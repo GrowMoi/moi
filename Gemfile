@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.2'
+gem 'rails', '4.2.0'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -33,9 +33,10 @@ group :doc do
 end
 
 #tests
-gem 'rspec'
-gem 'factory_girl'
-
+group :test, :development do
+  gem 'rspec-rails'
+  gem 'factory_girl'
+end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
