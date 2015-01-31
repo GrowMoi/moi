@@ -8,5 +8,6 @@ html
     = csrf_meta_tags
 
   body
-    = render "layouts/flashes"
-    = yield
+    .container
+      = render "layouts/flashes"
+      = yield
