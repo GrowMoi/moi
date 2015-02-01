@@ -232,6 +232,7 @@
         username: "Nombre de usuario"
         password: "Contraseña"
         remember_me: "Recordarme"
+        email: "Email"
       cliente:
         identificacion: "Identificación"
         tipo_id: "Tipo de identificación"

@@ -29,6 +29,7 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'slim'
 gem 'devise'
+gem 'decent_exposure'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -38,6 +39,7 @@ end
 group :test, :development do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'capybara'
 end
 
 group :development do
