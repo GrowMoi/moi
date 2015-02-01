@@ -48,7 +48,7 @@ test:
   encoding: utf8
   database: moi_test
   pool: 5
-  username: moi
+  username: postgres
   password:
 
 production:

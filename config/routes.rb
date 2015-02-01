@@ -56,7 +56,10 @@ Moi::Application.routes.draw do
   #   end
   namespace :admin do
     # resource :dashboard, only: :index
-    resource :users
+    resources :users
+
     root "dashboard#index"
   end
+
+  root "home#index"
 end
