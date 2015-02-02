@@ -19,6 +19,16 @@ describe "user management" do
       expect(page).to have_text(other_user.email)
     }
   end
+  
+  feature "see a user" do
+    before {
+      visit admin_user_path(current_user)
+    }
+    
+    it {
+      expect(page).to have_text(current_user.name)
+    }
+  end
 
   context "with forms" do
     let(:user_attrs) { attributes_for :user }
