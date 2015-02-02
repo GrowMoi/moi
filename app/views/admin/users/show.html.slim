@@ -1,13 +1,13 @@
-h4.row
-  strong = "#{t("activerecord.attributes.user.name")}:"
-  '
-  = user.name
-  br
-  '
-  strong = "#{t("activerecord.attributes.user.email")}:"
-  '
-  a href="mailto:" = user.email
-  br
-  strong = "#{t("activerecord.attributes.user.role")}:"
-  '
-  = user.role
+.row
+	col-md.4
+	  strong = "#{t("activerecord.attributes.user.name")}:"
+	  '
+	  = user.name
+	col-md.4
+	  strong = "#{t("activerecord.attributes.user.email")}:"
+	  '
+	  a href="mailto:" = user.email
+	col-md.4
+	  strong = "#{t("activerecord.attributes.user.role")}:"
+	  '
+	  = user.role
