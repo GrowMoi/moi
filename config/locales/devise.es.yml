@@ -12,7 +12,7 @@ es:
     confirmations:
       confirmed: "Su cuenta ha sido confirmada."
       confirmed_and_signed_in: "Su cuenta ha sido confirmada. Ha sido identificado correctamente."
-      send_instructions: "Recibira un correo electrónico en unos minutos con instrucciones sobre cómo restablecer su contraseña."
+      send_instructions: "Recibirá un correo electrónico en unos minutos con instrucciones sobre cómo restablecer su contraseña."
       send_paranoid_instructions: "Si su correo electrónico existe en nuestra base de datos recibirás un correo electrónico en unos minutos con instrucciones sobre cómo reiniciar su contraseña."
     failure:
       already_authenticated: "Ya ha sido identificado."
