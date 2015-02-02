@@ -12,5 +12,6 @@ html
       = render "admin/shared/main_navbar"
 
       .main-content.container-fluid
+        h1.text-center = yield :title
         = render "layouts/flashes"
         = yield

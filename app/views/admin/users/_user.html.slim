@@ -1,8 +1,9 @@
 .row
   .col-xs-4
     = user.name
+  .col-xs-4
     = user.email
-  .col-xs-4
+  .col-xs-2
     = user.role
-  .col-xs-4
-    = link_to "Editar", edit_admin_user_path(user)
+  .col-xs-2
+    = link_to "Editar", edit_admin_user_path(user), class: "btn btn-link btn-xs"
