@@ -1,6 +1,9 @@
-.pull-right
-  = link_to t("views.users.new"), new_admin_user_path, class: "btn btn-default"
-
-.clearfix
+- content_for :title, t("activerecord.models.user").pluralize
 
 = render users
+
+hr
+
+.pull-right
+  = link_to t("views.users.new"), new_admin_user_path, class: "btn btn-sm btn-default"
+.clearfix

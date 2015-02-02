@@ -3,6 +3,9 @@
 # contributors:
 #  - Tsutomu Kuroda - http://github.com/kuroda (t-kuroda@oiax.jp)
 # Corrected by Eloy Serra Labán: http://goo.gl/i9Kts, /nQ928, /XfKaX
+#
+# Added custom translations by vilcabamba's team
+#
 
 "es":
   views:
@@ -15,6 +18,7 @@
       first: "primero"
     users:
       new: "Nuevo Usuario"
+      edit: "Editar Usuario"
       created: "Usuario creado"
       updated: "Usuario actualizado"
   date:
