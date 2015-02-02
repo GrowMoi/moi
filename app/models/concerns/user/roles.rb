@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
     ROLES = %w(admin moderador curador cliente)
 
     included do
-      validates :role, inclusion: {in: ROLES}
+      validates :role, presence: true,
+                       inclusion: {in: ROLES}
     end
 
     # allows calling of `#admin?` `#moderador?`
