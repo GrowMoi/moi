@@ -1,0 +1,7 @@
+- if resource.errors.any?
+  .alert.alert-danger
+    h4 = pluralize resource.errors.count, "error"
+
+    ul
+      - resource.errors.full_messages.each do |msg|
+        li = msg
