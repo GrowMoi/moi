@@ -5,10 +5,8 @@ nav.navbar.navbar-default.navbar-static-top.main-navbar
 
     .collapse.navbar-collapse
       ul.nav.navbar-nav
-        li
-          = link_to "Dashboard", admin_root_path
-        li
-          = link_to "Usuarios", admin_users_path
+        = nav_item "Dashboard", admin_root_path
+        = nav_item "Usuarios", admin_users_path, "users"
 
       ul.nav.navbar-nav.navbar-right
         li.dropdown
