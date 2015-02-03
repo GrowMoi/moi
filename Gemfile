@@ -30,6 +30,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'slim'
 gem 'devise'
 gem 'decent_exposure'
+gem 'kaminari'
 gem "breadcrumbs_on_rails"
 
 group :doc do
