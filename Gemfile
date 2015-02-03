@@ -50,6 +50,9 @@ group :development do
   gem 'meta_request'
   gem 'rack-mini-profiler'
 end
+
+#datatables
+gem 'jquery-datatables-rails', '~> 3.1.1'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
