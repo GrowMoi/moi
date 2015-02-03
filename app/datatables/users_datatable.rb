@@ -1,5 +1,5 @@
 class UsersDatatable
-  delegate :params, :h, :link_to, :number_to_currency, :admin_user_path, to: :@view
+  delegate :params, :t, :link_to, :edit_admin_user_path, to: :@view
 
   def initialize(view)
     @view = view
@@ -19,23 +19,23 @@ private
   def data
     users.map do |user|
       [
-        link_to(user.name, admin_user_path(user)),
+        user.name,
+        user.email,
         user.role,
-        user.created_at.strftime("%B %e, %Y"),
-        user.name
+        link_to(t("actions.edit"), edit_admin_user_path(user))
       ]
     end
   end
 
   def users
-    @users ||= fetch_products
+    @users ||= fetch_users
   end
 
-  def fetch_products
+  def fetch_users
     users = User.order("#{sort_column} #{sort_direction}")
     users = users.page(page).per(per_page)
     if params[:sSearch].present?
-      users = users.where("name like :search or category like :search", search: "%#{params[:sSearch]}%")
+      users = users.where("name like :search or email like :search or role like :search", search: "%#{params[:sSearch]}%")
     end
     users
   end
@@ -49,7 +49,7 @@ private
   end
 
   def sort_column
-    columns = %w[name category released_on price]
+    columns = %w[name email role]
     columns[params[:iSortCol_0].to_i]
   end
 
