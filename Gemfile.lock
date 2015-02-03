@@ -52,6 +52,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-webkit (1.4.1)
+      capybara (>= 2.3.0, < 2.5.0)
+      json
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -61,6 +64,7 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     daemons (1.1.9)
+    database_cleaner (1.4.0)
     debug_inspector (0.0.2)
     decent_exposure (2.3.2)
     devise (3.4.1)
@@ -235,7 +239,9 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   capybara
+  capybara-webkit
   coffee-rails (~> 4.0.0)
+  database_cleaner
   decent_exposure
   devise
   factory_girl_rails

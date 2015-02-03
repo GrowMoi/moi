@@ -41,6 +41,8 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'pry'
+  gem 'capybara-webkit'
+  gem 'database_cleaner'
 end
 
 group :development do
