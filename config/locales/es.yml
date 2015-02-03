@@ -261,3 +261,6 @@
 
       full_messages:  # this doesn't work (?)
         format: "%{message}"
+
+  actions:
+    edit: "Editar"
