@@ -17,7 +17,7 @@ Haz un [squash](http://gitready.com/advanced/2009/02/10/squashing-commits-with-r
 
 ## código
 Te recomendamos utilizar [Sublime Text](http://www.sublimetext.com/) o [Atom](https://atom.io/). En ambos puedes activar dos preferencias *importantes*:
-- Remover espacio en blanco de los archivos que editas
-- Utilizar una línea nueva como delimitador de final de archivo
+- Remover espacio en blanco de los archivos que editas. En SublimeText "trim_trailing_white_space_on_save": true
+- Utilizar una línea nueva como delimitador de final de archivo. En SublimeText "ensure_newline_at_eof_on_save": true
 
 De preferencia, el código que escribamos va a estar en inglés. Esto es solamente para hacerlo estándar y por si tenemos que integrar personas de un mercado global al equipo.
