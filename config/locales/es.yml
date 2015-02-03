@@ -21,6 +21,7 @@
       edit: "Editar Usuario"
       created: "Usuario creado"
       updated: "Usuario actualizado"
+      show: "Mostrar Usuario"
   date:
     formats:
       default: "%d/%m/%Y"
