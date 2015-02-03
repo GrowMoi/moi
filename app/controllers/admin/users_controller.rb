@@ -1,6 +1,12 @@
 module Admin
   class UsersController < AdminController::Base
-    expose(:users)
+    respond_to(:html, :json)
+    expose(:users) do
+      respond_to do |format|
+        format.html
+        format.json { render json: UsersDatatable.new(view_context) }
+      end
+    end
     expose(:user, attributes: :user_params)
     expose(:roles) {
       User::Roles::ROLES
