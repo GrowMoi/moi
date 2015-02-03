@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "user management" do
+describe "user management", js: true do
   let!(:current_user) { create :user, :admin }
 
   before {
