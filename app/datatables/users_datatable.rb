@@ -1,5 +1,5 @@
 class UsersDatatable
-  delegate :params, :h, :link_to, :number_to_currency, to: :@view
+  delegate :params, :h, :link_to, :number_to_currency, :admin_user_path, to: :@view
 
   def initialize(view)
     @view = view
@@ -9,7 +9,7 @@ class UsersDatatable
     {
       sEcho: params[:sEcho].to_i,
       iTotalRecords: User.count,
-      iTotalDisplayRecords: users.total_entries,
+      iTotalDisplayRecords: users.count,
       aaData: data
     }
   end
@@ -19,10 +19,10 @@ private
   def data
     users.map do |user|
       [
-        link_to(user.name, user),
-        h(user.category),
-        h(user.released_on.strftime("%B %e, %Y")),
-        number_to_currency(user.price)
+        link_to(user.name, admin_user_path(user)),
+        user.role,
+        user.created_at.strftime("%B %e, %Y"),
+        user.name
       ]
     end
   end
@@ -33,7 +33,7 @@ private
 
   def fetch_products
     users = User.order("#{sort_column} #{sort_direction}")
-    users = users.page(page).per_page(per_page)
+    users = users.page(page).per(per_page)
     if params[:sSearch].present?
       users = users.where("name like :search or category like :search", search: "%#{params[:sSearch]}%")
     end
