@@ -1,10 +1,19 @@
 module Admin
   class UsersController < AdminController::Base
+    add_breadcrumb I18n.t("activerecord.models.user").pluralize, :admin_users_path
     expose(:users)
     expose(:user, attributes: :user_params)
     expose(:roles) {
       User::Roles::ROLES
     }
+
+    def new
+      add_breadcrumb I18n.t("views.users.new"), new_admin_user_path
+    end
+
+    def edit
+      add_breadcrumb I18n.t("views.users.edit"), edit_admin_user_path
+    end
 
     def create
       if user.save

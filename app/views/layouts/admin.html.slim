@@ -12,6 +12,8 @@ html
       = render "admin/shared/main_navbar"
 
       .main-content.container-fluid
+        ol.breadcrumb
+          = render_breadcrumbs :tag => :li, :separator => ''
         h1.text-center = yield :title
         = render "layouts/flashes"
         = yield
