@@ -21,4 +21,6 @@ Te recomendamos utilizar [Sublime Text](http://www.sublimetext.com/) o [Atom](ht
 - Utilizar una línea nueva como delimitador de final de archivo
 - Utilizar espacios en lugar de _tabs_ para indentar código. Preferiblemente 2 espacios para cada nivel
 
+En SublimeText, las opciones `trim_trailing_white_space_on_save` y `ensure_newline_at_eof_on_save` te van a salvar la vida
+
 De preferencia, el código que escribamos va a estar en inglés. Esto es solamente para hacerlo estándar y por si tenemos que integrar personas de un mercado global al equipo.
