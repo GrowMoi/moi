@@ -1,13 +1,13 @@
 require "rails_helper"
 
-describe "user management", js: true do
+describe "user management" do
   let!(:current_user) { create :user, :admin }
 
   before {
     login_as current_user
   }
 
-  feature "admin sees all users" do
+  feature "admin sees all users", js: true do
     let!(:other_user) { create :user }
 
     before {
@@ -41,7 +41,7 @@ describe "user management", js: true do
         fill_in label, with: value
       end
     }
-
+    #this isn't with js: true because is droping data so fails in count
     feature "create user" do
       before {
         visit new_admin_user_path
@@ -53,11 +53,24 @@ describe "user management", js: true do
 
       it {
         expect(page).to have_text(I18n.t("views.users.created"))
+      }
+    end
+
+    #this is with js: true to show datatable content
+    feature "create user", js: true do
+      before {
+        visit new_admin_user_path
+        fill_form!
+        find("input[type='submit']").click
+      }
+
+      it {
+        expect(page).to have_text(I18n.t("views.users.created"))
         expect(page).to have_text(user_attrs[:email])
       }
     end
 
-    feature "update user" do
+    feature "update user", js: true do
       let(:existing_user) { create :user }
 
       before {
