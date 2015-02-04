@@ -12,7 +12,12 @@ module Admin
     end
 
     def edit
+      show
       add_breadcrumb I18n.t("views.users.edit"), edit_admin_user_path
+    end
+
+    def show
+      add_breadcrumb user.name , admin_user_path(user)
     end
 
     def create
