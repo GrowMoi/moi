@@ -16,4 +16,20 @@ module ApplicationHelper
       key
     end
   end
+
+  ##
+  # Generates required markup to make a datatable.
+  # Accepts a block.
+  #
+  # @param options [Hash]
+  # @yield Contents of the table
+  # @option options [String] :source Source URL
+  #   to fetch records from. Needs to respond
+  #   to JSON
+  def datatable(options)
+    data = { source: options.fetch(:source) }
+    content_tag :table, class: "datatable table table-striped", data: data do
+      yield
+    end
+  end
 end
