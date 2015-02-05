@@ -29,28 +29,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
-
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  config.before(:each, js: true) do
-    DatabaseCleaner.strategy = :truncation
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
-
-  config.include(Capybara::Webkit::RspecMatchers, :type => :feature)
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
@@ -73,5 +51,6 @@ RSpec.configure do |config|
 
   # include factorygirl methods
   config.include FactoryGirl::Syntax::Methods
+  config.include Capybara::Webkit::RspecMatchers, :type => :feature
   config.include LoginMacros, type: :feature
 end
