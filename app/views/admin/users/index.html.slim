@@ -1,6 +1,6 @@
 - content_for :title, t("activerecord.models.user").pluralize
 
-table.datatable.table.table-striped.table-bordered*{'cellspacing'=> "0", 'data-source'=> admin_users_url(format: "json")}
+= datatable source: admin_users_path(format: :json) do
   thead
     tr
       th #{t("activerecord.attributes.user.name")}
