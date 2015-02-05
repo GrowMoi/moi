@@ -48,6 +48,9 @@ private
     params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
   end
 
+  # @todo this will raise an exception if `columns`
+  #   doesn't have the requested index.
+  #   We can have a `rescue` block
   def sort_column
     columns = %w[name email role]
     columns[params[:iSortCol_0].to_i]
