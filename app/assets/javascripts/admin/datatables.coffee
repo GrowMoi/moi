@@ -13,7 +13,7 @@ applyDatatables = ->
       sAjaxSource: $(this).data('source')
       columnDefs: columnDefs
       oLanguage:
-        sUrl: "/datatables.es.txt"
+        sUrl: "/datatables/datatables.es.txt"
 
 # Listen for document.ready and page:load (turbolinks)
 $(document).on "ready page:load", applyDatatables
