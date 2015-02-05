@@ -1,5 +1,5 @@
 class UsersDatatable
-  delegate :params, :t, :link_to, :edit_admin_user_path, to: :@view
+  delegate :params, :t, :link_to, to: :@view
 
   def initialize(view)
     @view = view
@@ -22,9 +22,20 @@ private
         user.name,
         user.email,
         user.role,
-        link_to(t("actions.edit"), edit_admin_user_path(user))
+        link_for(:show, user) + link_for(:edit, user)
       ]
     end
+  end
+
+  def link_for(action, user)
+    link_to(
+      t("actions.#{action}"),
+      { namespace: :admin,
+        controller: "users",
+        action: action,
+        id: user.id },
+      class: "btn btn-xs btn-link"
+    )
   end
 
   def users
