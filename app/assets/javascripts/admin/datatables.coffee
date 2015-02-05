@@ -12,6 +12,8 @@ applyDatatables = ->
       bServerSide: true
       sAjaxSource: $(this).data('source')
       columnDefs: columnDefs
+      oLanguage:
+        sUrl: "/datatables/datatables.es.txt"
 
 # Listen for document.ready and page:load (turbolinks)
 $(document).on "ready page:load", applyDatatables
