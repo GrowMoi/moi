@@ -52,9 +52,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-webkit (1.4.1)
-      capybara (>= 2.3.0, < 2.5.0)
-      json
+    cliver (0.3.2)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -129,6 +127,11 @@ GEM
       mini_portile (~> 0.6.0)
     orm_adapter (0.5.0)
     pg (0.18.1)
+    poltergeist (1.5.1)
+      capybara (~> 2.1)
+      cliver (~> 0.3.1)
+      multi_json (~> 1.0)
+      websocket-driver (>= 0.2.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -231,6 +234,7 @@ GEM
       json (>= 1.8.0)
     warden (1.2.3)
       rack (>= 1.0)
+    websocket-driver (0.4.0)
     xpath (2.0.0)
       nokogiri (~> 1.3)
     yard (0.8.7.6)
@@ -242,7 +246,6 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   capybara
-  capybara-webkit
   coffee-rails (~> 4.0.0)
   connection_pool
   database_cleaner
@@ -256,6 +259,7 @@ DEPENDENCIES
   mailcatcher
   meta_request
   pg
+  poltergeist
   pry-rails
   rack-mini-profiler
   rails (= 4.2.0)
