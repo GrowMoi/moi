@@ -19,15 +19,20 @@ module ApplicationHelper
 
   ##
   # Generates required markup to make a datatable.
-  # Accepts a block.
+  # @note Requires `:source` option
   #
   # @param options [Hash]
   # @yield Contents of the table
   # @option options [String] :source Source URL
   #   to fetch records from. Needs to respond
   #   to JSON
+  # @option options [Boolean] :includes_actions (true)
+  #   Option to make last column not sortable (So you
+  #   can add actions in there)
   def datatable(options)
-    data = { source: options.fetch(:source) }
+    defaults = { includes_actions: true }
+    raise ArgumentError, ":source must be provided" if options[:source].blank?
+    data = defaults.merge(options)
     content_tag :table, class: "datatable table table-striped", data: data do
       yield
     end
