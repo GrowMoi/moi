@@ -40,8 +40,8 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'capybara'
-  gem 'capybara-webkit'
   gem 'pry-rails'
+  gem 'poltergeist'
   gem 'database_cleaner'
   gem 'connection_pool'
 end
