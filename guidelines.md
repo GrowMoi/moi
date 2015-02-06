@@ -16,8 +16,11 @@ Intenta colocar un enlace y el ID de la historia de usuario en la que estás tra
 Haz un [squash](http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html) de los commits si tienes muchos de ellos en un sólo branch; idealmente el PR tiene un sólo commit.
 
 ## código
-Te recomendamos utilizar [Sublime Text](http://www.sublimetext.com/) o [Atom](https://atom.io/). En ambos puedes activar dos preferencias *importantes*:
+Te recomendamos utilizar [Sublime Text](http://www.sublimetext.com/) o [Atom](https://atom.io/). En ambos puedes activar las siguientes preferencias *importantes*:
 - Remover espacio en blanco de los archivos que editas
 - Utilizar una línea nueva como delimitador de final de archivo
+- Utilizar espacios en lugar de _tabs_ para indentar código. Preferiblemente 2 espacios para cada nivel
+
+En SublimeText, las opciones `trim_trailing_white_space_on_save` y `ensure_newline_at_eof_on_save` te van a salvar la vida
 
 De preferencia, el código que escribamos va a estar en inglés. Esto es solamente para hacerlo estándar y por si tenemos que integrar personas de un mercado global al equipo.

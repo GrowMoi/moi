@@ -1,20 +1,20 @@
 h2 = t "devise.login"
 
 = form_for(resource, as: resource_name, url: user_session_path) do |f|
-  .field
+  .form-group
     = f.label :email
-    = f.email_field :email, autofocus: true
+    = f.email_field :email, autofocus: true, class: "form-control"
 
-  .field
+  .form-group
     = f.label :password
-    = f.password_field :password, autocomplete: "off"
+    = f.password_field :password, autocomplete: "off", class: "form-control"
 
   - if devise_mapping.rememberable?
-    .field
-      = f.check_box :remember_me
+    .form-group
+      = f.check_box :remember_me, class: "checkbox"
       = f.label :remember_me
 
   .actions
-    = f.submit t("devise.login"), data: { disable_with: t("devise.login")}
+    = f.submit t("devise.login"), data: { disable_with: t("devise.login")}, class: "btn btn-primary"
 
 = render "devise/shared/links"
