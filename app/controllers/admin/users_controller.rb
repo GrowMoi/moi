@@ -1,11 +1,12 @@
 module Admin
   class UsersController < AdminController::Base
-    add_breadcrumb I18n.t("activerecord.models.user").pluralize, :admin_users_path
     expose(:users)
     expose(:user, attributes: :user_params)
     expose(:roles) {
       User::Roles::ROLES
     }
+    
+    add_breadcrumb I18n.t("activerecord.models.user").pluralize, :admin_users_path
 
     def new
       add_breadcrumb I18n.t("views.users.new"), new_admin_user_path
@@ -17,7 +18,7 @@ module Admin
     end
 
     def show
-      add_breadcrumb user.name , admin_user_path(user)
+      add_breadcrumb user.name, admin_user_path(user)
     end
 
     def create
