@@ -30,6 +30,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'slim'
 gem 'devise'
 gem 'decent_exposure'
+gem 'kaminari'
 gem "breadcrumbs_on_rails"
 
 group :doc do
@@ -40,7 +41,10 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'capybara'
-  gem 'pry'
+  gem 'pry-rails'
+  gem 'poltergeist'
+  gem 'database_cleaner'
+  gem 'connection_pool'
 end
 
 group :development do
@@ -50,6 +54,9 @@ group :development do
   gem 'meta_request'
   gem 'rack-mini-profiler'
 end
+
+#datatables
+gem 'jquery-datatables-rails', '~> 3.1.1'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

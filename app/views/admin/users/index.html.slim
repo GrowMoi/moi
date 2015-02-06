@@ -1,6 +1,13 @@
 - content_for :title, t("activerecord.models.user").pluralize
 
-= render users
+= datatable source: admin_users_path(format: :json) do
+  thead
+    tr
+      th #{t("activerecord.attributes.user.name")}
+      th #{t("activerecord.attributes.user.email")}
+      th #{t("activerecord.attributes.user.role")}
+      th
+  tbody
 
 hr
 

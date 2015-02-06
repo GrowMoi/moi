@@ -1,7 +1,8 @@
 module Admin
   class UsersController < AdminController::Base
-    expose(:users)
+
     expose(:user, attributes: :user_params)
+    expose(:users)
     expose(:roles) {
       User::Roles::ROLES
     }
@@ -19,6 +20,15 @@ module Admin
 
     def show
       add_breadcrumb user.name, admin_user_path(user)
+    end
+
+    def index
+      respond_to do |format|
+        format.html
+        format.json {
+          render json: UsersDatatable.new(view_context)
+        }
+      end
     end
 
     def create
