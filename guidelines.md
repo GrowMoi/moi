@@ -7,7 +7,7 @@ Si estás trabajando en una historia de usuario, te recomendamos crear un nuevo 
 
 Ejemplo: `moi-amb-002`
 
-Todos los commits que realices, los colocas dentro de tu nuevo branch y luego haces un [pull request](https://github.com/GrowMoi/moi/pulls/1) para que alguien más lo revise y lo una al branch principal (`master`).
+Todos los commits que realices, los colocas dentro de tu nuevo branch y luego haces un [pull request](https://github.com/GrowMoi/moi/pull/1) para que alguien más lo revise y lo una al branch principal (`master`).
 
 Recuerda no hacer `merge` de tus propios pull requests a menos que sea un _hotfix_ y utilizar mensajes cortos.
 
