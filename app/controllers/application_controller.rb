@@ -9,4 +9,9 @@ class ApplicationController < ActionController::Base
   decent_configuration do
     strategy DecentExposure::StrongParametersStrategy
   end
+
+  # cancan
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_path, error: I18n.t("views.unauthorized")
+  end
 end
