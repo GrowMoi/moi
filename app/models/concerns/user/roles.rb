@@ -17,7 +17,13 @@ class User < ActiveRecord::Base
     # @return [Boolean]
     ROLES.each do |role|
       define_method "#{role}?" do
-        role == role
+        self.role == role
+      end
+    end
+
+    module ClassMethods
+      def roles
+        ROLES
       end
     end
   end

@@ -8,7 +8,7 @@ FactoryGirl.define do
 
     # allows to have roles as user traits
     # example: create :user, :admin
-    User::Roles::ROLES.each do |rol|
+    User.roles.each do |rol|
       trait rol.to_sym do
         role { rol }
       end
