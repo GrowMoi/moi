@@ -30,8 +30,7 @@ private
   def link_for(action, user)
     link_to(
       t("actions.#{action}"),
-      { namespace: :admin,
-        controller: "users",
+      { controller: "users",
         action: action,
         id: user.id },
       class: "btn btn-xs btn-link"
