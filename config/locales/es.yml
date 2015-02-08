@@ -10,6 +10,7 @@
 "es":
   views:
     submitting: "Enviando.."
+    unauthorized: "No tienes permiso para realizar esta acción"
     pagination:
       previous: "&lt;"
       next: "&gt;"
