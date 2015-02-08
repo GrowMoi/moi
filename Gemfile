@@ -31,7 +31,8 @@ gem 'slim'
 gem 'devise'
 gem 'decent_exposure'
 gem 'kaminari'
-gem "breadcrumbs_on_rails"
+gem 'breadcrumbs_on_rails'
+gem 'cancan'
 
 group :doc do
   gem 'yard'

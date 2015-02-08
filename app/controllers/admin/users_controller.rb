@@ -1,12 +1,13 @@
 module Admin
   class UsersController < AdminController::Base
+    authorize_resource
 
     expose(:user, attributes: :user_params)
     expose(:users)
     expose(:roles) {
       User::Roles::ROLES
     }
-    
+
     add_breadcrumb I18n.t("activerecord.models.user").pluralize, :admin_users_path
 
     def new
