@@ -57,7 +57,9 @@ Moi::Application.routes.draw do
   namespace :admin do
     # resource :dashboard, only: :index
     resources :users
-    resources :neurons
+    resources :neurons do
+      get "tree_data", :on => :collection ,:defaults => { :format => 'json' }
+    end
 
     root "dashboard#index"
   end
