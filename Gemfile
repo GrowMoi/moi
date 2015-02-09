@@ -29,20 +29,35 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'slim'
 gem 'devise'
+gem 'decent_exposure'
+gem 'kaminari'
+gem 'breadcrumbs_on_rails'
+gem 'cancan'
 
 group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
+  gem 'yard'
 end
 
 group :test, :development do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'pry-rails'
+  gem 'poltergeist'
+  gem 'database_cleaner'
+  gem 'connection_pool'
 end
 
 group :development do
   gem 'mailcatcher'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
+  gem 'rack-mini-profiler'
 end
+
+#datatables
+gem 'jquery-datatables-rails', '~> 3.1.1'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

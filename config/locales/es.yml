@@ -3,15 +3,26 @@
 # contributors:
 #  - Tsutomu Kuroda - http://github.com/kuroda (t-kuroda@oiax.jp)
 # Corrected by Eloy Serra Labán: http://goo.gl/i9Kts, /nQ928, /XfKaX
+#
+# Added custom translations by vilcabamba's team
+#
 
 "es":
   views:
+    submitting: "Enviando.."
+    unauthorized: "No tienes permiso para realizar esta acción"
     pagination:
       previous: "&lt;"
       next: "&gt;"
       truncate: "..."
       last: "&uacute;ltimo"
       first: "primero"
+    users:
+      new: "Nuevo Usuario"
+      edit: "Editar Usuario"
+      created: "Usuario creado"
+      updated: "Usuario actualizado"
+      show: "Mostrar Usuario"
   date:
     formats:
       default: "%d/%m/%Y"
@@ -231,7 +242,11 @@
       user:
         username: "Nombre de usuario"
         password: "Contraseña"
+        password_confirmation: "Confirmación de contraseña"
         remember_me: "Recordarme"
+        email: "Email"
+        role: "Rol"
+        name: "Nombre"
       cliente:
         identificacion: "Identificación"
         tipo_id: "Tipo de identificación"
@@ -248,3 +263,7 @@
 
       full_messages:  # this doesn't work (?)
         format: "%{message}"
+
+  actions:
+    edit: "Editar"
+    show: "Mostrar"
