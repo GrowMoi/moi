@@ -5,4 +5,8 @@ class Neuron < ActiveRecord::Base
     validates :title, presence: true,
                       uniqueness: true
   end
+
+  def to_s
+    title
+  end
 end

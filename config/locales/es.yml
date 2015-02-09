@@ -262,6 +262,7 @@
         telefono: "Teléfono"
       neuron:
         title: Título
+        parent: Padre
 
     errors:
       messages:
