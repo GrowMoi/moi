@@ -9,7 +9,10 @@ module Admin
       private
 
       def require_admin!
-        # TODO
+        redirect_to(
+          root_path,
+          error: I18n.t("views.unauthorized")
+        ) unless current_user.admin?
       end
     end
   end

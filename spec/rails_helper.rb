@@ -49,6 +49,10 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   # config.infer_spec_type_from_file_location!
 
+  config.before :each, js: true do
+    ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
+  end
+
   # include factorygirl methods
   config.include FactoryGirl::Syntax::Methods
   config.include LoginMacros, type: :feature
