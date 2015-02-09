@@ -20,8 +20,6 @@ module Admin
       controller_name.singularize
     end
 
-    ##
-
     def breadcrumbs_plural
       breadcrumb_base.pluralize
     end
@@ -47,9 +45,11 @@ module Admin
           ),
           send("new_admin_#{breadcrumb_base}_path")
         )
+      when "create"
+        breadcrumb_for "new"
       when "show"
         add_breadcrumb(
-          resource.name,
+          resource,
           send("admin_#{breadcrumb_base}_path", resource)
         )
       when "edit"
@@ -59,6 +59,8 @@ module Admin
           I18n.t("views.#{breadcrumb_base.pluralize}.edit"),
           send("edit_admin_#{breadcrumb_base}_path")
         )
+      when "update"
+        breadcrumb_for "edit"
       end
     end
   end
