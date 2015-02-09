@@ -6,7 +6,7 @@ module AdminHelper
   # @param name [String] the text to display on link
   # @param path [String, Object] href path
   # @param controller_name [String] name to match with current controller's
-  #   name to know if a nav_item should be `active`
+  #   name to know if a nav_item should be `active`. Uses regexp
   # @param options [Object] options passed to `ActionView::Helpers::UrlHelper#link_to`
   # @return [Object] `li` tag with (or without) `active` class with a link
   def nav_item(name, path, controller_name=name, *options)

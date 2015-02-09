@@ -6,7 +6,8 @@ nav.navbar.navbar-default.navbar-static-top.main-navbar
     .collapse.navbar-collapse
       ul.nav.navbar-nav
         = nav_item "Dashboard", admin_root_path
-        = nav_item "Usuarios", admin_users_path, "users"
+        - if can? :manage, User
+          = nav_item "Usuarios", admin_users_path, "users"
 
       ul.nav.navbar-nav.navbar-right
         li.dropdown
