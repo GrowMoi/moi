@@ -19,12 +19,12 @@ describe "user management" do
       expect(page).to have_text(other_user.email)
     }
   end
-  
+
   feature "see a user" do
     before {
       visit admin_user_path(current_user)
     }
-    
+
     it {
       expect(page).to have_text(current_user.name)
     }
@@ -41,7 +41,7 @@ describe "user management" do
         fill_in label, with: value
       end
     }
-    #this isn't with js: true because is droping data so fails in count
+    
     feature "create user" do
       before {
         visit new_admin_user_path
