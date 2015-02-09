@@ -8,6 +8,8 @@ class Ability
     case user.role
     when "admin"
       can :manage, :all
+    when "curador"
+      can [:read, :create], Neuron
     end
   end
 end

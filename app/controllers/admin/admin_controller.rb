@@ -4,15 +4,15 @@ module Admin
       layout "admin"
 
       before_action :authenticate_user!
-      before_action :require_admin!
+      before_action :restrict_cliente!
 
       private
 
-      def require_admin!
+      def restrict_cliente!
         redirect_to(
           root_path,
           error: I18n.t("views.unauthorized")
-        ) unless current_user.admin?
+        ) if current_user.cliente?
       end
     end
   end

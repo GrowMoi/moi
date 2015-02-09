@@ -1,0 +1,12 @@
+- content_for :title, t("activerecord.models.neuron").pluralize
+
+| [missing tree]
+
+hr
+
+- if can? :create, Neuron
+  .pull-right
+    = link_to t("views.neurons.new"),
+              new_admin_neuron_path,
+              class: "btn btn-sm btn-default"
+  .clearfix
