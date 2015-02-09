@@ -44,7 +44,7 @@ group :test, :development do
   gem 'capybara'
   gem 'pry-rails'
   gem 'poltergeist'
-  gem 'database_cleaner'
+  gem 'database_cleaner', '~> 1.3.0'
   gem 'connection_pool'
 end
 
