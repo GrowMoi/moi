@@ -5,11 +5,11 @@ nav.navbar.navbar-default.navbar-static-top.main-navbar
 
     .collapse.navbar-collapse
       ul.nav.navbar-nav
-        = nav_item "Dashboard", admin_root_path
+        = nav_item "dashboard", admin_root_path
         - if can? :manage, User
-          = nav_item "Usuarios", admin_users_path, "users"
+          = nav_item "users", admin_users_path
         - if can? :read, Neuron
-          = nav_item "Neuronas", admin_neurons_path, "neuron"
+          = nav_item "neurons", admin_neurons_path
 
       ul.nav.navbar-nav.navbar-right
         li.dropdown

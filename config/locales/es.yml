@@ -17,6 +17,10 @@
       truncate: "..."
       last: "&uacute;ltimo"
       first: "primero"
+    main_navbar:
+      users: Usuarios
+      dashboard: Escritorio
+      neurons: Neuronas
     users:
       new: "Nuevo Usuario"
       edit: "Editar Usuario"
