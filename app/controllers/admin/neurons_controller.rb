@@ -21,13 +21,7 @@ module Admin
     def index
       respond_to do |format|
         format.html
-        format.json {
-          parents = Neuron.all
-          scoped = parents.map do |neuron|
-            neuron.to_node
-          end
-          render json: scoped
-        }
+        format.json { render json: Neuron.all, root: false }
       end
     end
 
