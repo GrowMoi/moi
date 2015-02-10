@@ -1,3 +1,5 @@
+ruby "2.1.4"
+
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -54,6 +56,10 @@ group :development do
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'rack-mini-profiler'
+end
+
+group :staging do
+  gem 'rails_12factor'
 end
 
 #datatables
