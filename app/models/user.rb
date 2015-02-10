@@ -6,7 +6,17 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :recoverable,
          :rememberable, :trackable, :validatable
 
+  after_update :send_email_change_role
+
   def to_s
     name
+  end
+
+  private
+
+  def send_email_change_role
+    if self.role_changed? #get boolean value before to save object
+    	UserMailer.change_permission(self).deliver_later
+		end
   end
 end
