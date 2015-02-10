@@ -12,9 +12,8 @@ created3tree = ->
     ]
   )
   svg = d3.select('#tree_data').append('svg').attr('width', width).attr('height', height).append('g').attr('transform', 'translate(40,0)')
-  d3.json '/admin/neurons/tree_data.json', (error, json) ->
+  d3.json '/admin/neurons.json', (error, json) ->
     nodes = tree.nodes(json[0])
-    console.log(nodes);
     links = tree.links(nodes)
     link = svg.selectAll('path.link').data(links).enter().append('path').attr('class', 'link').attr('d', diagonal)
     node = svg.selectAll('g.node').data(nodes).enter().append('g').attr('class', 'node').attr('transform', (d) ->

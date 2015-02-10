@@ -16,6 +16,20 @@ module Admin
         [neuron.to_s, neuron.id]
       end
     }
+    expose(:neurons)
+
+    def index
+      respond_to do |format|
+        format.html
+        format.json {
+          parents = Neuron.all
+          scoped = parents.map do |neuron|
+            neuron.to_node
+          end
+          render json: scoped
+        }
+      end
+    end
 
     def create
       if neuron.save
@@ -25,18 +39,6 @@ module Admin
         )
       else
         render :new
-      end
-    end
-
-    def tree_data
-      respond_to do |format|
-        format.json {
-          parents = Neuron.where(parent_id: nil )
-          scoped = parents.map do |neuron|
-            neuron.to_node
-          end
-          render json: scoped
-        }
       end
     end
 
