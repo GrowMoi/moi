@@ -1,7 +1,7 @@
 applyDatatables = ->
   $('.datatable').each ->
     columnDefs = []
-    if $(this).data("includes_actions")
+    if $(this).data("includesActions")
       # disable sorting on last column if the datatable
       # intends to display actions
       columnDefs.push { "targets": -1, "orderable": false }
