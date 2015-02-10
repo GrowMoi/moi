@@ -1,8 +1,8 @@
 class UserMailer < ApplicationMailer
-	default from: 'notifications@example.com'
+	default from: 'moi@example.com'
 
   def change_permission(user)
     @user = user
-    mail(to: @user.email, subject: 'Change your permission')
+    mail(to: @user.email, subject: I18n.t("email.subject"))
   end
 end

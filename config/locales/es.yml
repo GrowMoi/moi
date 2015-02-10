@@ -276,3 +276,6 @@
   actions:
     edit: "Editar"
     show: "Mostrar"
+
+  email:
+    subject: "Cambio de permisos"
