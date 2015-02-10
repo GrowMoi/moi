@@ -282,3 +282,6 @@
     show: "Mostrar"
     logout: Cerrar sesión
     my_profile: Mi perfil
+
+  email:
+    subject: "Cambio de permisos"
