@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 
   def send_email_change_role
     if self.role_changed? #get boolean value before to save object
-    	UserMailer.change_permission(self).deliver_later
+    	UserMailer.notify_role_change(self).deliver_later
 		end
   end
 end

@@ -277,5 +277,6 @@
     edit: "Editar"
     show: "Mostrar"
 
-  email:
-    subject: "Cambio de permisos"
+  user_mailer:
+    change_permission:
+      subject: "Cambio de permisos"
