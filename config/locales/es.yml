@@ -283,5 +283,6 @@
     logout: Cerrar sesión
     my_profile: Mi perfil
 
-  email:
-    subject: "Cambio de permisos"
+  user_mailer:
+    change_permission:
+      subject: "Cambio de permisos"
