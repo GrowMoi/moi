@@ -1,3 +1,5 @@
+ruby "2.1.4"
+
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -56,13 +58,17 @@ group :development do
   gem 'rack-mini-profiler'
 end
 
+group :staging do
+  gem 'rails_12factor'
+end
+
 #datatables
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
-# Use unicorn as the app server
-# gem 'unicorn'
+# Use puma as the app server
+gem 'puma'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
