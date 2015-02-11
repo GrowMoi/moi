@@ -57,7 +57,7 @@ group :development do
 end
 
 #datatables
-gem 'jquery-datatables-rails', '~> 3.1.1'
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
