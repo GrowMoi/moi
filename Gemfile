@@ -67,8 +67,8 @@ gem 'jquery-datatables-rails', '~> 3.1.1'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
-# Use unicorn as the app server
-# gem 'unicorn'
+# Use puma as the app server
+gem 'puma'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
