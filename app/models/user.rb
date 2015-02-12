@@ -8,8 +8,6 @@ class User < ActiveRecord::Base
 
   after_update :send_email_change_role
 
-  after_update :send_email_change_role
-
   def to_s
     name
   end
