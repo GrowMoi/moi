@@ -29,6 +29,10 @@ module Admin
       end
     end
 
+    def new
+      self.neuron.parent_id = params[:parent_id]
+    end
+
     def create
       if neuron.save
         redirect_to(

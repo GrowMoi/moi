@@ -61,7 +61,7 @@ class MoiTree
     @setChildren(@rootNeuron)
 
     @neurons = @tree.nodes(@rootNeuron)
-    
+
     @drawLinks()
     @drawNeurons()
     @drawWithoutParent()
@@ -75,6 +75,7 @@ class MoiTree
                   .attr("transform", (d) ->
                     "translate(#{d.x},#{d.y})"
                   )
+                  .on "click", $.proxy(@showDetails, @)
     neuron.append("circle").attr "r", 4.5
     neuron.append('text').attr('dx', (d) ->
       if d.children then -8 else 8
@@ -107,6 +108,7 @@ class MoiTree
                         y = i * vertical_space
                         "translate(#{@width - 10}, #{y})"
                       )
+                      .on "click", $.proxy(@showDetails, @)
     no_parents.append("circle").attr "r", 4.5
     no_parents.append("text")
                .attr("dx", 8)
@@ -121,6 +123,27 @@ class MoiTree
       for child in neuron.children
         @setChildren(child)
 
+  showDetails: (node) ->
+    $popover = $(".popover")
+    # format:
+    $popover.find(".popover-title").html(node.title)
+    $popover.find(".new-child-link")
+            .attr("href", "/admin/neurons/new?parent_id=#{node.id}")
+    $popover.find(".edit-link")
+            .attr("href", "/admin/neurons/#{node.id}/edit")
+    $popover.removeClass("hidden")
+            .hide()
+            .fadeIn(300)
+            .css(
+              position: "absolute",
+              left: event.pageX + 5,
+              top: event.pageY - 38
+            )
+
 $(document).on "ready page:load", ->
   if $("#moi_tree").length > 0
     new MoiTree("#moi_tree")
+
+# close popover
+$(document).on "click", ".popover .close", ->
+  $(".popover").addClass("hidden")
