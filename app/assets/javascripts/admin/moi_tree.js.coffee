@@ -127,8 +127,12 @@ class MoiTree
     $popover = $(".popover")
     # format:
     $popover.find(".popover-title").html(node.title)
-    $popover.find(".new-child-link")
-            .attr("href", "/admin/neurons/new?parent_id=#{node.id}")
+    $newChildLink = $popover.find(".new-child-link")
+    if node.parent_id
+      $newChildLink.show()
+                   .attr("href", "/admin/neurons/new?parent_id=#{node.id}")
+    else
+      $newChildLink.hide()
     $popover.find(".edit-link")
             .attr("href", "/admin/neurons/#{node.id}/edit")
     $popover.removeClass("hidden")
