@@ -4,6 +4,8 @@ module Admin
 
     authorize_resource
 
+    respond_to :html, :json
+
     expose(:neuron, attributes: :neuron_params)
     expose(:possible_parents) {
       # used by selects on forms
@@ -21,7 +23,9 @@ module Admin
     def index
       respond_to do |format|
         format.html
-        format.json { render json: Neuron.all, root: false }
+        format.json {
+          render json: neurons, meta: {root_id: 1}
+        }
       end
     end
 
