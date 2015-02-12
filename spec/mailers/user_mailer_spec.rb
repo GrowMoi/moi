@@ -16,7 +16,7 @@ RSpec.describe UserMailer, :type => :mailer do
     expect(mail.from).to eql(['moi@example.com'])
   end
 
-	it 'assigns @name' do
-		expect(mail.body.encoded).to match(user.name)
+	it 'have new role' do
+		expect(mail.body.encoded).to have_text(user.role)
 	end
 end
