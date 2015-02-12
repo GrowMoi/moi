@@ -7,7 +7,7 @@ setChildren = (neuron, neuron_parents) ->
 created3tree = ->
   jsonRoot = "neurons"
 
-  width = $("#tree_data").width()
+  width = $("#moi_tree").width()
   height = width
   tree = d3.layout.tree().size([
     width,
@@ -26,7 +26,7 @@ created3tree = ->
   #   parent_id: 3
   # }
 
-  svg = d3.select('#tree_data')
+  svg = d3.select('#moi_tree')
            .append('svg')
            .attr('width', width)
            .attr('height', height)
@@ -35,8 +35,8 @@ created3tree = ->
            .append('g')
            .attr('transform', 'translate(0,10)')
 
-  d3.json '/admin/neurons.json', (error, response) ->
 
+  d3.json $('#moi_tree').data("source"), (error, response) ->
     neurons = response[jsonRoot]
 
     root = neurons.filter((neuron) ->
@@ -104,7 +104,7 @@ created3tree = ->
 $(document).on "ready page:load", created3tree
 
 $(window).on "resize", ->
-  $chart = $("#tree_data svg")
+  $chart = $("#moi_tree svg")
   aspect = 1 # square ATM
   targetWidth = $chart.parent().width()
   $chart.attr("width", targetWidth)
