@@ -39,6 +39,18 @@ ActiveRecord::Schema.define(version: 20150329135001) do
   add_index "neurons", ["parent_id"], name: "index_neurons_on_parent_id", using: :btree
   add_index "neurons", ["title"], name: "index_neurons_on_title", using: :btree
 
+  create_table "search_engines", force: :cascade do |t|
+    t.string   "name",                      null: false
+    t.string   "slug",                      null: false
+    t.boolean  "active",     default: true
+    t.string   "gcse_id",                   null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "search_engines", ["gcse_id"], name: "index_search_engines_on_gcse_id", unique: true, using: :btree
+  add_index "search_engines", ["slug"], name: "index_search_engines_on_slug", unique: true, using: :btree
+
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
