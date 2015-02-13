@@ -28,9 +28,12 @@
       updated: "Usuario actualizado"
       show: "Mostrar Usuario"
     neurons:
-      new: Nueva Neurona
-      created: Neurona creada
-      new_child: Nuevo hijo
+      new: "Nueva Neurona"
+      created: "Neurona creada"
+      updated: "Neurona actualizada"
+      new_child: "Nuevo hijo"
+      edit: "Editar Nuerona"
+      show: "Mostrar Nuerona"
   date:
     formats:
       default: "%d/%m/%Y"

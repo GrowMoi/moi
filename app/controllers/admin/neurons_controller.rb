@@ -44,11 +44,23 @@ module Admin
       end
     end
 
+    def update
+      if nueron.save
+        redirect_to admin_neurons_path, notice: I18n.t("views.neurons.updated")
+      else
+        render :edit
+      end
+    end
+
     private
 
     def neuron_params
       params.require(:neuron).permit :title,
                                       :parent_id
+    end
+
+    def resource
+      @resource ||= neuron
     end
   end
 end
