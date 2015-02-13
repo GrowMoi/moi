@@ -41,6 +41,7 @@ gem 'paper_trail', '~> 4.0.0.beta'
 gem 'little_decorator', github: 'macool/little_decorator'
 gem 'nested_form'
 gem 'acts-as-taggable-on'
+gem 'google-api-client'
 
 group :doc do
   gem 'yard'
