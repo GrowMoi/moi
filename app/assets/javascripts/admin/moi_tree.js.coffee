@@ -128,7 +128,7 @@ class MoiTree
     # format:
     $popover.find(".popover-title").html(node.title)
     $newChildLink = $popover.find(".new-child-link")
-    if node.parent_id
+    if node.parent_id or node.id == @rootNeuron.id
       $newChildLink.show()
                    .attr("href", "/admin/neurons/new?parent_id=#{node.id}")
     else
