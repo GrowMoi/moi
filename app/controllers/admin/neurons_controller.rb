@@ -24,7 +24,7 @@ module Admin
       respond_to do |format|
         format.html
         format.json {
-          render json: neurons, meta: {root_id: 1}
+          render json: neurons, meta: {root_id: Neuron.first.id}
         }
       end
     end
@@ -45,7 +45,7 @@ module Admin
     end
 
     def update
-      if nueron.save
+      if neuron.save
         redirect_to admin_neurons_path, notice: I18n.t("views.neurons.updated")
       else
         render :edit
