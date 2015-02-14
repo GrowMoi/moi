@@ -39,6 +39,13 @@ module Admin
 
     def new
       self.neuron.parent_id = params[:parent_id]
+      neuron.contents.build
+    end
+
+    def preview
+      respond_to do |format|
+        format.js
+      end
     end
 
     def create
@@ -52,6 +59,7 @@ module Admin
       end
     end
 
+
     def update
       if neuron.save
         redirect_to admin_neurons_path, notice: I18n.t("views.neurons.updated")
@@ -63,8 +71,18 @@ module Admin
     private
 
     def neuron_params
-      params.require(:neuron).permit :title,
-                                      :parent_id
+      params.require(:neuron).permit :id,
+                                      :title,
+                                      :parent_id,
+                                      :contents_attributes => [
+                                        :id,
+                                        :neuron_id,
+                                        :kind,
+                                        :level,
+                                        :description,
+                                        :neuron_id,
+                                        :_destroy
+                                      ]
     end
 
     def resource

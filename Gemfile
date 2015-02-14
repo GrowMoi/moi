@@ -66,6 +66,21 @@ group :staging do
   gem 'rails_12factor'
 end
 
+#datatables
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+
+#serializer
+gem 'active_model_serializers'
+
+#track changes to model's data
+gem 'paper_trail', '~> 4.0.0.beta'
+
+#spell
+gem 'spellchecker'
+
+#form
+gem "nested_form", :git => "git://github.com/fabricioflores/nested_form.git"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

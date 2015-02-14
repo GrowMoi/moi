@@ -16,6 +16,17 @@ ActiveRecord::Schema.define(version: 20150218170255) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "contents", force: :cascade do |t|
+    t.integer  "level",       null: false
+    t.integer  "kind",        null: false
+    t.text     "description", null: false
+    t.integer  "neuron_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "contents", ["neuron_id"], name: "index_contents_on_neuron_id", using: :btree
+
   create_table "neurons", force: :cascade do |t|
     t.string   "title",      null: false
     t.integer  "parent_id"

@@ -2,8 +2,15 @@
 
 h2 = neuron.title
 
-/ waiting for details
+h3.text-center = t("activerecord.models.content").pluralize
 
+- neuron.contents.each do |content|
+  .col-xs-12
+    h5 #{t("activerecord.attributes.content.level")}: #{show_level(content.level)}
+    h5 #{t("activerecord.attributes.content.kind")}: #{show_kind(content.kind)}
+    h5 #{t("activerecord.attributes.content.description")}:
+    p = content.description
+    hr
 
 hr
 

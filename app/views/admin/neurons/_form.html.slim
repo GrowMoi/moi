@@ -1,4 +1,4 @@
-= form_for [:admin, neuron] do |f|
+= nested_form_for [:admin, neuron], :html => {:class => "neuron_form"} do |f|
   = render "admin/shared/form_errors", resource: neuron
 
   .form-group
@@ -8,15 +8,16 @@
   .form-group
     = f.label :parent
     = f.select :parent_id,
-               possible_parents,
-               {include_blank: true},
-               class: "form-control"
+                possible_parents,
+                {include_blank: true},
+                class: "form-control"
+
+  legend = t("activerecord.models.content").pluralize
+
+  = f.fields_for :contents do |content|
+    = render 'content_form', content:content
+
+  = f.link_to_add t("helpers.custom_buttons.add_content"), :contents, :class => "btn btn-default"
 
   .actions
-    - unless neuron.versions.empty?
-      = link_to t("views.neurons.show_changelog"),
-                log_admin_neuron_path(neuron),
-                class: "btn btn-link"
-
-    = f.submit class: "btn btn-primary",
-               data: {disable_with: t("views.submitting")}
+    = f.submit class: "btn btn-primary pull-right", data: {disable_with: t("views.submitting")}

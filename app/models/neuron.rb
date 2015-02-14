@@ -10,8 +10,14 @@
 #
 
 class Neuron < ActiveRecord::Base
+
+  #relations
+  has_many :contents, dependent: :destroy
   belongs_to :parent, class: Neuron
   has_paper_trail only: [:title, :parent_id]
+
+  #nested
+  accepts_nested_attributes_for :contents, :allow_destroy => true, reject_if: proc { |attributes| attributes['description'].blank? }
 
   begin :validations
     validates :title, presence: true,

@@ -60,9 +60,10 @@ Moi::Application.routes.draw do
     resources :neurons do
       member do
         get "log"
+        get 'contents'
       end
+      resources :contents
     end
-
     root "dashboard#index"
   end
 

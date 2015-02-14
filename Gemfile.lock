@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/fabricioflores/nested_form.git
+  revision: 03df4eba7620d460fb8bedb7b2294a99eb760333
+  specs:
+    nested_form (0.3.2)
+
+GIT
   remote: git://github.com/rweng/jquery-datatables-rails.git
   revision: db17aa0145164095b2b21f83f1ef7ccf91b9ea54
   specs:
@@ -231,6 +237,7 @@ GEM
       temple (~> 0.7.3)
       tilt (>= 1.3.3, < 2.1)
     slop (3.6.0)
+    spellchecker (0.1.5)
     sprockets (2.12.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -287,6 +294,7 @@ DEPENDENCIES
   little_decorator
   mailcatcher
   meta_request
+  nested_form!
   paper_trail (~> 4.0.0.beta)
   pg
   poltergeist
@@ -298,6 +306,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 4.0.0)
   slim
+  spellchecker
   turbolinks
   uglifier (>= 1.3.0)
   yard

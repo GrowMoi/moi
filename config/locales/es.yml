@@ -32,13 +32,32 @@
       created: "Neurona creada"
       updated: "Neurona actualizada"
       new_child: "Nuevo hijo"
-      edit: "Editar Neurona"
-      show: "Mostrar Neurona"
-      show_changelog: "Historial de Cambios"
+      edit: "Editar Nuerona"
+      show: "Mostrar Nuerona"
+      show_changelog: "Mostrar Historial de Cambios"
+      contents: "Contenidos"
     changelog:
       update: actualizó
       create: creó el registro con
       time_ago: "hace %{time_ago}"
+
+    contents:
+      new: "Nuevo Contenido"
+      edit: "Editar Contenido"
+      created: "Contenido creado"
+      updated: "Contenido actualizado"
+      show: "Mostrar contenidos"
+      levels:
+        1: "Principiante"
+        2: "Intermedio"
+        3: "Avanzado"
+      kinds:
+        1: "Qué es"
+        2: "Comó funciona"
+        3: "Por qué es"
+        4: "Quién/Cuando/Donde"
+        5: "Videos"
+        6: "Enlaces"
   date:
     formats:
       default: "%d/%m/%Y"
@@ -219,6 +238,10 @@
       update: 'Actualizar %{model}'
       submit: 'Guardar %{model}'
 
+    custom_buttons:
+      add_content: 'Agregar Contenido'
+      remove_content: 'Eliminar Contenido'
+
   errors:
     format: "%{message}"
 
@@ -259,6 +282,7 @@
       user: "Usuario"
       cliente: "Cliente"
       neuron: "Neurona"
+      content: "Contenido"
     attributes:
       user:
         username: "Nombre de usuario"
@@ -277,7 +301,10 @@
         title: Título
         parent: Padre
         parent_id: Padre
-
+      content:
+        level: "Nivel"
+        kind: "Tipo"
+        description: "Descripción"
     errors:
       messages:
         <<: *errors_messages
