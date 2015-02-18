@@ -11,7 +11,6 @@
 
 class Neuron < ActiveRecord::Base
   belongs_to :parent, class: Neuron
-  #paper trail gem
   has_paper_trail only: [:title, :parent_id]
 
   begin :validations
