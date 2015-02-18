@@ -57,7 +57,11 @@ Moi::Application.routes.draw do
   namespace :admin do
     # resource :dashboard, only: :index
     resources :users
-    resources :neurons
+    resources :neurons do
+      member do
+        get "show_changelog"
+      end
+    end
 
     root "dashboard#index"
   end

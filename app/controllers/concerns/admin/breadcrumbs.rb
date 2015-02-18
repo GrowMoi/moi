@@ -61,6 +61,12 @@ module Admin
         )
       when "update"
         breadcrumb_for "edit"
+      when "show_changelog"
+        breadcrumb_for "show"
+        add_breadcrumb(
+          I18n.t("views.#{breadcrumb_base.pluralize}.show_changelog"),
+          send("show_changelog_admin_#{breadcrumb_base}_path")
+        )
       end
     end
   end
