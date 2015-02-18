@@ -64,6 +64,9 @@ end
 
 #datatables
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+
+#serializer
+gem 'active_model_serializers'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
