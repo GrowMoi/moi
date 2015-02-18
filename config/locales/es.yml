@@ -34,6 +34,7 @@
       new_child: "Nuevo hijo"
       edit: "Editar Nuerona"
       show: "Mostrar Nuerona"
+      show_changelog: "Mostrar Cambios"
   date:
     formats:
       default: "%d/%m/%Y"
