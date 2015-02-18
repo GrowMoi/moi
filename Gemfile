@@ -61,6 +61,10 @@ gem 'jquery-datatables-rails', '~> 3.1.1'
 
 #serializer
 gem 'active_model_serializers'
+
+#track changes to model's data
+gem 'paper_trail', '~> 4.0.0.beta'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
