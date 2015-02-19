@@ -38,7 +38,7 @@ class MoiTree
 
   getNeurons: ->
     d3.json @path, (error, response) =>
-      alert(error) if error
+      console.error(error) if error
       @gotNeurons(response)
 
   gotNeurons: (response) ->
