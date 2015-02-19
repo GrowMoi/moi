@@ -3,3 +3,30 @@
 .row
   .col-xs-6
     h3 = neuron.title
+
+- neuron.versions.each_with_index do |version, index|
+  .row
+    b #{"Versión "}
+    = index+1
+  .row
+    b #{" Autor: "}
+    = User.find version.whodunnit.to_i
+  .row
+    b #{"Fecha: "}
+    = version.created_at
+  .row
+    b #{"Evento: "}
+    = version.event
+    - version.changeset.each do |key, value|
+      .row
+        b #{"Atributo cambiado:"}
+        = key
+        - value.each_with_index do |v, i|
+          - case i
+            - when 0
+              .row
+                b #{"Valor anterior:"}
+            - when 1
+              .row
+                b #{"Valor nuevo:"}
+          = v
