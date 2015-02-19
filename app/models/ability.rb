@@ -9,7 +9,7 @@ class Ability
     when "admin"
       can :manage, :all
     when "curador"
-      can [:read, :create], Neuron
+      can [:read, :create, :update], Neuron
     end
   end
 end

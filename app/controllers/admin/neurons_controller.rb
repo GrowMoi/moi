@@ -4,6 +4,8 @@ module Admin
 
     authorize_resource
 
+    respond_to :html, :json
+
     expose(:neuron, attributes: :neuron_params)
     expose(:possible_parents) {
       # used by selects on forms
@@ -16,6 +18,20 @@ module Admin
         [neuron.to_s, neuron.id]
       end
     }
+    expose(:neurons)
+
+    def index
+      respond_to do |format|
+        format.html
+        format.json {
+          render json: neurons, meta: {root_id: Neuron.first.id}
+        }
+      end
+    end
+
+    def new
+      self.neuron.parent_id = params[:parent_id]
+    end
 
     def create
       if neuron.save
@@ -28,11 +44,23 @@ module Admin
       end
     end
 
+    def update
+      if neuron.save
+        redirect_to admin_neurons_path, notice: I18n.t("views.neurons.updated")
+      else
+        render :edit
+      end
+    end
+
     private
 
     def neuron_params
       params.require(:neuron).permit :title,
                                       :parent_id
+    end
+
+    def resource
+      @resource ||= neuron
     end
   end
 end
