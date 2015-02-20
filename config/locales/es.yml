@@ -34,6 +34,15 @@
       new_child: "Nuevo hijo"
       edit: "Editar Nuerona"
       show: "Mostrar Nuerona"
+      show_changelog: "Mostrar Historial de Cambios"
+    changelog:
+      version: "Versión"
+      author: "Autor"
+      date: "Fecha"
+      event: "Evento"
+      changed_attribute: "Atributo Cambiado"
+      old_value: "Valor Anterior"
+      new_value: "Valor Nuevo"
   date:
     formats:
       default: "%d/%m/%Y"
@@ -282,8 +291,12 @@
         format: "%{message}"
 
   actions:
+    new: "Nuevo"
     edit: "Editar"
     show: "Mostrar"
+    create: "Crear"
+    update: "Actualizar"
+    destroy: "Eliminar"
     logout: Cerrar sesión
     my_profile: Mi perfil
 
