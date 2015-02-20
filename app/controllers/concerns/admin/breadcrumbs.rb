@@ -15,13 +15,21 @@ module Admin
     end
 
     ##
-    # base name (singular for breadcrumbs)
+    # @return [String] base name (singular)
+    #   based on controller's name by default
     def breadcrumb_base
       controller_name.singularize
     end
 
     def breadcrumbs_plural
       breadcrumb_base.pluralize
+    end
+    
+    ##
+    # @return [String] base path to
+    #   generate links
+    def breadcrumbs_base_path
+      breadcrumb_base
     end
 
     private
@@ -36,28 +44,28 @@ module Admin
           I18n.t(
             "activerecord.models.#{breadcrumb_base}"
           ).pluralize,
-          send("admin_#{breadcrumbs_plural}_path")
+          send("admin_#{breadcrumbs_base_path.pluralize}_path")
         )
       when "new"
         add_breadcrumb(
           I18n.t(
             "views.#{breadcrumbs_plural}.new"
           ),
-          send("new_admin_#{breadcrumb_base}_path")
+          send("new_admin_#{breadcrumbs_base_path}_path")
         )
       when "create"
         breadcrumb_for "new"
       when "show"
         add_breadcrumb(
           resource,
-          send("admin_#{breadcrumb_base}_path", resource)
+          send("admin_#{breadcrumbs_base_path}_path", resource)
         )
       when "edit"
         breadcrumb_for "show"
 
         add_breadcrumb(
           I18n.t("views.#{breadcrumb_base.pluralize}.edit"),
-          send("edit_admin_#{breadcrumb_base}_path")
+          send("edit_admin_#{breadcrumbs_base_path}_path")
         )
       when "update"
         breadcrumb_for "edit"
