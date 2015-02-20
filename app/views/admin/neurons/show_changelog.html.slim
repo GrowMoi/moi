@@ -8,28 +8,28 @@
     - neuron.versions.each_with_index do |version, index|
       .col-xs-6.changelog-box
         .row
-          h4 Version #{index+1}
+          h4 #{t("views.changelog.version")} #{index+1}
         .changelog-content
           .row
-            b #{" Autor: "}
+            b #{t("views.changelog.author") + ": "}
             = User.find version.whodunnit.to_i
           .row
-            b #{"Fecha: "}
+            b #{t("views.changelog.date") + ": "}
             = version.created_at
           .row
-            b #{"Evento: "}
-            = version.event
+            b #{t("views.changelog.event") + ": "}
+            = t("actions."+version.event)
           - version.changeset.each do |key, value|
             .row
-              b #{"Atributo cambiado: "}
-              = key
+              b #{t("views.changelog.changed_attribute") + ": "}
+              = t("activerecord.attributes.neuron."+key)
             - value.each_with_index do |v, i|
               - case i
                 - when 0
                   .row
-                    b #{"Valor anterior: "}
+                    b #{t("views.changelog.old_value") + ": "}
                     = v
                 - when 1
                   .row
-                    b #{"Valor nuevo: "}
+                    b #{t("views.changelog.new_value") + ": "}
                     = v
