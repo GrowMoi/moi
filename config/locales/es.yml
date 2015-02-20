@@ -256,7 +256,7 @@
 
   warning:
     messages:
-      change_rol: "Si cambias tu rol de administrador serás expulsado del sistema"
+      change_rol: "Si cambias tu rol de administrador, perderás tus privilegios de edición de usuarios/permisos"
 
   activerecord:
     models:
