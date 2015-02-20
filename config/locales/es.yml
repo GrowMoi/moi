@@ -245,6 +245,10 @@
         other:  "No se pudo guardar este/a %{model} porque se encontraron %{count} errores"
       body: "Se encontraron problemas con los siguientes campos:"
 
+  warning:
+    messages:
+      change_rol: "Si cambias tu rol de administrador serás expulsado del sistema"
+
   activerecord:
     models:
       user: "Usuario"
@@ -282,3 +286,7 @@
     show: "Mostrar"
     logout: Cerrar sesión
     my_profile: Mi perfil
+
+  user_mailer:
+    change_permission:
+      subject: "Cambio de permisos"
