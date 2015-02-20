@@ -14,7 +14,7 @@
     = f.select :role, roles, {}, class: "form-control"
 
   -if current_user == user
-    h6.text-danger si cambias tu rol de administrador seras expulsado del sistema
+    h6.text-danger = t("warning.messages.change_rol")
 
   .form-group
     = f.label :password
