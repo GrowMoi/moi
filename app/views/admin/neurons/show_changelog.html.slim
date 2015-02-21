@@ -28,8 +28,8 @@
                 - when 0
                   .row
                     b #{t("views.changelog.old_value") + ": "}
-                    = v
+                    = correct_value(key,v)
                 - when 1
                   .row
                     b #{t("views.changelog.new_value") + ": "}
-                    = v
+                    = correct_value(key,v)
