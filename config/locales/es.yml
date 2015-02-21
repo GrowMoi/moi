@@ -43,6 +43,7 @@
       changed_attribute: "Atributo Cambiado"
       old_value: "Valor Anterior"
       new_value: "Valor Nuevo"
+      without_parent: "Sin Padre"
   date:
     formats:
       default: "%d/%m/%Y"
@@ -280,6 +281,7 @@
       neuron:
         title: Título
         parent: Padre
+        parent_id: Padre
 
     errors:
       messages:
