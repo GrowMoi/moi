@@ -48,6 +48,9 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    airbrake (4.1.0)
+      builder
+      multi_json
     arel (6.0.0)
     bcrypt (3.1.10)
     better_errors (2.1.1)
@@ -263,6 +266,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  airbrake
   better_errors
   binding_of_caller
   breadcrumbs_on_rails

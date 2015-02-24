@@ -14,4 +14,5 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, error: I18n.t("views.unauthorized")
   end
+
 end
