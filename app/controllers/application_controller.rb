@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_resource_error(exception)
-    if Rails.env.production || Rails.env.staging
+    if Rails.env == "production" || Rails.env == "staging"
       Airbrake.notify(exception, airbrake_request_data)
       flash[:error] = exception.message
       redirect_to root_path
