@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   add_flash_types :error
 
-  rescue_from APIError: :render_resource_error
+  rescue_from Exception, with: :render_resource_error
 
   # strong_params in decent exposure
   decent_configuration do
