@@ -77,6 +77,9 @@ gem 'paper_trail', '~> 4.0.0.beta'
 # Use puma as the app server
 gem 'puma'
 
+#use airbrake to track errors
+gem 'airbrake'
+
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
