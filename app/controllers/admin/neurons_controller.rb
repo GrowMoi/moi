@@ -62,5 +62,13 @@ module Admin
     def resource
       @resource ||= neuron
     end
+
+    def breadcrumb_for_log
+      breadcrumb_for "show"
+      add_breadcrumb(
+        I18n.t("views.neurons.show_changelog"),
+        log_admin_neuron_path(resource)
+      )
+    end
   end
 end

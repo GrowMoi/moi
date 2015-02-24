@@ -59,7 +59,7 @@ Moi::Application.routes.draw do
     resources :users
     resources :neurons do
       member do
-        get "show_changelog"
+        get "log"
       end
     end
 

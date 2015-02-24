@@ -32,9 +32,9 @@
       created: "Neurona creada"
       updated: "Neurona actualizada"
       new_child: "Nuevo hijo"
-      edit: "Editar Nuerona"
-      show: "Mostrar Nuerona"
-      show_changelog: "Mostrar Historial de Cambios"
+      edit: "Editar Neurona"
+      show: "Mostrar Neurona"
+      show_changelog: "Historial de Cambios"
     changelog:
       version: "Versión"
       author: "Autor"
