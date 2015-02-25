@@ -36,14 +36,9 @@
       show: "Mostrar Neurona"
       show_changelog: "Historial de Cambios"
     changelog:
-      version: "Versión"
-      author: "Autor"
-      date: "Fecha"
-      event: "Evento"
-      changed_attribute: "Atributo Cambiado"
-      old_value: "Valor Anterior"
-      new_value: "Valor Nuevo"
-      without_parent: "Sin Padre"
+      update: actualizó
+      create: creó el registro con
+      time_ago: "hace %{time_ago}"
   date:
     formats:
       default: "%d/%m/%Y"
