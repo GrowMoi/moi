@@ -29,6 +29,8 @@ class User < ActiveRecord::Base
 
   after_update :send_email_change_role
 
+  validates :email, presence: true, uniqueness: true
+
   def to_s
     name
   end
@@ -36,7 +38,7 @@ class User < ActiveRecord::Base
   private
 
   def send_email_change_role
-    if self.role_changed? #get boolean value before to save object
+    if role_changed?
     	UserMailer.notify_role_change(self).deliver_later
     end
   end

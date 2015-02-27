@@ -35,6 +35,10 @@ gem 'decent_exposure'
 gem 'kaminari'
 gem 'breadcrumbs_on_rails'
 gem 'cancan'
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+gem 'active_model_serializers'
+gem 'paper_trail', '~> 4.0.0.beta'
+gem 'little_decorator'
 
 group :doc do
   gem 'yard'
@@ -61,15 +65,6 @@ end
 group :staging do
   gem 'rails_12factor'
 end
-
-#datatables
-gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
-
-#serializer
-gem 'active_model_serializers'
-
-#track changes to model's data
-gem 'paper_trail', '~> 4.0.0.beta'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

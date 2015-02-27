@@ -24,15 +24,13 @@ module Admin
     def breadcrumbs_plural
       breadcrumb_base.pluralize
     end
-    
+
     ##
     # @return [String] base path to
     #   generate links
     def breadcrumbs_base_path
       breadcrumb_base
     end
-
-    private
 
     ##
     # @param action [String] name of the action
@@ -69,12 +67,11 @@ module Admin
         )
       when "update"
         breadcrumb_for "edit"
-      when "show_changelog"
-        breadcrumb_for "show"
-        add_breadcrumb(
-          I18n.t("views.#{breadcrumb_base.pluralize}.show_changelog"),
-          send("show_changelog_admin_#{breadcrumb_base}_path")
-        )
+      else
+        # define breadcrumb_for_action for custom
+        if defined?("breadcrumb_for_#{action}")
+          send("breadcrumb_for_#{action}")
+        end
       end
     end
   end

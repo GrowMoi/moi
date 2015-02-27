@@ -114,6 +114,8 @@ GEM
     kaminari (0.16.2)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    little_decorator (0.0.6)
+      rails
     loofah (2.0.1)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -282,6 +284,7 @@ DEPENDENCIES
   jquery-datatables-rails!
   jquery-rails
   kaminari
+  little_decorator
   mailcatcher
   meta_request
   paper_trail (~> 4.0.0.beta)

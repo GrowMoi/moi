@@ -1,5 +1,3 @@
 - content_for :title, t("views.neurons.edit")
 
-- unless neuron.versions.empty?
-      small = link_to t("views.neurons.show_changelog"), show_changelog_admin_neuron_path(neuron), class: "btn btn-link"
 = render "form"

@@ -6,6 +6,7 @@ module Admin
 
     respond_to :html, :json
 
+    expose(:neurons)
     expose(:neuron, attributes: :neuron_params)
     expose(:possible_parents) {
       # used by selects on forms
@@ -18,7 +19,14 @@ module Admin
         [neuron.to_s, neuron.id]
       end
     }
-    expose(:neurons)
+    expose(:neuron_versions) {
+      decorate sorted_neuron_versions
+    }
+    expose(:sorted_neuron_versions) {
+      neuron.versions.merge(
+        PaperTrail::Version.unscope(:order)
+      ).order(id: :desc)
+    }
 
     def index
       respond_to do |format|
@@ -61,6 +69,14 @@ module Admin
 
     def resource
       @resource ||= neuron
+    end
+
+    def breadcrumb_for_log
+      breadcrumb_for "show"
+      add_breadcrumb(
+        I18n.t("views.neurons.show_changelog"),
+        log_admin_neuron_path(resource)
+      )
     end
   end
 end
