@@ -20,15 +20,4 @@ module AdminHelper
       )
     end
   end
-
-  def correct_value(key,value)
-    if key == "parent_id"
-      if Neuron.find_by_id(value)
-        value = Neuron.find(value).to_s
-      else
-        value = t("views.changelog.without_parent")
-      end
-    end
-    value
-  end
 end
