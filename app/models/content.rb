@@ -16,5 +16,5 @@ class Content < ActiveRecord::Base
   belongs_to :neuron
 
   #validations
-  validates :description, :presence =>true
+  validates :description, presence: true
 end

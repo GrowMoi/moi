@@ -9,8 +9,7 @@
 .form-group
   = content.label :description
   = content.text_area :description, class: "form-control"
-  = content.hidden_field :neuron_id
 
-= content.link_to_remove t("helpers.custom_buttons.remove_content"), class: "btn btn-danger"
+= content.link_to_remove t("helpers.neuron_contents.remove_content"), class: "btn btn-danger"
 
 hr
