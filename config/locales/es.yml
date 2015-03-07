@@ -238,7 +238,7 @@
       update: 'Actualizar %{model}'
       submit: 'Guardar %{model}'
 
-    custom_buttons:
+    neuron_contents:
       add_content: 'Agregar Contenido'
       remove_content: 'Eliminar Contenido'
 

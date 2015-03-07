@@ -17,7 +17,13 @@
   = f.fields_for :contents do |content|
     = render 'content_form', content:content
 
-  = f.link_to_add t("helpers.custom_buttons.add_content"), :contents, :class => "btn btn-default"
+  = f.link_to_add t("helpers.neuron_contents.add_content"), :contents, :class => "btn btn-default"
 
   .actions
-    = f.submit class: "btn btn-primary pull-right", data: {disable_with: t("views.submitting")}
+    - unless neuron.versions.empty?
+      = link_to t("views.neurons.show_changelog"),
+                log_admin_neuron_path(neuron),
+                class: "btn btn-link"
+
+    = f.submit class: "btn btn-primary",
+               data: {disable_with: t("views.submitting")}

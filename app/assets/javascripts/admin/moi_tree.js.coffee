@@ -135,8 +135,6 @@ class MoiTree
       $newChildLink.hide()
     $popover.find(".edit-link")
             .attr("href", "/admin/neurons/#{node.id}/edit")
-    $popover.find(".content-link")
-            .attr("href", "/admin/neurons/#{node.id}/contents")
     $popover.removeClass("hidden")
             .hide()
             .fadeIn(300)
