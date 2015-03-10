@@ -41,6 +41,8 @@
       update: actualizó
       create: creó el registro con
       time_ago: "hace %{time_ago}"
+      changes_in_neuron: "Cambios en neurona"
+      changes_in_contents: "Cambios en contenidos"
 
     contents:
       new: "Nuevo Contenido"
@@ -302,6 +304,7 @@
         level: "Nivel"
         kind: "Tipo"
         description: "Descripción"
+        neuron_id: "Neurona padre"
     errors:
       messages:
         <<: *errors_messages

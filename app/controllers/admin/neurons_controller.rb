@@ -22,10 +22,14 @@ module Admin
     expose(:neuron_versions) {
       decorate sorted_neuron_versions
     }
+    expose(:content_versions) {
+      decorate sorted_content_versions
+    }
     expose(:sorted_neuron_versions) {
-      neuron.versions.merge(
-        PaperTrail::Version.unscope(:order)
-      ).order(id: :desc)
+      paper_trail_order(neuron.versions)
+    }
+    expose(:sorted_content_versions) {
+      paper_trail_order(neuron.versions_contents)
     }
     expose(:formatted_contents) {
       neuron.build_contents!
@@ -102,6 +106,12 @@ module Admin
         I18n.t("views.neurons.show_changelog"),
         log_admin_neuron_path(resource)
       )
+    end
+
+    def paper_trail_order(array)
+      array.merge(
+        PaperTrail::Version.unscope(:order)
+      ).order(id: :desc)
     end
   end
 end
