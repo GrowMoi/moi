@@ -36,7 +36,9 @@ describe "user management" do
     let(:user_attrs) { attributes_for :user }
     let(:fill_form!) {
       # we need to select role
-      select user_attrs.delete(:role), from: I18n.t("activerecord.attributes.user.role")
+      select user_attrs.delete(:role),
+             from: I18n.t("activerecord.attributes.user.role"),
+             visible: false
       # we fill in all other attrs
       user_attrs.each do |key, value|
         label = I18n.t("activerecord.attributes.user.#{key}")

@@ -10,7 +10,7 @@ module Admin
     expose(:neuron, attributes: :neuron_params)
     expose(:possible_parents) {
       # used by selects on forms
-      scope = Neuron.select(:id, :title)
+      scope = Neuron.select(:id, :title).order(:title)
       unless neuron.new_record?
         scope = scope.where.not(id: neuron.id)
       end
