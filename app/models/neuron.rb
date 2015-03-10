@@ -15,7 +15,7 @@ class Neuron < ActiveRecord::Base
     belongs_to :parent, class: Neuron
   end
 
-  has_paper_trail only: [:title, :parent_id]
+  has_paper_trail
 
   accepts_nested_attributes_for :contents,
     allow_destroy: true,
