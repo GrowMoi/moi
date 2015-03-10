@@ -1,0 +1,10 @@
+= f.fields_for :contents,
+               formatted_contents.fetch(level).fetch(kind) do |content_form|
+  = render "admin/neurons/contents/form",
+           f: content_form
+
+= f.link_to_add :contents,
+                class: "btn-xs btn btn-default",
+                data: { level: level,
+                        kind: kind } do
+  span.glyphicon.glyphicon-plus.text-success

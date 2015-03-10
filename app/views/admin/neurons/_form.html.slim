@@ -1,23 +1,29 @@
 = nested_form_for [:admin, neuron], :html => {:class => "neuron_form"} do |f|
   = render "admin/shared/form_errors", resource: neuron
 
-  .form-group
-    = f.label :title
-    = f.text_field :title, class: "form-control"
+  ul.nav.nav-tabs.default-tabs
+    li.active data-toggle="tab"
+      = link_to t("views.neurons.general"),
+                "#general",
+                class: "persist-tab"
 
-  .form-group
-    = f.label :parent
-    = f.select :parent_id,
-                possible_parents,
-                {include_blank: true},
-                class: "form-control"
+    li data-toggle="tab"
+      = link_to t("activerecord.models.content").pluralize,
+                "#contents",
+                class: "persist-tab"
 
-  legend = t("activerecord.models.content").pluralize
+  .tab-content
+    .tab-pane#general.active
+      = render "general_form", f: f
 
-  = f.fields_for :contents do |content|
-    = render 'content_form', content:content
-
-  = f.link_to_add t("helpers.custom_buttons.add_content"), :contents, :class => "btn btn-default"
+    .tab-pane#contents
+      = render "contents_form", f: f
 
   .actions
-    = f.submit class: "btn btn-primary pull-right", data: {disable_with: t("views.submitting")}
+    - unless neuron.versions.empty?
+      = link_to t("views.neurons.show_changelog"),
+                log_admin_neuron_path(neuron),
+                class: "btn btn-link"
+
+    = f.submit class: "btn btn-primary",
+               data: {disable_with: t("views.submitting")}

@@ -1,6 +1,11 @@
 module ContentHelper
-  def content_level
-    I18n.t("views.contents.levels").map { |key, value| [ value, key ] }
+  def content_kinds_for_select
+    Content::KINDS.map do |kind|
+      [
+        I18n.t("views.contents.kinds.#{kind}"),
+        kind
+      ]
+    end
   end
 
   def content_kind

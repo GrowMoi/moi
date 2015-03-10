@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 20150218170255) do
 
   create_table "contents", force: :cascade do |t|
     t.integer  "level",       null: false
-    t.integer  "kind",        null: false
+    t.string   "kind",        null: false
     t.text     "description", null: false
-    t.integer  "neuron_id"
+    t.integer  "neuron_id",   null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

@@ -27,6 +27,15 @@ module Admin
         PaperTrail::Version.unscope(:order)
       ).order(id: :desc)
     }
+    expose(:formatted_contents) {
+      neuron.build_contents!
+      neuron.contents.inject({}) do |memo, content|
+        memo[content.level] ||= Hash.new
+        memo[content.level][content.kind] ||= Array.new
+        memo[content.level][content.kind] << content
+        memo
+      end
+    }
 
     def index
       respond_to do |format|
@@ -38,14 +47,7 @@ module Admin
     end
 
     def new
-      self.neuron.parent_id = params[:parent_id]
-      neuron.contents.build
-    end
-
-    def preview
-      respond_to do |format|
-        format.js
-      end
+      neuron.parent_id = params[:parent_id]
     end
 
     def create
@@ -59,10 +61,12 @@ module Admin
       end
     end
 
-
     def update
       if neuron.save
-        redirect_to admin_neurons_path, notice: I18n.t("views.neurons.updated")
+        redirect_to(
+          {action: :index},
+          notice: I18n.t("views.neurons.updated")
+        )
       else
         render :edit
       end
@@ -76,7 +80,6 @@ module Admin
                                       :parent_id,
                                       :contents_attributes => [
                                         :id,
-                                        :neuron_id,
                                         :kind,
                                         :level,
                                         :description,

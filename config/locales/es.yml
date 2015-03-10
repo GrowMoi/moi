@@ -32,10 +32,11 @@
       created: "Neurona creada"
       updated: "Neurona actualizada"
       new_child: "Nuevo hijo"
-      edit: "Editar Nuerona"
-      show: "Mostrar Nuerona"
+      edit: "Editar Neurona"
+      show: "Mostrar Neurona"
       show_changelog: "Mostrar Historial de Cambios"
       contents: "Contenidos"
+      general: General
     changelog:
       update: actualizó
       create: creó el registro con
@@ -48,16 +49,16 @@
       updated: "Contenido actualizado"
       show: "Mostrar contenidos"
       levels:
-        1: "Principiante"
-        2: "Intermedio"
-        3: "Avanzado"
+        "1": "Principiante"
+        "2": "Intermedio"
+        "3": "Avanzado"
       kinds:
-        1: "Qué es"
-        2: "Comó funciona"
-        3: "Por qué es"
-        4: "Quién/Cuando/Donde"
-        5: "Videos"
-        6: "Enlaces"
+        que-es: "Qué es"
+        como-funciona: "Cómo funciona"
+        por-que-es: "Por qué es"
+        quien-cuando-donde: "Quién/Cuándo/Dónde"
+        videos: "Vídeos"
+        enlaces: "Enlaces"
   date:
     formats:
       default: "%d/%m/%Y"
@@ -237,10 +238,6 @@
       create: 'Crear %{model}'
       update: 'Actualizar %{model}'
       submit: 'Guardar %{model}'
-
-    custom_buttons:
-      add_content: 'Agregar Contenido'
-      remove_content: 'Eliminar Contenido'
 
   errors:
     format: "%{message}"
