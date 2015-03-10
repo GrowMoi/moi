@@ -25,6 +25,8 @@ class Content < ActiveRecord::Base
   #relations
   belongs_to :neuron
 
+  has_paper_trail
+
   begin :validations
     validates :description, presence: true
     validates :level, presence: true,
