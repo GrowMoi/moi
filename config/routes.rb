@@ -57,6 +57,11 @@ Moi::Application.routes.draw do
   namespace :admin do
     # resource :dashboard, only: :index
     resources :users
+
+    match "neurons/preview" => "neurons_preview#preview",
+          via: [:post, :patch],
+          as: :neuron_preview
+
     resources :neurons do
       member do
         get "log"

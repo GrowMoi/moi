@@ -322,6 +322,7 @@
     destroy: "Eliminar"
     logout: Cerrar sesión
     my_profile: Mi perfil
+    preview: Vista previa
 
   user_mailer:
     change_permission:

@@ -1,13 +1,15 @@
 module Admin
-  class NeuronsController < AdminController::Base
+  class NeuronsController < Neurons::BaseController
     include Breadcrumbs
+
+    before_action :add_breadcrumbs
 
     authorize_resource
 
     respond_to :html, :json
 
     expose(:neurons)
-    expose(:neuron, attributes: :neuron_params)
+
     expose(:possible_parents) {
       # used by selects on forms
       scope = Neuron.select(:id, :title).order(:title)
@@ -26,19 +28,6 @@ module Admin
         PaperTrail::NeuronVersionDecorator
       )
     }
-    expose(:formatted_contents) {
-      neuron.build_contents!
-      neuron.contents.inject({}) do |memo, content|
-        memo[content.level] ||= Hash.new
-        memo[content.level][content.kind] ||= Array.new
-        memo[content.level][content.kind] << content
-        memo
-      end
-    }
-
-    expose(:decorated_neuron) {
-      decorate neuron
-    }
 
     def index
       respond_to do |format|
@@ -52,7 +41,7 @@ module Admin
     def new
       neuron.parent_id = params[:parent_id]
     end
-
+    
     def create
       if neuron.save_with_version
         redirect_to(
@@ -76,25 +65,6 @@ module Admin
     end
 
     private
-
-    def neuron_params
-      params.require(:neuron).permit :id,
-                                      :title,
-                                      :parent_id,
-                                      :contents_attributes => [
-                                        :id,
-                                        :kind,
-                                        :level,
-                                        :description,
-                                        :neuron_id,
-                                        :_destroy,
-                                        :keyword_list
-                                      ]
-    end
-
-    def resource
-      @resource ||= neuron
-    end
 
     def breadcrumb_for_log
       breadcrumb_for "show"

@@ -9,14 +9,7 @@ describe "neurons as curador" do
 
   context "with forms" do
     include_context "form features"
-
-    let(:neuron_attrs) { attributes_for :neuron }
-    let(:fill_form!) {
-      neuron_attrs.each do |key, value|
-        label = I18n.t("activerecord.attributes.neuron.#{key}")
-        fill_in label, with: value
-      end
-    }
+    include_context "neuron form features"
 
     feature "curador can create neurons" do
       before {
@@ -36,10 +29,6 @@ describe "neurons as curador" do
       let(:created_neuron) { Neuron.last }
       let(:created_content) { created_neuron.contents.first }
       let(:description) { "First content description" }
-
-      let(:first_textarea) {
-        all("textarea[name*='description']").first
-      }
 
       before {
         visit new_admin_neuron_path
@@ -136,5 +125,7 @@ describe "neurons as curador" do
         expect(neuron.contents.reload).to be_empty
       }
     end
+
+
   end
 end

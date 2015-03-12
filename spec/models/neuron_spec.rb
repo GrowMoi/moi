@@ -65,7 +65,7 @@ RSpec.describe Neuron, :type => :model do
     }
   end
 
-  describe "#save_with_version" do
+  describe "#save_with_version", versioning: true do
     let(:neuron) { build :neuron }
     let(:invalid_neuron) { build :neuron, title: nil }
 
@@ -90,11 +90,16 @@ RSpec.describe Neuron, :type => :model do
         neuron.attributes = attrs # assign changes
       }
 
-      it {
-        expect {
-          neuron.save_with_version
-        }.to change { PaperTrail::Version.count }.by(2)
+      subject {
+        -> { neuron.save_with_version }
+      }
 
+      it {
+        is_expected.to change(PaperTrail::Version, :count).by(2)
+      }
+
+      it {
+        subject.call
         expect(
           versions[0].transaction_id
         ).to eq(versions[1].transaction_id)

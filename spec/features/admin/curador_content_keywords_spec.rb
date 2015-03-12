@@ -22,6 +22,7 @@ describe "curador adds keywords to content" do
   }
 
   include_context "form features"
+  include_context "neuron form features"
 
   feature "creates new keywords", js: true do
     let!(:neuron) { create :neuron }

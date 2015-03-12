@@ -46,17 +46,22 @@ class Neuron < ActiveRecord::Base
   end
 
   ##
-  # Saves and touches a version if `will_touch`
-  # is set
+  # Saves and touches a version
   #
+  # @yield [version] created version (if any)
   # @return [Boolean] if the record was saved or not
-  def save_with_version
+  def save_with_version(opts={})
     changed = changed? # if not already creating version
     contents_changed = contents_any?(changed?: true)
     transaction do
-      save.tap do |saved|
+      save(opts).tap do |saved|
         if saved && !changed && contents_changed
           touch_with_version
+        end
+
+        # only if a version was created
+        if changed || contents_changed
+          yield versions.last if block_given?
         end
       end
     end

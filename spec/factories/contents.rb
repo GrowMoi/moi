@@ -20,5 +20,13 @@ FactoryGirl.define do
     sequence(:description) { |n|
       "Content's description #{n}"
     }
+
+    trait :with_keywords do
+      keyword_list {
+        1.upto(10).map do |i|
+          "keyword#{i}"
+        end.sample(2).join(", ")
+      }
+    end
   end
 end
