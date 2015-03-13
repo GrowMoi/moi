@@ -298,6 +298,12 @@
         title: Título
         parent: Padre
         parent_id: Padre
+        updated_at: Actualizado en
+        created_at: Creado en
+        level: Nivel
+        description: Descripción
+        neuron_id: Neurona
+        id: id
       content:
         level: "Nivel"
         kind: "Tipo"

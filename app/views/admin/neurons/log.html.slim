@@ -19,5 +19,29 @@ h2 = neuron.title
               strong
                 =' t("activerecord.attributes.neuron.#{key}") + ":"
               = value[1]
+        - if version.kind
+          .row
+            .col-xs-12
+              strong
+                =' t("activerecord.attributes.neuron.kind") + ":"
+              = version.kind
+        - if version.level
+          .row
+            .col-xs-12
+              strong
+                =' t("activerecord.attributes.neuron.level") + ":"
+              = version.level
+        - if version.description
+          .row
+            .col-xs-12
+              strong
+                =' t("activerecord.attributes.neuron.description") + ":"
+              = version.description
+        - if version.neuron_id
+          .row
+            .col-xs-12
+              strong
+                =' t("activerecord.attributes.neuron.neuron_id") + ":"
+              = version.neuron_id
     .col-xs-2
       .text-muted.small = version.time_ago
