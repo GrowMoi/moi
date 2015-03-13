@@ -10,12 +10,19 @@
 #
 
 class Neuron < ActiveRecord::Base
+  attr_accessor :content_id, :level, :kind, :description, :neuron_id
   begin :relationships
     has_many :contents, dependent: :destroy
     belongs_to :parent, class: Neuron
   end
 
-  has_paper_trail
+  has_paper_trail :meta =>  {
+                              content_id: :content_id,
+                              kind: :kind,
+                              description: :description,
+                              level: :level,
+                              neuron_id: :neuron_id,
+                            }
 
   accepts_nested_attributes_for :contents,
     allow_destroy: true,

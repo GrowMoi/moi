@@ -25,7 +25,8 @@ class Content < ActiveRecord::Base
   #relations
   belongs_to :neuron
 
-  has_paper_trail
+  #callbacks
+  before_save :touch_parent!
 
   begin :validations
     validates :description, presence: true
@@ -37,5 +38,14 @@ class Content < ActiveRecord::Base
 
   def kind
     read_attribute(:kind).try :to_sym
+  end
+
+  def touch_parent!
+    self.neuron.content_id = self.id
+    self.neuron.level = self.level
+    self.neuron.kind = self.kind
+    self.neuron.description = self.description
+    self.neuron.neuron_id = self.neuron_id
+    self.neuron.touch_with_version
   end
 end
