@@ -11,11 +11,6 @@ $(document).on "ready page:load", ->
   $(".default-tabs").each ->
     $(this).find("a:first").tab "show"
 
-  # show first default list group by default
-  $(".default-list-group").each ->
-    $(this).find("a:first").addClass("active")
-                           .tab "show"
-
   if !!hash
     # attempt to set this hash as tab
     $(".default-tabs a[href='#{hash}']").tab "show"

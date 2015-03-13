@@ -1,0 +1,2 @@
+class ContentDecorator < LittleDecorator
+end

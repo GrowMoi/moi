@@ -1,6 +1,6 @@
 - content_for :title, t("views.neurons.show_changelog")
 
-h2 = neuron.title
+h2 = decorated_neuron.title
 
 - neuron_versions.each do |version|
   .row.changelog-version

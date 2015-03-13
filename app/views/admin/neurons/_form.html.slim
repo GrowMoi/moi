@@ -1,4 +1,4 @@
-= nested_form_for [:admin, neuron], :html => {:class => "neuron_form"} do |f|
+= nested_form_for [:admin, neuron] do |f|
   = render "admin/shared/form_errors", resource: neuron
 
   ul.nav.nav-tabs.default-tabs
@@ -20,7 +20,7 @@
       = render "contents_form", f: f
 
   .actions
-    - unless neuron.versions.empty?
+    - unless decorated_neuron.versions.empty?
       = link_to t("views.neurons.show_changelog"),
                 log_admin_neuron_path(neuron),
                 class: "btn btn-link"
