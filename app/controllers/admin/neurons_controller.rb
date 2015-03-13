@@ -37,6 +37,10 @@ module Admin
       end
     }
 
+    expose(:decorated_neuron){
+      decorate neuron
+    }
+
     def index
       respond_to do |format|
         format.html
