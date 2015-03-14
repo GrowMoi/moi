@@ -45,6 +45,10 @@ class Neuron < ActiveRecord::Base
     self
   end
 
+  def versions_contents
+    PaperTrail::VersionAssociation.where(foreign_key_name: "neuron_id", foreign_key_id: self.id).map { |v| PaperTrail::Version.where(id: v.version_id)  }
+  end
+
   private
 
   def contents_any?(opts)
