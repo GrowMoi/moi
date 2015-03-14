@@ -15,7 +15,7 @@ class Neuron < ActiveRecord::Base
     belongs_to :parent, class: Neuron
   end
 
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   accepts_nested_attributes_for :contents,
     allow_destroy: true,
@@ -46,7 +46,7 @@ class Neuron < ActiveRecord::Base
   end
 
   def versions_contents
-    PaperTrail::VersionAssociation.where(foreign_key_name: "neuron_id", foreign_key_id: self.id).map { |v| PaperTrail::Version.where(id: v.version_id)  }
+    PaperTrail::VersionAssociation.where(foreign_key_name: "neuron_id", foreign_key_id: self.id).map { |v| PaperTrail::Version.where(id: v.version_id).first  }
   end
 
   private
