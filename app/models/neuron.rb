@@ -46,8 +46,13 @@ class Neuron < ActiveRecord::Base
   end
 
   def versions_contents
-    PaperTrail::VersionAssociation.where(foreign_key_name: "neuron_id", foreign_key_id: self.id).map { |v| PaperTrail::Version.where(id: v.version_id).first  }
+    cv = PaperTrail::VersionAssociation.where(foreign_key_name: "neuron_id", foreign_key_id: self.id)
+    PaperTrail::Version.where(id: cv.map(&:version_id))
   end
+  # we need to merge current versions and content versions to use only one decorator and one each
+  # def merged_versions
+  #   self.versions.merge(self.versions_contents)
+  # end
 
   private
 

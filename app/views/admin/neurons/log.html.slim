@@ -21,3 +21,22 @@ h2 = neuron.title
               = value[1]
     .col-xs-2
       .text-muted.small = version.time_ago
+- content_versions.each do |version|
+  .row.changelog-version
+    .col-xs-1.author
+      = version.user.avatar_with_link
+    .col-xs-9
+      =' version.user.name_with_link
+      =' t("views.changelog.#{version.event}") + ":"
+
+      span.text-info =' version.changed_attrs
+
+      .changeset-details
+        - version.changeset.each do |key, value|
+          .row
+            .col-xs-12
+              strong
+                =' t("activerecord.attributes.content.#{key}") + ":"
+              = value[1]
+    .col-xs-2
+      .text-muted.small = version.time_ago
