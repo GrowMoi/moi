@@ -15,7 +15,7 @@ class Neuron < ActiveRecord::Base
     belongs_to :parent, class: Neuron
   end
 
-  has_paper_trail ignore: [:created_at, :updated_at]
+  has_paper_trail ignore: [:created_at, :updated_at, :id]
 
   accepts_nested_attributes_for :contents,
     allow_destroy: true,

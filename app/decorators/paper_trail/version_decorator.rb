@@ -4,9 +4,15 @@ module PaperTrail
       @user ||= decorate User.find(whodunnit)
     end
 
-    def changed_attrs
+    def changed_attrs_neuron
       changeset.keys.map { |key|
         t("activerecord.attributes.neuron.#{key}").downcase
+      }.join ", "
+    end
+
+    def changed_attrs_content
+      changeset.keys.map { |key|
+        t("activerecord.attributes.content.#{key}").downcase
       }.join ", "
     end
 
