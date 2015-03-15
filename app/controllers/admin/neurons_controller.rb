@@ -23,10 +23,15 @@ module Admin
       decorate sorted_neuron_versions
     }
     expose(:content_versions) {
-      decorate neuron.versions_contents
+      decorate sorted_content_versions
     }
     expose(:sorted_neuron_versions) {
       neuron.versions.merge(
+        PaperTrail::Version.unscope(:order)
+      ).order(id: :desc)
+    }
+    expose(:sorted_content_versions) {
+      neuron.versions_contents.merge(
         PaperTrail::Version.unscope(:order)
       ).order(id: :desc)
     }
