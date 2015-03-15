@@ -15,7 +15,7 @@ class Neuron < ActiveRecord::Base
     belongs_to :parent, class: Neuron
   end
 
-  has_paper_trail only: [:title, :parent_id]
+  has_paper_trail ignore: [:created_at, :updated_at, :id]
 
   accepts_nested_attributes_for :contents,
     allow_destroy: true,
@@ -44,6 +44,15 @@ class Neuron < ActiveRecord::Base
     end
     self
   end
+
+  def versions_contents
+    cv = PaperTrail::VersionAssociation.where(foreign_key_name: "neuron_id", foreign_key_id: self.id)
+    PaperTrail::Version.where(id: cv.map(&:version_id))
+  end
+  # we need to merge current versions and content versions to use only one decorator and one each
+  # def merged_versions
+  #   self.versions.merge(self.versions_contents)
+  # end
 
   private
 

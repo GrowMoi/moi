@@ -1,7 +1,7 @@
 - content_for :title, t("views.neurons.show_changelog")
 
 h2 = neuron.title
-
+h4 = t("views.changelog.changes_in_neuron")
 - neuron_versions.each do |version|
   .row.changelog-version
     .col-xs-1.author
@@ -10,7 +10,7 @@ h2 = neuron.title
       =' version.user.name_with_link
       =' t("views.changelog.#{version.event}") + ":"
 
-      span.text-info =' version.changed_attrs
+      span.text-info =' version.changed_attrs("neuron")
 
       .changeset-details
         - version.changeset.each do |key, value|
@@ -21,3 +21,24 @@ h2 = neuron.title
               = value[1]
     .col-xs-2
       .text-muted.small = version.time_ago
+- if content_versions.length > 0
+  h4 = t("views.changelog.changes_in_contents")
+  - content_versions.each do |version|
+    .row.changelog-version
+      .col-xs-1.author
+        = version.user.avatar_with_link
+      .col-xs-9
+        =' version.user.name_with_link
+        =' t("views.changelog.#{version.event}") + ":"
+
+        span.text-info =' version.changed_attrs("content")
+
+        .changeset-details
+          - version.changeset.each do |key, value|
+            .row
+              .col-xs-12
+                strong
+                  =' t("activerecord.attributes.content.#{key}") + ":"
+                = value[1]
+      .col-xs-2
+        .text-muted.small = version.time_ago
