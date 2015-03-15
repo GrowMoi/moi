@@ -8,3 +8,6 @@
               possible_parents,
               {include_blank: true},
               class: "form-control"
+.form-group
+  = f.label :tag_list, "Keywords"
+  = f.text_field :tag_list, class: "form-control"

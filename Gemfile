@@ -40,6 +40,7 @@ gem 'active_model_serializers'
 gem 'paper_trail', '~> 4.0.0.beta'
 gem 'little_decorator'
 gem 'nested_form'
+gem 'acts-as-taggable-on', '~> 3.4'
 
 group :doc do
   gem 'yard'
