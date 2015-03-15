@@ -10,6 +10,10 @@
 #
 
 class Neuron < ActiveRecord::Base
+
+  #tags
+  acts_as_taggable
+
   begin :relationships
     has_many :contents, dependent: :destroy
     belongs_to :parent, class: Neuron
