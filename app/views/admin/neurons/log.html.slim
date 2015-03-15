@@ -10,7 +10,7 @@ h4 = t("views.changelog.changes_in_neuron")
       =' version.user.name_with_link
       =' t("views.changelog.#{version.event}") + ":"
 
-      span.text-info =' version.changed_attrs_neuron
+      span.text-info =' version.changed_attrs("neuron")
 
       .changeset-details
         - version.changeset.each do |key, value|
@@ -31,7 +31,7 @@ h4 = t("views.changelog.changes_in_neuron")
         =' version.user.name_with_link
         =' t("views.changelog.#{version.event}") + ":"
 
-        span.text-info =' version.changed_attrs_content
+        span.text-info =' version.changed_attrs("content")
 
         .changeset-details
           - version.changeset.each do |key, value|
