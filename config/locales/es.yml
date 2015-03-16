@@ -300,7 +300,7 @@
         title: Título
         parent: Padre
         parent_id: Padre
-        keywords: "Palabras claves"
+        tag_list: "Palabras claves"
       content:
         level: "Nivel"
         kind: "Tipo"
