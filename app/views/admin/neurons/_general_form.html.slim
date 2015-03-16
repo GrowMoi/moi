@@ -9,5 +9,5 @@
               {include_blank: true},
               class: "form-control"
 .form-group
-  = f.label :tag_list, "Keywords"
-  = f.text_field :tag_list, class: "form-control"
+  = f.label :tag_list, t("activerecord.attributes.neuron.keywords")
+  = f.text_field :tag_list, class: "form-control input-tags"
