@@ -86,6 +86,7 @@ module Admin
       params.require(:neuron).permit :id,
                                       :title,
                                       :parent_id,
+                                      :tag_list,
                                       :contents_attributes => [
                                         :id,
                                         :kind,
