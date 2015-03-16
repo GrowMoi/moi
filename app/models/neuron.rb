@@ -13,6 +13,7 @@ class Neuron < ActiveRecord::Base
 
   #tags
   acts_as_taggable
+  acts_as_taggable_on :keywords
 
   begin :relationships
     has_many :contents, dependent: :destroy
@@ -34,6 +35,10 @@ class Neuron < ActiveRecord::Base
 
   def to_s
     title
+  end
+
+  def tag_list
+    tags.map(&:name).join(", ")
   end
 
   ##
