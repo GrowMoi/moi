@@ -10,12 +10,12 @@
 #
 
 class Neuron < ActiveRecord::Base
+  has_paper_trail ignore: [:created_at, :id]
+
   begin :relationships
     has_many :contents, dependent: :destroy
     belongs_to :parent, class: Neuron
   end
-
-  has_paper_trail ignore: [:created_at, :updated_at, :id]
 
   accepts_nested_attributes_for :contents,
     allow_destroy: true,
@@ -33,7 +33,7 @@ class Neuron < ActiveRecord::Base
   end
 
   ##
-  # builds a content for each level
+  # builds a content for each level & kind
   def build_contents!
     Content::LEVELS.each do |level|
       Content::KINDS.each do |kind|
@@ -45,14 +45,22 @@ class Neuron < ActiveRecord::Base
     self
   end
 
-  def versions_contents
-    cv = PaperTrail::VersionAssociation.where(foreign_key_name: "neuron_id", foreign_key_id: self.id)
-    PaperTrail::Version.where(id: cv.map(&:version_id))
+  ##
+  # Saves and touches a version if `will_touch`
+  # is set
+  #
+  # @return [Boolean] if the record was saved or not
+  def save_with_version
+    changed = changed? # if not already creating version
+    contents_changed = contents_any?(changed?: true)
+    transaction do
+      save.tap do |saved|
+        if saved && !changed && contents_changed
+          touch_with_version
+        end
+      end
+    end
   end
-  # we need to merge current versions and content versions to use only one decorator and one each
-  # def merged_versions
-  #   self.versions.merge(self.versions_contents)
-  # end
 
   private
 

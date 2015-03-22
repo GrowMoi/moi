@@ -4,17 +4,30 @@ module PaperTrail
       @user ||= decorate User.find(whodunnit)
     end
 
-    def changed_attrs(model)
-      changeset.keys.map { |key|
-        t("activerecord.attributes."+model+".#{key}").downcase
-      }.join ", "
+    def changes
+      changeset.inject({}) do |memo, (key, value)|
+        attribute = localised_attr_for(key)
+        memo[attribute] = value_for(key, value.last)
+        memo
+      end
     end
 
-    def time_ago
-      t(
-        "views.changelog.time_ago",
-        time_ago: time_ago_in_words(created_at)
-      )
+    private
+
+    def localised_attr_for(key)
+      raise NotImplementedError
+    end
+
+    def value_for(key, value)
+      value
+    end
+
+    def changeset
+      @changeset ||= record.changeset.except(*ignored_keys)
+    end
+
+    def ignored_keys
+      %w(updated_at)
     end
   end
 end

@@ -64,4 +64,41 @@ RSpec.describe Neuron, :type => :model do
       ).to eq( levels.count * kinds.count )
     }
   end
+
+  describe "#save_with_version" do
+    let(:neuron) { build :neuron }
+    let(:invalid_neuron) { build :neuron, title: nil }
+
+    it "returns same as #save" do
+      expect(neuron.save_with_version).to be_truthy
+      expect(invalid_neuron.save_with_version).to be_falsy
+    end
+
+    describe "creates version" do
+      let!(:content) { create :content, neuron: neuron }
+      let(:versions) { PaperTrail::Version.last(2) }
+      let(:attrs) {
+        {
+          contents_attributes: {
+            :"0" => attributes_for(:content)
+          }
+        }
+      }
+
+      before {
+        neuron.save
+        neuron.attributes = attrs # assign changes
+      }
+
+      it {
+        expect {
+          neuron.save_with_version
+        }.to change { PaperTrail::Version.count }.by(2)
+
+        expect(
+          versions[0].transaction_id
+        ).to eq(versions[1].transaction_id)
+      }
+    end
+  end
 end
