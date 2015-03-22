@@ -38,7 +38,7 @@ gem 'cancan'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'active_model_serializers'
 gem 'paper_trail', '~> 4.0.0.beta'
-gem 'little_decorator'
+gem 'little_decorator', github: 'macool/little_decorator'
 gem 'nested_form'
 
 group :doc do

@@ -22,8 +22,11 @@ class Content < ActiveRecord::Base
     enlaces
   }.split("\n").map(&:squish).map(&:to_sym).reject(&:blank?)
 
-  #relations
-  belongs_to :neuron
+  has_paper_trail ignore: [:created_at, :updated_at, :id]
+
+  begin :relationships
+    belongs_to :neuron
+  end
 
   begin :validations
     validates :description, presence: true

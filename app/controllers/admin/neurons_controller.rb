@@ -20,12 +20,11 @@ module Admin
       end
     }
     expose(:neuron_versions) {
-      decorate sorted_neuron_versions
-    }
-    expose(:sorted_neuron_versions) {
-      neuron.versions.merge(
-        PaperTrail::Version.unscope(:order)
-      ).order(id: :desc)
+      # decorate them
+      decorate(
+        neuron.versions.reverse,
+        PaperTrail::NeuronVersionDecorator
+      )
     }
     expose(:formatted_contents) {
       neuron.build_contents!
@@ -55,7 +54,7 @@ module Admin
     end
 
     def create
-      if neuron.save
+      if neuron.save_with_version
         redirect_to(
           {action: :index},
           notice: I18n.t("views.neurons.created")
@@ -66,7 +65,7 @@ module Admin
     end
 
     def update
-      if neuron.save
+      if neuron.save_with_version
         redirect_to(
           {action: :index},
           notice: I18n.t("views.neurons.updated")
@@ -79,18 +78,19 @@ module Admin
     private
 
     def neuron_params
-      params.require(:neuron).permit :id,
-                                      :title,
-                                      :parent_id,
-                                      :contents_attributes => [
-                                        :id,
-                                        :kind,
-                                        :level,
-                                        :description,
-                                        :neuron_id,
-                                        :_destroy
-                                      ]
-    end
+      params.require(:neuron)
+            .permit :id,
+                    :title,
+                    :parent_id,
+                    contents_attributes: [
+                      :id,
+                      :kind,
+                      :level,
+                      :description,
+                      :neuron_id,
+                      :_destroy
+                    ]
+  end
 
     def resource
       @resource ||= neuron

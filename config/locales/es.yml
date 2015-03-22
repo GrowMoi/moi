@@ -298,6 +298,7 @@
         title: Título
         parent: Padre
         parent_id: Padre
+        contents: Contenidos
       content:
         level: "Nivel"
         kind: "Tipo"

@@ -13,11 +13,14 @@ h2 = decorated_neuron.title
       span.text-info =' version.changed_attrs
 
       .changeset-details
-        - version.changeset.each do |key, value|
-          .row
-            .col-xs-12
-              strong
-                =' t("activerecord.attributes.neuron.#{key}") + ":"
-              = value[1]
+        = render "changes", changes: version.changes
+
+        - if version.contents_changed?
+          h5 = t("activerecord.attributes.neuron.contents")
+          .neuron-contents
+            - version.changed_contents.each do |content|
+              = render "changes", changes: content.changes
+              hr
+
     .col-xs-2
       .text-muted.small = version.time_ago

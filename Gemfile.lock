@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/macool/little_decorator.git
+  revision: 32427367d37317d43dbbbc40b242ef993f279e54
+  specs:
+    little_decorator (0.0.6)
+      rails
+
+GIT
   remote: git://github.com/rweng/jquery-datatables-rails.git
   revision: db17aa0145164095b2b21f83f1ef7ccf91b9ea54
   specs:
@@ -114,8 +121,6 @@ GEM
     kaminari (0.16.2)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    little_decorator (0.0.6)
-      rails
     loofah (2.0.1)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -285,7 +290,7 @@ DEPENDENCIES
   jquery-datatables-rails!
   jquery-rails
   kaminari
-  little_decorator
+  little_decorator!
   mailcatcher
   meta_request
   nested_form
