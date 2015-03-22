@@ -1,19 +1,26 @@
-= form_for [:admin, neuron] do |f|
+= nested_form_for [:admin, neuron] do |f|
   = render "admin/shared/form_errors", resource: neuron
 
-  .form-group
-    = f.label :title
-    = f.text_field :title, class: "form-control"
+  ul.nav.nav-tabs.default-tabs
+    li.active data-toggle="tab"
+      = link_to t("views.neurons.general"),
+                "#general",
+                class: "persist-tab"
 
-  .form-group
-    = f.label :parent
-    = f.select :parent_id,
-               possible_parents,
-               {include_blank: true},
-               class: "form-control"
+    li data-toggle="tab"
+      = link_to t("activerecord.models.content").pluralize,
+                "#contents",
+                class: "persist-tab"
+
+  .tab-content
+    .tab-pane#general.active
+      = render "general_form", f: f
+
+    .tab-pane#contents
+      = render "contents_form", f: f
 
   .actions
-    - unless neuron.versions.empty?
+    - unless decorated_neuron.versions.empty?
       = link_to t("views.neurons.show_changelog"),
                 log_admin_neuron_path(neuron),
                 class: "btn btn-link"

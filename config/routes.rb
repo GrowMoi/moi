@@ -62,7 +62,6 @@ Moi::Application.routes.draw do
         get "log"
       end
     end
-
     root "dashboard#index"
   end
 

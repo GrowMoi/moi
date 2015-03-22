@@ -1,0 +1,13 @@
+= f.hidden_field :level, class: "content-level"
+= f.hidden_field :kind, class: "content-kind"
+
+.form-group
+  = f.text_area :description,
+                placeholder: t("activerecord.attributes.content.description"),
+                class: "form-control"
+
+.actions
+  = f.link_to_remove class: "btn btn-xs btn-link" do
+    span.glyphicon.glyphicon-remove.text-danger
+
+hr

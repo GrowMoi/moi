@@ -10,8 +10,18 @@
 #
 
 class Neuron < ActiveRecord::Base
-  belongs_to :parent, class: Neuron
+  begin :relationships
+    has_many :contents, dependent: :destroy
+    belongs_to :parent, class: Neuron
+  end
+
   has_paper_trail only: [:title, :parent_id]
+
+  accepts_nested_attributes_for :contents,
+    allow_destroy: true,
+    reject_if: ->(attributes) {
+      attributes["description"].blank?
+    }
 
   begin :validations
     validates :title, presence: true,
@@ -22,4 +32,26 @@ class Neuron < ActiveRecord::Base
     title
   end
 
+  ##
+  # builds a content for each level
+  def build_contents!
+    Content::LEVELS.each do |level|
+      Content::KINDS.each do |kind|
+        unless contents_any?(level: level, kind: kind)
+          contents.build(level: level, kind: kind)
+        end
+      end
+    end
+    self
+  end
+
+  private
+
+  def contents_any?(opts)
+    contents.any? do |content|
+      opts.all? do |key, val|
+        content.send(key).eql?(val)
+      end
+    end
+  end
 end

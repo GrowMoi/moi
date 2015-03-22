@@ -9,4 +9,6 @@
 //= require turbolinks
 //= require d3
 //= require nprogress
+//= require jquery_nested_form
+//= require chosen.jquery.min
 //= require_tree ./admin

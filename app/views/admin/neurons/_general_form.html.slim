@@ -1,0 +1,10 @@
+.form-group
+  = f.label :title
+  = f.text_field :title, class: "form-control"
+
+.form-group
+  = f.label :parent
+  = f.select :parent_id,
+              possible_parents,
+              {include_blank: true},
+              class: "form-control"

@@ -10,7 +10,7 @@ module Admin
     expose(:neuron, attributes: :neuron_params)
     expose(:possible_parents) {
       # used by selects on forms
-      scope = Neuron.select(:id, :title)
+      scope = Neuron.select(:id, :title).order(:title)
       unless neuron.new_record?
         scope = scope.where.not(id: neuron.id)
       end
@@ -27,6 +27,19 @@ module Admin
         PaperTrail::Version.unscope(:order)
       ).order(id: :desc)
     }
+    expose(:formatted_contents) {
+      neuron.build_contents!
+      neuron.contents.inject({}) do |memo, content|
+        memo[content.level] ||= Hash.new
+        memo[content.level][content.kind] ||= Array.new
+        memo[content.level][content.kind] << content
+        memo
+      end
+    }
+
+    expose(:decorated_neuron) {
+      decorate neuron
+    }
 
     def index
       respond_to do |format|
@@ -38,7 +51,7 @@ module Admin
     end
 
     def new
-      self.neuron.parent_id = params[:parent_id]
+      neuron.parent_id = params[:parent_id]
     end
 
     def create
@@ -54,7 +67,10 @@ module Admin
 
     def update
       if neuron.save
-        redirect_to admin_neurons_path, notice: I18n.t("views.neurons.updated")
+        redirect_to(
+          {action: :index},
+          notice: I18n.t("views.neurons.updated")
+        )
       else
         render :edit
       end
@@ -63,8 +79,17 @@ module Admin
     private
 
     def neuron_params
-      params.require(:neuron).permit :title,
-                                      :parent_id
+      params.require(:neuron).permit :id,
+                                      :title,
+                                      :parent_id,
+                                      :contents_attributes => [
+                                        :id,
+                                        :kind,
+                                        :level,
+                                        :description,
+                                        :neuron_id,
+                                        :_destroy
+                                      ]
     end
 
     def resource
