@@ -61,6 +61,7 @@ class MoiTree
     @setChildren(@rootNeuron)
 
     @neurons = @tree.nodes(@rootNeuron)
+    @shownNeurons = @neurons
 
     @drawLinks()
     @drawNeurons()
@@ -69,7 +70,7 @@ class MoiTree
   drawNeurons: ->
     self = this
     neuron = @svg.selectAll("g.node")
-                  .data(@neurons)
+                  .data(@shownNeurons)
                   .enter()
                   .append("g")
                   .attr("class", "node")
@@ -78,6 +79,10 @@ class MoiTree
                   )
     neuron.append("circle")
           .attr("r", 4.5)
+          .style("fill", (d) ->
+            if d._children then "lightsteelblue" else "#fff"
+          ).on "click", (node) =>
+            @toggleNode(node)
 
     neuron.append('text')
           .attr('dx', -8)
@@ -89,7 +94,7 @@ class MoiTree
             self.showDetails(node, this)
 
   drawLinks: ->
-    links = @tree.links(@neurons)
+    links = @tree.links(@shownNeurons)
     diagonal = d3.svg.diagonal().projection((d) ->
       [ d.x, d.y ]
     )
@@ -129,7 +134,44 @@ class MoiTree
       for child in neuron.children
         @setChildren(child)
 
-  showDetails: (node) ->
+  hideChildren: (node) ->
+    node.hidden = true
+    return unless node.children
+    node._children = node.children
+    node.children = null
+    for child in node._children
+      @hideChildren(child)
+    null
+
+  showChildren: (node) ->
+    node.hidden = false
+    return unless node._children
+    node.children = node._children
+    node._children = null
+    for child in node.children
+      @showChildren(child)
+    null
+
+  filterShownNeurons: ->
+    @shownNeurons = @neurons.filter (neuron) ->
+      !neuron.hidden
+
+  toggleNode: (node) ->
+    if node.children
+      @hideChildren(node)
+      node.hidden = false
+    else
+      @showChildren(node)
+    @filterShownNeurons()
+
+    d3.select(@selector).html("")
+    @createD3Elements()
+    @drawSVG()
+    @drawLinks()
+    @drawNeurons()
+    @drawWithoutParent()
+
+  showDetails: (node, text) ->
     $popover = $(".popover")
     # format:
     $popover.find(".popover-title").html(node.title)
