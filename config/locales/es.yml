@@ -300,12 +300,12 @@
         title: Título
         parent: Padre
         parent_id: Padre
-        tag_list: "Palabras claves"
       content:
         level: "Nivel"
         kind: "Tipo"
         description: "Descripción"
         neuron_id: "Neurona padre"
+        keyword_list: "Palabras claves"
     errors:
       messages:
         <<: *errors_messages

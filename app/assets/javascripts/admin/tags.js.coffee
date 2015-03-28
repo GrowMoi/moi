@@ -1,3 +1,3 @@
-#need initialise (turbolinks)
-$(document).on "ready page:load", ->
-  $('.input-tags').tagsinput()
+$(document).on "ready page:load nested:fieldAdded:contents", ->
+  $('.input-tags').tagsinput
+    tagClass: "label label-success"

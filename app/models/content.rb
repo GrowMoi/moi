@@ -22,6 +22,9 @@ class Content < ActiveRecord::Base
     enlaces
   }.split("\n").map(&:squish).map(&:to_sym).reject(&:blank?)
 
+  #keywords
+  acts_as_taggable_on :keywords
+
   #relations
   belongs_to :neuron
 
