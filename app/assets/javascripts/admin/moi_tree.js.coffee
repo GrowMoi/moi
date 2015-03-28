@@ -37,11 +37,11 @@ class MoiTree
               .attr('transform', 'translate(0,10)')
 
   getNeurons: ->
-    d3.json @path, (error, response) =>
-      console.error(error) if error
-      @gotNeurons(response)
+    d3.json @path, @gotNeurons
 
-  gotNeurons: (response) ->
+  gotNeurons: (error, response) =>
+    console.error(error) if error
+
     neurons = response.neurons # under `neurons` key in json
 
     @rootNeuron = neurons.filter((neuron) ->
@@ -61,31 +61,40 @@ class MoiTree
     @setChildren(@rootNeuron)
 
     @neurons = @tree.nodes(@rootNeuron)
+    @shownNeurons = @neurons
 
     @drawLinks()
     @drawNeurons()
     @drawWithoutParent()
 
   drawNeurons: ->
+    self = this
     neuron = @svg.selectAll("g.node")
-                  .data(@neurons)
+                  .data(@shownNeurons)
                   .enter()
                   .append("g")
                   .attr("class", "node")
                   .attr("transform", (d) ->
                     "translate(#{d.x},#{d.y})"
                   )
-                  .on "click", $.proxy(@showDetails, @)
-    neuron.append("circle").attr "r", 4.5
-    neuron.append('text').attr('dx', (d) ->
-      if d.children then -8 else 8
-    ).attr('dy', 3).attr('text-anchor', (d) ->
-      if d.children then 'end' else 'start'
-    ).text (d) ->
-      d.title
+    neuron.append("circle")
+          .attr("r", 4.5)
+          .style("fill", (d) ->
+            if d._children then "lightsteelblue" else "#fff"
+          ).on "click", (node) =>
+            @toggleNode(node)
+
+    neuron.append('text')
+          .attr('dx', -8)
+          .attr('dy', 3)
+          .attr('text-anchor', "end")
+          .text((d) ->
+            d.title
+          ).on "mouseenter", (node) ->
+            self.showDetails(node, this)
 
   drawLinks: ->
-    links = @tree.links(@neurons)
+    links = @tree.links(@shownNeurons)
     diagonal = d3.svg.diagonal().projection((d) ->
       [ d.x, d.y ]
     )
@@ -97,6 +106,7 @@ class MoiTree
                 .attr("d", diagonal)
 
   drawWithoutParent: ->
+    self = this
     vertical_space = 15
     @svg.append("g").attr("class", "no-parents")
     no_parents = @svg.selectAll("g.no-parents")
@@ -108,7 +118,6 @@ class MoiTree
                         y = i * vertical_space
                         "translate(#{@width - 10}, #{y})"
                       )
-                      .on "click", $.proxy(@showDetails, @)
     no_parents.append("circle").attr "r", 4.5
     no_parents.append("text")
                .attr("dx", 8)
@@ -116,6 +125,8 @@ class MoiTree
                .text((d) ->
                  d.title
                 )
+               .on "mouseenter", (node) ->
+                 self.showDetails(node, this)
 
   setChildren: (neuron) ->
     neuron.children = @neuron_parents[neuron.id]
@@ -123,7 +134,44 @@ class MoiTree
       for child in neuron.children
         @setChildren(child)
 
-  showDetails: (node) ->
+  hideChildren: (node) ->
+    node.hidden = true
+    return unless node.children
+    node._children = node.children
+    node.children = null
+    for child in node._children
+      @hideChildren(child)
+    null
+
+  showChildren: (node) ->
+    node.hidden = false
+    return unless node._children
+    node.children = node._children
+    node._children = null
+    for child in node.children
+      @showChildren(child)
+    null
+
+  filterShownNeurons: ->
+    @shownNeurons = @neurons.filter (neuron) ->
+      !neuron.hidden
+
+  toggleNode: (node) ->
+    if node.children
+      @hideChildren(node)
+      node.hidden = false
+    else
+      @showChildren(node)
+    @filterShownNeurons()
+
+    d3.select(@selector).html("")
+    @createD3Elements()
+    @drawSVG()
+    @drawLinks()
+    @drawNeurons()
+    @drawWithoutParent()
+
+  showDetails: (node, text) ->
     $popover = $(".popover")
     # format:
     $popover.find(".popover-title").html(node.title)
@@ -135,19 +183,35 @@ class MoiTree
       $newChildLink.hide()
     $popover.find(".edit-link")
             .attr("href", "/admin/neurons/#{node.id}/edit")
+
+    $text = $(text)
+    position = $text.position()
+
+    # position box itself
     $popover.removeClass("hidden")
             .hide()
             .fadeIn(300)
             .css(
               position: "absolute",
-              left: event.pageX + 5,
-              top: event.pageY - 38
+              left: position.left,
+              top: position.top + 10
+            )
+
+    # move arrow
+    leftOffset = parseInt($text.css("width")) / 2
+    arrowPositionLeft = if leftOffset < 14 then 14 else leftOffset
+    $popover.find(".arrow")
+            .css(
+              position: "absolute",
+              left: arrowPositionLeft
             )
 
 $(document).on "ready page:load", ->
   if $("#moi_tree").length > 0
     new MoiTree("#moi_tree")
 
-# close popover
-$(document).on "click", ".popover .close", ->
+hidePopover = ->
   $(".popover").addClass("hidden")
+
+# close popover
+$(document).on "click", ".popover .close", hidePopover
