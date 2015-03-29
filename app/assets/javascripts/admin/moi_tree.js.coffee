@@ -94,6 +94,9 @@ class MoiTree
             self.showDetails(node, this)
 
   drawLinks: ->
+    # re-calculate tree position
+    @tree.nodes(@rootNeuron)
+
     links = @tree.links(@shownNeurons)
     diagonal = d3.svg.diagonal().projection((d) ->
       [ d.x, d.y ]
@@ -165,6 +168,10 @@ class MoiTree
     @filterShownNeurons()
 
     d3.select(@selector).html("")
+
+    @draw()
+
+  draw: ->
     @createD3Elements()
     @drawSVG()
     @drawLinks()
