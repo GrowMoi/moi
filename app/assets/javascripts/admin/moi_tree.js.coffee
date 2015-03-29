@@ -1,4 +1,8 @@
-class MoiTree
+#= require ./moi_tree/dialog
+
+window.moiTree ||= {}
+
+class moiTree.Tree
   selector: null
   $node: null
   path: null
@@ -90,8 +94,12 @@ class MoiTree
           .attr('text-anchor', "end")
           .text((d) ->
             d.title
-          ).on "mouseenter", (node) ->
+          ).on("mouseenter", (node) ->
             self.showDetails(node, this)
+          ).on("click", @showNeuron)
+
+  showNeuron: (neuron) =>
+    window.location.pathname = "/admin/neurons/#{neuron.id}"
 
   drawLinks: ->
     # re-calculate tree position
@@ -127,9 +135,9 @@ class MoiTree
                .attr("dy", 3)
                .text((d) ->
                  d.title
-                )
-               .on "mouseenter", (node) ->
+               ).on("mouseenter", (node) ->
                  self.showDetails(node, this)
+               ).on("click", @showNeuron)
 
   setChildren: (neuron) ->
     neuron.children = @neuron_parents[neuron.id]
@@ -166,59 +174,19 @@ class MoiTree
     else
       @showChildren(node)
     @filterShownNeurons()
-
-    d3.select(@selector).html("")
-
     @draw()
 
   draw: ->
+    d3.select(@selector).html("")
     @createD3Elements()
     @drawSVG()
     @drawLinks()
     @drawNeurons()
     @drawWithoutParent()
 
-  showDetails: (node, text) ->
-    $popover = $(".popover")
-    # format:
-    $popover.find(".popover-title").html(node.title)
-    $newChildLink = $popover.find(".new-child-link")
-    if node.parent_id or node.id == @rootNeuron.id
-      $newChildLink.show()
-                   .attr("href", "/admin/neurons/new?parent_id=#{node.id}")
-    else
-      $newChildLink.hide()
-    $popover.find(".edit-link")
-            .attr("href", "/admin/neurons/#{node.id}/edit")
-
-    $text = $(text)
-    position = $text.position()
-
-    # position box itself
-    $popover.removeClass("hidden")
-            .hide()
-            .fadeIn(300)
-            .css(
-              position: "absolute",
-              left: position.left,
-              top: position.top + 10
-            )
-
-    # move arrow
-    leftOffset = parseInt($text.css("width")) / 2
-    arrowPositionLeft = if leftOffset < 14 then 14 else leftOffset
-    $popover.find(".arrow")
-            .css(
-              position: "absolute",
-              left: arrowPositionLeft
-            )
+  showDetails: (neuron, text) ->
+    new moiTree.TreeDialog(neuron, text)
 
 $(document).on "ready page:load", ->
   if $("#moi_tree").length > 0
-    new MoiTree("#moi_tree")
-
-hidePopover = ->
-  $(".popover").addClass("hidden")
-
-# close popover
-$(document).on "click", ".popover .close", hidePopover
+    new moiTree.Tree("#moi_tree")
