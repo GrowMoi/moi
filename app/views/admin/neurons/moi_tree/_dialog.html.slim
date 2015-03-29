@@ -1,0 +1,15 @@
+.popover.bottom.hidden.neurons-popover
+  .arrow
+  .popover-title Title
+  a.close ×
+  .popover-content
+    .text-right
+      = link_to t("actions.show"),
+                admin_neuron_path(id: 1),
+                class: "btn btn-xs btn-link show-link"
+      = link_to t("views.neurons.new_child"),
+                new_admin_neuron_path,
+                class: "btn btn-xs btn-link new-child-link"
+      = link_to t("actions.edit"),
+                edit_admin_neuron_path(id: 1),
+                class: "btn btn-xs btn-link edit-link"
