@@ -1,3 +1,5 @@
+isFirefox = navigator.userAgent.indexOf("Firefox") != -1
+
 class MoiTree
   selector: null
   $node: null
@@ -193,6 +195,7 @@ class MoiTree
 
     $text = $(text)
     position = $text.position()
+    left = if isFirefox then position.left - 30 else position.left
 
     # position box itself
     $popover.removeClass("hidden")
@@ -200,7 +203,7 @@ class MoiTree
             .fadeIn(300)
             .css(
               position: "absolute",
-              left: position.left,
+              left: left,
               top: position.top + 10
             )
 
