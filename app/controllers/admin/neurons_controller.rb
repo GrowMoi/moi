@@ -78,19 +78,19 @@ module Admin
     private
 
     def neuron_params
-      params.require(:neuron)
-            .permit :id,
-                    :title,
-                    :parent_id,
-                    contents_attributes: [
-                      :id,
-                      :kind,
-                      :level,
-                      :description,
-                      :neuron_id,
-                      :_destroy
-                    ]
-  end
+      params.require(:neuron).permit :id,
+                                      :title,
+                                      :parent_id,
+                                      :contents_attributes => [
+                                        :id,
+                                        :kind,
+                                        :level,
+                                        :description,
+                                        :neuron_id,
+                                        :_destroy,
+                                        :keyword_list
+                                      ]
+    end
 
     def resource
       @resource ||= neuron

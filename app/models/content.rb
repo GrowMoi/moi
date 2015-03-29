@@ -24,6 +24,8 @@ class Content < ActiveRecord::Base
 
   has_paper_trail ignore: [:created_at, :updated_at, :id]
 
+  acts_as_taggable_on :keywords
+
   begin :relationships
     belongs_to :neuron
   end

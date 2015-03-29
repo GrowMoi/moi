@@ -303,6 +303,7 @@
         level: "Nivel"
         kind: "Tipo"
         description: "Descripción"
+        keyword_list: "Palabras claves"
     errors:
       messages:
         <<: *errors_messages

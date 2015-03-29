@@ -17,10 +17,6 @@ describe "neurons as curador" do
         fill_in label, with: value
       end
     }
-    let(:select_contents_tab!) {
-      # select `contents` tab:
-      click_on I18n.t("activerecord.models.content").pluralize
-    }
 
     feature "curador can create neurons" do
       before {
