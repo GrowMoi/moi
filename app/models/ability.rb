@@ -10,6 +10,7 @@ class Ability
       can :manage, :all
     when "curador"
       can [:read, :create, :update, :preview, :log], Neuron
+      cannot [:delete, :restore], Neuron
     end
   end
 end

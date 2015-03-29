@@ -83,7 +83,9 @@ class moiTree.Tree
                   )
     neuron.append("circle")
           .attr("r", 4.5)
-          .style("fill", (d) ->
+          .style("stroke", (d) ->
+            if d.deleted then "#ec5747"
+          ).style("fill", (d) ->
             if d._children then "lightsteelblue" else "#fff"
           ).on "click", (node) =>
             @toggleNode(node)

@@ -28,7 +28,8 @@ module Admin
 
       def neuron_params
         params.require(:neuron)
-              .permit :title,
+              .permit :id,
+                      :title,
                       :parent_id,
                       :contents_attributes => [
                         :id,
@@ -39,6 +40,8 @@ module Admin
                         :_destroy,
                         :keyword_list
                       ]
+      rescue ActionController::ParameterMissing
+        Hash.new
       end
     end
   end

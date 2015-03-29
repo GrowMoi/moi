@@ -4,9 +4,13 @@ module Admin
 
     authorize_resource
 
-    respond_to :html, :json
-
-    expose(:neurons)
+    expose(:neurons) {
+      if current_user.admin?
+        Neuron.all
+      else
+        Neuron.active
+      end
+    }
 
     expose(:possible_parents) {
       # used by selects on forms
@@ -53,6 +57,22 @@ module Admin
       else
         render :edit
       end
+    end
+
+    def delete
+      neuron.update! deleted: true
+      redirect_to(
+        {action: :index},
+        notice: I18n.t("views.neurons.delete")
+      )
+    end
+
+    def restore
+      neuron.update! deleted: false
+      redirect_to(
+        {action: :index},
+        notice: I18n.t("views.neurons.restore")
+      )
     end
   end
 end
