@@ -1,3 +1,5 @@
--formatted_contents.fetch(level).fetch(kind).each do |content|
-  = content.description
-  hr
+- formatted_contents.fetch(level).fetch(kind).each do |content|
+  .neuron-content
+    = content.description
+    = content.keywords
+    hr
