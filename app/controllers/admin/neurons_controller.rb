@@ -40,7 +40,7 @@ module Admin
     def create
       if neuron.save_with_version
         redirect_to(
-          {action: :index},
+          {action: :show, id: neuron.id},
           notice: I18n.t("views.neurons.created")
         )
       else
@@ -51,7 +51,7 @@ module Admin
     def update
       if neuron.save_with_version
         redirect_to(
-          {action: :index},
+          {action: :show, id: neuron.id},
           notice: I18n.t("views.neurons.updated")
         )
       else
