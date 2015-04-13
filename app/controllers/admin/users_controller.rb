@@ -2,6 +2,8 @@ module Admin
   class UsersController < AdminController::Base
     include Breadcrumbs
 
+    before_action :add_breadcrumbs
+
     authorize_resource
 
     expose(:user, attributes: :user_params)

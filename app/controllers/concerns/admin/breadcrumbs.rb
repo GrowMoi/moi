@@ -4,10 +4,6 @@ module Admin
   module Breadcrumbs
     extend ActiveSupport::Concern
 
-    included do
-      before_action :add_breadcrumbs
-    end
-
     def add_breadcrumbs
       breadcrumb_for "index" # base
 
@@ -67,11 +63,11 @@ module Admin
         )
       when "update"
         breadcrumb_for "edit"
-      else
-        # define breadcrumb_for_action for custom
-        if defined?("breadcrumb_for_#{action}")
-          send("breadcrumb_for_#{action}")
-        end
+      end
+
+      # define breadcrumb_for_action for custom
+      if respond_to?("breadcrumb_for_#{action}", true)
+        send("breadcrumb_for_#{action}")
       end
     end
   end

@@ -42,11 +42,12 @@ ul.nav.nav-tabs.default-tabs
                       kind: kind,
                       level: level
 .actions
-  - unless neuron.versions.empty?
+  - if action_name != "preview" && neuron.versions.any?
     = link_to t("views.neurons.show_changelog"),
-              log_admin_neuron_path(neuron),
+              admin_neuron_log_path(neuron),
               class: "btn btn-link"
 
-  = link_to t("actions.edit"),
-            edit_admin_neuron_path(neuron),
-            class: "btn btn-link"
+  - unless neuron.new_record?
+    = link_to t("actions.edit"),
+              edit_admin_neuron_path(neuron),
+              class: "btn btn-link"

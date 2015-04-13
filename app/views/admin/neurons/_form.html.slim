@@ -1,6 +1,8 @@
 = nested_form_for [:admin, neuron] do |f|
   = render "admin/shared/form_errors", resource: neuron
 
+  = f.hidden_field :id
+
   ul.nav.nav-tabs.default-tabs
     li.active data-toggle="tab"
       = link_to t("views.neurons.general"),
@@ -22,8 +24,12 @@
   .actions
     - unless decorated_neuron.versions.empty?
       = link_to t("views.neurons.show_changelog"),
-                log_admin_neuron_path(neuron),
+                admin_neuron_log_path(neuron),
                 class: "btn btn-link"
+
+    = link_to t("actions.preview"),
+              admin_neuron_preview_path,
+              class: "btn btn-default preview-btn"
 
     = f.submit class: "btn btn-primary",
                data: {disable_with: t("views.submitting")}

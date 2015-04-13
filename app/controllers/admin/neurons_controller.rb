@@ -1,13 +1,13 @@
 module Admin
-  class NeuronsController < AdminController::Base
-    include Breadcrumbs
+  class NeuronsController < Neurons::BaseController
+    before_action :add_breadcrumbs
 
     authorize_resource
 
     respond_to :html, :json
 
     expose(:neurons)
-    expose(:neuron, attributes: :neuron_params)
+
     expose(:possible_parents) {
       # used by selects on forms
       scope = Neuron.select(:id, :title).order(:title)
@@ -18,26 +18,6 @@ module Admin
         # format them for select
         [neuron.to_s, neuron.id]
       end
-    }
-    expose(:neuron_versions) {
-      # decorate them
-      decorate(
-        neuron.versions.reverse,
-        PaperTrail::NeuronVersionDecorator
-      )
-    }
-    expose(:formatted_contents) {
-      neuron.build_contents!
-      neuron.contents.inject({}) do |memo, content|
-        memo[content.level] ||= Hash.new
-        memo[content.level][content.kind] ||= Array.new
-        memo[content.level][content.kind] << content
-        memo
-      end
-    }
-
-    expose(:decorated_neuron) {
-      decorate neuron
     }
 
     def index
@@ -73,35 +53,6 @@ module Admin
       else
         render :edit
       end
-    end
-
-    private
-
-    def neuron_params
-      params.require(:neuron).permit :id,
-                                      :title,
-                                      :parent_id,
-                                      :contents_attributes => [
-                                        :id,
-                                        :kind,
-                                        :level,
-                                        :description,
-                                        :neuron_id,
-                                        :_destroy,
-                                        :keyword_list
-                                      ]
-    end
-
-    def resource
-      @resource ||= neuron
-    end
-
-    def breadcrumb_for_log
-      breadcrumb_for "show"
-      add_breadcrumb(
-        I18n.t("views.neurons.show_changelog"),
-        log_admin_neuron_path(resource)
-      )
     end
   end
 end
