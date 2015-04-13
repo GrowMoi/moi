@@ -58,14 +58,15 @@ Moi::Application.routes.draw do
     # resource :dashboard, only: :index
     resources :users
 
-    resources :neurons do
-      resource :log, module: "neurons"
-      
-    end
     # preview
-    match "neurons/preview" => "neurons_preview#preview",
+    match "neurons/preview" => "neurons/preview#preview",
           via: [:post, :patch],
           as: :neuron_preview
+
+    resources :neurons do
+      resource :log, module: "neurons",
+                     only: :show
+    end
 
     root "dashboard#index"
   end
