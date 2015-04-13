@@ -24,7 +24,7 @@
   .actions
     - unless decorated_neuron.versions.empty?
       = link_to t("views.neurons.show_changelog"),
-                log_admin_neuron_path(neuron),
+                admin_neuron_log_path(neuron),
                 class: "btn btn-link"
 
     = link_to t("actions.preview"),

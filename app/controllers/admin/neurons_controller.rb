@@ -1,7 +1,5 @@
 module Admin
   class NeuronsController < Neurons::BaseController
-    include Breadcrumbs
-
     before_action :add_breadcrumbs
 
     authorize_resource
@@ -21,13 +19,6 @@ module Admin
         [neuron.to_s, neuron.id]
       end
     }
-    expose(:neuron_versions) {
-      # decorate them
-      decorate(
-        neuron.versions.reverse,
-        PaperTrail::NeuronVersionDecorator
-      )
-    }
 
     def index
       respond_to do |format|
@@ -41,7 +32,7 @@ module Admin
     def new
       neuron.parent_id = params[:parent_id]
     end
-    
+
     def create
       if neuron.save_with_version
         redirect_to(
@@ -62,16 +53,6 @@ module Admin
       else
         render :edit
       end
-    end
-
-    private
-
-    def breadcrumb_for_log
-      breadcrumb_for "show"
-      add_breadcrumb(
-        I18n.t("views.neurons.show_changelog"),
-        log_admin_neuron_path(resource)
-      )
     end
   end
 end

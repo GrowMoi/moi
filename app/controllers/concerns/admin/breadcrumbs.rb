@@ -63,11 +63,11 @@ module Admin
         )
       when "update"
         breadcrumb_for "edit"
-      else
-        # define breadcrumb_for_action for custom
-        if defined?("breadcrumb_for_#{action}")
-          send("breadcrumb_for_#{action}")
-        end
+      end
+
+      # define breadcrumb_for_action for custom
+      if respond_to?("breadcrumb_for_#{action}", true)
+        send("breadcrumb_for_#{action}")
       end
     end
   end

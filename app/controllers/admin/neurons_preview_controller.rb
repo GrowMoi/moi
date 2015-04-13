@@ -1,7 +1,5 @@
 module Admin
   class NeuronsPreviewController < Neurons::BaseController
-    include Breadcrumbs
-
     before_action :add_breadcrumbs
 
     expose(:neuron) {
@@ -28,10 +26,6 @@ module Admin
 
     def breadcrumb_for_preview
       add_breadcrumb I18n.t("actions.preview")
-    end
-
-    def breadcrumb_base
-      "neuron"
     end
   end
 end

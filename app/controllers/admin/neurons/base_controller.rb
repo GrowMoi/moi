@@ -1,6 +1,8 @@
 module Admin
   module Neurons
     class BaseController < AdminController::Base
+      include Breadcrumbs
+
       expose(:neuron, attributes: :neuron_params)
       alias_method :resource, :neuron
 
@@ -19,6 +21,10 @@ module Admin
       }
 
       private
+
+      def breadcrumb_base
+        "neuron"
+      end
 
       def neuron_params
         params.require(:neuron)

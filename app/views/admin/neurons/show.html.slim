@@ -44,7 +44,7 @@ ul.nav.nav-tabs.default-tabs
 .actions
   - if action_name != "preview" && neuron.versions.any?
     = link_to t("views.neurons.show_changelog"),
-              log_admin_neuron_path(neuron),
+              admin_neuron_log_path(neuron),
               class: "btn btn-link"
 
   - unless neuron.new_record?
