@@ -78,3 +78,30 @@ describe "curador adds keywords to content" do
     }
   end
 end
+
+describe "curador sees keywords", type: :feature do
+  let!(:current_user) {
+    create :user, :curador
+  }
+  let!(:neuron) {
+    create :neuron
+  }
+  let!(:content) {
+    create :content, neuron: neuron,
+                     keyword_list: keywords.join(",")
+  }
+  let(:keywords) {
+    %w(tag1 tag2 tag3)
+  }
+
+  before {
+    login_as current_user
+    visit admin_neuron_path(neuron)
+  }
+
+  it {
+    keywords.each do |keyword|
+      expect(page).to have_text(keyword)
+    end
+  }
+end

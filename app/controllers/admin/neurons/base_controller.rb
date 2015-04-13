@@ -15,7 +15,7 @@ module Admin
         neuron.contents.inject({}) do |memo, content|
           memo[content.level] ||= Hash.new
           memo[content.level][content.kind] ||= Array.new
-          memo[content.level][content.kind] << content
+          memo[content.level][content.kind] << decorate(content)
           memo
         end
       }
