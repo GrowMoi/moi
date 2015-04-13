@@ -12,7 +12,7 @@ require 'paper_trail/frameworks/rspec'
 Capybara.javascript_driver = :poltergeist
 # prevents Javascript errors do not get re-raised in Ruby
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, {js_errors: false})
+  Capybara::Poltergeist::Driver.new(app)
 end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
