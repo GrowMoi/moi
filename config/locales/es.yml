@@ -37,6 +37,8 @@
       show_changelog: "Mostrar Historial de Cambios"
       contents: "Contenidos"
       general: General
+      restore: "Neurona restaurada"
+      delete: "Neurona eliminada"
     changelog:
       update: actualizó
       create: creó el registro con
@@ -320,6 +322,7 @@
     create: "Crear"
     update: "Actualizar"
     destroy: "Eliminar"
+    restore: "Restaurar"
     logout: Cerrar sesión
     my_profile: Mi perfil
     preview: Vista previa

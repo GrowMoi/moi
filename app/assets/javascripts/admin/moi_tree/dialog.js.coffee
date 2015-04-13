@@ -10,6 +10,7 @@ class moiTree.TreeDialog
     @setShowLink()
     @setNewChildLink()
     @setEditLink()
+    @setToggleLink()
 
   setShowLink: ->
     href = "/admin/neurons/#{@neuron.id}"
@@ -32,6 +33,18 @@ class moiTree.TreeDialog
     href = "/admin/neurons/#{@neuron.id}/edit"
     @$popover.find(".edit-link")
              .attr("href", href)
+
+  setToggleLink: ->
+    $deleteLink = @$popover.find(".destroy-link")
+    $restoreLink = @$popover.find(".restore-link")
+    if @neuron.deleted
+      $restoreLink.show()
+      $restoreLink.attr("href", "/admin/neurons/#{@neuron.id}/restore")
+      $deleteLink.hide()
+    else
+      $deleteLink.show()
+      $deleteLink.attr("href", "/admin/neurons/#{@neuron.id}/delete")
+      $restoreLink.hide()
 
   positionPopover: ->
     $text = $(@text)

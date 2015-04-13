@@ -7,10 +7,14 @@
 #  parent_id  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  deleted    :boolean          default("false")
 #
 
 class Neuron < ActiveRecord::Base
   has_paper_trail ignore: [:created_at, :id]
+
+  scope :active, -> { where(deleted: false) }
+  scope :inactive, -> { where(deleted: true) }
 
   begin :relationships
     has_many :contents, dependent: :destroy

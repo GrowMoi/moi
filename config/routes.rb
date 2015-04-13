@@ -66,6 +66,10 @@ Moi::Application.routes.draw do
     resources :neurons do
       resource :log, module: "neurons",
                      only: :show
+      member do
+        post :delete
+        post :restore
+      end
     end
 
     root "dashboard#index"

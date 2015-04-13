@@ -7,6 +7,7 @@
 #  parent_id  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  deleted    :boolean          default("false")
 #
 
 FactoryGirl.define do
@@ -15,6 +16,10 @@ FactoryGirl.define do
 
     trait :with_parent do
       parent { create(:neuron) }
+    end
+
+    trait :inactive do
+      deleted true
     end
   end
 end

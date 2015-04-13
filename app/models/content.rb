@@ -4,7 +4,7 @@
 #
 #  id          :integer          not null, primary key
 #  level       :integer          not null
-#  kind        :integer          not null
+#  kind        :string           not null
 #  description :text             not null
 #  neuron_id   :integer          not null
 #  created_at  :datetime         not null
