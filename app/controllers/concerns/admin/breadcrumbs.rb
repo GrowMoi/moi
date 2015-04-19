@@ -1,9 +1,9 @@
-##
-# Adds breadcrumbs for each action
 module Admin
   module Breadcrumbs
     extend ActiveSupport::Concern
-
+    ##
+    # Adds breadcrumbs for each action.
+    # Calls breadcrumbs for #index by default
     def add_breadcrumbs
       breadcrumb_for "index" # base
 
