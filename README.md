@@ -3,13 +3,13 @@
 
 ## development
 
-#### requirements:
+#### requirements
 
 - postgresql
 - phantomjs (to run specs) See [Installing phantomjs](https://github.com/teampoltergeist/poltergeist#installing-phantomjs)
 - qt (for specs to [compile `capybara-webkit`](https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit))
 
-#### resources:
+#### resources
 
 - [documentation](http://www.rubydoc.info/github/GrowMoi/moi/master)
 - [guidelines](https://github.com/GrowMoi/moi/blob/master/guidelines.md)
