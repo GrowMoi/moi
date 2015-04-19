@@ -51,7 +51,7 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'pry-rails'
-  gem 'poltergeist'
+  gem 'poltergeist', '~> 1.6'
   gem 'database_cleaner', '~> 1.3.0'
   gem 'connection_pool'
 end
