@@ -187,7 +187,7 @@ class moiTree.Tree
     @drawWithoutParent()
 
   showDetails: (neuron, text) ->
-    new moiTree.TreeDialog(neuron, text)
+    new moiTree.TreeDialog(neuron, text, @rootNeuron)
 
 $(document).on "ready page:load", ->
   if $("#moi_tree").length > 0
