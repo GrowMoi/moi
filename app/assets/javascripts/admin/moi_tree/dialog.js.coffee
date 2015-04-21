@@ -3,7 +3,7 @@ window.moiTree ||= {}
 isFirefox = navigator.userAgent.indexOf("Firefox") != -1
 
 class moiTree.TreeDialog
-  constructor: (@neuron, @text) ->
+  constructor: (@neuron, @text, @rootNeuron) ->
     @$popover = $(".popover")
     @positionPopover()
     @setTitle()
