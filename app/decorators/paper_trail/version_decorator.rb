@@ -27,7 +27,14 @@ module PaperTrail
     end
 
     def ignored_keys
-      %w(updated_at)
+      @@ignored_keys
     end
+
+    def self.ignore_keys(*keys)
+      @@ignored_keys ||= []
+      @@ignored_keys += Array(keys).flatten
+    end
+
+    ignore_keys "updated_at"
   end
 end

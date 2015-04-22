@@ -1,0 +1,5 @@
+h5 = t("activerecord.attributes.neuron.contents")
+.neuron-contents
+  - contents.each do |content|
+    = render "changes", changes: content.changes
+    hr

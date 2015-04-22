@@ -2,6 +2,8 @@ module PaperTrail
   class ContentVersionDecorator < VersionDecorator
     private
 
+    ignore_keys "neuron_id"
+
     def value_for(key, value)
       case key
       when "kind"
@@ -13,10 +15,6 @@ module PaperTrail
 
     def localised_attr_for(key)
       t("activerecord.attributes.content.#{key}")
-    end
-
-    def ignored_keys
-      %w(neuron_id)
     end
   end
 end

@@ -3,7 +3,7 @@ nav.navbar.navbar-default.navbar-static-top.main-navbar
     .navbar-header
       = link_to "moi", admin_root_path, class: "navbar-brand"
 
-    .collapse.navbar-collapse
+    .navbar-collapse
       ul.nav.navbar-nav
         = nav_item "dashboard", admin_root_path
         - if can? :manage, User
@@ -14,7 +14,8 @@ nav.navbar.navbar-default.navbar-static-top.main-navbar
       ul.nav.navbar-nav.navbar-right
         li.dropdown
           = link_to "#", data: {toggle: "dropdown"} do
-            = current_user.name
+            = decorated_current_user.avatar(class: "navbar-avatar margin-right")
+            = decorated_current_user.name
             span.caret
           ul.dropdown-menu role="menu"
             li

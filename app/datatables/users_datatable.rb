@@ -1,5 +1,5 @@
 class UsersDatatable
-  delegate :params, :t, :link_to, to: :@view
+  delegate :params, :t, :link_to, :image_tag, to: :@view
 
   def initialize(view)
     @view = view
@@ -17,24 +17,15 @@ class UsersDatatable
 private
 
   def data
-    users.map do |user|
+    users.map do |raw_user|
+      user = UserDatatableDecorator.new(raw_user, self)
       [
-        user.name,
+        user.avatar_and_name,
         user.email,
         user.role,
-        link_for(:show, user) + link_for(:edit, user)
+        user.link_for(:show) + user.link_for(:edit)
       ]
     end
-  end
-
-  def link_for(action, user)
-    link_to(
-      t("actions.#{action}"),
-      { controller: "users",
-        action: action,
-        id: user.id },
-      class: "btn btn-xs btn-link"
-    )
   end
 
   def users

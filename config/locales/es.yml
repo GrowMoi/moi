@@ -41,8 +41,10 @@
       delete: "Neurona eliminada"
     changelog:
       update: actualizó
-      create: creó el registro con
+      create: creó este registro con
       time_ago: "hace %{time_ago}"
+      delete: eliminó este registro
+      restore: restauró este registro
 
     contents:
       new: "Nuevo Contenido"
