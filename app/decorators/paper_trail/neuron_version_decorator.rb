@@ -29,7 +29,19 @@ module PaperTrail
       )
     end
 
+    def event_explanation
+      t(
+        "views.changelog.#{record.event}"
+      ) + (changed_keys.any? ? ":" : "")
+    end
+
+    def changed_keys
+      @changed_keys ||= changeset.keys + extra_keys
+    end
+
     private
+
+    ignore_keys "deleted"
 
     def localised_attr_for(key)
       t("activerecord.attributes.neuron.#{key}")
@@ -42,10 +54,6 @@ module PaperTrail
       else
         super
       end
-    end
-
-    def changed_keys
-      changeset.keys + extra_keys
     end
 
     def extra_keys

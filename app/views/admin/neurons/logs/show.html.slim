@@ -8,19 +8,17 @@ h2 = decorated_neuron.title
       = version.user.avatar_with_link
     .col-xs-9
       =' version.user.name_with_link
-      =' t("views.changelog.#{version.event}") + ":"
+      =' version.event_explanation
 
       span.text-info =' version.changed_attrs
 
-      .changeset-details
-        = render "changes", changes: version.changes
+      - if version.changed_keys.any?
+        .changeset-details
+          = render "changes", changes: version.changes
 
-        - if version.contents_changed?
-          h5 = t("activerecord.attributes.neuron.contents")
-          .neuron-contents
-            - version.changed_contents.each do |content|
-              = render "changes", changes: content.changes
-              hr
+          - if version.contents_changed?
+            = render "content_changes",
+                     contents: version.changed_contents
 
     .col-xs-2
       .text-muted.small = version.time_ago

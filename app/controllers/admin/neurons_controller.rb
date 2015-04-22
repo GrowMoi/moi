@@ -60,6 +60,7 @@ module Admin
     end
 
     def delete
+      neuron.paper_trail_event = "delete"
       neuron.update! deleted: true
       redirect_to(
         {action: :index},
@@ -68,6 +69,7 @@ module Admin
     end
 
     def restore
+      neuron.paper_trail_event = "restore"
       neuron.update! deleted: false
       redirect_to(
         {action: :index},
