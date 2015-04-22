@@ -1,8 +1,9 @@
 class UserDecorator < LittleDecorator
   GRAVATAR_DEFAULT = "mm"
 
-  def avatar
-    image_tag gravatar_url, class: "avatar"
+  def avatar(opts = {})
+    options = opts.merge(class: "avatar #{opts[:class]}")
+    image_tag gravatar_url, options
   end
 
   def avatar_with_link
@@ -15,6 +16,10 @@ class UserDecorator < LittleDecorator
 
   def gravatar_url
     @gravatar_url ||= "http://www.gravatar.com/avatar/#{email_hexdigest}?d=#{GRAVATAR_DEFAULT}"
+  end
+
+  def role_badge
+    content_tag :span, record.role, class: "label label-default"
   end
 
   private

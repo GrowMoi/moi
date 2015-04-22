@@ -15,4 +15,7 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, error: I18n.t("views.unauthorized")
   end
 
+  expose(:decorated_current_user) {
+    decorate current_user
+  }
 end

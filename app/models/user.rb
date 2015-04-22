@@ -27,8 +27,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :recoverable,
   :rememberable, :trackable, :validatable
 
-  after_update :send_email_change_role
+  after_update :send_role_changed_email
 
+  validates :name, presence: true
   validates :email, presence: true, uniqueness: true
 
   def to_s
@@ -37,7 +38,7 @@ class User < ActiveRecord::Base
 
   private
 
-  def send_email_change_role
+  def send_role_changed_email
     if role_changed?
     	UserMailer.notify_role_change(self).deliver_later
     end

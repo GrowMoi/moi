@@ -11,6 +11,9 @@ module Admin
     expose(:roles) {
       User::Roles::ROLES
     }
+    expose(:decorated_user) {
+      decorate user
+    }
 
     def index
       respond_to do |format|
