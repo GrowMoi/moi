@@ -311,6 +311,7 @@
     errors:
       messages:
         <<: *errors_messages
+        circular_parent: "%{child} no puede ser padre de %{parent} dado que alguno de sus padres es %{parent}"
       template:
         <<: *errors_template
 

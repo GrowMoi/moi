@@ -50,7 +50,11 @@ module PaperTrail
     def value_for(key, value)
       case key
       when "parent_id"
-        Neuron.find(value).title
+        if value.present?
+          Neuron.find(value).title
+        else
+          "-"
+        end
       else
         super
       end

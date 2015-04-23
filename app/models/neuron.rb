@@ -30,6 +30,8 @@ class Neuron < ActiveRecord::Base
   begin :validations
     validates :title, presence: true,
                       uniqueness: true
+    validate :parent_is_not_child,
+             if: ->{ parent_id.present? }
   end
 
   def to_s
@@ -69,6 +71,23 @@ class Neuron < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def parent_is_not_child
+    parent_is_child = false
+    candidate = Neuron.find_by(id: parent_id)
+    while candidate.present? && candidate.parent_id.present? && !parent_is_child
+      parent_is_child = candidate.parent_id == id
+      candidate = candidate.parent
+    end
+    errors.add(
+      :parent,
+      I18n.t(
+        "activerecord.errors.messages.circular_parent",
+        child: parent.to_s,
+        parent: self.to_s
+      )
+    ) if parent_is_child
   end
 
   private

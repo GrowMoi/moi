@@ -13,7 +13,7 @@
 require 'rails_helper'
 
 RSpec.describe Neuron, :type => :model do
-  context "a neuron can have a parent" do
+  describe "a neuron can have a parent" do
     let(:neuron) {
       create :neuron, :with_parent
     }
@@ -26,6 +26,27 @@ RSpec.describe Neuron, :type => :model do
 
     it {
       expect(neuron.parent).to be_present
+    }
+  end
+
+  describe "parent can't be child" do
+    let(:parent) {
+      create :neuron
+    }
+    let(:child) {
+      create :neuron, parent: parent
+    }
+    let(:child2) {
+      create :neuron, parent: child
+    }
+
+    before {
+      child.parent = child2
+    }
+
+    it {
+      expect(child).to_not be_valid
+      expect(child.errors.keys).to include(:parent)
     }
   end
 
