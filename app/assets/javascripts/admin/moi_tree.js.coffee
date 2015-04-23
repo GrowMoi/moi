@@ -121,7 +121,6 @@ class moiTree.Tree
   drawWithoutParent: ->
     self = this
     vertical_space = 15
-    @svg.append("g").attr("class", "no-parents")
     no_parents = @svg.selectAll("g.no-parents")
                       .data(@neuron_parents["no_parent"])
                       .enter()
