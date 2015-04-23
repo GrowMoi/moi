@@ -46,7 +46,7 @@ RSpec.describe Neuron, :type => :model do
 
     it {
       expect(child).to_not be_valid
-      expect(child.errors.keys).to include(:parent_id)
+      expect(child.errors.keys).to include(:parent)
     }
   end
 
