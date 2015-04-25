@@ -1,10 +1,28 @@
 class UserDecorator < LittleDecorator
-  GRAVATAR_DEFAULT = "mm"
+  ##
+  # default image for gravatar https://en.gravatar.com/site/implement/images#default-image
+  GRAVATAR_DEFAULT = "retro"
+  GRAVATAR_SIZE = "80"
 
+  ##
+  # @!group avatar
+
+  ##
+  # size: 35px
   def avatar(opts = {})
     options = opts.merge(class: "avatar #{opts[:class]}")
     image_tag gravatar_url, options
   end
+
+  ##
+  # size: 150px
+  def avatar_small
+    image_tag gravatar_url(size: 300),
+              class: "avatar avatar-big"
+  end
+
+  # @!endgroup
+  ##
 
   def avatar_with_link
     link_to avatar, record_path
@@ -14,12 +32,18 @@ class UserDecorator < LittleDecorator
     link_to name, record_path
   end
 
-  def gravatar_url
-    @gravatar_url ||= "http://www.gravatar.com/avatar/#{email_hexdigest}?d=#{GRAVATAR_DEFAULT}"
+  ##
+  # @param options [Hash]
+  # @option options [Integer] :size eg 300
+  def gravatar_url(options = {})
+    size = options[:size] || GRAVATAR_SIZE
+    "http://www.gravatar.com/avatar/#{email_hexdigest}?d=#{GRAVATAR_DEFAULT}&s=#{size}"
   end
 
-  def role_badge
-    content_tag :span, record.role, class: "label label-default"
+  def role_label
+    content_tag :span,
+                record.role,
+                class: "label label-default"
   end
 
   private
