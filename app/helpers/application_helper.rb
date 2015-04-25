@@ -37,4 +37,24 @@ module ApplicationHelper
       yield
     end
   end
+
+  ##
+  # Adds a tooltip. Accepts a block
+  #
+  # @param title [String]
+  # @param options [Hash]
+  # @option options [String] :place (top)
+  # @yield a div with the tooltip
+  def tooltip(title, options = {})
+    opts = { place: "top" }.merge(options)
+    content_tag :div,
+                class: "bs-tooltip",
+                title: title,
+                data: {
+                  toggle: "tooltip",
+                  placement: opts[:place]
+                } do
+      yield
+    end
+  end
 end
