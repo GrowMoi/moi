@@ -7,10 +7,12 @@
                 class: "form-control"
 
 .form-group
-  = f.text_field :keyword_list,
-                  placeholder: t("activerecord.attributes.content.keyword_list"),
-                 value: f.object.keyword_list.join(","),
-                 class: "form-control input-tags"
+  = tooltip t("views.contents.keyword_list_form_instructions"),
+            place: "left" do
+    = f.text_field :keyword_list,
+                    placeholder: t("activerecord.attributes.content.keyword_list"),
+                   value: f.object.keyword_list.join(","),
+                   class: "form-control input-tags"
 
 .actions
   = f.link_to_remove class: "btn btn-xs btn-link" do

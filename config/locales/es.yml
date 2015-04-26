@@ -45,13 +45,13 @@
       time_ago: "hace %{time_ago}"
       delete: eliminó este registro
       restore: restauró este registro
-
     contents:
       new: "Nuevo Contenido"
       edit: "Editar Contenido"
       created: "Contenido creado"
       updated: "Contenido actualizado"
       show: "Mostrar contenidos"
+      keyword_list_form_instructions: Separadas por coma
       levels:
         "1": "Principiante"
         "2": "Intermedio"
@@ -307,7 +307,7 @@
         level: "Nivel"
         kind: "Tipo"
         description: "Descripción"
-        keyword_list: "Palabras claves"
+        keyword_list: "Palabras clave"
     errors:
       messages:
         <<: *errors_messages

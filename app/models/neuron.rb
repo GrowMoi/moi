@@ -73,6 +73,9 @@ class Neuron < ActiveRecord::Base
     end
   end
 
+  ##
+  # validates parent is not a child or child of any of their
+  # children
   def parent_is_not_child
     parent_is_child = false
     candidate = Neuron.find_by(id: parent_id)

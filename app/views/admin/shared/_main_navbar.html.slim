@@ -12,7 +12,7 @@ nav.navbar.navbar-default.navbar-static-top.main-navbar
           = nav_item "neurons", admin_neurons_path
 
       ul.nav.navbar-nav.navbar-right
-        li.dropdown
+        li.dropdown.current-user-dropdown
           = link_to "#", data: {toggle: "dropdown"} do
             = decorated_current_user.avatar(class: "navbar-avatar margin-right")
             = decorated_current_user.name
