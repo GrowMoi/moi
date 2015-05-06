@@ -18,23 +18,29 @@ class KnowledgeSearch
     end
   end
 
+  def results
+    search.data.items
+  end
+
   ##
   # @return [Google::APIClient::Schema::Customsearch::V1::Search]
-  #   Search results
   def search
-    google_client.execute(
+    @search ||= google_client.execute(
       search_api.cse.list,
       q: query,
       cx: search_engine.gcse_id,
       lr: "lang_#{lang}" # "lang_es" | "lang_en"
-    ).data # .items
+    )
   end
 
   private
 
   def search_engine
     @search_engine ||=
-      SearchEngine.active.find_by!(slug: source)
+      SearchEngine.active
+                  .find_by!(
+                    slug: source.downcase
+                  )
   end
 
   def search_api

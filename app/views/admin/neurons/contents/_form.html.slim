@@ -14,6 +14,19 @@
                    value: f.object.keyword_list.join(","),
                    class: "form-control input-tags"
 
+.form-group.content-form-source
+  .row
+    .col-xs-11
+      = f.text_field :source,
+                     placeholder: t("activerecord.attributes.content.source"),
+                     class: "form-control"
+    .col-xs-1.external-source-btn
+      = tooltip t("views.contents.external_source"),
+                place: "right" do
+        = link_to "#", id: "knowledge-search-btn",
+                       class: "btn btn-default" do
+          .glyphicon.glyphicon-globe
+
 .actions
   = f.link_to_remove class: "btn btn-xs btn-link" do
     span.glyphicon.glyphicon-remove.text-danger

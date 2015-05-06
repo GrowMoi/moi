@@ -52,6 +52,8 @@
       updated: "Contenido actualizado"
       show: "Mostrar contenidos"
       keyword_list_form_instructions: Separadas por coma
+      external_source: Consultar fuente externa
+      search_query: Términos de búsqueda
       levels:
         "1": "Principiante"
         "2": "Intermedio"
@@ -308,6 +310,7 @@
         kind: "Tipo"
         description: "Descripción"
         keyword_list: "Palabras clave"
+        source: Fuente
     errors:
       messages:
         <<: *errors_messages
@@ -329,6 +332,7 @@
     logout: Cerrar sesión
     my_profile: Mi perfil
     preview: Vista previa
+    search: Buscar
 
   user_mailer:
     change_permission:

@@ -21,4 +21,8 @@ class SearchEngine < ActiveRecord::Base
     validates :gcse_id, presence: true,
                         uniqueness: true
   end
+
+  def to_s
+    name
+  end
 end
