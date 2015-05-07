@@ -11,7 +11,7 @@ describe "neurons as curador" do
     include_context "form features"
     include_context "neuron form features"
 
-    feature "curador can create neurons" do
+    feature "curador can create neurons", js: true do
       before {
         visit new_admin_neuron_path
         fill_form!
@@ -25,7 +25,7 @@ describe "neurons as curador" do
       }
     end
 
-    feature "curador can add contents through neurons" do
+    feature "curador can add contents through neurons", js: true do
       let(:created_neuron) { Neuron.last }
       let(:created_content) { created_neuron.contents.first }
       let(:description) { "First content description" }
@@ -33,6 +33,7 @@ describe "neurons as curador" do
       before {
         visit new_admin_neuron_path
         fill_form!
+        select_contents_tab!
         first_textarea.set description
         expect {
           submit_form!
@@ -57,7 +58,7 @@ describe "neurons as curador" do
       }
     end
 
-    feature "update neuron" do
+    feature "update neuron", js: true do
       let!(:existing_neuron) { create :neuron }
 
       before {
