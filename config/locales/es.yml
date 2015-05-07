@@ -52,6 +52,9 @@
       updated: "Contenido actualizado"
       show: "Mostrar contenidos"
       keyword_list_form_instructions: Separadas por coma
+      external_source: Consultar fuente externa
+      external_source_help: Copia y pega el texto que necesites. La fuente será agregada automáticamente
+      search_query: Términos de búsqueda
       levels:
         "1": "Principiante"
         "2": "Intermedio"
@@ -308,6 +311,7 @@
         kind: "Tipo"
         description: "Descripción"
         keyword_list: "Palabras clave"
+        source: Fuente
     errors:
       messages:
         <<: *errors_messages
@@ -329,6 +333,7 @@
     logout: Cerrar sesión
     my_profile: Mi perfil
     preview: Vista previa
+    search: Buscar
 
   user_mailer:
     change_permission:

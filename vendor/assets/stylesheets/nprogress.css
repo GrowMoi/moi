@@ -39,7 +39,7 @@
   right: 15px;
 }
 
-#nprogress .spinner-icon {
+.spinner-icon {
   width: 18px;
   height: 18px;
   box-sizing: border-box;

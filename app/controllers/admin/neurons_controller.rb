@@ -24,6 +24,10 @@ module Admin
       end
     }
 
+    expose(:search_engines) {
+      SearchEngine.active
+    }
+
     def index
       respond_to do |format|
         format.html

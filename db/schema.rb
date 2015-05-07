@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150329135001) do
+ActiveRecord::Schema.define(version: 20150425181933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20150329135001) do
     t.integer  "neuron_id",   null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "source"
   end
 
   add_index "contents", ["neuron_id"], name: "index_contents_on_neuron_id", using: :btree
@@ -38,6 +39,18 @@ ActiveRecord::Schema.define(version: 20150329135001) do
   add_index "neurons", ["deleted"], name: "index_neurons_on_deleted", using: :btree
   add_index "neurons", ["parent_id"], name: "index_neurons_on_parent_id", using: :btree
   add_index "neurons", ["title"], name: "index_neurons_on_title", using: :btree
+
+  create_table "search_engines", force: :cascade do |t|
+    t.string   "name",                      null: false
+    t.string   "slug",                      null: false
+    t.boolean  "active",     default: true
+    t.string   "gcse_id",                   null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "search_engines", ["gcse_id"], name: "index_search_engines_on_gcse_id", unique: true, using: :btree
+  add_index "search_engines", ["slug"], name: "index_search_engines_on_slug", unique: true, using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"

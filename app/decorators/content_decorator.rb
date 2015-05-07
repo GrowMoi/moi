@@ -6,4 +6,12 @@ class ContentDecorator < LittleDecorator
       end.join.html_safe
     end
   end
+
+  def source
+    if record.source.present?
+      link_to record.source,
+              record.source,
+              target: "_blank"
+    end
+  end
 end
