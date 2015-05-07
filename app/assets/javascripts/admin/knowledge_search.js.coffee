@@ -34,6 +34,10 @@ class KnowledgeSearch
     @hideSpinner()
     resultsHtml = template(data)
     $(@resultsId).html(resultsHtml)
+    @reloadModal()
+
+  reloadModal: ->
+    @$el.modal "handleUpdate"
 
   resultSelected: (e) =>
     @showSpinner()
@@ -46,6 +50,7 @@ class KnowledgeSearch
     $results.append iframe
     # @$input.attr "disabled", "disabled"
     @$input.val src
+    @reloadModal()
 
   showSpinner: =>
     @$el.find(".loading-spinner").removeClass("hidden")
