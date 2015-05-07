@@ -46,8 +46,8 @@ class KnowledgeSearch
     iframe.on "load", @hideSpinner
     $results = $(@resultsId)
     externalLink = $("<a />", href: src, target: "_blank", html: src)
-    $results.html externalLink
-    $results.append iframe
+    $results.html iframe
+    $results.append externalLink
     # @$input.attr "disabled", "disabled"
     @$input.val src
     @reloadModal()
