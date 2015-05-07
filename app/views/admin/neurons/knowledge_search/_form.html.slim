@@ -1,5 +1,7 @@
+= render "admin/neurons/knowledge_search/result_template"
+
 .modal.fade.knowledge-search-form
-  .modal-dialog
+  .modal-dialog.modal-lg
     .modal-content
       .modal-header
         button.close data-dismiss="modal" &times;
@@ -20,5 +22,9 @@
               = submit_tag t("actions.search"),
                            class: "btn btn-primary"
 
-        .knowledge-search-results.hidden
-          hr
+
+        hr
+        .hidden.loading-spinner
+          .spinner-icon
+
+        .knowledge-search-results
