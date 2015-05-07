@@ -1,0 +1,3 @@
+class SearchEngineDecorator < LittleDecorator
+
+end

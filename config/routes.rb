@@ -57,6 +57,7 @@ Moi::Application.routes.draw do
   namespace :admin do
     # resource :dashboard, only: :index
     resources :users
+    resources :settings, only: :index
     resource :external_search, only: :create
 
     # preview
