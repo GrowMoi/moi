@@ -47,6 +47,10 @@
       time_ago: "hace %{time_ago}"
       delete: eliminó este registro
       restore: restauró este registro
+    search_engine:
+      active_status:
+        "true": Activo
+        "false": Inactivo
     contents:
       new: "Nuevo Contenido"
       edit: "Editar Contenido"

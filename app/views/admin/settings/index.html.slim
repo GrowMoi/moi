@@ -1,6 +1,5 @@
 - content_for :title, t("activerecord.models.settings")
 
 - if can? :manage, SearchEngine
-  h3 = t("views.search_engines")
-  - search_engines.each do |search_engine|
-    = render search_engine
+  = render "admin/search_engines/index"
+  hr

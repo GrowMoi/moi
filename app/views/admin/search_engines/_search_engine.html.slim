@@ -1,4 +1,3 @@
-.row
-  .col-xs-10
-    = search_engine.name
-  .col-xs-2 editar
+= link_to admin_search_engine_path(search_engine) do
+  = search_engine.name
+  = search_engine.status_label unless search_engine.active?
