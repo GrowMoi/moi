@@ -1,12 +1,12 @@
 - content_for :title, t("views.search_engines")
 
-h3 = search_engine.name
+h3 = decorated_search_engine.name
 
 p
-  = search_engine.status_label
-  code = search_engine.slug
+  = decorated_search_engine.status_label
+  code = decorated_search_engine.slug
 
-code = search_engine.gcse_id
+code = decorated_search_engine.gcse_id
 
 hr
 

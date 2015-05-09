@@ -14,6 +14,11 @@ module Admin
           error: I18n.t("views.unauthorized")
         ) if current_user.cliente?
       end
+
+      # for navbar
+      def nav_item
+        self.class.name
+      end
     end
   end
 end

@@ -60,7 +60,7 @@ Moi::Application.routes.draw do
 
     # settings
     resources :settings, only: :index
-    resources :search_engines, except: :index
+    resources :search_engines, except: [:index, :destroy]
 
     # preview
     match "neurons/preview" => "neurons/preview#preview",

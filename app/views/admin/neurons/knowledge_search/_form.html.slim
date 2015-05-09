@@ -19,7 +19,7 @@
               = t("views.contents.external_source_help")
             .form-group.provider
               = select_tag :provider,
-                           options_for_select(search_engines)
+                           options_from_collection_for_select(search_engines, :slug, :name)
             .form-group.actions
               = submit_tag t("actions.search"),
                            class: "btn btn-primary"

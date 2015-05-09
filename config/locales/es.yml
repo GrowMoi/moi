@@ -48,6 +48,11 @@
       delete: eliminó este registro
       restore: restauró este registro
     search_engine:
+      edit: Editar motor de búsqueda
+      new: Nuevo motor de búsqueda
+      gcse_help_block: Identificador de Google único para este motor
+      updated: Motor de búsqueda actualizado
+      created: Motor de búsqueda creado
       active_status:
         "true": Activo
         "false": Inactivo
@@ -320,6 +325,10 @@
         description: "Descripción"
         keyword_list: "Palabras clave"
         source: Fuente
+      search_engine:
+        name: Nombre
+        gcse_id: CSE id
+        active: Activo
     errors:
       messages:
         <<: *errors_messages
