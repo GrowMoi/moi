@@ -12,6 +12,7 @@ module Admin
     }
 
     def create
+      authorize! :search, Content
       render json: {
         results: formatted_results
       }

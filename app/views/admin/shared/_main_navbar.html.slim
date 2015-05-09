@@ -10,6 +10,8 @@ nav.navbar.navbar-default.navbar-static-top.main-navbar
           = nav_item "users", admin_users_path
         - if can? :read, Neuron
           = nav_item "neurons", admin_neurons_path
+        - if can? :manage, :all
+          = nav_item "settings", admin_settings_path
 
       ul.nav.navbar-nav.navbar-right
         li.dropdown.current-user-dropdown

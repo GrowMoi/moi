@@ -12,7 +12,9 @@ class ApplicationController < ActionController::Base
 
   # cancan
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_path, error: I18n.t("views.unauthorized")
+    redirect_to root_path,
+                status: :forbidden,
+                error: I18n.t("views.unauthorized")
   end
 
   expose(:decorated_current_user) {

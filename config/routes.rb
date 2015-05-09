@@ -57,7 +57,10 @@ Moi::Application.routes.draw do
   namespace :admin do
     # resource :dashboard, only: :index
     resources :users
-    resource :external_search, only: :create
+
+    # settings
+    resources :settings, only: :index
+    resources :search_engines, except: [:index, :destroy]
 
     # preview
     match "neurons/preview" => "neurons/preview#preview",
@@ -72,6 +75,7 @@ Moi::Application.routes.draw do
         post :restore
       end
     end
+    resource :external_search, only: :create
 
     root "dashboard#index"
   end
