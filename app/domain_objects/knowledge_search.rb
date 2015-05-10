@@ -50,6 +50,8 @@ class KnowledgeSearch
 
   def google_client
     @google_client ||= Google::APIClient.new(
+      application_name: "moi",
+      application_version: 1.0,
       key: Rails.application.secrets.google_api_key,
       authorization: nil
     )
