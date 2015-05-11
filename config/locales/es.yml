@@ -355,3 +355,8 @@
   user_mailer:
     change_permission:
       subject: "Cambio de permisos"
+
+  devise:
+    sessions:
+      user:
+        already_signed_out: Ya cerraste sesión

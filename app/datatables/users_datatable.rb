@@ -34,11 +34,13 @@ private
 
   def fetch_users
     users = User.order("#{sort_column} #{sort_direction}")
-    users = users.page(page).per(per_page)
     if params[:sSearch].present?
-      users = users.where("name like :search or email like :search or role like :search", search: "%#{params[:sSearch]}%")
+      users = users.where(
+        "name ILIKE :search OR email ILIKE :search",
+        search: "%#{params[:sSearch]}%"
+      )
     end
-    users
+    users.page(page).per(per_page)
   end
 
   def page

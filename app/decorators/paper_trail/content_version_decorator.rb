@@ -8,6 +8,8 @@ module PaperTrail
       case key
       when "kind"
         t("views.contents.kinds.#{value}")
+      when "level"
+        t("views.contents.levels.#{value}")
       else
         super
       end
