@@ -55,7 +55,7 @@ Moi::Application.routes.draw do
   #     resources :products
   #   end
   namespace :admin do
-    # resource :dashboard, only: :index
+    resource :dashboard, only: :index
     resources :users
 
     # settings

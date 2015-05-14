@@ -1,6 +1,10 @@
 module Admin
   class DashboardController < AdminController::Base
-    def index
-    end
+    expose(:neurons) {
+      Neuron.try(neurons_state.to_sym)
+    }
+    expose(:neurons_state) {
+      params[:state] ||= "approved"
+    }
   end
 end

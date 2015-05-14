@@ -1,0 +1,9 @@
+div.row
+  .col-xs-6
+    h5 = neuron.title
+    h6.text-muted = neuron.parent
+  .col-xs-6
+    = link_to t("views.neurons.show"),
+              admin_neuron_path(neuron),
+              class: "btn btn-link pull-right"
+hr

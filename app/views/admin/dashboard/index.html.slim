@@ -1,0 +1,6 @@
+h3 = t("activerecord.models.neuron").pluralize
+
+= neuron_tabs :approved, :pending
+
+.landing-page-neurons
+  = render partial: "neuron", collection: neurons

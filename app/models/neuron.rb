@@ -13,6 +13,8 @@
 class Neuron < ActiveRecord::Base
   has_paper_trail ignore: [:created_at, :id]
 
+  enum state: [:pending, :approved]
+
   scope :active, -> { where(deleted: false) }
   scope :inactive, -> { where(deleted: true) }
 
