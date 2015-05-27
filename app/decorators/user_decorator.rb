@@ -8,6 +8,14 @@ class UserDecorator < LittleDecorator
   # @!group avatar
 
   ##
+  # @param options [Hash]
+  # @option options [Integer] :size eg 300
+  def gravatar_url(options = {})
+    size = options[:size] || GRAVATAR_SIZE
+    "http://www.gravatar.com/avatar/#{email_hexdigest}?d=#{GRAVATAR_DEFAULT}&s=#{size}"
+  end
+
+  ##
   # size: 35px
   def avatar(opts = {})
     options = opts.merge(class: "avatar #{opts[:class]}")
@@ -21,23 +29,15 @@ class UserDecorator < LittleDecorator
               class: "avatar avatar-big"
   end
 
-  # @!endgroup
-  ##
-
   def avatar_with_link
     link_to avatar, record_path
   end
 
+  # @!endgroup
+  ##
+
   def name_with_link
     link_to name, record_path
-  end
-
-  ##
-  # @param options [Hash]
-  # @option options [Integer] :size eg 300
-  def gravatar_url(options = {})
-    size = options[:size] || GRAVATAR_SIZE
-    "http://www.gravatar.com/avatar/#{email_hexdigest}?d=#{GRAVATAR_DEFAULT}&s=#{size}"
   end
 
   def role_label
