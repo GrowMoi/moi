@@ -7,16 +7,23 @@ RSpec.describe Admin::DashboardController,
       create :user, :admin
     }
 
-    #default neuron is state pending
+    # default neuron state is pending
     let!(:pending_neuron) { create :neuron }
 
     let!(:approved_neuron) {
       create :neuron, state: :approved
     }
 
+    before {
+      sign_in current_user
+    }
+
+    it {
+      expect(pending_neuron.state).to eq("pending")
+    }
+
     describe "should get approved neuron" do
       before {
-        sign_in current_user
         get :index, state: 'approved'
       }
 
@@ -27,13 +34,22 @@ RSpec.describe Admin::DashboardController,
 
     describe "should get pending neuron" do
       before {
-        sign_in current_user
         get :index, state: 'pending'
       }
 
       it {
         expect(controller.neurons).to include(pending_neuron)
       }
+    end
+
+    describe "invalid params" do
+      before {
+        get :index, state: "something-bad"
+      }
+
+      it "uses default scope" do
+        expect(controller.neurons).to include(approved_neuron)
+      end
     end
   end
 end
