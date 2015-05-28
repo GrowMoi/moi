@@ -42,6 +42,7 @@ gem 'little_decorator', github: 'macool/little_decorator'
 gem 'nested_form'
 gem 'acts-as-taggable-on'
 gem 'google-api-client'
+gem 'searchlight'
 
 group :doc do
   gem 'yard'

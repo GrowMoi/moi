@@ -1,7 +1,17 @@
 - content_for :title, t("activerecord.models.neuron").pluralize
 
-.text-center
-  = neuron_switcher
+.text-center = neuron_switcher
+
+.row
+  .col-lg-6
+    = form_tag(admin_root_path, method: :get) do
+      .input-group.search_box
+        = hidden_field_tag :state, neurons_state
+        = text_field_tag :q, params[:q], class: "form-control"
+        span.input-group-btn
+          = submit_tag t("actions.search"),
+                       class: "btn btn-default",
+                       data: { disable_with: t("views.submitting") }
 
 .landing-page-neurons
   = render partial: "neuron", collection: neurons
