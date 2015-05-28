@@ -16,14 +16,13 @@ class NeoImporter
             if attributes[:description].present?
               neuron.contents.create!(attributes)
             else
-              puts "WARN: Discarding content:"
-              puts attributes
+              # puts "WARN: Discarding content:"
+              # puts attributes
             end
           end
         end
       end
-      puts "Created: "
-      puts "#{@created_neuron.title}"
+      puts "Created: #{@created_neuron.title}, parent: #{@created_neuron.parent.try(:title)}"
       @created_neuron
     end
 
@@ -56,8 +55,16 @@ class NeoImporter
     end
 
     def create_neuron!
+      title = node.name
+
+      dup_i = 1
+      while Neuron.exists?(title: title)
+        title = "#{node.name} (DUP #{dup_i})"
+        dup_i += 1
+      end
+
       @created_neuron = Neuron.create!(
-        title: node.name,
+        title: title,
         parent_id: parent.try(:id)
       )
     end
