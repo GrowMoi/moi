@@ -1,6 +1,12 @@
 module Admin
   class DashboardController < AdminController::Base
     expose(:neurons) {
+      NeuronSearch.custom_search(
+        scope: neuron_scope,
+        q: params[:q]
+      ).results
+    }
+    expose(:neuron_scope) {
       Neuron.where(state: state)
     }
     expose(:neurons_state) {
