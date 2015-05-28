@@ -46,6 +46,7 @@ gem 'acts-as-taggable-on'
 gem 'google-api-client'
 gem 'searchlight'
 gem 'spellchecker'
+gem 'carrierwave'
 
 group :doc do
   gem 'yard'
@@ -68,6 +69,7 @@ group :development do
   gem 'meta_request'
   gem 'rack-mini-profiler'
   gem 'annotate'
+  gem 'neography', github: "maxdemarzi/neography", require: false
 end
 
 group :staging do
