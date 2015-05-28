@@ -5,6 +5,7 @@ module Admin
         scope: neuron_scope,
         q: params[:q]
       ).results
+       .accessible_by(current_ability, :index)
     }
     expose(:neuron_scope) {
       Neuron.where(state: state)
