@@ -1,6 +1,7 @@
-h3 = t("activerecord.models.neuron").pluralize
+- content_for :title, t("activerecord.models.neuron").pluralize
 
-= neuron_tabs :approved, :pending
+.text-center
+  = neuron_switcher
 
 .landing-page-neurons
   = render partial: "neuron", collection: neurons

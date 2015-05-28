@@ -1,16 +1,17 @@
 module DashboardHelper
   ##
-  # Creates tabs for different neuron states
+  # Creates a switcher for different neuron states
+  # picks states from Neuron model
   #
-  # @param states [Array] neuron states to display
   # @return [String] tabs for neuron states
-  def neuron_tabs(*states)
-    content_tag :ul, class: "nav nav-tabs" do
+  def neuron_switcher
+    states = Neuron.states.keys
+    content_tag :div, class: "btn-group" do
       states.map do |state|
-        active_class = "active" if neurons_state == state.to_s
-        content_tag :li, class: active_class do
-          link_to t("views.neurons.#{state}"), state: state
-        end
+        active = "active" if neurons_state == state
+        link_to t("views.neurons.#{state}"),
+                admin_root_path(state: state),
+                class: "btn btn-default #{active}"
       end.join.html_safe
     end
   end
