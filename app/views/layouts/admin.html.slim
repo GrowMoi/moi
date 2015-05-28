@@ -13,9 +13,10 @@ html
 
       .main-content.container-fluid
         h1.text-center = yield :title
-        
-        ol.breadcrumb
-          = render_breadcrumbs tag: :li, separator: ""
-          
+
+        - if breadcrumbs.any?
+          ol.breadcrumb
+            = render_breadcrumbs tag: :li, separator: ""
+
         = render "layouts/flashes"
         = yield

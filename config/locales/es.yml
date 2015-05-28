@@ -41,6 +41,8 @@
       general: General
       restore: "Neurona restaurada"
       delete: "Neurona eliminada"
+      approved: Aprobado
+      pending: Pendiente
     changelog:
       update: actualizó
       create: creó este registro con

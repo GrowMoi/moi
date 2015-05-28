@@ -1,0 +1,7 @@
+- content_for :title, t("activerecord.models.neuron").pluralize
+
+.text-center
+  = neuron_switcher
+
+.landing-page-neurons
+  = render partial: "neuron", collection: neurons
