@@ -1,15 +1,32 @@
+$height: 100px
+
 .neuron_dashboard
   padding-top: 10px
-  &:link
+  position: relative
+  .neuron-show
     text-decoration: none
   .neuron_dashboard_content
     border-radius: 0.3em
     border: 1px solid #eee
-    height: 100px
+    height: $height
     padding: 5px 10px
     overflow: hidden
     &:hover
       box-shadow: 0 1px 2px #ccc
+
+  &:hover
+    .neuron-edit
+      display: block
+
+  .neuron-edit
+    text-decoration: none
+    position: absolute
+    top: $height - 20
+    right: 25px
+    display: none
+    &:hover
+      text-shadow: 0 1px 1px #aaa
+
 .search_box
   padding-top: 10px
   .form-control
