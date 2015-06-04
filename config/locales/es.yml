@@ -43,6 +43,7 @@
       delete: "Neurona eliminada"
       approved: Aprobado
       pending: Pendiente
+      deleted: Eliminado
     changelog:
       update: actualizó
       create: creó este registro con

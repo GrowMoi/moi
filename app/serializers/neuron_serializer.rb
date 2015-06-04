@@ -7,7 +7,7 @@
 #  parent_id  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  deleted    :boolean          default(FALSE)
+#  state      :integer          default(0)
 #
 
 class NeuronSerializer < ActiveModel::Serializer
@@ -15,4 +15,7 @@ class NeuronSerializer < ActiveModel::Serializer
              :parent_id,
              :title,
              :deleted
+  def deleted
+    object.state === "deleted"
+  end
 end

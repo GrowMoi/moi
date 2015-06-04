@@ -7,7 +7,7 @@
 #  parent_id  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  deleted    :boolean          default(FALSE)
+#  state      :integer          default(0)
 #
 
 require 'rails_helper'
