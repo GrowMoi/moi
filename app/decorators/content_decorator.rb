@@ -16,27 +16,33 @@ class ContentDecorator < LittleDecorator
   end
 
   def spellcheck_description
-    description = record.description || ""
-    results = Spellchecker.check(description, dictionary = I18n.locale.to_s)
-    words = content_tag :div do
-      content_words = content_tag(:span)
-      results.each do |w|
-        if w[:correct]
-          word = w[:original]
-        else
-          suggestions = w[:suggestions].take(3)
-          suggestions = suggestions.join(" | ")
-          word = content_tag(:span, "#{w[:original]}",
-            class: " bs-tooltip text-danger",
-            title: suggestions,
-            "data-toggle" => "tooltip",
-            "data-placement" => "top" )
-        end
-        content_words = content_words + " " + word
-      end
-      content_words
+    @spellchecked_description ||= spellchecked_description
+  rescue RuntimeError => e
+    if e.message == "Aspell command not found"
+      # aspell is not present. gracefully fallback
+      # to original description
+      return record.description
+    else
+      raise e
     end
-    return words
   end
 
+  private
+
+  def spellchecked_description
+    Spellchecker.check(
+      record.description.to_s,
+      I18n.locale.to_s
+    ).map do |w|
+      if w[:correct]
+        w[:original]
+      else
+        suggestions = w[:suggestions].first(3).join(" | ")
+        content_tag(:span,
+                    w[:original] + " ",
+                    class: "bs-tooltip text-danger",
+                    title: suggestions)
+      end
+    end.join(" ").html_safe
+  end
 end
