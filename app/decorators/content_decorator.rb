@@ -15,8 +15,8 @@ class ContentDecorator < LittleDecorator
     end
   end
 
-  def spellcheck_description
-    @spellchecked_description ||= spellchecked_description
+  def description_spellchecked
+    @spellchecked_description ||= spellcheck_description
   rescue RuntimeError => e
     if e.message == "Aspell command not found"
       # aspell is not present. gracefully fallback
@@ -29,7 +29,7 @@ class ContentDecorator < LittleDecorator
 
   private
 
-  def spellchecked_description
+  def spellcheck_description
     Spellchecker.check(
       record.description.to_s,
       I18n.locale.to_s
