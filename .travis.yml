@@ -6,6 +6,9 @@ rvm:
 bundler_args: --without development
 addons:
   postgresql: 9.3
+  apt:
+    packages:
+      - aspell-es
 env:
   - RAILS_ENV=test
 before_script:

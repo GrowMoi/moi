@@ -43,6 +43,7 @@ gem 'nested_form'
 gem 'acts-as-taggable-on'
 gem 'google-api-client'
 gem 'searchlight'
+gem 'spellchecker'
 
 group :doc do
   gem 'yard'

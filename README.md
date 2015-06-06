@@ -7,7 +7,7 @@
 
 - postgresql
 - phantomjs (to run specs) See [Installing phantomjs](https://github.com/teampoltergeist/poltergeist#installing-phantomjs)
-- qt (for specs to [compile `capybara-webkit`](https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit))
+- aspell (for spellchecker). If this package is not found, it just won't check. You can install on mac with homebrew: `brew install aspell --with-lang-es`
 
 #### resources
 
