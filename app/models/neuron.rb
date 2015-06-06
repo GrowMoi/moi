@@ -7,16 +7,17 @@
 #  parent_id  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  deleted    :boolean          default(FALSE)
+#  state      :integer          default(0)
 #
 
 class Neuron < ActiveRecord::Base
   has_paper_trail ignore: [:created_at, :id]
 
-  enum state: [:pending, :approved]
+  scope :not_deleted, -> {
+    where.not(state: states.fetch(:deleted))
+  }
 
-  scope :active, -> { where(deleted: false) }
-  scope :inactive, -> { where(deleted: true) }
+  enum state: [:pending, :approved, :deleted]
 
   begin :relationships
     has_many :contents, dependent: :destroy

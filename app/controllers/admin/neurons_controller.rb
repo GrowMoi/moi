@@ -8,7 +8,7 @@ module Admin
       if current_user.admin?
         Neuron.all
       else
-        Neuron.active
+        Neuron.not_deleted
       end
     }
 
@@ -65,7 +65,7 @@ module Admin
 
     def delete
       neuron.paper_trail_event = "delete"
-      neuron.update! deleted: true
+      neuron.update! state: :deleted
       redirect_to(
         {action: :index},
         notice: I18n.t("views.neurons.delete")
@@ -74,7 +74,7 @@ module Admin
 
     def restore
       neuron.paper_trail_event = "restore"
-      neuron.update! deleted: false
+      neuron.update! state: :pending
       redirect_to(
         {action: :index},
         notice: I18n.t("views.neurons.restore")

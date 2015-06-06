@@ -7,7 +7,7 @@
 #  parent_id  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  deleted    :boolean          default(FALSE)
+#  state      :integer          default(0)
 #
 
 FactoryGirl.define do
@@ -19,7 +19,7 @@ FactoryGirl.define do
     end
 
     trait :inactive do
-      deleted true
+      state :deleted
     end
   end
 end
