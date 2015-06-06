@@ -13,6 +13,10 @@
 class Neuron < ActiveRecord::Base
   has_paper_trail ignore: [:created_at, :id]
 
+  scope :not_deleted, -> {
+    where.not(state: states.fetch(:deleted))
+  }
+
   enum state: [:pending, :approved, :deleted]
 
   begin :relationships

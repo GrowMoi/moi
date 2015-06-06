@@ -55,7 +55,7 @@ RSpec.describe Admin::NeuronsController,
 
       before {
         sign_in admin
-        get :index
+        get :index, format: :json
       }
 
       it {
@@ -63,6 +63,10 @@ RSpec.describe Admin::NeuronsController,
       }
       it {
         is_expected.to include(active_neuron)
+      }
+      it {
+        # json includes a deleted neuron
+        expect(response.body).to include("\"deleted\":true")
       }
     end
 
@@ -103,6 +107,24 @@ RSpec.describe Admin::NeuronsController,
           is_expected.to eq(active_neuron)
         }
       end
+    end
+  end
+
+  describe "admin actions" do
+    let!(:admin) { create :user, :admin }
+
+    before { sign_in admin }
+
+    describe "#delete" do
+      let!(:neuron) { create :neuron }
+      before { post :delete, id: neuron.id }
+      it { expect(neuron.reload).to be_deleted }
+    end
+
+    describe "#restore" do
+      let!(:neuron) { create :neuron }
+      before { post :restore, id: neuron.id }
+      it { expect(neuron.reload).to be_pending }
     end
   end
 end

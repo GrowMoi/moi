@@ -15,7 +15,8 @@ class NeuronSerializer < ActiveModel::Serializer
              :parent_id,
              :title,
              :deleted
+
   def deleted
-    object.state === "deleted"
+    object.deleted?
   end
 end
