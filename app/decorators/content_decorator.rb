@@ -28,7 +28,7 @@ class ContentDecorator < LittleDecorator
   end
 
   private
-  
+
   def spellcheck_error
     if record.description.present?
       aspell_error = content_tag(
@@ -36,7 +36,7 @@ class ContentDecorator < LittleDecorator
         I18n.t("views.contents.aspell_not_present"),
         class: "small text-danger"
       )
-      record.description + aspell_error
+      (record.description + aspell_error).html_safe
     end
   end
 
