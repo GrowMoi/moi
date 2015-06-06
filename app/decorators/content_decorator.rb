@@ -21,7 +21,7 @@ class ContentDecorator < LittleDecorator
     if e.message == "Aspell command not found"
       # aspell is not present. gracefully fallback
       # to original description
-      return record.description.to_s + spellchecker_error
+      return spellcheck_error
     else
       raise e
     end
@@ -29,12 +29,15 @@ class ContentDecorator < LittleDecorator
 
   private
   
-  def spellchecker_error
-    content_tag(
-      :div,
-      I18n.t("views.contents.aspell_not_present"),
-      class: "small text-danger"
-    )
+  def spellcheck_error
+    if record.description.present?
+      aspell_error = content_tag(
+        :div,
+        I18n.t("views.contents.aspell_not_present"),
+        class: "small text-danger"
+      )
+      record.description + aspell_error
+    end
   end
 
   def spellcheck_description
