@@ -7,6 +7,16 @@ class ContentDecorator < LittleDecorator
     end
   end
 
+  def media
+    if record.media?
+      link_to record.media_url,
+              class: "content-media",
+              target: "_blank" do
+        render_media
+      end
+    end
+  end
+
   def source
     if record.source.present?
       link_to record.source,
@@ -28,6 +38,20 @@ class ContentDecorator < LittleDecorator
   end
 
   private
+
+  def render_media
+    file = record.media.file
+    images = %w(jpg jpeg gif png)
+    case file.extension
+    when *images
+      image_tag record.media_url
+    else
+      glyphicon = content_tag :span,
+                              nil,
+                              class: "glyphicon glyphicon-paperclip"
+      glyphicon + " " + file.filename
+    end
+  end
 
   def spellcheck_error
     if record.description.present?

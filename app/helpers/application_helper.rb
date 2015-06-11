@@ -48,7 +48,7 @@ module ApplicationHelper
   def tooltip(title, options = {})
     opts = { place: "top" }.merge(options)
     content_tag :div,
-                class: "bs-tooltip",
+                class: "bs-tooltip #{opts[:class]}",
                 title: title,
                 data: {
                   toggle: "tooltip",
