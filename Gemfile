@@ -29,6 +29,8 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
+
 gem 'slim'
 gem 'devise'
 gem 'decent_exposure'
@@ -80,6 +82,8 @@ gem 'puma'
 
 #use airbrake to track errors
 gem 'airbrake'
+
+gem 'foreman'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development

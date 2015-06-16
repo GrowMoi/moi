@@ -18,3 +18,5 @@ config/database.yml
 .yardoc/
 .c9/
 doc/
+.env
+public/assets/
