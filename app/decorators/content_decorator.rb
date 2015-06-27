@@ -8,7 +8,7 @@ class ContentDecorator < LittleDecorator
   end
 
   def media
-    if record.media?
+    if record.media.to_s.present?
       link_to record.media_url,
               class: "content-media",
               target: "_blank" do
