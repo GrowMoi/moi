@@ -69,7 +69,7 @@ group :development do
   gem 'meta_request'
   gem 'rack-mini-profiler'
   gem 'annotate'
-  gem 'neography', github: "maxdemarzi/neography", require: false
+  # gem 'neography', github: "maxdemarzi/neography", require: false
 end
 
 group :staging do

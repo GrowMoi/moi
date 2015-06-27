@@ -1,3 +1,6 @@
+# If you use this, please uncomment `neography`
+# from Gemfile
+
 require "neography"
 require "neo_importer/neuron_node"
 
