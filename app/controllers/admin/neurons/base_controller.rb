@@ -39,7 +39,8 @@ module Admin
                         :neuron_id,
                         :_destroy,
                         :keyword_list,
-                        :source
+                        :source,
+                        :media
                       ]
       rescue ActionController::ParameterMissing
         Hash.new

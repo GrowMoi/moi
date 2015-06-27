@@ -10,6 +10,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  source      :string
+#  media       :string
 #
 
 class Content < ActiveRecord::Base
@@ -27,19 +28,32 @@ class Content < ActiveRecord::Base
 
   acts_as_taggable_on :keywords
 
+  mount_uploader :media, ContentMediaUploader
+
   begin :relationships
     belongs_to :neuron
   end
 
   begin :validations
-    validates :description, presence: true
     validates :level, presence: true,
                       inclusion: {in: LEVELS}
     validates :kind, presence: true,
                      inclusion: {in: KINDS}
+    validate :has_description_or_media
   end
 
   def kind
     read_attribute(:kind).try :to_sym
+  end
+
+  private
+
+  def has_description_or_media
+    if description.blank? && !media
+      errors.add(
+        :base,
+        I18n.t("activerecord.errors.messages.content_has_description_or_media")
+      )
+    end
   end
 end

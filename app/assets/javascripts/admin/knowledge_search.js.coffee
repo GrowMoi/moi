@@ -60,7 +60,7 @@ class KnowledgeSearch
 
 knowledgeSearch = new KnowledgeSearch()
 
-$(document).on "click", "#knowledge-search-btn", (e) ->
+$(document).on "click", ".knowledge-search-btn", (e) ->
   $input = $(e.target).closest(".form-group")
                       .find "[name*='[source]']"
   knowledgeSearch.init $input

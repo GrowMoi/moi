@@ -70,6 +70,7 @@
       external_source_help: Copia y pega el texto que necesites. La fuente será agregada automáticamente
       search_query: Términos de búsqueda
       aspell_not_present: "Advertencia: este texto no ha sido revisado ortográficamente"
+      attach_media: Adjuntar multimedia
       levels:
         "1": "Principiante"
         "2": "Intermedio"
@@ -337,6 +338,7 @@
       messages:
         <<: *errors_messages
         circular_parent: "%{child} no puede ser padre de %{parent} dado que alguno de sus padres es %{parent}"
+        content_has_description_or_media: Debe incluir una descripción o un archivo
       template:
         <<: *errors_template
 

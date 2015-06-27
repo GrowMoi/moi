@@ -20,12 +20,29 @@
       = f.text_field :source,
                      placeholder: t("activerecord.attributes.content.source"),
                      class: "form-control"
-    .col-xs-1.external-source-btn
-      = tooltip t("views.contents.external_source"),
-                place: "right" do
-        = link_to "#", id: "knowledge-search-btn",
-                       class: "btn btn-default" do
+
+    .col-xs-1.text-right.external-source-btn
+        = tooltip t("views.contents.external_source"),
+                  place: "bottom",
+                  class: "btn btn-default knowledge-search-btn" do
           .glyphicon.glyphicon-globe
+
+.form-group
+  / media
+  = tooltip t("views.contents.attach_media"),
+            place: "bottom",
+            class: "btn btn-default content-media-uploader" do
+    .glyphicon.glyphicon-paperclip
+
+  .hidden
+    = f.file_field :media
+    = f.hidden_field :media_cache
+
+  span.content-media-name
+    - if f.object.media?
+      = link_to f.object.media.file.filename,
+                f.object.media_url,
+                target: "_blank"
 
 .actions
   = f.link_to_remove class: "btn btn-xs btn-link" do

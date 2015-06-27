@@ -10,6 +10,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  source      :string
+#  media       :string
 #
 
 require 'rails_helper'

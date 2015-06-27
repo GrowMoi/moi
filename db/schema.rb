@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150604023319) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "source"
+    t.string   "media"
   end
 
   add_index "contents", ["neuron_id"], name: "index_contents_on_neuron_id", using: :btree
