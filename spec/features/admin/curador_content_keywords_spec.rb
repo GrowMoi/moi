@@ -16,6 +16,9 @@ describe "curador adds keywords to content" do
   let(:description_textarea) {
     find "[name$='[description]']"
   }
+  let(:source_input) {
+    find "[name$='[source]']"
+  }
 
   before {
     login_as current_user
@@ -33,6 +36,7 @@ describe "curador adds keywords to content" do
       visit edit_admin_neuron_path(neuron)
       select_contents_tab!
       description_textarea.set "Description"
+      source_input.set "http://google.com"
       keywords_input.set keywords_str
       expect {
         submit_form!
@@ -65,6 +69,7 @@ describe "curador adds keywords to content" do
       visit edit_admin_neuron_path(neuron)
       select_contents_tab!
       description_textarea.set "Description"
+      source_input.set "http://google.com"
       keywords_input.set new_keywords.join(",")
       expect {
         submit_form!
