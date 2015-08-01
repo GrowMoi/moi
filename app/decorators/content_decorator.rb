@@ -21,7 +21,7 @@ class ContentDecorator < LittleDecorator
     link_to URI.parse(record.source),
             record.source,
             target: "_blank"
-    rescue URI::InvalidURIError
+  rescue URI::InvalidURIError
     record.source
   end
 
