@@ -22,7 +22,9 @@ FactoryGirl.define do
     sequence(:description) { |n|
       "Content's description #{n}"
     }
-
+    sequence(:source) { |n|
+      "Content's source #{n}"
+    }
     trait :with_keywords do
       keyword_list {
         1.upto(10).map do |i|

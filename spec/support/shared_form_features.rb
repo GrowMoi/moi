@@ -11,6 +11,10 @@ RSpec.shared_context "neuron form features" do
     all("textarea[name*='description']").first
   }
 
+  let(:source_input) {
+    find "[name$='[source]']"
+  }
+
   let(:select_contents_tab!) {
     # select `contents` tab:
     click_on I18n.t("activerecord.models.content").pluralize

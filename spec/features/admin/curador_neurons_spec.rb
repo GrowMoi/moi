@@ -29,12 +29,14 @@ describe "neurons as curador" do
       let(:created_neuron) { Neuron.last }
       let(:created_content) { created_neuron.contents.first }
       let(:description) { "First content description" }
+      let(:source) { "some source" }
 
       before {
         visit new_admin_neuron_path
         fill_form!
         select_contents_tab!
         first_textarea.set description
+        source_input.set source
         expect {
           submit_form!
         }.to change{ Content.count }.by(1)

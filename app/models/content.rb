@@ -40,6 +40,7 @@ class Content < ActiveRecord::Base
     validates :kind, presence: true,
                      inclusion: {in: KINDS}
     validate :has_description_or_media
+    validates :source, presence: true
   end
 
   def kind
