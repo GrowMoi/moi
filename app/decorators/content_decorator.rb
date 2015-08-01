@@ -18,11 +18,11 @@ class ContentDecorator < LittleDecorator
   end
 
   def source
-    if record.source.present?
-      link_to record.source,
-              record.source,
-              target: "_blank"
-    end
+    link_to URI.parse(record.source),
+            record.source,
+            target: "_blank"
+    rescue URI::InvalidURIError
+    record.source
   end
 
   def description_spellchecked
