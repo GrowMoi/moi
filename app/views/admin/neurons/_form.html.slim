@@ -1,7 +1,7 @@
 / knowledge search modal
 = render "admin/neurons/knowledge_search/form"
 
-= nested_form_for [:admin, neuron] do |f|
+= nested_form_for [:admin, neuron], html: {class: "neuron-form"} do |f|
   = render "admin/shared/form_errors", resource: neuron
 
   = f.hidden_field :id
