@@ -18,11 +18,12 @@ class ContentDecorator < LittleDecorator
   end
 
   def source
-    link_to URI.parse(record.source),
-            record.source,
-            target: "_blank"
-  rescue URI::InvalidURIError
-    record.source
+    if record.source =~ (/\A(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?\Z/i)
+      link_to record.source,
+              target: "_blank"
+    else
+      record.source
+    end
   end
 
   def description_spellchecked
