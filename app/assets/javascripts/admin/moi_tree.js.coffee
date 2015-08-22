@@ -37,8 +37,14 @@ class moiTree.Tree
               .attr("height", @height)
               .attr('viewBox',"0 0 #{@width} #{@height}")
               .attr('preserveAspectRatio', 'xMidYMid')
+              .style("overflow", "scroll")
               .append('g')
+              .attr("class","drawarea")
               .attr('transform', 'translate(0,10)')
+    d3.select('svg').call d3.behavior.zoom().scaleExtent([
+      0.5
+      5
+    ]).on('zoom', zoom)
 
   getNeurons: ->
     d3.json @path, @gotNeurons
@@ -78,8 +84,8 @@ class moiTree.Tree
                   .enter()
                   .append("g")
                   .attr("class", "node")
-                  .attr("transform", (d) ->
-                    "translate(#{d.x},#{d.y})"
+                  .attr("transform", (d) =>
+                    "translate(#{d.x}, #{ @height - d.y})"
                   )
     neuron.append("circle")
           .attr("r", 4.5)
@@ -108,8 +114,8 @@ class moiTree.Tree
     @tree.nodes(@rootNeuron)
 
     links = @tree.links(@shownNeurons)
-    diagonal = d3.svg.diagonal().projection((d) ->
-      [ d.x, d.y ]
+    diagonal = d3.svg.diagonal().projection((d) =>
+      [ d.x, @height - d.y ]
     )
     link = @svg.selectAll("path.link")
                 .data(links)
@@ -187,6 +193,27 @@ class moiTree.Tree
 
   showDetails: (neuron, text) ->
     new moiTree.TreeDialog(neuron, text, @rootNeuron)
+
+  zoom = ->
+    $('.popover').hide()
+    @m = [40, 240, 40, 240]
+    @realWidth = window.innerWidth
+    @realHeight = window.innerHeight
+    @w = @realWidth - @m[0] - @m[0]
+    @h = @realHeight - @m[0] - @m[2]
+    scale = d3.event.scale
+    translation = d3.event.translate
+    tbound = -@h * scale
+    bbound = @h * scale
+    lbound = (-@w + @m[1]) * scale
+    rbound = (@w - @m[3]) * scale
+    # limit translation to thresholds
+    translation = [
+      Math.max(Math.min(translation[0], rbound), lbound)
+      Math.max(Math.min(translation[1], bbound), tbound)
+    ]
+    d3.select('.drawarea').attr 'transform', 'translate(' + translation + ')' + ' scale(' + scale + ')'
+    return
 
 $(document).on "ready page:load", ->
   if $("#moi_tree").length > 0
