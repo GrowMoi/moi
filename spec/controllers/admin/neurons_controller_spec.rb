@@ -43,10 +43,9 @@ RSpec.describe Admin::NeuronsController,
   describe "neuron scope" do
     subject { controller.neurons }
 
-    let!(:active_neuron) { create :neuron }
-    let!(:inactive_neuron) {
-      create :neuron, :inactive
-    }
+    let!(:active_neuron) { create :neuron, active: true }
+    let!(:inactive_neuron) { create :neuron }
+    let!(:deleted_neuron) { create :neuron, deleted: true }
 
     describe "as admin" do
       let!(:admin) {
@@ -63,6 +62,9 @@ RSpec.describe Admin::NeuronsController,
       }
       it {
         is_expected.to include(active_neuron)
+      }
+      it {
+        is_expected.to include(deleted_neuron)
       }
       it {
         # json includes a deleted neuron
@@ -85,7 +87,7 @@ RSpec.describe Admin::NeuronsController,
           is_expected.to include(active_neuron)
         }
         it {
-          is_expected.to_not include(inactive_neuron)
+          is_expected.to_not include(deleted_neuron)
         }
       end
 
@@ -98,7 +100,7 @@ RSpec.describe Admin::NeuronsController,
 
         it {
           expect {
-            get :show, id: inactive_neuron.id
+            get :show, id: deleted_neuron.id
           }.to raise_error(ActiveRecord::RecordNotFound)
         }
 
@@ -124,7 +126,7 @@ RSpec.describe Admin::NeuronsController,
     describe "#restore" do
       let!(:neuron) { create :neuron }
       before { post :restore, id: neuron.id }
-      it { expect(neuron.reload).to be_pending }
+      it { expect(neuron.reload).to_not be_deleted }
     end
   end
 end

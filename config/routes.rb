@@ -75,7 +75,14 @@ Moi::Application.routes.draw do
         post :restore
       end
     end
+
     resource :external_search, only: :create
+
+    resources :contents do
+      member do
+        post :approve
+      end
+    end
 
     root "dashboard#index"
   end

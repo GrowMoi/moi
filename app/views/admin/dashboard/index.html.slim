@@ -6,7 +6,7 @@
   .col-lg-6
     = form_tag(admin_root_path, method: :get) do
       .input-group.search_box
-        = hidden_field_tag :state, neurons_state
+        = hidden_field_tag :state, neuron_scope
         = text_field_tag :q, params[:q], class: "form-control"
         span.input-group-btn
           = submit_tag t("actions.search"),
