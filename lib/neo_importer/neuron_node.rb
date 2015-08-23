@@ -13,7 +13,7 @@ class NeoImporter
           kinds.each do |kind|
             attributes = content_attributes_for(level, kind)
 
-            if attributes[:description].present?
+            if attributes[:description].present? || attributes[:source].present?
               neuron.contents.create!(attributes)
             else
               # puts "WARN: Discarding content:"

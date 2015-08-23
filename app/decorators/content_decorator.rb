@@ -20,6 +20,7 @@ class ContentDecorator < LittleDecorator
   def source
     if record.source =~ (/\A(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?\Z/i)
       link_to record.source,
+              record.source,
               target: "_blank"
     else
       record.source
