@@ -1,22 +1,12 @@
 #moi_tree
-  svg
-    transform: rotate(180deg)
-    -webkit-transform: rotate(180deg)
-    -moz-transform: rotate(180deg)
-    -o-transform: rotate(180deg)
-
   .node
     circle
       fill: #fff
       stroke: steelblue
       stroke-width: 1.5px
       cursor: pointer
-      
+
     text
-      transform: rotate(180deg)
-      -webkit-transform: rotate(180deg)
-      -moz-transform: rotate(180deg)
-      -o-transform: rotate(180deg)
       cursor: pointer
       &:hover
         font-weight: bold
@@ -39,3 +29,7 @@
     position: absolute
     top: 0
     right: 2px
+
+svg
+  pointer-events: all
+  background-color: #fafafa
