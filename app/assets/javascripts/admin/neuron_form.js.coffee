@@ -4,7 +4,7 @@ formHasChanged = false
 $(document).on "page:load", ->
   formHasChanged = false
 
-$(document).on "change", "#{selector} input", ->
+$(document).on "change", "#{selector} input, #{selector} textarea", ->
   formHasChanged = true
 
 $(document).on "page:before-change", ->
