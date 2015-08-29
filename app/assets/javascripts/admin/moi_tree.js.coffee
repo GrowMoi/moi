@@ -8,12 +8,14 @@ class moiTree.Tree
   path: null
   width: null
   height: null
+  zoom: null
 
   constructor: (@selector) ->
     @$node = $(@selector)
+    @setZoom()
     @path = @$node.data("source")
     @width = @$node.width()
-    @height = @width
+    @height = @width/2
     @createD3Elements()
     @drawSVG()
     @getNeurons()
@@ -29,8 +31,14 @@ class moiTree.Tree
 
   createD3Elements: ->
     @tree = d3.layout.tree().size([@width, @height-20])
+                            .nodeSize([100, 70])
 
-  drawSVG: ->
+  setZoom: ->
+    @zoom = d3.behavior.zoom().scaleExtent([0.0001,3])
+                              .center([100, 100])
+                              .on('zoom', zoom)
+
+  drawSVG: =>
     @svg = d3.select(@selector)
               .append("svg")
               .attr("width", @width)
@@ -41,10 +49,8 @@ class moiTree.Tree
               .append('g')
               .attr("class","drawarea")
               .attr('transform', 'translate(0,10)')
-    d3.select('svg').call d3.behavior.zoom().scaleExtent([
-      0.5
-      5
-    ]).on('zoom', zoom)
+    d3.select('svg').call @zoom
+
 
   getNeurons: ->
     d3.json @path, @gotNeurons
@@ -197,8 +203,8 @@ class moiTree.Tree
   zoom = ->
     $('.popover').hide()
     @m = [40, 240, 40, 240]
-    @realWidth = window.innerWidth
-    @realHeight = window.innerHeight
+    @realWidth = 20000
+    @realHeight = 2000
     @w = @realWidth - @m[0] - @m[0]
     @h = @realHeight - @m[0] - @m[2]
     scale = d3.event.scale
