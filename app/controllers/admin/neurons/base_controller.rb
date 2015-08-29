@@ -40,7 +40,8 @@ module Admin
                         :_destroy,
                         :keyword_list,
                         :source,
-                        :media
+                        :media,
+                        :media_cache
                       ]
       rescue ActionController::ParameterMissing
         Hash.new
