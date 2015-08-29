@@ -5,9 +5,9 @@ h2 = decorated_neuron.title
 - neuron_versions.each do |version|
   .row.changelog-version
     .col-xs-1.author
-      = version.user.avatar_with_link
+      = version.who.avatar_with_link
     .col-xs-9
-      =' version.user.name_with_link
+      =' version.who.name_with_link
       =' version.event_explanation
 
       span.text-info =' version.changed_attrs

@@ -4,6 +4,17 @@ module PaperTrail
       @user ||= decorate User.find(whodunnit)
     end
 
+    def sysadmin
+      @sysadmin ||= decorate User.new(
+        name: "moi",
+        email: "moi@macool.me"
+      )
+    end
+
+    def who
+      @who ||= user_exists? ? user : sysadmin
+    end
+
     def changes
       changeset.inject({}) do |memo, (key, value)|
         attribute = localised_attr_for(key)
@@ -13,6 +24,11 @@ module PaperTrail
     end
 
     private
+
+    def user_exists?
+      # User.exists?(id: whodunnit)
+      whodunnit.present?
+    end
 
     def localised_attr_for(key)
       raise NotImplementedError

@@ -53,6 +53,6 @@ class UserDecorator < LittleDecorator
   end
 
   def record_path
-    admin_user_path(record)
+    admin_user_path(record) if record.persisted?
   end
 end
