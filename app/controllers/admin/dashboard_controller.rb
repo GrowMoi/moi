@@ -2,15 +2,11 @@ module Admin
   class DashboardController < AdminController::Base
 
     expose(:neurons) {
-      NeuronSearch.custom_search(
-        scope: neuron_query,
+      NeuronSearch.new(
         q: params[:q]
       ).results
+       .send(neuron_scope)
        .accessible_by(current_ability, :index)
-    }
-
-    expose(:neuron_query) {
-      Neuron.send(neuron_scope)
     }
 
     expose(:neuron_scope) {

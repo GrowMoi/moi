@@ -15,12 +15,18 @@ FactoryGirl.define do
   factory :neuron do
     sequence(:title) { |n| "Neurona #{n}" }
 
+    trait :active do
+      active true
+    end
+    trait :inactive do
+      active false
+    end
+    trait :deleted do
+      deleted true
+    end
+
     trait :with_parent do
       parent { create(:neuron) }
     end
-
-    # trait :inactive do
-    #   state :deleted
-    # end
   end
 end

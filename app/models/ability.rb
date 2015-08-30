@@ -7,7 +7,9 @@ class Ability
     when "admin"
       can :manage, :all
     when "curador"
-      can [:read, :create, :update, :preview, :log], Neuron
+      can [:read, :create, :update, :preview, :log],
+          Neuron,
+          deleted: false
       cannot [:delete, :restore], Neuron
       can :search, Content
     end
