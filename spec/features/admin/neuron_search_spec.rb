@@ -10,13 +10,15 @@ describe "neuron search", type: :feature do
   let!(:neuron_one) {
     create(:neuron, state).tap do |neuron|
       create(:content, description: name_one,
-                       neuron: neuron)
+                       neuron: neuron,
+                       approved: true)
     end
   }
   let!(:deleted_neuron) {
     create(:neuron, state, :deleted).tap do |neuron|
       create(:content, description: name_two,
-                       neuron: neuron)
+                       neuron: neuron,
+                       approved: true)
     end
   }
   before {

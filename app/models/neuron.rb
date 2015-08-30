@@ -93,10 +93,6 @@ class Neuron < ActiveRecord::Base
     end
   end
 
-  def any_content_approved
-    contents_any?(approved: true)
-  end
-
   ##
   # validates parent is not a child or child of any of their
   # children

@@ -17,9 +17,27 @@
 require 'rails_helper'
 
 RSpec.describe Content, :type => :model do
-  describe "factory" do
-    let(:content) { build :content }
 
+  #approved content by default false
+  let(:content) { build :content }
+
+  describe "factory" do
     it{ expect(content).to be_valid }
+  end
+
+  describe "neuron should not to be active" do
+    it {
+      expect(content.neuron.active).to eq(false)
+    }
+  end
+
+  describe "neuron should to be active" do
+    before {
+      content.update! approved: true
+    }
+
+    it {
+      expect(content.neuron.active).to eq(true)
+    }
   end
 end
