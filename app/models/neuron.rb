@@ -22,7 +22,7 @@ class Neuron < ActiveRecord::Base
   end
 
   scope :not_deleted, -> {
-    where.not(deleted: true)
+    where(deleted: false)
   }
 
   begin :relationships
