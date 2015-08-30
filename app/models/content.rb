@@ -32,7 +32,7 @@ class Content < ActiveRecord::Base
   mount_uploader :media, ContentMediaUploader
 
   begin :relationships
-    belongs_to :neuron
+    belongs_to :neuron, touch: true
   end
 
   begin :validations
@@ -46,17 +46,6 @@ class Content < ActiveRecord::Base
 
   def kind
     read_attribute(:kind).try :to_sym
-  end
-
-  #callbacks
-  after_update :update_active_neuron, :if => lambda { |c| c.approved_changed? }
-
-  def update_active_neuron
-    if neuron.any_content_approved
-      neuron.update! active: true
-    else
-      neuron.update! active: false
-    end
   end
 
   private

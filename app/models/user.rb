@@ -16,7 +16,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  name                   :string
-#  role                   :string
+#  role                   :string           default("cliente"), not null
 #
 
 class User < ActiveRecord::Base

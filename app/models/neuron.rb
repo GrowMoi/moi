@@ -48,6 +48,16 @@ class Neuron < ActiveRecord::Base
     title
   end
 
+  after_touch :update_active_state!
+
+  def update_active_state!
+    if contents_any?(approved: true)
+      self.update! active: true
+    else
+      self.update! active: false
+    end
+  end
+
   ##
   # builds a content for each level & kind
   def build_contents!
