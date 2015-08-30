@@ -48,6 +48,17 @@ class Content < ActiveRecord::Base
     read_attribute(:kind).try :to_sym
   end
 
+  #callbacks
+  after_update :update_active_neuron, :if => lambda { |c| c.approved_changed? }
+
+  def update_active_neuron
+    if neuron.any_content_approved
+      neuron.update! active: true
+    else
+      neuron.update! active: false
+    end
+  end
+
   private
 
   def has_description_or_media
