@@ -65,7 +65,7 @@ module Admin
 
     def delete
       neuron.paper_trail_event = "delete"
-      neuron.update! state: :deleted
+      neuron.update! deleted: true
       redirect_to(
         {action: :index},
         notice: I18n.t("views.neurons.delete")
@@ -74,7 +74,7 @@ module Admin
 
     def restore
       neuron.paper_trail_event = "restore"
-      neuron.update! state: :pending
+      neuron.update! deleted: false
       redirect_to(
         {action: :index},
         notice: I18n.t("views.neurons.restore")

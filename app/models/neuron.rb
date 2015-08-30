@@ -7,17 +7,23 @@
 #  parent_id  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  state      :integer          default(0)
+#  active     :boolean          default(FALSE)
 #
 
 class Neuron < ActiveRecord::Base
   has_paper_trail ignore: [:created_at, :id]
 
-  scope :not_deleted, -> {
-    where.not(state: states.fetch(:deleted))
-  }
+  STATES = %w(active inactive)
 
-  enum state: [:pending, :approved, :deleted]
+  STATES.map(&:to_sym).each do |state|
+    scope state, -> {
+      where(active: state == :active)
+    }
+  end
+
+  scope :not_deleted, -> {
+    where.not(deleted: true)
+  }
 
   begin :relationships
     has_many :contents, dependent: :destroy

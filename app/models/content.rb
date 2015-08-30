@@ -11,6 +11,7 @@
 #  updated_at  :datetime         not null
 #  source      :string
 #  media       :string
+#  approved    :boolean          default(FALSE)
 #
 
 class Content < ActiveRecord::Base

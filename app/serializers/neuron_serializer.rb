@@ -7,7 +7,7 @@
 #  parent_id  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  state      :integer          default(0)
+#  active     :boolean          default(FALSE)
 #
 
 class NeuronSerializer < ActiveModel::Serializer

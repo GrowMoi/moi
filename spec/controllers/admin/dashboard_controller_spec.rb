@@ -2,53 +2,47 @@ require "rails_helper"
 
 RSpec.describe Admin::DashboardController,
                type: :controller do
-  describe "Approved and pending neurons" do
+  describe "Active and Inactive neurons" do
     let!(:current_user) {
       create :user, :admin
     }
 
-    # default neuron state is pending
-    let!(:pending_neuron) { create :neuron }
+    # default neuron state is active
+    let!(:active_neuron) { create :neuron, active: true}
 
-    let!(:approved_neuron) {
-      create :neuron, state: :approved
-    }
+    let!(:inactive_neuron) { create :neuron }
 
     before {
       sign_in current_user
     }
 
-    it {
-      expect(pending_neuron.state).to eq("pending")
-    }
-
-    describe "should get approved neuron" do
+    describe "should get active neuron" do
       before {
-        get :index, state: 'approved'
+        get :index, state: 'active'
       }
 
       it {
-        expect(controller.neurons).to include(approved_neuron)
+        expect(controller.neurons).to include(active_neuron)
       }
     end
 
-    describe "should get pending neuron" do
+    describe "should get inactive neuron" do
       before {
-        get :index, state: 'pending'
+        get :index, state: 'inactive'
       }
 
       it {
-        expect(controller.neurons).to include(pending_neuron)
+        expect(controller.neurons).to include(inactive_neuron)
       }
     end
 
-    describe "invalid params" do
+    describe "empty params" do
       before {
-        get :index, state: "something-bad"
+        get :index, state: ""
       }
 
       it "uses default scope" do
-        expect(controller.neurons).to include(approved_neuron)
+        expect(controller.neurons).to include(active_neuron)
       end
     end
   end

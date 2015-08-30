@@ -44,6 +44,8 @@
       approved: Aprobado
       pending: Pendiente
       deleted: Eliminado
+      active: "Activa"
+      inactive: "Inactiva"
     changelog:
       update: actualizó
       create: creó este registro con
@@ -75,6 +77,9 @@
         "1": "Principiante"
         "2": "Intermedio"
         "3": "Avanzado"
+      toggle_approve:
+        true: Contenido aprobado
+        false: Contenido desaprobado
       kinds:
         que-es: "Qué es"
         como-funciona: "Cómo funciona"
