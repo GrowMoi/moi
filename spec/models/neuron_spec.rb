@@ -8,6 +8,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  active     :boolean          default(FALSE)
+#  deleted    :boolean          default(FALSE)
 #
 
 require 'rails_helper'

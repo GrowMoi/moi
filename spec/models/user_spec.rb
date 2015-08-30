@@ -16,7 +16,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  name                   :string
-#  role                   :string           default("cliente"), not null
+#  role                   :string
 #
 
 require 'rails_helper'
