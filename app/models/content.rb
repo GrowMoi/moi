@@ -32,7 +32,7 @@ class Content < ActiveRecord::Base
   mount_uploader :media, ContentMediaUploader
 
   begin :relationships
-    belongs_to :neuron
+    belongs_to :neuron, touch: true
   end
 
   begin :validations

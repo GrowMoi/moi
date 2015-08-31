@@ -8,6 +8,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  active     :boolean          default(FALSE)
+#  deleted    :boolean          default(FALSE)
 #
 
 class Neuron < ActiveRecord::Base
@@ -22,12 +23,16 @@ class Neuron < ActiveRecord::Base
   end
 
   scope :not_deleted, -> {
-    where.not(deleted: true)
+    where(deleted: false)
   }
 
   begin :relationships
     has_many :contents, dependent: :destroy
     belongs_to :parent, class: Neuron
+  end
+
+  begin :callbacks
+    after_touch :update_active_state!
   end
 
   accepts_nested_attributes_for :contents,
@@ -63,6 +68,7 @@ class Neuron < ActiveRecord::Base
   ##
   # Saves and touches a version
   #
+  # @param opts [Hash] options passed to #save
   # @yield [version] created version (if any)
   # @return [Boolean] if the record was saved or not
   def save_with_version(opts={})
@@ -104,6 +110,20 @@ class Neuron < ActiveRecord::Base
 
   private
 
+  ##
+  # marks `active` flag as true if any of the contents
+  # is approved. Marks it false otherwise
+  def update_active_state!
+    update!(
+      active: contents_any?(approved: true)
+    )
+  end
+
+  ##
+  # if any of the contents matches the conditions
+  #
+  # @param opts [Hash] conditions to match
+  # @example contents_any?({kind: kind})
   def contents_any?(opts)
     contents.any? do |content|
       opts.all? do |key, val|

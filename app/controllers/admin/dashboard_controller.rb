@@ -1,7 +1,13 @@
 module Admin
   class DashboardController < AdminController::Base
+
     expose(:neurons) {
-      Neuron.send(neuron_scope)
+      NeuronSearch.new(
+        q: params[:q]
+      ).results
+       .send(neuron_scope)
+       .accessible_by(current_ability, :index)
+       .page(params[:page]).per(18)
     }
 
     expose(:neuron_scope) {
