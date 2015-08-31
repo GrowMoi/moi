@@ -31,6 +31,10 @@ class Neuron < ActiveRecord::Base
     belongs_to :parent, class: Neuron
   end
 
+  begin :callbacks
+    after_touch :update_active_state!
+  end
+
   accepts_nested_attributes_for :contents,
     allow_destroy: true,
     reject_if: ->(attributes) {
@@ -46,16 +50,6 @@ class Neuron < ActiveRecord::Base
 
   def to_s
     title
-  end
-
-  after_touch :update_active_state!
-
-  def update_active_state!
-    if contents_any?(approved: true)
-      self.update! active: true
-    else
-      self.update! active: false
-    end
   end
 
   ##
@@ -74,6 +68,7 @@ class Neuron < ActiveRecord::Base
   ##
   # Saves and touches a version
   #
+  # @param opts [Hash] options passed to #save
   # @yield [version] created version (if any)
   # @return [Boolean] if the record was saved or not
   def save_with_version(opts={})
@@ -115,6 +110,20 @@ class Neuron < ActiveRecord::Base
 
   private
 
+  ##
+  # marks `active` flag as true if any of the contents
+  # is approved. Marks it false otherwise
+  def update_active_state!
+    update!(
+      active: contents_any?(approved: true)
+    )
+  end
+
+  ##
+  # if any of the contents matches the conditions
+  #
+  # @param opts [Hash] conditions to match
+  # @example contents_any?({kind: kind})
   def contents_any?(opts)
     contents.any? do |content|
       opts.all? do |key, val|

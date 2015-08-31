@@ -33,5 +33,11 @@ FactoryGirl.define do
         end.sample(2).join(", ")
       }
     end
+    trait :approved do
+      after(:create) do |content|
+        content.update! approved: true
+        content.neuron.reload.touch
+      end
+    end
   end
 end
