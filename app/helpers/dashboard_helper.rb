@@ -9,7 +9,10 @@ module DashboardHelper
       Neuron::STATES.map do |state|
         active = "active" if neuron_scope == state.to_sym
         link_to t("views.neurons.#{state}"),
-                admin_root_path(state: state),
+                admin_root_path(
+                  state: state,
+                  q: params[:q]
+                ),
                 class: "btn btn-default #{active}"
       end.join.html_safe
     end
