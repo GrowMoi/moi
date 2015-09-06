@@ -42,17 +42,20 @@
       general: General
       restore: "Neurona restaurada"
       delete: "Neurona eliminada"
-      approved: Aprobado
-      pending: Pendiente
       deleted: Eliminado
       active: "Activa"
       inactive: "Inactiva"
+      public_status:
+        "true": Pública
+        "false": No es pública
     changelog:
       update: actualizó
       create: creó este registro con
       time_ago: "hace %{time_ago}"
       delete: eliminó este registro
       restore: restauró este registro
+      active_neuron: moderó neurona
+      approve_content: moderó contenido
     search_engine:
       edit: Editar motor de búsqueda
       new: Nuevo motor de búsqueda
@@ -68,6 +71,7 @@
       created: "Contenido creado"
       updated: "Contenido actualizado"
       show: "Mostrar contenidos"
+      approve: "Aprobado"
       keyword_list_form_instructions: Separadas por coma
       external_source: Consultar fuente externa
       external_source_help: Copia y pega el texto que necesites. La fuente será agregada automáticamente
@@ -79,8 +83,12 @@
         "2": "Intermedio"
         "3": "Avanzado"
       toggle_approve:
-        true: Contenido aprobado
-        false: Contenido desaprobado
+        "true": "Contenido aprobado"
+        "false": "Contenido desaprobado"
+      approved:
+        "true": "Si"
+        "false": "No"
+      by_approve: "Por Aprobar"
       kinds:
         que-es: "Qué es"
         como-funciona: "Cómo funciona"
@@ -333,12 +341,15 @@
         parent: Padre
         parent_id: Padre
         contents: Contenidos
+        active: Activa
+        is_public: Pública
       content:
         level: "Nivel"
         kind: "Tipo"
         description: "Descripción"
         keyword_list: "Palabras clave"
         source: Fuente
+        approved: Aprobado
       search_engine:
         name: Nombre
         gcse_id: CSE id
@@ -352,6 +363,7 @@
         <<: *errors_messages
         circular_parent: "%{child} no puede ser padre de %{parent} dado que alguno de sus padres es %{parent}"
         content_has_description_or_media: Debe incluir una descripción o un archivo
+        cannot_delete_neuron: "%{neuron} no se puede eliminar porque es pública"
       template:
         <<: *errors_template
 

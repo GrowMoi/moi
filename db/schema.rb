@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150831204727) do
+
+ActiveRecord::Schema.define(version: 20150913183303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 20150831204727) do
     t.datetime "updated_at",                 null: false
     t.boolean  "active",     default: false
     t.boolean  "deleted",    default: false
+    t.boolean  "is_public",  default: false
   end
 
   add_index "neurons", ["deleted"], name: "index_neurons_on_deleted", using: :btree

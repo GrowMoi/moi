@@ -35,6 +35,16 @@ class Content < ActiveRecord::Base
     belongs_to :neuron, touch: true
   end
 
+  begin :scopes
+    scope :approved, ->(status=true) {
+      where(approved: status)
+    }
+  end
+
+  begin :callbacks
+    after_update :log_approve_neuron
+  end
+
   begin :validations
     validates :level, presence: true,
                       inclusion: {in: LEVELS}
@@ -46,6 +56,13 @@ class Content < ActiveRecord::Base
 
   def kind
     read_attribute(:kind).try :to_sym
+  end
+
+  def log_approve_neuron
+    if self.approved_changed?
+      self.neuron.paper_trail_event = "approve_content"
+      self.neuron.touch_with_version
+    end
   end
 
   private

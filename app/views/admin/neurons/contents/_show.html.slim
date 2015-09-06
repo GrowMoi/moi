@@ -4,4 +4,8 @@
     = content.keywords
     = content.source
     = content.media
+    - if content.persisted?
+      .approved-content
+        label = I18n.t("views.contents.approve")
+        = content.toggle_approved
     hr

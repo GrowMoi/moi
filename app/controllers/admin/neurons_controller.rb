@@ -78,11 +78,18 @@ module Admin
 
     def delete
       neuron.paper_trail_event = "delete"
-      neuron.update! deleted: true
-      redirect_to(
-        {action: :index},
-        notice: I18n.t("views.neurons.delete")
-      )
+      if neuron.update(deleted: true)
+        redirect_to(
+          {action: :index},
+          notice: I18n.t("views.neurons.delete")
+        )
+      else
+        redirect_to(
+          {action: :index},
+          error: I18n.t("activerecord.errors.messages.cannot_delete_neuron",
+                  neuron: neuron)
+        )
+      end
     end
 
     def restore

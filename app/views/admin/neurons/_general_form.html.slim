@@ -8,3 +8,7 @@
               possible_parents,
               {include_blank: true},
               class: "form-control"
+.checkbox
+  label
+    = f.check_box :is_public
+    = f.label :is_public

@@ -27,6 +27,26 @@ class ContentDecorator < LittleDecorator
     end
   end
 
+  def toggle_approved
+    content_tag :div, class: "btn-group" do
+      if record.approved
+        content_tag(:span, t("views.contents.approved.#{record.approved}"),
+                    class: "btn btn-primary btn-xs") +
+        link_to(t("views.contents.approved.#{!record.approved}"),
+                approve_admin_content_path(record),
+                method: :post,
+                class: "btn btn-default btn-xs")
+      else
+        link_to(t("views.contents.approved.#{!record.approved}"),
+              approve_admin_content_path(record),
+              method: :post,
+              class: "btn btn-default btn-xs") +
+        content_tag(:span, t("views.contents.approved.#{record.approved}"),
+                    class: "btn btn-primary btn-xs")
+      end
+    end
+  end
+
   def description_spellchecked
     @spellchecked_description ||= spellcheck_description
   rescue RuntimeError => e
