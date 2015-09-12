@@ -23,6 +23,7 @@
       dashboard: Escritorio
       neurons: Neuronas
       settings: Preferencias
+      profiles: Árboles
     users:
       new: "Nuevo Usuario"
       edit: "Editar Usuario"
@@ -87,6 +88,8 @@
         quien-cuando-donde: "Quién/Cuándo/Dónde"
         videos: "Vídeos"
         enlaces: "Enlaces"
+    profiles:
+      new: Nuevo árbol
   date:
     formats:
       default: "%d/%m/%Y"
@@ -310,6 +313,7 @@
       content: "Contenido"
       settings: Preferencias
       search_engine: Motor de búsqueda
+      profile: Árbol
     attributes:
       user:
         username: "Nombre de usuario"
@@ -339,6 +343,10 @@
         name: Nombre
         gcse_id: CSE id
         active: Activo
+      profile:
+        name: Nombre
+        biography: Biografía
+
     errors:
       messages:
         <<: *errors_messages

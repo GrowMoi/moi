@@ -12,6 +12,8 @@ nav.navbar.navbar-default.navbar-static-top.main-navbar
           = nav_item "neurons", admin_neurons_path
         - if can? :manage, :all
           = nav_item "settings", admin_settings_path
+        - if can? :manage, Profile
+          = nav_item "profiles", admin_profiles_path
 
       ul.nav.navbar-nav.navbar-right
         li.dropdown.current-user-dropdown
