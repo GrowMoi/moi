@@ -184,7 +184,7 @@ class moiTree.Tree
                                     if d._children then "lightsteelblue" else "#fff")
 
 
-    nodeEnter.append('svg:text').attr('dy', -8).attr('text-anchor', 'middle').text((d) ->
+    nodeEnter.append('svg:text').attr('dy', -10).attr('text-anchor', 'middle').text((d) ->
       d.title
     ).on("mouseenter", (node) ->
       self.showDetails(node, this)
@@ -267,6 +267,7 @@ class moiTree.Tree
       Math.max(Math.min(translation[1], bbound), tbound)
     ]
     d3.select('.drawarea').attr 'transform', 'translate(' + translation + ')' + ' scale(' + scale + ')'
+    $(document).trigger "zoomChange", scale
     return
 
 $(document).on "ready page:load", ->
