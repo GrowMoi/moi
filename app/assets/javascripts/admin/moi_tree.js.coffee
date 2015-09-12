@@ -32,7 +32,7 @@ class moiTree.Tree
 
   createD3Elements: ->
     @tree = d3.layout.tree().size([@width, @height-20])
-                            .nodeSize([100, 70])
+                            .nodeSize([80, 70])
     @diagonal = d3.svg.diagonal().projection((d) =>
       [ d.x, @height - d.y ]
     )
@@ -184,7 +184,7 @@ class moiTree.Tree
                                     if d._children then "lightsteelblue" else "#fff")
 
 
-    nodeEnter.append('svg:text').attr('dy', -5).attr('text-anchor', 'middle').text((d) ->
+    nodeEnter.append('svg:text').attr('dy', -8).attr('text-anchor', 'middle').text((d) ->
       d.title
     ).on("mouseenter", (node) ->
       self.showDetails(node, this)
@@ -237,11 +237,11 @@ class moiTree.Tree
       d.x0 = d.x
       d.y0 = d.y
       return
-    d3.select('svg').call d3.behavior.zoom().scaleExtent([
-      0.5
-      5
-    ]).on('zoom', zoom)
-    if source.name == 'root'
+    if source.name == 'root' # TODO: replace with ID
+      d3.select('svg').call d3.behavior.zoom().scaleExtent([
+        0.5
+        5
+      ]).on('zoom', zoom)
       d3.select('.drawarea').attr 'transform', 'translate(' + 380 + ',' + -20 + ')'
     return
 
