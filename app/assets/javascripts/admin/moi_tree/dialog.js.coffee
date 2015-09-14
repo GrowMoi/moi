@@ -1,6 +1,9 @@
 window.moiTree ||= {}
 
-isFirefox = navigator.userAgent.indexOf("Firefox") != -1
+currentTreeZoom = 1
+
+$(document).on "zoomChange", (e, scale) =>
+  currentTreeZoom = scale
 
 class moiTree.TreeDialog
   constructor: (@neuron, @text, @rootNeuron) ->
@@ -49,7 +52,9 @@ class moiTree.TreeDialog
   positionPopover: ->
     $text = $(@text)
     position = $text.position()
-    left = if isFirefox then position.left - 30 else position.left
+    left = position.left + 5 # 5 is just padding
+    leftOffset = $text[0].getBBox().width # this gets the width of svg
+    leftFinal = left + (leftOffset * currentTreeZoom)
 
     # position box itself
     @$popover.removeClass("hidden")
@@ -57,17 +62,15 @@ class moiTree.TreeDialog
              .fadeIn(300)
              .css(
                position: "absolute",
-               left: left,
-               top: position.top + 10
+               left: leftFinal,
+               top: position.top - 17
              )
 
     # move arrow
-    leftOffset = parseInt($text.css("width")) / 2
-    arrowPositionLeft = if leftOffset < 14 then 14 else leftOffset
     @$popover.find(".arrow")
              .css(
                position: "absolute",
-               left: arrowPositionLeft
+               top: "20px"
              )
 
 # close popover
