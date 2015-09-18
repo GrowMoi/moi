@@ -39,7 +39,7 @@ class moiTree.Tree
 
   setZoom: ->
     @zoom = d3.behavior.zoom().scaleExtent([0.0001,3])
-                              .center([100, 100])
+                              .translate([380, -20])
                               .on('zoom', zoom)
 
   drawSVG: =>
@@ -237,12 +237,6 @@ class moiTree.Tree
       d.x0 = d.x
       d.y0 = d.y
       return
-    if source.name == 'root' # TODO: replace with ID
-      d3.select('svg').call d3.behavior.zoom().scaleExtent([
-        0.5
-        5
-      ]).on('zoom', zoom)
-      d3.select('.drawarea').attr 'transform', 'translate(' + 380 + ',' + -20 + ')'
     return
 
   showDetails: (neuron, text) ->
