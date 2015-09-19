@@ -146,7 +146,6 @@ class moiTree.Tree
     @createD3Elements()
     @drawSVG()
     @drawLinks()
-    @drawNeurons()
     @drawWithoutParent()
 
   update: (source) ->
