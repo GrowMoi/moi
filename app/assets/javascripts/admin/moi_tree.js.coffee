@@ -23,12 +23,11 @@ class moiTree.Tree
     @listenForResize()
 
   listenForResize: ->
-    $(window).on "resize", ->
+    $(window).on "resize", =>
       $chart = $("#{@selector} svg")
-      aspect = 1 # square ATM
       targetWidth = $chart.parent().width()
       $chart.attr("width", targetWidth)
-      $chart.attr("height", targetWidth / aspect)
+      $chart.attr("height", targetWidth / 2)
 
   createD3Elements: ->
     @tree = d3.layout.tree().size([@width, @height-20])
