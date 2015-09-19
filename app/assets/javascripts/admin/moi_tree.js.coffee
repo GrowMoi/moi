@@ -81,7 +81,6 @@ class moiTree.Tree
     @setChildren(@rootNeuron)
 
     @neurons = @tree.nodes(@rootNeuron)
-    @shownNeurons = @neurons
     @update(@rootNeuron)
     @drawWithoutParent()
 
@@ -134,17 +133,12 @@ class moiTree.Tree
       @showChildren(child)
     null
 
-  filterShownNeurons: ->
-    @shownNeurons = @neurons.filter (neuron) ->
-      !neuron.hidden
-
   toggleNode: (node) ->
     if node.children
       @hideChildren(node)
       node.hidden = false
     else
       @showChildren(node)
-    @filterShownNeurons()
     @update(node)
 
   draw: ->
