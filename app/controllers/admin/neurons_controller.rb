@@ -28,11 +28,24 @@ module Admin
       SearchEngine.active
     }
 
+    expose(:initial_neurons) {
+      TreeService::DepthFetcher.new(
+        depth: 2
+      ).neurons
+    }
+
+    expose(:root_neuron) {
+      TreeService::RootFetcher.root_neuron
+    }
+
     def index
       respond_to do |format|
         format.html
         format.json {
-          render json: neurons, meta: {root_id: Neuron.first.id}
+          render json: neurons, meta: {
+            root_id: root_neuron.id,
+            initial_tree: initial_neurons.map(&:id)
+          }
         }
       end
     end

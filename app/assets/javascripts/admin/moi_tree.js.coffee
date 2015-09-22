@@ -10,6 +10,7 @@ class moiTree.Tree
   height: null
   zoom: null
   diagonal: null
+  initialTree: null
 
   constructor: (@selector) ->
     @$node = $(@selector)
@@ -65,6 +66,8 @@ class moiTree.Tree
       neuron.id == response.meta.root_id
     )[0]
 
+    @initialTree = response.meta.initial_tree
+
     @rootNeuron.x0 = @height / 2;
     @rootNeuron.y0 = @width;
 
@@ -110,10 +113,18 @@ class moiTree.Tree
                ).on("click", @showNeuron)
 
   setChildren: (neuron) ->
-    neuron.children = @neuron_parents[neuron.id]
-    if neuron.children
-      for child in neuron.children
+    # children are hidden by default...
+    neuron._children = @neuron_parents[neuron.id]
+    if neuron is @rootNeuron # ... except for root
+      neuron.children = @neuron_parents[neuron.id]
+    if neuron._children
+      for child in neuron._children
         @setChildren(child)
+        @showChildrenIfInitialTree(child)
+
+  showChildrenIfInitialTree: (child) ->
+    if child.id in @initialTree
+      @showChildren(child)
 
   hideChildren: (node) ->
     node.hidden = true
@@ -129,8 +140,6 @@ class moiTree.Tree
     return unless node._children
     node.children = node._children
     node._children = null
-    for child in node.children
-      @showChildren(child)
     null
 
   toggleNode: (node) ->
