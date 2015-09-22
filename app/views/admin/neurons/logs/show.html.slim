@@ -7,10 +7,10 @@ h2 = decorated_neuron.title
     .col-xs-1.author
       = version.who.avatar_with_link
     .col-xs-9
-      =' version.who.name_with_link
-      =' version.event_explanation
+      => version.who.name_with_link
+      => version.event_explanation
 
-      span.text-info =' version.changed_attrs
+      span.text-info => version.changed_attrs
 
       - if version.changed_keys.any?
         .changeset-details
