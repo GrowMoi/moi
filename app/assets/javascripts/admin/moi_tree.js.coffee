@@ -157,6 +157,18 @@ class moiTree.Tree
     @drawLinks()
     @drawWithoutParent()
 
+  paintNode: (node) ->
+    node.attr('r', 4)
+        .style('stroke', (d) ->
+          if d.deleted then "#ec5747"
+        )
+        .style('fill', (d) ->
+          if d.children || d._children is undefined
+            "#fff"
+          else
+            "lightsteelblue"
+        )
+
   update: (source) ->
     self = this
     duration = if d3.event and d3.event.altKey then 5000 else 500
@@ -178,12 +190,7 @@ class moiTree.Tree
       @update d
       return
     )
-    nodeEnter.append('svg:circle').attr('r', 4)
-                                  .style('stroke', (d) ->
-                                    if d.deleted then "#ec5747")
-                                  .style('fill', (d) ->
-                                    if d._children then "lightsteelblue" else "#fff")
-
+    @paintNode(nodeEnter.append('svg:circle'))
 
     nodeEnter.append('svg:text').attr('dy', -10).attr('text-anchor', 'middle').text((d) ->
       d.title
@@ -195,11 +202,7 @@ class moiTree.Tree
     nodeUpdate = node.transition().duration(duration).attr('transform', (d) =>
       'translate(' + d.x + ',' + (@height - (d.y)) + ')'
     )
-    nodeUpdate.select('circle').attr('r', 4)
-                               .style('stroke', (d) ->
-                                 if d.deleted then "#ec5747")
-                               .style('fill', (d) ->
-                                 if d._children then "lightsteelblue" else "#fff")
+    @paintNode(nodeUpdate.select('circle'))
 
     nodeUpdate.select('text').style('fill-opacity', 1)
 
