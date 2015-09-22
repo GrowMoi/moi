@@ -14,7 +14,8 @@
                   class: "form-control"
 
   .form-group
-    = render "admin/neurons/moi_tree/tree"
+    = render "admin/neurons/moi_tree/tree",
+             hide_dialog: true
 
   .actions
     = f.submit class: "btn btn-primary",
