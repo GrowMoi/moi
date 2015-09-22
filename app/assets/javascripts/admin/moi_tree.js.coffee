@@ -150,13 +150,6 @@ class moiTree.Tree
       @showChildren(node)
     @update(node)
 
-  draw: ->
-    d3.select(@selector).html("")
-    @createD3Elements()
-    @drawSVG()
-    @drawLinks()
-    @drawWithoutParent()
-
   paintNode: (node) ->
     node.attr('r', 4)
         .style('stroke', (d) ->
