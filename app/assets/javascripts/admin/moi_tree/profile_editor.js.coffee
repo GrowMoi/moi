@@ -5,9 +5,16 @@ class ProfileEditorTree
 
   listenForClicks: ->
     $(document).on "moiTree:nodeClicked", (e, node) ->
-      console.log node
-      console.log "should be painted"
-      # d3.select(node).stroke "yellow"
+      d3node = d3.selectAll('circle').filter((d, i) =>
+        if d
+          d.id == node.id
+      )
+      # here we have the node
+      # we are updating, the is the reason it not keep yellow or bigger
+      d3node.attr('r', 100)
+            .style('fill', 'yellow')
+            .style('stroke', 'yellow')
+      # we can change the color of text if we select d3.selectAll('g') in ln 8
       false
 
 treeSelector = "#tree-for-profile-editor"
