@@ -71,7 +71,6 @@
       created: "Contenido creado"
       updated: "Contenido actualizado"
       show: "Mostrar contenidos"
-      approve: "Aprobado"
       keyword_list_form_instructions: Separadas por coma
       external_source: Consultar fuente externa
       external_source_help: Copia y pega el texto que necesites. La fuente será agregada automáticamente
@@ -82,12 +81,15 @@
         "1": "Principiante"
         "2": "Intermedio"
         "3": "Avanzado"
-      toggle_approve:
+      toggled_approve:
         "true": "Contenido aprobado"
         "false": "Contenido desaprobado"
-      approved:
-        "true": "Si"
-        "false": "No"
+      toggle_approve:
+        approved: Aprobar
+        unapproved: Reprobar
+      approved_status:
+        approved: Aprobado
+        unapproved: No aprobado
       by_approve: "Por Aprobar"
       kinds:
         que-es: "Qué es"

@@ -27,24 +27,17 @@ class ContentDecorator < LittleDecorator
     end
   end
 
+  def can_be_approved?
+    can?(:approve, record) && record.persisted?
+  end
+
   def toggle_approved
-    content_tag :div, class: "btn-group" do
-      if record.approved
-        content_tag(:span, t("views.contents.approved.#{record.approved}"),
-                    class: "btn btn-primary btn-xs") +
-        link_to(t("views.contents.approved.#{!record.approved}"),
-                approve_admin_content_path(record),
-                method: :post,
-                class: "btn btn-default btn-xs")
-      else
-        link_to(t("views.contents.approved.#{!record.approved}"),
-              approve_admin_content_path(record),
-              method: :post,
-              class: "btn btn-default btn-xs") +
-        content_tag(:span, t("views.contents.approved.#{record.approved}"),
-                    class: "btn btn-primary btn-xs")
-      end
-    end
+    render "admin/neurons/contents/toggle_approved",
+           decorator: self,
+           icons: {
+             "true" => "glyphicon-ok-circle",
+             "false" => "glyphicon-ban-circle"
+           }
   end
 
   def description_spellchecked
@@ -57,6 +50,19 @@ class ContentDecorator < LittleDecorator
     else
       raise e
     end
+  end
+
+  def approved_to_s
+    approved_options(record.approved?)
+  end
+
+  def approved_options(key=nil)
+    @approved_options ||= {
+      "true" => "approved",
+      "false" => "unapproved"
+    }
+    return @approved_options if key.nil?
+    @approved_options[key.to_s]
   end
 
   private

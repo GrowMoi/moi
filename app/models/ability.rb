@@ -13,7 +13,7 @@ class Ability
           Neuron,
           deleted: false
       cannot [:delete, :restore], Neuron
-      can :search, Content
+      can [:search, :approve], Content
     end
   end
 end
