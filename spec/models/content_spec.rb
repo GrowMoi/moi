@@ -52,4 +52,15 @@ RSpec.describe Content, :type => :model do
       expect(neuron.reload).to_not be_active
     }
   end
+
+  describe "papertrail should registre event: active_neuron", versioning: true do
+    before {
+      content.update! approved: true
+    }
+
+    it {
+      pending
+      # is_expected.to change(PaperTrail::Version, :event).to eq("active_neuron")
+    }
+  end
 end
