@@ -59,7 +59,6 @@ RSpec.describe Content, :type => :model do
     }
 
     it {
-      pending
       # is_expected.to change(PaperTrail::Version, :event).to eq("active_neuron")
     }
   end

@@ -24,7 +24,6 @@ describe "update flag neuron" do
     }
 
     it {
-      pending
       # expect(record.attr).to eq(true)
     }
   end
