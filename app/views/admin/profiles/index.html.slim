@@ -6,9 +6,13 @@
               class: "btn btn-default btn-xs" do
       i.glyphicon.glyphicon-plus
 
-.profiles-list
+p.text-muted
+  = pluralize profiles.count,
+              t("activerecord.models.profile")
+
+ul.profiles-list
   - profiles.each do |profile|
-    div
+    li
       = link_to admin_profile_path(profile),
                 class: "profile-name" do
         = profile.name

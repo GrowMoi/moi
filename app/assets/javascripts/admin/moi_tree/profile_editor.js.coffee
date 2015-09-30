@@ -1,13 +1,23 @@
 class ProfileEditorTree
   neuron_ids: []
+  events: {
+    "moiTree:nodeShown": "markNeuron"
+    "moiTree:nodeHidden": "unMarkNeuron"
+  }
 
   constructor: (selector) ->
     @$selector = $(selector)
     @listenForClicks()
+    @listenForRemoval()
 
   listenForClicks: ->
-    $(document).on "moiTree:nodeShown", @markNeuron
-    $(document).on "moiTree:nodeHidden", @unMarkNeuron
+    for event, method of @events
+      $(document).on event, this[method]
+
+  listenForRemoval: ->
+    $(document).on "page:before-change", =>
+      for event, method of @events
+        $(document).off event
 
   markNeuron: (e, neuron) =>
     neuron.marked = true
