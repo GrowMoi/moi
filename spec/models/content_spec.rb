@@ -57,9 +57,10 @@ RSpec.describe Content, :type => :model do
     before {
       content.update! approved: true
     }
-
     it {
-      # is_expected.to change(PaperTrail::Version, :event).to eq("active_neuron")
+      expect(
+       neuron.versions.last.event
+      ).to eq("active_neuron")
     }
   end
 end
