@@ -115,9 +115,13 @@ class moiTree.Tree
 
   setChildren: (neuron) ->
     # children are hidden by default...
+    neuron.hidden_children = true
     neuron._children = @neuron_parents[neuron.id]
     if neuron is @rootNeuron # ... except for root
+      neuron.hidden_children = false
       neuron.children = @neuron_parents[neuron.id]
+      # manually trigger root as shown
+      $(document).trigger "moiTree:nodeShown", neuron
     if neuron._children
       for child in neuron._children
         @setChildren(child)
@@ -128,7 +132,8 @@ class moiTree.Tree
       @showChildren(child)
 
   hideChildren: (node) ->
-    node.hidden = true
+    node.hidden_children = true
+    $(document).trigger "moiTree:nodeHidden", node
     return unless node.children
     node._children = node.children
     node.children = null
@@ -137,7 +142,8 @@ class moiTree.Tree
     null
 
   showChildren: (node) ->
-    node.hidden = false
+    node.hidden_children = false
+    $(document).trigger "moiTree:nodeShown", node
     return unless node._children
     node.children = node._children
     node._children = null
@@ -146,15 +152,13 @@ class moiTree.Tree
   nodeClicked: (node) =>
     @toggleNode node
     @update node
-    $(document).trigger "moiTree:nodeClicked", node
     false
 
   toggleNode: (node) ->
-    if node.children
-      @hideChildren(node)
-      node.hidden = false
-    else
+    if node.hidden_children
       @showChildren(node)
+    else
+      @hideChildren(node)
     @update(node)
 
   paintNodes: (node) ->
@@ -163,7 +167,9 @@ class moiTree.Tree
           if d.deleted then "#ec5747"
         )
         .style('fill', (d) ->
-          if d.children || d._children is undefined
+          if d.marked
+            "orange"
+          else if d.children || d._children is undefined
             "#fff"
           else
             "lightsteelblue"

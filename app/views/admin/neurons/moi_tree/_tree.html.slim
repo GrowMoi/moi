@@ -1,4 +1,4 @@
-#moi_tree.col-md-12 data-source="#{admin_neurons_path(format: :json)}"
+#moi_tree.col-md-12 data-source="#{options[:source]}"
 
-- unless defined?(hide_dialog)
+- unless options[:hide_dialog].present?
   = render "admin/neurons/moi_tree/dialog"

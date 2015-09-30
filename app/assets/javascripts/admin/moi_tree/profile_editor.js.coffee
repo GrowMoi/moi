@@ -1,21 +1,29 @@
 class ProfileEditorTree
+  neuron_ids: []
+
   constructor: (selector) ->
-    @$tree = $(selector)
+    @$selector = $(selector)
     @listenForClicks()
 
   listenForClicks: ->
-    $(document).on "moiTree:nodeClicked", (e, node) ->
-      d3node = d3.selectAll('circle').filter((d, i) =>
-        if d
-          d.id == node.id
-      )
-      # here we have the node
-      # we are updating, the is the reason it not keep yellow or bigger
-      d3node.attr('r', 100)
-            .style('fill', 'yellow')
-            .style('stroke', 'yellow')
-      # we can change the color of text if we select d3.selectAll('g') in ln 8
-      false
+    $(document).on "moiTree:nodeShown", @markNeuron
+    $(document).on "moiTree:nodeHidden", @unMarkNeuron
+
+  markNeuron: (e, neuron) =>
+    neuron.marked = true
+    @neuron_ids.push neuron.id
+    @updateInput()
+
+  unMarkNeuron: (e, neuron) =>
+    neuron.marked = false
+    index = @neuron_ids.indexOf(neuron.id)
+    if index > 0
+      @neuron_ids.splice(index, 1)
+    @updateInput()
+
+  updateInput: ->
+    @$selector.find("#profile_neuron_ids")
+              .val @neuron_ids.join(",")
 
 treeSelector = "#tree-for-profile-editor"
 $(document).on "ready page:load", ->
