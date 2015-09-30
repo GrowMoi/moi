@@ -90,7 +90,7 @@
       approved_status:
         approved: Aprobado
         unapproved: No aprobado
-      by_approve: "Por Aprobar"
+      to_approve: "Por Aprobar"
       kinds:
         que-es: "Qué es"
         como-funciona: "Cómo funciona"
