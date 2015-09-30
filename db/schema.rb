@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20150913183303) do
     t.string   "source"
     t.string   "media"
     t.boolean  "approved",    default: false
+    t.string   "title"
   end
 
   add_index "contents", ["neuron_id"], name: "index_contents_on_neuron_id", using: :btree
