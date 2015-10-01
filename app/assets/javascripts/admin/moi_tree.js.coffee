@@ -10,9 +10,11 @@ class moiTree.Tree
   height: null
   zoom: null
   diagonal: null
+  initialTree: null
 
   constructor: (@selector) ->
     @$node = $(@selector)
+    @node = @$node[0]
     @setZoom()
     @path = @$node.data("source")
     @width = @$node.width()
@@ -24,7 +26,7 @@ class moiTree.Tree
 
   listenForResize: ->
     $(window).on "resize", =>
-      $chart = $("#{@selector} svg")
+      $chart = @$node.find("svg")
       targetWidth = $chart.parent().width()
       $chart.attr("width", targetWidth)
       $chart.attr("height", targetWidth / 2)
@@ -42,7 +44,7 @@ class moiTree.Tree
                               .on('zoom', zoom)
 
   drawSVG: =>
-    @svg = d3.select(@selector)
+    @svg = d3.select(@node)
               .append("svg")
               .attr("width", @width)
               .attr("height", @height)
@@ -65,6 +67,8 @@ class moiTree.Tree
       neuron.id == response.meta.root_id
     )[0]
 
+    @initialTree = response.meta.initial_tree
+
     @rootNeuron.x0 = @height / 2;
     @rootNeuron.y0 = @width;
 
@@ -81,11 +85,10 @@ class moiTree.Tree
     @setChildren(@rootNeuron)
 
     @neurons = @tree.nodes(@rootNeuron)
-    @shownNeurons = @neurons
     @update(@rootNeuron)
     @drawWithoutParent()
 
-  showNeuron: (neuron) =>
+  redirectToNeuron: (neuron) =>
     window.location.pathname = "/admin/neurons/#{neuron.id}"
 
   drawWithoutParent: ->
@@ -108,16 +111,29 @@ class moiTree.Tree
                  d.title
                ).on("mouseenter", (node) ->
                  self.showDetails(node, this)
-               ).on("click", @showNeuron)
+               ).on("click", @redirectToNeuron)
 
   setChildren: (neuron) ->
-    neuron.children = @neuron_parents[neuron.id]
-    if neuron.children
-      for child in neuron.children
+    # children are hidden by default...
+    neuron.hidden_children = true
+    neuron._children = @neuron_parents[neuron.id]
+    if neuron is @rootNeuron # ... except for root
+      neuron.hidden_children = false
+      neuron.children = @neuron_parents[neuron.id]
+      # manually trigger root as shown
+      $(document).trigger "moiTree:nodeShown", neuron
+    if neuron._children
+      for child in neuron._children
         @setChildren(child)
+        @showChildrenIfInitialTree(child)
+
+  showChildrenIfInitialTree: (child) ->
+    if child.id in @initialTree
+      @showChildren(child)
 
   hideChildren: (node) ->
-    node.hidden = true
+    node.hidden_children = true
+    $(document).trigger "moiTree:nodeHidden", node
     return unless node.children
     node._children = node.children
     node.children = null
@@ -126,34 +142,38 @@ class moiTree.Tree
     null
 
   showChildren: (node) ->
-    node.hidden = false
+    node.hidden_children = false
+    $(document).trigger "moiTree:nodeShown", node
     return unless node._children
     node.children = node._children
     node._children = null
-    for child in node.children
-      @showChildren(child)
     null
 
-  filterShownNeurons: ->
-    @shownNeurons = @neurons.filter (neuron) ->
-      !neuron.hidden
+  nodeClicked: (node) =>
+    @toggleNode node
+    @update node
+    false
 
   toggleNode: (node) ->
-    if node.children
-      @hideChildren(node)
-      node.hidden = false
-    else
+    if node.hidden_children
       @showChildren(node)
-    @filterShownNeurons()
+    else
+      @hideChildren(node)
     @update(node)
 
-  draw: ->
-    d3.select(@selector).html("")
-    @createD3Elements()
-    @drawSVG()
-    @drawLinks()
-    @drawNeurons()
-    @drawWithoutParent()
+  paintNodes: (node) ->
+    node.attr('r', 4)
+        .style('stroke', (d) ->
+          if d.deleted then "#ec5747"
+        )
+        .style('fill', (d) ->
+          if d.marked
+            "orange"
+          else if d.children || d._children is undefined
+            "#fff"
+          else
+            "lightsteelblue"
+        )
 
   update: (source) ->
     self = this
@@ -171,17 +191,8 @@ class moiTree.Tree
     # Enter any new nodes at the parent's previous position.
     nodeEnter = node.enter().append('svg:g').attr('class', 'node').attr('transform', (d) ->
       'translate(' + source.y0 + ',' + source.x0 + ')'
-    ).on('click', (d) =>
-      @toggleNode d
-      @update d
-      return
-    )
-    nodeEnter.append('svg:circle').attr('r', 4)
-                                  .style('stroke', (d) ->
-                                    if d.deleted then "#ec5747")
-                                  .style('fill', (d) ->
-                                    if d._children then "lightsteelblue" else "#fff")
-
+    ).on('click', @nodeClicked)
+    @paintNodes(nodeEnter.append('svg:circle'))
 
     nodeEnter.append('svg:text').attr('dy', -10).attr('text-anchor', 'middle').text((d) ->
       d.title
@@ -193,11 +204,7 @@ class moiTree.Tree
     nodeUpdate = node.transition().duration(duration).attr('transform', (d) =>
       'translate(' + d.x + ',' + (@height - (d.y)) + ')'
     )
-    nodeUpdate.select('circle').attr('r', 4)
-                               .style('stroke', (d) ->
-                                 if d.deleted then "#ec5747")
-                               .style('fill', (d) ->
-                                 if d._children then "lightsteelblue" else "#fff")
+    @paintNodes(nodeUpdate.select('circle'))
 
     nodeUpdate.select('text').style('fill-opacity', 1)
 

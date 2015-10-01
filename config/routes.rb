@@ -57,6 +57,7 @@ Moi::Application.routes.draw do
   namespace :admin do
     resource :dashboard, only: :index
     resources :users
+    resources :profiles
 
     # settings
     resources :settings, only: :index

@@ -57,4 +57,20 @@ module ApplicationHelper
       yield
     end
   end
+
+  ##
+  # Renders a moi tree
+  #
+  # @param options [Hash]
+  # @option options [String] :source where to pull
+  #   neurons from. defaults to whole tree
+  # @option options [Boolean] :hide_dialog (false)
+  #   shows or hides dialog for each neuron
+  def moi_tree(options={})
+    defaults = {
+      source: admin_neurons_path(format: :json)
+    }
+    render "admin/neurons/moi_tree/tree",
+           options: defaults.merge(options)
+  end
 end

@@ -6,6 +6,8 @@ class Ability
     case user.role
     when "admin"
       can :manage, :all
+    when "moderador"
+      can :manage, Profile
     when "curador"
       can [:read, :create, :update, :preview, :log],
           Neuron,
