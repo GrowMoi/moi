@@ -13,9 +13,17 @@ $(document).on "click", ".content-media-uploader", (e) ->
   $input = $this.parent().find("input[type='file']")
   $input.trigger "click"
   $input.on "change", (e) ->
-    name = if typeof(e.target.files[0]) is "object"
-      e.target.files[0].name
-    else
-      ""
-    $this.nextAll(".content-media-name").text(name)
+    return unless typeof(e.target.files[0]) is "object"
+    
+    reader = new FileReader()
+    reader.onload = ->
+      img = reader.result
+      $preview = $ "<a />",
+                   href: img,
+                   target: "_blank",
+                   html: $("<img />", src: img)
+      $preview.append(e.target.files[0].name)
+      $this.nextAll(".content-media-name-on-form").html $preview
+
+    reader.readAsDataURL(e.target.files[0])
     $input.off "change"

@@ -77,6 +77,7 @@
       search_query: Términos de búsqueda
       aspell_not_present: "Advertencia: este texto no ha sido revisado ortográficamente"
       attach_media: Adjuntar multimedia
+      title_tooltip: Título de la pregunta del test
       levels:
         "1": "Principiante"
         "2": "Intermedio"
@@ -352,6 +353,7 @@
         keyword_list: "Palabras clave"
         source: Fuente
         approved: Aprobado
+        title: Título
       search_engine:
         name: Nombre
         gcse_id: CSE id

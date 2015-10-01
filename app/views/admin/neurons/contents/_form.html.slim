@@ -2,6 +2,13 @@
 = f.hidden_field :kind, class: "content-kind"
 
 .form-group
+  = tooltip t("views.contents.title_tooltip"),
+            place: "left" do
+    = f.text_field :title,
+                   placeholder: t("activerecord.attributes.content.title"),
+                   class: "form-control"
+
+.form-group
   = f.text_area :description,
                 placeholder: t("activerecord.attributes.content.description"),
                 class: "form-control"
@@ -38,14 +45,12 @@
     = f.file_field :media
     = f.hidden_field :media_cache
 
-  span.content-media-name
+  span.content-media-name-on-form
     - if f.object.media?
-      = link_to f.object.media.file.filename,
-                f.object.media_url,
-                target: "_blank"
+      = decorate(f.object).media_for_form
 
 .actions
-  = f.link_to_remove class: "btn btn-xs btn-link" do
+  = f.link_to_remove class: "btn btn-link" do
     span.glyphicon.glyphicon-remove.text-danger
 
 hr

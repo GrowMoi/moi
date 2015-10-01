@@ -36,6 +36,7 @@ module Admin
                         :id,
                         :kind,
                         :level,
+                        :title,
                         :description,
                         :neuron_id,
                         :_destroy,
