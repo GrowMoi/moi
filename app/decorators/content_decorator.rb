@@ -1,6 +1,11 @@
 class ContentDecorator < LittleDecorator
   IMAGE_EXTENSIONS = %w(jpg jpeg gif png).freeze
 
+  def title
+    content_tag :strong,
+                record.title
+  end
+
   def keywords
     content_tag :div, class: "content-keywords" do
       record.keyword_list.map do |keyword|
