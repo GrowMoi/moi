@@ -44,7 +44,11 @@ module Admin
                         :keyword_list,
                         :source,
                         :media,
-                        :media_cache
+                        :media_cache,
+                        :possible_answers_attributes => [
+                          :correct,
+                          :text
+                        ]
                       ]
       rescue ActionController::ParameterMissing
         Hash.new

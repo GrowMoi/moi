@@ -25,6 +25,7 @@ class Content < ActiveRecord::Base
     videos
     enlaces
   }.split("\n").map(&:squish).map(&:to_sym).reject(&:blank?)
+  NUMBER_OF_POSSIBLE_ANSWERS = 3
 
   has_paper_trail ignore: [:created_at, :updated_at, :id]
 
@@ -76,7 +77,7 @@ class Content < ActiveRecord::Base
   end
 
   def build_possible_answers!
-    max = 3
+    max = NUMBER_OF_POSSIBLE_ANSWERS
     remaining = max - possible_answers.length
     1.upto(remaining).map do
       possible_answers.build

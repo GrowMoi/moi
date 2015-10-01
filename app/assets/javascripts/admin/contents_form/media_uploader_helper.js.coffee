@@ -1,12 +1,3 @@
-# automatically adds level and kind to content form
-$(document).on "nested:fieldAdded:contents", (e) ->
-  $contentForm = e.field
-  $target = $(e.currentTarget.activeElement)
-  $contentForm.find("input.content-level")
-              .val $target.data("level")
-  $contentForm.find("input.content-kind")
-              .val $target.data("kind")
-
 # media uploader
 $(document).on "click", ".content-media-uploader", (e) ->
   $this = $(this)
@@ -14,7 +5,7 @@ $(document).on "click", ".content-media-uploader", (e) ->
   $input.trigger "click"
   $input.on "change", (e) ->
     return unless typeof(e.target.files[0]) is "object"
-    
+
     reader = new FileReader()
     reader.onload = ->
       img = reader.result

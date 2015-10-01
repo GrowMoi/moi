@@ -1,3 +1,4 @@
+selector = ".input-tags"
 $(document).on "ready page:load nested:fieldAdded:contents", ->
-  $('.input-tags').tagsinput
+  $(selector).tagsinput
     tagClass: "label label-info"
