@@ -78,6 +78,9 @@
       aspell_not_present: "Advertencia: este texto no ha sido revisado ortográficamente"
       attach_media: Adjuntar multimedia
       title_tooltip: Título de la pregunta del test
+      to_approve: "Por Aprobar"
+      test: Test
+      basic_info: Información básica
       levels:
         "1": "Principiante"
         "2": "Intermedio"
@@ -91,7 +94,6 @@
       approved_status:
         approved: Aprobado
         unapproved: No aprobado
-      to_approve: "Por Aprobar"
       kinds:
         que-es: "Qué es"
         como-funciona: "Cómo funciona"
@@ -99,8 +101,12 @@
         quien-cuando-donde: "Quién/Cuándo/Dónde"
         videos: "Vídeos"
         enlaces: "Enlaces"
+
     profiles:
       new: Nuevo árbol
+    possible_answers:
+      correct: Respuesta correcta
+
   date:
     formats:
       default: "%d/%m/%Y"
@@ -361,6 +367,8 @@
       profile:
         name: Nombre
         biography: Biografía
+      possible_answer:
+        text: Posible respuesta
 
     errors:
       messages:

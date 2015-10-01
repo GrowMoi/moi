@@ -15,6 +15,7 @@ module Admin
         neuron.contents.inject({}) do |memo, content|
           memo[content.level] ||= Hash.new
           memo[content.level][content.kind] ||= Array.new
+          content.build_possible_answers!
           memo[content.level][content.kind] << decorate(content)
           memo
         end

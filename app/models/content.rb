@@ -34,7 +34,16 @@ class Content < ActiveRecord::Base
 
   begin :relationships
     belongs_to :neuron, touch: true
+    has_many :possible_answers,
+             ->{ order :id },
+             dependent: :destroy
   end
+
+  accepts_nested_attributes_for :possible_answers,
+    allow_destroy: true,
+    reject_if: ->(attributes) {
+      attributes["text"].blank?
+    }
 
   begin :scopes
     scope :approved, ->(status=true) {
@@ -63,6 +72,14 @@ class Content < ActiveRecord::Base
     if self.approved_changed?
       self.neuron.paper_trail_event = "approve_content"
       self.neuron.touch_with_version
+    end
+  end
+
+  def build_possible_answers!
+    max = 3
+    remaining = max - possible_answers.length
+    1.upto(remaining).map do
+      possible_answers.build
     end
   end
 
