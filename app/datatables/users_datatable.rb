@@ -9,7 +9,7 @@ class UsersDatatable
     {
       sEcho: params[:sEcho].to_i,
       iTotalRecords: User.count,
-      iTotalDisplayRecords: users.count,
+      iTotalDisplayRecords: users_scope.count,
       aaData: data
     }
   end
@@ -33,14 +33,20 @@ private
   end
 
   def fetch_users
-    users = User.order("#{sort_column} #{sort_direction}")
-    if params[:sSearch].present?
-      users = users.where(
-        "name ILIKE :search OR email ILIKE :search",
-        search: "%#{params[:sSearch]}%"
-      )
+    users_scope.page(page).per(per_page)
+  end
+
+  def users_scope
+    @users_scope ||= begin
+      scope = User.order("#{sort_column} #{sort_direction}")
+      if params[:sSearch].present?
+        scope = scope.where(
+          "name ILIKE :search OR email ILIKE :search",
+          search: "%#{params[:sSearch]}%"
+        )
+      end
+      scope
     end
-    users.page(page).per(per_page)
   end
 
   def page
