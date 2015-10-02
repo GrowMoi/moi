@@ -36,7 +36,7 @@ class ContentDecorator < LittleDecorator
   end
 
   def source
-    if record.source =~ (/\A(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?\Z/i)
+    if source_is_uri?
       link_to record.source,
               record.source,
               target: "_blank"
@@ -84,6 +84,12 @@ class ContentDecorator < LittleDecorator
   end
 
   private
+
+  def source_is_uri?
+    # taken from
+    # http://stackoverflow.com/questions/1805761/check-if-url-is-valid-ruby#answer-1805788
+    record.source =~ /\A#{URI::regexp}\z/
+  end
 
   def media_file
     @media_file ||= record.media.file
