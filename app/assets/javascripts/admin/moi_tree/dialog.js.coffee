@@ -51,7 +51,7 @@ class moiTree.TreeDialog
 
   positionPopover: ->
     $text = $(@text)
-    position = $text.position()
+    position = $text[0].getBoundingClientRect();
     left = position.left + 5 # 5 is just padding
     leftOffset = $text[0].getBBox().width # this gets the width of svg
     leftFinal = left + (leftOffset * currentTreeZoom)
