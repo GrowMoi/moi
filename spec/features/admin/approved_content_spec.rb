@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "update flag neuron" do
+describe "approve contents" do
   let!(:current_user) { create :user, :admin }
 
   let!(:neuron) {
@@ -8,7 +8,9 @@ describe "update flag neuron" do
   }
 
   let!(:content) {
-    create :content, neuron: neuron
+    create :content, neuron: neuron,
+                     kind: "que-es",
+                     level: 1
   }
 
   before {
@@ -16,16 +18,42 @@ describe "update flag neuron" do
     visit admin_neuron_path(neuron)
   }
 
-  feature "approve content", js: true do
-    before {
-      # I can't found link
-      # content.approved?
-      # click_link I18n.t("views.contents.approved_status.unapproved")
+  feature "toggle `approved` flag", js: true do
+    let(:click_btn!) {
+      # select contents tab
+      find("[href='#contents']").click
+
+      # click approve toggle button
+      btn = find "a#{btn_selector}"
+      btn.click
     }
 
-    it {
-      # expect(record.attr).to eq(true)
-    }
+    describe "approve" do
+      let(:btn_selector) { ".unapproved" }
+
+      before {
+        expect(neuron).to_not be_active
+        click_btn!
+      }
+
+      it { expect(content.reload).to be_approved }
+      it { expect(neuron.reload).to be_active }
+    end
+
+    describe "unapprove" do
+      let(:btn_selector) { ".approved" }
+
+      before {
+        content.toggle! :approved
+        neuron.update! active: true # HACK
+        expect(neuron.reload).to be_active
+        visit admin_neuron_path(neuron)
+        click_btn!
+      }
+
+      it { expect(content.reload).to_not be_approved }
+      it { expect(neuron.reload).to_not be_active }
+    end
   end
 
 end
