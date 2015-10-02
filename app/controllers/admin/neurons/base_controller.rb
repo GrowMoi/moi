@@ -31,6 +31,7 @@ module Admin
               .permit :id,
                       :title,
                       :parent_id,
+                      :is_public,
                       :contents_attributes => [
                         :id,
                         :kind,

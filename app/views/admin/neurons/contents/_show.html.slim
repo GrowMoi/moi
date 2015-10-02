@@ -4,4 +4,6 @@
     = content.keywords
     = content.source
     = content.media
+    - if content.can_be_approved?
+      = content.toggle_approved
     hr

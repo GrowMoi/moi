@@ -11,5 +11,33 @@
       max-width: 100%
       max-height: 400px
 
+  .content-toggle-approve
+    display: inline-block
+    .glyphicon
+      margin-right: 3px
+    a:not(:hover)
+      text-decoration: none
+      color: #333
+    &[data-status="approved"]
+      .approved
+        display: block
+      .unapproved
+        display: none
+      &:hover
+        .approved
+          display: none
+        .unapproved
+          display: block
+    &[data-status="unapproved"]
+      .approved
+        display: none
+      .unapproved
+        display: block
+      &:hover
+        .approved
+          display: block
+        .unapproved
+          display: none
+
   hr
     margin-top: 10px

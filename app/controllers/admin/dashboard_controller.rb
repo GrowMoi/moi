@@ -9,6 +9,9 @@ module Admin
        .accessible_by(current_ability, :index)
        .page(params[:page]).per(18)
     }
+    expose(:decorated_neurons) {
+      decorate neurons
+    }
 
     expose(:neuron_scope) {
       raise ActiveRecord::RecordNotFound unless Neuron::STATES.include?(state)

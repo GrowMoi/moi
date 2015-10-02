@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #  active     :boolean          default(FALSE)
 #  deleted    :boolean          default(FALSE)
+#  is_public  :boolean          default(FALSE)
 #
 
 require 'rails_helper'
@@ -48,6 +49,19 @@ RSpec.describe Neuron, :type => :model do
     it {
       expect(child).to_not be_valid
       expect(child.errors.keys).to include(:parent)
+    }
+  end
+
+  describe "neuron can't delete if public" do
+    let(:neuron) {
+      create :neuron, :public
+    }
+    before {
+      neuron.update(deleted: true)
+    }
+    it {
+      expect(neuron).to_not be_valid
+      expect(neuron.errors.keys).to include(:deleted)
     }
   end
 

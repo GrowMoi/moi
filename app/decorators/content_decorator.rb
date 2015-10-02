@@ -27,6 +27,19 @@ class ContentDecorator < LittleDecorator
     end
   end
 
+  def can_be_approved?
+    can?(:approve, record) && record.persisted?
+  end
+
+  def toggle_approved
+    render "admin/neurons/contents/toggle_approved",
+           decorator: self,
+           icons: {
+             "true" => "glyphicon-ok-circle",
+             "false" => "glyphicon-ban-circle"
+           }
+  end
+
   def description_spellchecked
     @spellchecked_description ||= spellcheck_description
   rescue RuntimeError => e
@@ -37,6 +50,19 @@ class ContentDecorator < LittleDecorator
     else
       raise e
     end
+  end
+
+  def approved_to_s
+    approved_options(record.approved?)
+  end
+
+  def approved_options(key=nil)
+    @approved_options ||= {
+      "true" => "approved",
+      "false" => "unapproved"
+    }
+    return @approved_options if key.nil?
+    @approved_options[key.to_s]
   end
 
   private
