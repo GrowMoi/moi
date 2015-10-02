@@ -3,6 +3,9 @@ $height: 100px
 .neuron_dashboard
   padding-top: 10px
   position: relative
+  &:hover
+    .neuron-edit
+      display: block
   .neuron-show
     text-decoration: none
   .neuron_dashboard_content
@@ -14,9 +17,8 @@ $height: 100px
     &:hover
       box-shadow: 0 1px 2px #ccc
 
-  &:hover
-    .neuron-edit
-      display: block
+    .neuron-contents-badges
+      float: right
 
   .neuron-edit
     text-decoration: none

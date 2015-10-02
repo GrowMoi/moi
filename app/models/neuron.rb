@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #  active     :boolean          default(FALSE)
 #  deleted    :boolean          default(FALSE)
+#  is_public  :boolean          default(FALSE)
 #
 
 class Neuron < ActiveRecord::Base
@@ -27,7 +28,11 @@ class Neuron < ActiveRecord::Base
   }
 
   begin :relationships
-    has_many :contents, dependent: :destroy
+    has_many :contents,
+             ->{
+               includes(:possible_answers).includes(:keywords)
+             },
+             dependent: :destroy
     belongs_to :parent, class: Neuron
   end
 
@@ -46,6 +51,9 @@ class Neuron < ActiveRecord::Base
                       uniqueness: true
     validate :parent_is_not_child,
              if: ->{ parent_id.present? }
+    validate :check_is_public,
+              on: :update,
+              :if => :deleted?
   end
 
   def to_s
@@ -108,15 +116,21 @@ class Neuron < ActiveRecord::Base
     ) if parent_is_child
   end
 
+  def check_is_public
+    errors.add :deleted if is_public?
+  end
+
   private
 
   ##
   # marks `active` flag as true if any of the contents
   # is approved. Marks it false otherwise
   def update_active_state!
-    update!(
-      active: contents_any?(approved: true)
-    )
+    self.active = contents_any?(approved: true)
+    if active_changed?
+      self.paper_trail_event = "active_neuron"
+      save!
+    end
   end
 
   ##

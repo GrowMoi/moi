@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150831204727) do
+
+ActiveRecord::Schema.define(version: 20150913183303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +27,7 @@ ActiveRecord::Schema.define(version: 20150831204727) do
     t.string   "source"
     t.string   "media"
     t.boolean  "approved",    default: false
+    t.string   "title"
   end
 
   add_index "contents", ["neuron_id"], name: "index_contents_on_neuron_id", using: :btree
@@ -37,11 +39,23 @@ ActiveRecord::Schema.define(version: 20150831204727) do
     t.datetime "updated_at",                 null: false
     t.boolean  "active",     default: false
     t.boolean  "deleted",    default: false
+    t.boolean  "is_public",  default: false
   end
 
   add_index "neurons", ["deleted"], name: "index_neurons_on_deleted", using: :btree
   add_index "neurons", ["parent_id"], name: "index_neurons_on_parent_id", using: :btree
   add_index "neurons", ["title"], name: "index_neurons_on_title", using: :btree
+
+  create_table "possible_answers", force: :cascade do |t|
+    t.integer  "content_id",                 null: false
+    t.string   "text",                       null: false
+    t.boolean  "correct",    default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "possible_answers", ["content_id"], name: "index_possible_answers_on_content_id", using: :btree
+  add_index "possible_answers", ["correct"], name: "index_possible_answers_on_correct", using: :btree
 
   create_table "profiles", force: :cascade do |t|
     t.string   "name"
@@ -129,4 +143,6 @@ ActiveRecord::Schema.define(version: 20150831204727) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
+  add_foreign_key "possible_answers", "contents"
+  add_foreign_key "profiles", "users"
 end

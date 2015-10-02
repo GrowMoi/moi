@@ -1,0 +1,10 @@
+# automatically adds NUMBER_OF_POSSIBLE_ANSWERS
+# possible answers to content form
+
+number_of_possible_answers = <%= Content::NUMBER_OF_POSSIBLE_ANSWERS %>
+
+$(document).on "nested:fieldAdded:contents", (e) ->
+  $contentForm = e.field
+  $addLink = $contentForm.find(".add-possible-answer")
+  for i in [1..number_of_possible_answers]
+    $addLink.trigger "click"

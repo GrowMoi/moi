@@ -12,6 +12,7 @@
 #  source      :string
 #  media       :string
 #  approved    :boolean          default(FALSE)
+#  title       :string
 #
 
 require 'rails_helper'
@@ -50,6 +51,32 @@ RSpec.describe Content, :type => :model do
     }
     it {
       expect(neuron.reload).to_not be_active
+    }
+  end
+
+  describe "papertrail should registre event: active_neuron", versioning: true do
+    before {
+      content.update! approved: true
+    }
+    it {
+      expect(
+       neuron.versions.last.event
+      ).to eq("active_neuron")
+    }
+  end
+
+  describe "papertrail should registre event: approve_content", versioning: true do
+    #the event if registre only when change approved value
+    let(:content) {
+      create :content, :approved
+    }
+    before {
+      content.update! approved: false
+    }
+    it {
+      expect(
+       content.neuron.versions.last.event
+      ).to eq("approve_content")
     }
   end
 end

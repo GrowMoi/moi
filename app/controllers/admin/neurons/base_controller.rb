@@ -15,6 +15,7 @@ module Admin
         neuron.contents.inject({}) do |memo, content|
           memo[content.level] ||= Hash.new
           memo[content.level][content.kind] ||= Array.new
+          content.build_possible_answers!
           memo[content.level][content.kind] << decorate(content)
           memo
         end
@@ -31,17 +32,23 @@ module Admin
               .permit :id,
                       :title,
                       :parent_id,
+                      :is_public,
                       :contents_attributes => [
                         :id,
                         :kind,
                         :level,
+                        :title,
                         :description,
                         :neuron_id,
                         :_destroy,
                         :keyword_list,
                         :source,
                         :media,
-                        :media_cache
+                        :media_cache,
+                        :possible_answers_attributes => [
+                          :correct,
+                          :text
+                        ]
                       ]
       rescue ActionController::ParameterMissing
         Hash.new

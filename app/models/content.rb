@@ -12,6 +12,7 @@
 #  source      :string
 #  media       :string
 #  approved    :boolean          default(FALSE)
+#  title       :string
 #
 
 class Content < ActiveRecord::Base
@@ -24,6 +25,7 @@ class Content < ActiveRecord::Base
     videos
     enlaces
   }.split("\n").map(&:squish).map(&:to_sym).reject(&:blank?)
+  NUMBER_OF_POSSIBLE_ANSWERS = 3
 
   has_paper_trail ignore: [:created_at, :updated_at, :id]
 
@@ -33,6 +35,25 @@ class Content < ActiveRecord::Base
 
   begin :relationships
     belongs_to :neuron, touch: true
+    has_many :possible_answers,
+             ->{ order :id },
+             dependent: :destroy
+  end
+
+  accepts_nested_attributes_for :possible_answers,
+    allow_destroy: true,
+    reject_if: ->(attributes) {
+      attributes["text"].blank?
+    }
+
+  begin :scopes
+    scope :approved, ->(status=true) {
+      where(approved: status)
+    }
+  end
+
+  begin :callbacks
+    after_update :log_approve_neuron
   end
 
   begin :validations
@@ -46,6 +67,21 @@ class Content < ActiveRecord::Base
 
   def kind
     read_attribute(:kind).try :to_sym
+  end
+
+  def log_approve_neuron
+    if self.approved_changed?
+      self.neuron.paper_trail_event = "approve_content"
+      self.neuron.touch_with_version
+    end
+  end
+
+  def build_possible_answers!
+    max = NUMBER_OF_POSSIBLE_ANSWERS
+    remaining = max - possible_answers.length
+    1.upto(remaining).map do
+      possible_answers.build
+    end
   end
 
   private

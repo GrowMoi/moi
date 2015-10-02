@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #  active     :boolean          default(FALSE)
 #  deleted    :boolean          default(FALSE)
+#  is_public  :boolean          default(FALSE)
 #
 
 FactoryGirl.define do
@@ -24,7 +25,12 @@ FactoryGirl.define do
     trait :deleted do
       deleted true
     end
-
+    trait :public do
+      is_public true
+    end
+    trait :not_public do
+      is_public false
+    end
     trait :with_parent do
       parent { create(:neuron) }
     end

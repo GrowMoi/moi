@@ -44,16 +44,19 @@ module ApplicationHelper
   # @param title [String]
   # @param options [Hash]
   # @option options [String] :place (top)
+  # @option options [Symbol] :tag (:div)
+  # @option options [Hash] :data
   # @yield a div with the tooltip
   def tooltip(title, options = {})
-    opts = { place: "top" }.merge(options)
-    content_tag :div,
+    opts = { place: "top", tag: :div }.merge(options)
+    data = {
+      toggle: "tooltip",
+      placement: opts[:place]
+    }.merge(opts.fetch(:data){ Hash.new })
+    content_tag opts[:tag],
                 class: "bs-tooltip #{opts[:class]}",
                 title: title,
-                data: {
-                  toggle: "tooltip",
-                  placement: opts[:place]
-                } do
+                data: data do
       yield
     end
   end

@@ -42,17 +42,20 @@
       general: General
       restore: "Neurona restaurada"
       delete: "Neurona eliminada"
-      approved: Aprobado
-      pending: Pendiente
       deleted: Eliminado
       active: "Activa"
       inactive: "Inactiva"
+      public_status:
+        "true": Pública
+        "false": No es pública
     changelog:
       update: actualizó
       create: creó este registro con
       time_ago: "hace %{time_ago}"
       delete: eliminó este registro
       restore: restauró este registro
+      active_neuron: moderó neurona
+      approve_content: moderó contenido
     search_engine:
       edit: Editar motor de búsqueda
       new: Nuevo motor de búsqueda
@@ -74,13 +77,23 @@
       search_query: Términos de búsqueda
       aspell_not_present: "Advertencia: este texto no ha sido revisado ortográficamente"
       attach_media: Adjuntar multimedia
+      title_tooltip: Título de la pregunta del test
+      to_approve: "Por Aprobar"
+      test: Test
+      basic_info: Información básica
       levels:
         "1": "Principiante"
         "2": "Intermedio"
         "3": "Avanzado"
+      toggled_approve:
+        "true": "Contenido aprobado"
+        "false": "Contenido desaprobado"
       toggle_approve:
-        true: Contenido aprobado
-        false: Contenido desaprobado
+        approved: Aprobar
+        unapproved: Reprobar
+      approved_status:
+        approved: Aprobado
+        unapproved: No aprobado
       kinds:
         que-es: "Qué es"
         como-funciona: "Cómo funciona"
@@ -88,8 +101,12 @@
         quien-cuando-donde: "Quién/Cuándo/Dónde"
         videos: "Vídeos"
         enlaces: "Enlaces"
+
     profiles:
       new: Nuevo árbol
+    possible_answers:
+      correct: Respuesta correcta
+
   date:
     formats:
       default: "%d/%m/%Y"
@@ -333,12 +350,16 @@
         parent: Padre
         parent_id: Padre
         contents: Contenidos
+        active: Activa
+        is_public: Pública
       content:
         level: "Nivel"
         kind: "Tipo"
         description: "Descripción"
         keyword_list: "Palabras clave"
         source: Fuente
+        approved: Aprobado
+        title: Título
       search_engine:
         name: Nombre
         gcse_id: CSE id
@@ -346,12 +367,15 @@
       profile:
         name: Nombre
         biography: Biografía
+      possible_answer:
+        text: Posible respuesta
 
     errors:
       messages:
         <<: *errors_messages
         circular_parent: "%{child} no puede ser padre de %{parent} dado que alguno de sus padres es %{parent}"
         content_has_description_or_media: Debe incluir una descripción o un archivo
+        cannot_delete_neuron: "%{neuron} no se puede eliminar porque es pública"
       template:
         <<: *errors_template
 
