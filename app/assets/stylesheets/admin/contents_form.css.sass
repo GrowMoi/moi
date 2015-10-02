@@ -12,11 +12,23 @@
         padding-right: 25px
       .remove_nested_fields
         position: absolute
-        top: 2px
-        right: 18px
+        top: 0
+        right: 10px
         padding-right: 0
         &:hover .glyphicon
           text-shadow: 0 1px 0 #aaa
+
+.contents_form
+  .fields
+    margin-bottom: 1em
+  // label
+  //   font-weight: normal
+  fieldset
+    padding: 0.3em 0 1em 0
+    legend
+      margin: 10px 0
+  hr
+    margin: 30px 0
 
 .content-form-source
   .external-source-btn
@@ -24,3 +36,10 @@
 
 .content-media-uploader
   margin-right: 0.5em
+
+.content-media-name-on-form
+  img
+    max-height: 40px
+    margin-right: 0.3em
+  .glyphicon
+    display: none

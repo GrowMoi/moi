@@ -1,9 +1,13 @@
 - formatted_contents.fetch(level).fetch(kind).each do |content|
+  - if content.can_be_approved?
+    .neuron-moderate-actions
+      = content.toggle_approved
+
   .neuron-content
+    div = content.title
     = content.description_spellchecked
     = content.keywords
     = content.source
     = content.media
-    - if content.can_be_approved?
-      = content.toggle_approved
+
     hr

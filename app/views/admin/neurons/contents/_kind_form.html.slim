@@ -1,7 +1,8 @@
 = f.fields_for :contents,
                formatted_contents.fetch(level).fetch(kind) do |content_form|
-  = render "admin/neurons/contents/form",
-           f: content_form
+  .content-form
+    = render "admin/neurons/contents/form",
+             f: content_form
 
 = f.link_to_add :contents,
                 class: "btn-xs btn btn-default",

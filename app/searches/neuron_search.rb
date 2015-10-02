@@ -4,7 +4,7 @@ class NeuronSearch < Searchlight::Search
 
   def search_q
     search.includes(:contents)
-          .where("title ILIKE :q OR contents.description ILIKE :q", q: "%#{q}%")
+          .where("contents.title ILIKE :q OR contents.description ILIKE :q", q: "%#{q}%")
           .references(:contents)
   end
 end
