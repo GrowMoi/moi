@@ -101,11 +101,13 @@
         quien-cuando-donde: "Quién/Cuándo/Dónde"
         videos: "Vídeos"
         enlaces: "Enlaces"
-
     profiles:
       new: Nuevo árbol
     possible_answers:
       correct: Respuesta correcta
+    dashboard:
+      neurons_count: Mostrando %{count} neuronas de un total de
+      neurons_total_count: "%{count} neuronas"
 
   date:
     formats:
