@@ -19,4 +19,11 @@
 
 .clearfix
 
-.text-center = paginate neurons
+.dashboard-pagination.text-center
+  = paginate neurons
+  - if neurons.any?
+    .text-muted
+      => t("views.dashboard.neurons_count",
+          count: neurons.length)
+      = t("views.dashboard.neurons_total_count",
+          count: neurons.total_count)
