@@ -11,5 +11,7 @@
         = neuron.contents_approved_badge
 
       h5.text-muted = neuron.parent
+
+      = neuron.status_label if neuron.is_public?
   = link_to "", edit_admin_neuron_path(neuron),
       class: "glyphicon glyphicon-edit neuron-edit"
