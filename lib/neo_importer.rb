@@ -5,7 +5,7 @@ require "neography"
 require "neo_importer/neuron_node"
 
 class NeoImporter
-  ROOT_ID = 13772
+  ROOT_ID = 13_772
 
   def run!
     root = Neography::Node.load(ROOT_ID, neo)
@@ -14,7 +14,7 @@ class NeoImporter
 
   private
 
-  def create_neuron!(node, parent=nil)
+  def create_neuron!(node, parent = nil)
     neuron = NeuronNode.new(node, parent).create!
     node.outgoing(:is_father_of).each do |son|
       create_neuron!(son, neuron)

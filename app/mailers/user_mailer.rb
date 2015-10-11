@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-	default from: 'moi@example.com'
+  default from: "moi@example.com"
 
   def notify_role_change(user)
     @user = user

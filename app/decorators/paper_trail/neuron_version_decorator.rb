@@ -61,7 +61,7 @@ module PaperTrail
     end
 
     def extra_keys
-      Array.new.tap do |keys|
+      [].tap do |keys|
         keys << "contents" if contents_changed?
       end
     end

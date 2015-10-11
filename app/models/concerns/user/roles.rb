@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
     included do
       validates :role, presence: true,
-                       inclusion: {in: ROLES}
+                       inclusion: { in: ROLES }
     end
 
     # Define method names based on existing roles.

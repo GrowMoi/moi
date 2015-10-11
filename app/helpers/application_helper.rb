@@ -31,7 +31,7 @@ module ApplicationHelper
   #   can add actions in there)
   def datatable(options)
     defaults = { includes_actions: true }
-    raise ArgumentError, ":source must be provided" if options[:source].blank?
+    fail ArgumentError, ":source must be provided" if options[:source].blank?
     data = defaults.merge(options)
     content_tag :table, class: "datatable table table-striped", data: data do
       yield
@@ -52,7 +52,7 @@ module ApplicationHelper
     data = {
       toggle: "tooltip",
       placement: opts[:place]
-    }.merge(opts.fetch(:data){ Hash.new })
+    }.merge(opts.fetch(:data) { Hash.new })
     content_tag opts[:tag],
                 class: "bs-tooltip #{opts[:class]}",
                 title: title,
@@ -69,7 +69,7 @@ module ApplicationHelper
   #   neurons from. defaults to whole tree
   # @option options [Boolean] :hide_dialog (false)
   #   shows or hides dialog for each neuron
-  def moi_tree(options={})
+  def moi_tree(options = {})
     defaults = {
       source: admin_neurons_path(format: :json)
     }

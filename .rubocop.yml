@@ -1,3 +1,6 @@
+# inherited from
+# https://github.com/bbatsov/rubocop/blob/master/config/default.yml
+
 AllCops:
   RunRailsCops: true
   DisplayCopNames: true
@@ -24,6 +27,18 @@ Style/BlockDelimiters:
     - before
     - sequence
     - expose
+  IgnoredMethods:
+    - lambda
+    - proc
+    - it
+    - any?
+    - password_confirmation
+    - level
+    - kind
+    - each
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+Style/LambdaCall:
+  EnforcedStyle: braces

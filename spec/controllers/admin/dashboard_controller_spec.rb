@@ -8,7 +8,7 @@ RSpec.describe Admin::DashboardController,
     }
 
     # default neuron state is active
-    let!(:active_neuron) { create :neuron, active: true}
+    let!(:active_neuron) { create :neuron, active: true }
 
     let!(:inactive_neuron) { create :neuron }
 
@@ -18,7 +18,7 @@ RSpec.describe Admin::DashboardController,
 
     describe "should get active neuron" do
       before {
-        get :index, state: 'active'
+        get :index, state: "active"
       }
 
       it {
@@ -28,7 +28,7 @@ RSpec.describe Admin::DashboardController,
 
     describe "should get inactive neuron" do
       before {
-        get :index, state: 'inactive'
+        get :index, state: "inactive"
       }
 
       it {

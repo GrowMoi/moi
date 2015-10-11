@@ -30,11 +30,11 @@ module PaperTrail
       whodunnit.present?
     end
 
-    def localised_attr_for(key)
-      raise NotImplementedError
+    def localised_attr_for(_key)
+      fail NotImplementedError
     end
 
-    def value_for(key, value)
+    def value_for(_key, value)
       value
     end
 

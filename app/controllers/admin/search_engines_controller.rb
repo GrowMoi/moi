@@ -39,9 +39,9 @@ module Admin
 
     def search_engine_params
       params.require(:search_engine)
-            .permit(:name, :slug, :gcse_id, :active)
+        .permit(:name, :slug, :gcse_id, :active)
     rescue ActionController::ParameterMissing
-      Hash.new
+      {}
     end
 
     def add_breadcrumbs

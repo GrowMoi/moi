@@ -37,7 +37,7 @@ class Neuron < ActiveRecord::Base
   end
 
   begin :callbacks
-    after_touch :update_active_state!
+        after_touch :update_active_state!
   end
 
   accepts_nested_attributes_for :contents,
@@ -47,13 +47,13 @@ class Neuron < ActiveRecord::Base
     }
 
   begin :validations
-    validates :title, presence: true,
-                      uniqueness: true
-    validate :parent_is_not_child,
-             if: ->{ parent_id.present? }
-    validate :check_is_public,
-              on: :update,
-              :if => :deleted?
+        validates :title, presence: true,
+                          uniqueness: true
+        validate :parent_is_not_child,
+                 if: -> { parent_id.present? }
+        validate :check_is_public,
+                 on: :update,
+                 if: :deleted?
   end
 
   def to_s
@@ -98,7 +98,7 @@ class Neuron < ActiveRecord::Base
 
   ##
   # validates parent is not a child or child of any of their
-  # children
+  #  children
   def parent_is_not_child
     parent_is_child = false
     candidate = Neuron.find_by(id: parent_id)
@@ -111,7 +111,7 @@ class Neuron < ActiveRecord::Base
       I18n.t(
         "activerecord.errors.messages.circular_parent",
         child: parent.to_s,
-        parent: self.to_s
+        parent: to_s
       )
     ) if parent_is_child
   end

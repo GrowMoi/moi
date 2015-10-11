@@ -9,8 +9,8 @@ class CopyContentTitles < ActiveRecord::Migration
         if has_title
           title = content_parts[0] # first is title
           say "updated content ##{content.id} -> #{title}"
-          content_parts.slice!(0,2) # remove first two
-          description = content_parts.join("\n") # rejoin the rest
+          content_parts.slice!(0, 2) #  remove first two
+          description = content_parts.join("\n") #  rejoin the rest
           content.assign_attributes(
             title: title,
             description: description
