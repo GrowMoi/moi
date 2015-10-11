@@ -11,9 +11,9 @@
 #  updated_at :datetime         not null
 #
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe SearchEngine, :type => :model do
+RSpec.describe SearchEngine, type: :model do
   describe "factory" do
     let(:search_engine) { build :search_engine }
     it {

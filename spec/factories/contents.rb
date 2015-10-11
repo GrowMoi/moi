@@ -19,8 +19,8 @@ FactoryGirl.define do
   factory :content do
     neuron
 
-    level { Content::LEVELS.sample }
-    kind { Content::KINDS.sample }
+    level do Content::LEVELS.sample end
+    kind do Content::KINDS.sample end
     sequence(:description) { |n|
       "Content's description #{n}"
     }

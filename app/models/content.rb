@@ -17,14 +17,14 @@
 
 class Content < ActiveRecord::Base
   LEVELS = %w(1 2 3).map!(&:to_i)
-  KINDS = %{
+  KINDS = %(
     que-es
     como-funciona
     por-que-es
     quien-cuando-donde
     videos
     enlaces
-  }.split("\n").map(&:squish).map(&:to_sym).reject(&:blank?)
+  ).split("\n").map(&:squish).map(&:to_sym).reject(&:blank?)
   NUMBER_OF_POSSIBLE_ANSWERS = 3
 
   has_paper_trail ignore: [:created_at, :updated_at, :id]
@@ -34,45 +34,45 @@ class Content < ActiveRecord::Base
   mount_uploader :media, ContentMediaUploader
 
   begin :relationships
-    belongs_to :neuron, touch: true
-    has_many :possible_answers,
-             ->{ order :id },
-             dependent: :destroy
+        belongs_to :neuron, touch: true
+        has_many :possible_answers,
+                 -> { order :id },
+                 dependent: :destroy
   end
 
   accepts_nested_attributes_for :possible_answers,
-    allow_destroy: true,
-    reject_if: ->(attributes) {
-      attributes["text"].blank?
-    }
+                                allow_destroy: true,
+                                reject_if: lambda { |attributes|
+                                  attributes["text"].blank?
+                                }
 
   begin :scopes
-    scope :approved, ->(status=true) {
-      where(approved: status)
-    }
+        scope :approved, lambda { |status = true|
+          where(approved: status)
+        }
   end
 
   begin :callbacks
-    after_update :log_approve_neuron
+        after_update :log_approve_neuron
   end
 
   begin :validations
-    validates :level, presence: true,
-                      inclusion: {in: LEVELS}
-    validates :kind, presence: true,
-                     inclusion: {in: KINDS}
-    validate :has_description_or_media
-    validates :source, presence: true
+        validates :level, presence: true,
+                          inclusion: { in: LEVELS }
+        validates :kind, presence: true,
+                         inclusion: { in: KINDS }
+        validate :has_description_or_media
+        validates :source, presence: true
   end
 
   def kind
-    read_attribute(:kind).try :to_sym
+    self[:kind].try :to_sym
   end
 
   def log_approve_neuron
     if self.approved_changed?
-      self.neuron.paper_trail_event = "approve_content"
-      self.neuron.touch_with_version
+      neuron.paper_trail_event = "approve_content"
+      neuron.touch_with_version
     end
   end
 

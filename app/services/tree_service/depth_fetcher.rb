@@ -8,9 +8,9 @@ module TreeService
     end
 
     def neurons
-      levels = {0 => [root_neuron]}
+      levels = { 0 => [root_neuron] }
       (1..depth).each do |level|
-        parents = levels.fetch(level-1)
+        parents = levels.fetch(level - 1)
         levels[level] = children_for(parents)
       end
       levels.values.flatten

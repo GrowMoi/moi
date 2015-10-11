@@ -1,6 +1,6 @@
 module PaperTrail
   class Version < ::ActiveRecord::Base
-    scope :reverse, -> {
+    scope :reverse, lambda {
       scoped.merge(
         unscope(:order)
       ).order(id: :desc)

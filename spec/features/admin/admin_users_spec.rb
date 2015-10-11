@@ -52,7 +52,7 @@ describe "user management" do
         fill_form!
         expect {
           submit_form!
-        }.to change{ User.count }.by(1)
+        }.to change { User.count }.by(1)
       }
 
       it {
@@ -60,7 +60,7 @@ describe "user management" do
       }
     end
 
-    #this is with js: true to show datatable content
+    # this is with js: true to show datatable content
     feature "create user", js: true do
       before {
         visit new_admin_user_path

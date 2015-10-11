@@ -10,9 +10,9 @@
 #  updated_at :datetime         not null
 #
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe PossibleAnswer, :type => :model do
+RSpec.describe PossibleAnswer, type: :model do
   describe "factory" do
     let(:possible_answer) { build :possible_answer }
     it { expect(possible_answer).to be_valid }

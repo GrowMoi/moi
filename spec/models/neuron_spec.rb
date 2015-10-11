@@ -12,9 +12,9 @@
 #  is_public  :boolean          default(FALSE)
 #
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe Neuron, :type => :model do
+RSpec.describe Neuron, type: :model do
   describe "a neuron can have a parent" do
     let(:neuron) {
       create :neuron, :with_parent
@@ -23,7 +23,7 @@ RSpec.describe Neuron, :type => :model do
     before {
       expect {
         neuron
-      }.to change{ Neuron.count }.by(2)
+      }.to change { Neuron.count }.by(2)
     }
 
     it {
@@ -75,9 +75,9 @@ RSpec.describe Neuron, :type => :model do
     it "should include all levels" do
       levels.each do |level|
         expect(
-          neuron.contents.any? do |content|
+          neuron.contents.any? { |content|
             content.level == level
-          end
+          }
         ).to be_truthy
       end
     end
@@ -86,10 +86,10 @@ RSpec.describe Neuron, :type => :model do
       levels.each do |level|
         kinds.each do |kind|
           expect(
-            neuron.contents.any? do |content|
+            neuron.contents.any? { |content|
               content.level == level &&
               content.kind == kind
-            end
+            }
           ).to be_truthy
         end
       end
@@ -98,7 +98,7 @@ RSpec.describe Neuron, :type => :model do
     it {
       expect(
         neuron.contents.length
-      ).to eq( levels.count * kinds.count )
+      ).to eq(levels.count * kinds.count)
     }
   end
 

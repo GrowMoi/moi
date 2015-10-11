@@ -10,7 +10,7 @@ RSpec.describe User::Roles do
     describe "role #{role}" do
       let(:user) { send(role) }
       let(:other_role) {
-        User.roles.reject{|r| r == role }.sample
+        User.roles.reject { |r| r == role }.sample
       }
 
       it {

@@ -8,21 +8,21 @@ module Admin
 
     expose(:profiles)
     expose(:profile, attributes: :profile_params)
-    expose(:decorated_profile) {
+    expose(:decorated_profile) do
       decorate profile
-    }
+    end
     alias_method :resource, :decorated_profile
 
-    expose(:root_neuron) {
+    expose(:root_neuron) do
       TreeService::RootFetcher.root_neuron
-    }
+    end
 
-    expose(:initial_neurons) {
+    expose(:initial_neurons) do
       TreeService::DepthFetcher.new(
         depth: 2,
         scope: decorated_profile.neurons
       ).neurons
-    }
+    end
 
     def create
       profile.user = current_user
@@ -49,11 +49,11 @@ module Admin
 
     def profile_params
       params.require(:profile)
-            .permit(
-              :name,
-              :biography,
-              :neuron_ids
-            )
+        .permit(
+          :name,
+          :biography,
+          :neuron_ids
+        )
     end
 
     def breadcrumb_base

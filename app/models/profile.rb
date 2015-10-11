@@ -23,8 +23,7 @@ class Profile < ActiveRecord::Base
   #   profile.neuron_ids = [1,2,3,""]
   def neuron_ids=(ids)
     ids = ids.split(",") if ids.is_a?(String)
-    write_attribute :neuron_ids,
-                    Array(ids).flatten
-                              .reject(&:blank?)
+    self[:neuron_ids] = Array(ids).flatten
+                        .reject(&:blank?)
   end
 end

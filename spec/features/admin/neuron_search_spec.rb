@@ -6,20 +6,20 @@ describe "neuron search", type: :feature do
   let(:name_two) { "common QWE" }
   let!(:other_content) {
     create :content, :approved,
-                     description: "other"
+           description: "other"
   }
   let!(:neuron_one) {
     create(:neuron, state).tap do |neuron|
       create(:content, :approved,
-                       description: name_one,
-                       neuron: neuron)
+             description: name_one,
+             neuron: neuron)
     end
   }
   let!(:deleted_neuron) {
     create(:neuron, state, :deleted).tap do |neuron|
       create(:content, :approved,
-                       description: name_two,
-                       neuron: neuron)
+             description: name_two,
+             neuron: neuron)
     end
   }
   let!(:pending_content) {

@@ -15,14 +15,14 @@
 #  title       :string
 #
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe Content, :type => :model do
+RSpec.describe Content, type: :model do
   let(:content) { build :content }
   let(:neuron) { content.neuron }
 
   describe "factory" do
-    it{ expect(content).to be_valid }
+    it { expect(content).to be_valid }
   end
 
   describe "neuron should not to be active" do
@@ -60,13 +60,13 @@ RSpec.describe Content, :type => :model do
     }
     it {
       expect(
-       neuron.versions.last.event
+        neuron.versions.last.event
       ).to eq("active_neuron")
     }
   end
 
   describe "papertrail should registre event: approve_content", versioning: true do
-    #the event if registre only when change approved value
+    # the event if registre only when change approved value
     let(:content) {
       create :content, :approved
     }
@@ -75,7 +75,7 @@ RSpec.describe Content, :type => :model do
     }
     it {
       expect(
-       content.neuron.versions.last.event
+        content.neuron.versions.last.event
       ).to eq("approve_content")
     }
   end

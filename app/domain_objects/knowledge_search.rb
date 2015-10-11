@@ -1,4 +1,4 @@
-require 'google/api_client'
+require "google/api_client"
 
 class KnowledgeSearch
   attr_accessor :query, :lang, :source
@@ -8,7 +8,7 @@ class KnowledgeSearch
   # @option options [String] :query Required.
   # @option options [String] :lang ("es")
   # @option options [String] :source ("wikipedia")
-  def initialize(options={})
+  def initialize(options = {})
     defaults = {
       lang: "es",
       source: "wikipedia"
@@ -38,9 +38,9 @@ class KnowledgeSearch
   def search_engine
     @search_engine ||=
       SearchEngine.active
-                  .find_by!(
-                    slug: source.downcase
-                  )
+      .find_by!(
+        slug: source.downcase
+      )
   end
 
   def search_api
