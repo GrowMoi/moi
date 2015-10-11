@@ -15,7 +15,12 @@ class Profile < ActiveRecord::Base
   belongs_to :user
 
   ##
-  # reject blanks and cast to Array
+  # rejects blanks and casts to Array
+  #
+  # @example Using strings
+  #   profile.neuron_ids = "1,2,3"
+  # @example Using array
+  #   profile.neuron_ids = [1,2,3,""]
   def neuron_ids=(ids)
     ids = ids.split(",") if ids.is_a?(String)
     write_attribute :neuron_ids,
