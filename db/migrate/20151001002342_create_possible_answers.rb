@@ -6,7 +6,7 @@ class CreatePossibleAnswers < ActiveRecord::Migration
       t.boolean :correct, default: false
       t.timestamps null: false
     end
-    
+
     add_index :possible_answers, :correct
     add_foreign_key :possible_answers, :contents
   end

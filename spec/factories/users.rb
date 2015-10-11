@@ -24,7 +24,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "User #{n}" }
     sequence(:email) { |n| "user-#{n}@moi.org" }
     sequence(:password) { |n| "user-password-#{n}" }
-    password_confirmation { password }
+    password_confirmation do password end
     role "cliente"
 
     # allows to have roles as user traits

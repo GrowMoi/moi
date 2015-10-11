@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable and :omniauthable
   devise :database_authenticatable, :recoverable,
-  :rememberable, :trackable, :validatable
+         :rememberable, :trackable, :validatable
 
   after_update :send_role_changed_email
 
@@ -41,8 +41,6 @@ class User < ActiveRecord::Base
   private
 
   def send_role_changed_email
-    if role_changed?
-    	UserMailer.notify_role_change(self).deliver_later
-    end
+    UserMailer.notify_role_change(self).deliver_later if role_changed?
   end
 end

@@ -4,9 +4,9 @@ module Admin
 
     before_action :add_breadcrumbs
 
-    expose(:search_engines) {
+    expose(:search_engines) do
       decorate SearchEngine.all
-    }
+    end
 
     private
 

@@ -3,13 +3,13 @@ module Admin
     class PreviewController < BaseController
       before_action :add_breadcrumbs
 
-      expose(:neuron) {
+      expose(:neuron) do
         if existing_neuron?
           Neuron.find params[:neuron][:id]
         else
           Neuron.new
         end
-      }
+      end
 
       def preview
         authorize! :preview, neuron

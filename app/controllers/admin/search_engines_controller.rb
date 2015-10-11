@@ -1,15 +1,15 @@
 module Admin
   class SearchEnginesController < SettingsController
-    expose(:search_engine) {
+    expose(:search_engine) do
       if params[:id].present?
         SearchEngine.find params[:id]
       else
         SearchEngine.new search_engine_params
       end
-    }
-    expose(:decorated_search_engine) {
+    end
+    expose(:decorated_search_engine) do
       decorate search_engine
-    }
+    end
 
     authorize_resource
 
@@ -39,9 +39,9 @@ module Admin
 
     def search_engine_params
       params.require(:search_engine)
-            .permit(:name, :slug, :gcse_id, :active)
+        .permit(:name, :slug, :gcse_id, :active)
     rescue ActionController::ParameterMissing
-      Hash.new
+      {}
     end
 
     def add_breadcrumbs

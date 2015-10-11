@@ -7,7 +7,5 @@ class SearchEngineDecorator < LittleDecorator
     end
   end
 
-  def to_s
-    record.to_s
-  end
+  delegate :to_s, to: :record
 end

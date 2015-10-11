@@ -8,12 +8,12 @@ module Admin
 
     expose(:user, attributes: :user_params)
     expose(:users)
-    expose(:roles) {
+    expose(:roles) do
       User::Roles::ROLES
-    }
-    expose(:decorated_user) {
+    end
+    expose(:decorated_user) do
       decorate user
-    }
+    end
 
     def index
       respond_to do |format|

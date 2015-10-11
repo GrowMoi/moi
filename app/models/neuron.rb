@@ -18,42 +18,42 @@ class Neuron < ActiveRecord::Base
   STATES = %w(active inactive)
 
   STATES.map(&:to_sym).each do |state|
-    scope state, -> {
+    scope state, lambda {
       where(active: state == :active)
     }
   end
 
-  scope :not_deleted, -> {
+  scope :not_deleted, lambda {
     where(deleted: false)
   }
 
   begin :relationships
-    has_many :contents,
-             ->{
-               includes(:possible_answers).includes(:keywords)
-             },
-             dependent: :destroy
-    belongs_to :parent, class: Neuron
+        has_many :contents,
+                 lambda {
+                   includes(:possible_answers).includes(:keywords)
+                 },
+                 dependent: :destroy
+        belongs_to :parent, class: Neuron
   end
 
   begin :callbacks
-    after_touch :update_active_state!
+        after_touch :update_active_state!
   end
 
   accepts_nested_attributes_for :contents,
-    allow_destroy: true,
-    reject_if: ->(attributes) {
-      attributes["description"].blank? && attributes["media"].blank?
-    }
+                                allow_destroy: true,
+                                reject_if: lambda { |attributes|
+                                  attributes["description"].blank? && attributes["media"].blank?
+                                }
 
   begin :validations
-    validates :title, presence: true,
-                      uniqueness: true
-    validate :parent_is_not_child,
-             if: ->{ parent_id.present? }
-    validate :check_is_public,
-              on: :update,
-              :if => :deleted?
+        validates :title, presence: true,
+                          uniqueness: true
+        validate :parent_is_not_child,
+                 if: -> { parent_id.present? }
+        validate :check_is_public,
+                 on: :update,
+                 if: :deleted?
   end
 
   def to_s
@@ -79,26 +79,22 @@ class Neuron < ActiveRecord::Base
   # @param opts [Hash] options passed to #save
   # @yield [version] created version (if any)
   # @return [Boolean] if the record was saved or not
-  def save_with_version(opts={})
+  def save_with_version(opts = {})
     changed = changed? # if not already creating version
     contents_changed = contents_any?(changed?: true)
     transaction do
       save(opts).tap do |saved|
-        if saved && !changed && contents_changed
-          touch_with_version
-        end
+        touch_with_version if saved && !changed && contents_changed
 
         # only if a version was created
-        if changed || contents_changed
-          yield versions.last if block_given?
-        end
+        yield versions.last if block_given? if changed || contents_changed
       end
     end
   end
 
   ##
   # validates parent is not a child or child of any of their
-  # children
+  #  children
   def parent_is_not_child
     parent_is_child = false
     candidate = Neuron.find_by(id: parent_id)
@@ -111,7 +107,7 @@ class Neuron < ActiveRecord::Base
       I18n.t(
         "activerecord.errors.messages.circular_parent",
         child: parent.to_s,
-        parent: self.to_s
+        parent: to_s
       )
     ) if parent_is_child
   end

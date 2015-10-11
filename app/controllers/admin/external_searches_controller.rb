@@ -1,15 +1,15 @@
 module Admin
   class ExternalSearchesController < AdminController::Base
-    expose(:search) {
+    expose(:search) do
       KnowledgeSearch.new(
         query: params[:q],
         source: params[:provider]
       )
-    }
+    end
 
-    expose(:results) {
+    expose(:results) do
       search.results
-    }
+    end
 
     def create
       authorize! :search, Content
@@ -23,7 +23,7 @@ module Admin
     def formatted_results
       results.map do |result|
         hash = result.to_hash
-        if result.pagemap && result.pagemap.to_hash.has_key?("cse_thumbnail")
+        if result.pagemap && result.pagemap.to_hash.key?("cse_thumbnail")
           hash.merge!(
             thumbnail: result.pagemap.cse_thumbnail.first.to_hash
           )

@@ -11,35 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20150913183303) do
-
+ActiveRecord::Schema.define(version: 20_150_913_183_303) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "contents", force: :cascade do |t|
-    t.integer  "level",                       null: false
-    t.string   "kind",                        null: false
-    t.text     "description",                 null: false
-    t.integer  "neuron_id",                   null: false
+    t.integer "level", null: false
+    t.string "kind", null: false
+    t.text "description", null: false
+    t.integer "neuron_id", null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.string   "source"
-    t.string   "media"
-    t.boolean  "approved",    default: false
-    t.string   "title"
+    t.string "source"
+    t.string "media"
+    t.boolean "approved", default: false
+    t.string "title"
   end
 
   add_index "contents", ["neuron_id"], name: "index_contents_on_neuron_id", using: :btree
 
   create_table "neurons", force: :cascade do |t|
-    t.string   "title",                      null: false
-    t.integer  "parent_id"
+    t.string "title", null: false
+    t.integer "parent_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.boolean  "active",     default: false
-    t.boolean  "deleted",    default: false
-    t.boolean  "is_public",  default: false
+    t.boolean "active",     default: false
+    t.boolean "deleted",    default: false
+    t.boolean "is_public",  default: false
   end
 
   add_index "neurons", ["deleted"], name: "index_neurons_on_deleted", using: :btree
@@ -47,9 +45,9 @@ ActiveRecord::Schema.define(version: 20150913183303) do
   add_index "neurons", ["title"], name: "index_neurons_on_title", using: :btree
 
   create_table "possible_answers", force: :cascade do |t|
-    t.integer  "content_id",                 null: false
-    t.string   "text",                       null: false
-    t.boolean  "correct",    default: false
+    t.integer "content_id", null: false
+    t.string "text", null: false
+    t.boolean "correct", default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end
@@ -58,10 +56,10 @@ ActiveRecord::Schema.define(version: 20150913183303) do
   add_index "possible_answers", ["correct"], name: "index_possible_answers_on_correct", using: :btree
 
   create_table "profiles", force: :cascade do |t|
-    t.string   "name"
-    t.text     "biography"
-    t.integer  "user_id",                 null: false
-    t.text     "neuron_ids", default: [],              array: true
+    t.string "name"
+    t.text "biography"
+    t.integer "user_id", null: false
+    t.text "neuron_ids", default: [], array: true
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
@@ -69,10 +67,10 @@ ActiveRecord::Schema.define(version: 20150913183303) do
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
   create_table "search_engines", force: :cascade do |t|
-    t.string   "name",                      null: false
-    t.string   "slug",                      null: false
-    t.boolean  "active",     default: true
-    t.string   "gcse_id",                   null: false
+    t.string "name",                      null: false
+    t.string "slug",                      null: false
+    t.boolean "active", default: true
+    t.string "gcse_id", null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
@@ -81,40 +79,40 @@ ActiveRecord::Schema.define(version: 20150913183303) do
   add_index "search_engines", ["slug"], name: "index_search_engines_on_slug", unique: true, using: :btree
 
   create_table "taggings", force: :cascade do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
-    t.string   "taggable_type"
-    t.integer  "tagger_id"
-    t.string   "tagger_type"
-    t.string   "context",       limit: 128
+    t.integer "tag_id"
+    t.integer "taggable_id"
+    t.string "taggable_type"
+    t.integer "tagger_id"
+    t.string "tagger_type"
+    t.string "context", limit: 128
     t.datetime "created_at"
   end
 
-  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+  add_index "taggings", %w(tag_id taggable_id taggable_type context tagger_id tagger_type), name: "taggings_idx", unique: true, using: :btree
+  add_index "taggings", %w(taggable_id taggable_type context), name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string  "name"
+    t.string "name"
     t.integer "taggings_count", default: 0
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "",        null: false
-    t.string   "encrypted_password",     default: "",        null: false
-    t.string   "reset_password_token"
+    t.string "email",                  default: "",        null: false
+    t.string "encrypted_password",     default: "",        null: false
+    t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,         null: false
+    t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
-    t.string   "role",                   default: "cliente", null: false
+    t.string "name"
+    t.string "role", default: "cliente", null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -122,25 +120,25 @@ ActiveRecord::Schema.define(version: 20150913183303) do
 
   create_table "version_associations", force: :cascade do |t|
     t.integer "version_id"
-    t.string  "foreign_key_name", null: false
+    t.string "foreign_key_name", null: false
     t.integer "foreign_key_id"
   end
 
-  add_index "version_associations", ["foreign_key_name", "foreign_key_id"], name: "index_version_associations_on_foreign_key", using: :btree
+  add_index "version_associations", %w(foreign_key_name foreign_key_id), name: "index_version_associations_on_foreign_key", using: :btree
   add_index "version_associations", ["version_id"], name: "index_version_associations_on_version_id", using: :btree
 
   create_table "versions", force: :cascade do |t|
-    t.string   "item_type",      null: false
-    t.integer  "item_id",        null: false
-    t.string   "event",          null: false
-    t.string   "whodunnit"
-    t.text     "object"
+    t.string "item_type", null: false
+    t.integer "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
     t.datetime "created_at"
-    t.text     "object_changes"
-    t.integer  "transaction_id"
+    t.text "object_changes"
+    t.integer "transaction_id"
   end
 
-  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+  add_index "versions", %w(item_type item_id), name: "index_versions_on_item_type_and_item_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "possible_answers", "contents"

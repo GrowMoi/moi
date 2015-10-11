@@ -17,7 +17,7 @@ describe "neurons as curador" do
         fill_form!
         expect {
           submit_form!
-        }.to change{ Neuron.count }.by(1)
+        }.to change { Neuron.count }.by(1)
       }
 
       it {
@@ -39,7 +39,7 @@ describe "neurons as curador" do
         source_input.set source
         expect {
           submit_form!
-        }.to change{ Content.count }.by(1)
+        }.to change { Content.count }.by(1)
       }
 
       it {
@@ -121,14 +121,12 @@ describe "neurons as curador" do
         find(".remove_nested_fields[data-association='contents']").click
         expect {
           submit_form!
-        }.to change{ Content.count }.by(-1)
+        }.to change { Content.count }.by(-1)
       }
 
       it {
         expect(neuron.contents.reload).to be_empty
       }
     end
-
-
   end
 end

@@ -1,8 +1,8 @@
 require "rails_helper"
 
-describe %Q{
+describe %(
   Only admin users can enter admin panel
-}, type: :feature do
+), type: :feature do
   context "admin" do
     let!(:user) { create :user, :admin }
 

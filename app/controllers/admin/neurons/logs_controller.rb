@@ -3,13 +3,13 @@ module Admin
     class LogsController < BaseController
       before_action :add_breadcrumbs
 
-      expose(:neuron_versions) {
+      expose(:neuron_versions) do
         # decorate them
         decorate(
           neuron.versions.reverse,
           PaperTrail::NeuronVersionDecorator
         )
-      }
+      end
 
       def show
         authorize! :log, neuron

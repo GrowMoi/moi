@@ -74,7 +74,7 @@ class ContentDecorator < LittleDecorator
     approved_options(record.approved?)
   end
 
-  def approved_options(key=nil)
+  def approved_options(key = nil)
     @approved_options ||= {
       "true" => "approved",
       "false" => "unapproved"
@@ -88,7 +88,7 @@ class ContentDecorator < LittleDecorator
   def source_is_uri?
     # taken from
     # http://stackoverflow.com/questions/1805761/check-if-url-is-valid-ruby#answer-1805788
-    record.source =~ /\A#{URI::regexp}\z/
+    record.source =~ /\A#{URI.regexp}\z/
   end
 
   def media_file
