@@ -47,6 +47,7 @@ gem 'google-api-client'
 gem 'searchlight'
 gem 'spellchecker'
 gem 'carrierwave'
+gem 'rubocop', require: false
 
 group :doc do
   gem 'yard'
