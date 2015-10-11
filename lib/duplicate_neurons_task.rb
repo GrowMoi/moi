@@ -17,10 +17,8 @@ class DuplicateNeuronsTask
     end
 
     def wipe_all!
-      list.tap do |list|
-        duplicate_neurons.find_each do |neuron|
-          neuron.destroy
-        end
+      list.tap do |_list|
+        duplicate_neurons.find_each(&:destroy)
       end
     end
 

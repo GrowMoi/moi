@@ -55,5 +55,4 @@ describe "approve contents" do
       it { expect(neuron.reload).to_not be_active }
     end
   end
-
 end

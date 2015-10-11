@@ -49,11 +49,11 @@ module Admin
 
     def profile_params
       params.require(:profile)
-            .permit(
-              :name,
-              :biography,
-              :neuron_ids
-            )
+        .permit(
+          :name,
+          :biography,
+          :neuron_ids
+        )
     end
 
     def breadcrumb_base

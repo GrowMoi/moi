@@ -5,7 +5,7 @@ class UsersDatatable
     @view = view
   end
 
-  def as_json(options = {})
+  def as_json(_options = {})
     {
       sEcho: params[:sEcho].to_i,
       iTotalRecords: User.count,
@@ -14,7 +14,7 @@ class UsersDatatable
     }
   end
 
-private
+  private
 
   def data
     users.map do |raw_user|
@@ -50,7 +50,7 @@ private
   end
 
   def page
-    params[:iDisplayStart].to_i/per_page + 1
+    params[:iDisplayStart].to_i / per_page + 1
   end
 
   def per_page
@@ -61,7 +61,7 @@ private
   #   doesn't have the requested index.
   #   We can have a `rescue` block
   def sort_column
-    columns = %w[name email role]
+    columns = %w(name email role)
     columns[params[:iSortCol_0].to_i]
   end
 

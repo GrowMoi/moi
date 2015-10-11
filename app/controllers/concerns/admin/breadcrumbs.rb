@@ -30,7 +30,7 @@ module Admin
 
     ##
     # @param action [String] name of the action
-    #   to render breadcrumbs for
+    #    to render breadcrumbs for
     def breadcrumb_for(action)
       case action
       when "index"

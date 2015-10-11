@@ -2,7 +2,7 @@ class NeoImporter
   class NeuronNode
     attr_reader :node, :parent
 
-    def initialize(node, parent=nil)
+    def initialize(node, parent = nil)
       @node = node
       @parent = parent
     end
@@ -42,14 +42,12 @@ class NeoImporter
       }
     end
 
-    def description_for(prefix, level, kind)
+    def description_for(prefix, _level, _kind)
       description = ""
 
-      # add title just in case
+      #  add title just in case
       title = node.send("#{prefix}_title")
-      if title.present?
-        description = "#{title}\n\n"
-      end
+      description = "#{title}\n\n" if title.present?
 
       description + node.send("#{prefix}_description").to_s
     end
@@ -82,9 +80,9 @@ class NeoImporter
         :"que-es" => "what",
         :"por-que-es" => "why",
         :"como-funciona" => "how",
-        :"enlaces" => "links",
+        :enlaces => "links",
         :"quien-cuando-donde" => "qcd",
-        :"videos" => "videos"
+        :videos => "videos"
       }
     end
   end

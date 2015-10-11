@@ -16,5 +16,4 @@ FactoryGirl.define do
     sequence(:text) { |n| "Possible answer #{n}" }
     correct { [true, false].sample }
   end
-
 end
