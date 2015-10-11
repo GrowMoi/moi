@@ -125,8 +125,14 @@ class ContentDecorator < LittleDecorator
   end
 
   def spellcheck_description
+    record.description.to_s.split("\n").map do |paragraph|
+      spellcheck_words(paragraph)
+    end.join("\n").html_safe
+  end
+
+  def spellcheck_words(content)
     Spellchecker.check(
-      record.description.to_s,
+      content,
       I18n.locale.to_s
     ).map do |w|
       if w[:correct]
