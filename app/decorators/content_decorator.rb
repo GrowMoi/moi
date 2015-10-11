@@ -134,7 +134,7 @@ class ContentDecorator < LittleDecorator
       else
         suggestions = w[:suggestions].first(3).join(" | ")
         content_tag(:span,
-                    w[:original] + " ",
+                    w[:original],
                     class: "bs-tooltip text-danger",
                     title: suggestions)
       end
