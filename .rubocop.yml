@@ -23,6 +23,7 @@ Style/BlockDelimiters:
     - watch
     - before
     - sequence
+    - expose
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
