@@ -14,7 +14,6 @@ class PossibleAnswer < ActiveRecord::Base
   belongs_to :content
 
   begin :validations
-    validates :content_id, presence: true
     validates :text, presence: true
   end
 end
