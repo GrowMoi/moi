@@ -34,7 +34,8 @@ ul.nav.nav-tabs.default-tabs
                 - Content::KINDS.each do |kind|
                   li data-toggle="tab"
                     = link_to t("views.contents.kinds.#{kind}"),
-                              "#content-level-#{level}-kind-#{kind}"
+                              "#content-level-#{level}-kind-#{kind}",
+                              class: "persist-tab"
 
               .tab-content
                 - Content::KINDS.each do |kind|
