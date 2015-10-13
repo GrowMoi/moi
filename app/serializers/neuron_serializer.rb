@@ -19,8 +19,4 @@ class NeuronSerializer < ActiveModel::Serializer
              :is_public,
              :active,
              :deleted
-
-  def deleted
-    object.deleted?
-  end
 end

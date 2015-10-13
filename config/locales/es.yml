@@ -103,6 +103,8 @@
         enlaces: "Enlaces"
     profiles:
       new: Nuevo árbol
+      edit: Editar árbol
+      updated: Árbol actualizado
     possible_answers:
       correct: Respuesta correcta
     dashboard:

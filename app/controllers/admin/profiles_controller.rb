@@ -45,6 +45,29 @@ module Admin
       end
     end
 
+    def edit
+      respond_to do |format|
+        format.html
+        format.json {
+          render json: decorated_profile.all_neurons,
+                 root: "neurons",
+                 meta: { root_id: root_neuron.id,
+                         initial_tree: decorated_profile.neurons.map(&:id) }
+        }
+      end
+    end
+
+    def update
+      if profile.save
+        redirect_to(
+          { action: :show, id: profile.id },
+          notice: I18n.t("views.profiles.updated")
+        )
+      else
+        render :edit
+      end
+    end
+
     private
 
     def profile_params

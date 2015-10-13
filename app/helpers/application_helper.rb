@@ -73,7 +73,9 @@ module ApplicationHelper
     defaults = {
       source: admin_neurons_path(format: :json)
     }
+    opts = defaults.merge(options)
+    opts[:source] ||= defaults[:source]
     render "admin/neurons/moi_tree/tree",
-           options: defaults.merge(options)
+           options: opts
   end
 end
