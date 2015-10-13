@@ -46,6 +46,7 @@ module Admin
                         :media,
                         :media_cache,
                         :possible_answers_attributes => [
+                          :id,
                           :correct,
                           :text
                         ]
