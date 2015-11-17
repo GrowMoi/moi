@@ -20,6 +20,7 @@
 #
 
 class User < ActiveRecord::Base
+  include DeviseTokenAuth::Concerns::User
   include Roles
 
   # Include default devise modules. Others available are:
@@ -36,6 +37,14 @@ class User < ActiveRecord::Base
 
   def to_s
     name
+  end
+
+  def confirmed_at
+    Time.utc(2000).to_date
+  end
+
+  def confirmation_sent_at
+    Time.utc(1999).to_date
   end
 
   private

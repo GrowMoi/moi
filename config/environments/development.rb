@@ -45,7 +45,8 @@ Moi::Application.configure do
 
       resource "*",
                headers: :any,
-               methods: [:get, :post, :delete, :put, :patch, :options, :head]
+               methods: [:get, :post, :delete, :put, :patch, :options, :head],
+               expose:  ["access-token", "expiry", "token-type", "uid", "client"]
     end
   end
 end

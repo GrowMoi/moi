@@ -33,6 +33,7 @@ gem 'dotenv-rails', :require => 'dotenv/rails-now'
 
 gem 'slim'
 gem 'devise'
+gem 'devise_token_auth'
 gem 'decent_exposure'
 gem 'kaminari'
 gem 'breadcrumbs_on_rails'
