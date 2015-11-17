@@ -38,4 +38,14 @@ Moi::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  config.middleware.insert_before 0, "Rack::Cors" do
+    allow do
+      origins "http://localhost:8100" # development mobileapp
+
+      resource "*",
+               headers: :any,
+               methods: [:get, :post, :delete, :put, :patch, :options, :head]
+    end
+  end
 end

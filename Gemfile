@@ -48,6 +48,7 @@ gem 'searchlight'
 gem 'spellchecker'
 gem 'carrierwave'
 gem 'rubocop', require: false
+gem "rack-cors", :require => "rack/cors"
 
 group :doc do
   gem 'yard'
