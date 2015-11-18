@@ -43,7 +43,7 @@ Moi::Application.configure do
     allow do
       origins "http://localhost:8100" # development mobileapp
 
-      resource "*",
+      resource "/api/*",
                headers: :any,
                methods: [:get, :post, :delete, :put, :patch, :options, :head],
                expose:  ["access-token", "expiry", "token-type", "uid", "client"]

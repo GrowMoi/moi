@@ -4,13 +4,36 @@
 
 ## development
 
-#### requirements
+### requirements
 
-- postgresql
+- ruby 2.1+
+- postgresql 9+
 - phantomjs (to run specs) See [Installing phantomjs](https://github.com/teampoltergeist/poltergeist#installing-phantomjs)
 - aspell (for spellchecker). If this package is not found, it just won't check. You can install on mac with homebrew: `brew install aspell --with-lang-es`
 
-#### resources
+### getting started
+
+0. after cloning & switching to app
+
+  `$ git clone git@github.com:GrowMoi/moi.git moi-backend && cd moi-backend`
+
+1. bundle
+
+  `$ bundle`
+
+2. revise database configs
+
+  `$ cp config/database.yml.example config/database.yml`
+
+3. create db, migrate it and seed it
+
+  `$ bundle exec rake db:create db:migrate db:seed`
+
+4. boot the app
+
+  `$ bundle exec foreman start`
+
+### resources
 
 - [documentation](http://www.rubydoc.info/github/GrowMoi/moi/master)
 - [guidelines](https://github.com/GrowMoi/moi/blob/master/guidelines.md)

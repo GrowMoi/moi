@@ -31,7 +31,7 @@ FactoryGirl.define do
     # example: create :user, :admin
     User.roles.each do |rol|
       trait rol.to_sym do
-        role { rol }
+        role rol
       end
     end
   end
