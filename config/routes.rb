@@ -1,4 +1,6 @@
 Moi::Application.routes.draw do
+  devise_for :users
+  
   namespace :api do
     namespace :auth do
       mount_devise_token_auth_for(
@@ -11,8 +13,6 @@ Moi::Application.routes.draw do
       )
     end
   end
-
-  devise_for :users
 
   namespace :admin do
     resource :dashboard, only: :index
