@@ -5,7 +5,8 @@ Moi::Application.routes.draw do
         "User",
         at: "user",
         controllers: {
-          sessions: "api/sessions"
+          sessions: "api/sessions",
+          token_validations: "api/token_validations"
         }
       )
     end
