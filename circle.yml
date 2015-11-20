@@ -3,4 +3,4 @@ machine:
     version: 2.1.4
 notify:
   webhooks:
-    - https://vilcabamba.hipchat.com/v2/room/2166553/notification?auth_token=vZuoQbDz2xmmLv23c2vsiqdgiyjsAnjVMUCoTy21
+    - url: https://vilcabamba.hipchat.com/v2/room/2166553/notification?auth_token=vZuoQbDz2xmmLv23c2vsiqdgiyjsAnjVMUCoTy21
