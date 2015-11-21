@@ -18,7 +18,7 @@ Moi::Application.configure do
 
   config.action_mailer.default_url_options = {
     host: "localhost",
-    port: 3000
+    port: 5000
   }
 
   # deliver to mailcatcher
@@ -38,4 +38,15 @@ Moi::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  config.middleware.insert_before 0, "Rack::Cors" do
+    allow do
+      origins "http://localhost:8100" # development mobileapp
+
+      resource "/api/*",
+               headers: :any,
+               methods: [:get, :post, :delete, :put, :patch, :options, :head],
+               expose:  ["access-token", "expiry", "token-type", "uid", "client"]
+    end
+  end
 end

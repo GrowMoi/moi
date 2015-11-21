@@ -88,4 +88,16 @@ Moi::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  config.middleware.insert_before 0, "Rack::Cors" do
+    allow do
+      origins "http://moi-frontend.herokuapp.com",
+              "https://moi-frontend.herokuapp.com"
+
+      resource "/api/*",
+               headers: :any,
+               methods: [:get, :post, :delete, :put, :patch, :options, :head],
+               expose:  ["access-token", "expiry", "token-type", "uid", "client"]
+    end
+  end
 end

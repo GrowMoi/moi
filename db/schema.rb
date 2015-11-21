@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20150913183303) do
+ActiveRecord::Schema.define(version: 20151117054412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,12 +100,12 @@ ActiveRecord::Schema.define(version: 20150913183303) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "",        null: false
-    t.string   "encrypted_password",     default: "",        null: false
+    t.string   "email",                  default: "",                      null: false
+    t.string   "encrypted_password",     default: "",                      null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,         null: false
+    t.integer  "sign_in_count",          default: 0,                       null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
@@ -114,11 +113,15 @@ ActiveRecord::Schema.define(version: 20150913183303) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.string   "role",                   default: "cliente", null: false
+    t.string   "role"
+    t.string   "uid",                    default: "md5((random())::text)", null: false
+    t.string   "provider",               default: "email",                 null: false
+    t.json     "tokens"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
 
   create_table "version_associations", force: :cascade do |t|
     t.integer "version_id"
@@ -137,12 +140,15 @@ ActiveRecord::Schema.define(version: 20150913183303) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
+    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
+  add_foreign_key "versions", "users", column: "owner_id"
 end

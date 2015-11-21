@@ -29,10 +29,11 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-gem 'dotenv-rails', :require => 'dotenv/rails-now'
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 gem 'slim'
 gem 'devise'
+gem 'devise_token_auth', github: "lynndylanhurley/devise_token_auth"
 gem 'decent_exposure'
 gem 'kaminari'
 gem 'breadcrumbs_on_rails'
@@ -48,6 +49,7 @@ gem 'searchlight'
 gem 'spellchecker'
 gem 'carrierwave'
 gem 'rubocop', require: false
+gem "rack-cors", require: "rack/cors"
 
 group :doc do
   gem 'yard'
