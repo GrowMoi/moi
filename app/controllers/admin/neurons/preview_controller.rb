@@ -14,6 +14,7 @@ module Admin
       def preview
         authorize! :preview, neuron
 
+        neuron.eager_contents!
         neuron.assign_attributes(neuron_params)
 
         render "admin/neurons/show"

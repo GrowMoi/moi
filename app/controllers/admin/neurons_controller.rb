@@ -6,10 +6,11 @@ module Admin
 
     expose(:neurons) {
       if current_user.admin?
-        Neuron.all
+        scope = Neuron.all
       else
-        Neuron.not_deleted
+        scope = Neuron.not_deleted
       end
+      scope.includes(contents: :possible_answers)
     }
 
     expose(:possible_parents) {
@@ -52,6 +53,10 @@ module Admin
 
     def new
       neuron.parent_id = params[:parent_id]
+    end
+
+    def show
+      neuron.eager_contents!
     end
 
     def create

@@ -29,12 +29,6 @@ class Neuron < ActiveRecord::Base
 
   begin :relationships
     has_many :contents,
-             -> {
-               includes(
-                :spellcheck_analyses,
-                possible_answers: :spellcheck_analyses,
-              )
-             },
              dependent: :destroy
     belongs_to :parent, class: Neuron
   end
@@ -121,6 +115,11 @@ class Neuron < ActiveRecord::Base
 
   def check_is_public
     errors.add :deleted if is_public?
+  end
+
+  def eager_contents!
+    self.contents = contents.eager
+    self
   end
 
   private

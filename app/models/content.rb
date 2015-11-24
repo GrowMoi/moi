@@ -53,6 +53,12 @@ class Content < ActiveRecord::Base
     }
 
   begin :scopes
+    scope :eager, -> {
+      includes(
+        :spellcheck_analyses,
+        possible_answers: :spellcheck_analyses
+      )
+    }
     scope :approved, ->(status=true) {
       where(approved: status)
     }
