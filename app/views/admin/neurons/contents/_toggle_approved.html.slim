@@ -8,10 +8,11 @@ span.bs-tooltip.content-toggle-approve(
 )
   - icons.each do |key, icon|
     - option = decorator.approved_options(key)
+    - modifier = key == "true" ? "success" : "default"
 
     = link_to approve_admin_content_path(decorator),
               method: :post,
-              class: "btn-link #{option}" do
+              class: "btn-link #{option} label label-#{modifier}" do
       span.glyphicon class="#{icon}"
       - if decorator.approved.to_s == key
         = t("views.contents.approved_status.#{option}")
