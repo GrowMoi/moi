@@ -7,7 +7,7 @@
 ### requirements
 
 - ruby 2.1+
-- postgresql 9+
+- postgresql 9.3+
 - phantomjs (to run specs) See [Installing phantomjs](https://github.com/teampoltergeist/poltergeist#installing-phantomjs)
 - aspell (for spellchecker). If this package is not found, it just won't check. You can install on mac with homebrew: `brew install aspell --with-lang-es`
 
