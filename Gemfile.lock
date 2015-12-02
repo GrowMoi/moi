@@ -14,6 +14,12 @@ GIT
       rails
 
 GIT
+  remote: git://github.com/nicholasjhenry/spellchecker.git
+  revision: 74ae2c23d23ba4a65729c37b3d124615271483b5
+  specs:
+    spellchecker (0.1.5)
+
+GIT
   remote: git://github.com/rweng/jquery-datatables-rails.git
   revision: db17aa0145164095b2b21f83f1ef7ccf91b9ea54
   specs:
@@ -325,7 +331,6 @@ GEM
       temple (~> 0.7.3)
       tilt (>= 1.3.3, < 2.1)
     slop (3.6.0)
-    spellchecker (0.1.5)
     sprockets (2.12.4)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -416,7 +421,7 @@ DEPENDENCIES
   sass-rails (~> 4.0.0)
   searchlight
   slim
-  spellchecker
+  spellchecker!
   turbolinks
   uglifier (>= 1.3.0)
   yard

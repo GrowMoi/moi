@@ -46,7 +46,7 @@ gem 'nested_form'
 gem 'acts-as-taggable-on'
 gem 'google-api-client'
 gem 'searchlight'
-gem 'spellchecker'
+gem 'spellchecker', github: 'nicholasjhenry/spellchecker'
 gem 'carrierwave'
 gem 'rubocop', require: false
 gem "rack-cors", require: "rack/cors"
