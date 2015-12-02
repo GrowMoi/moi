@@ -73,6 +73,11 @@ group :development do
   gem 'meta_request'
   gem 'rack-mini-profiler'
   gem 'annotate'
+  gem 'capistrano', '~> 3.4'
+  gem 'capistrano-rails'
+  gem 'capistrano-passenger'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-bundler'
   # gem 'neography', github: "maxdemarzi/neography", require: false
 end
 
