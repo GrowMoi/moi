@@ -5,7 +5,7 @@ set :application, 'moi'
 set :repo_url, 'git@github.com:GrowMoi/moi.git'
 
 set :slack_webhook, 'https://hooks.slack.com/services/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'
-set :slack_username, 'dude'
+set :slack_username, 'capistrán'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
