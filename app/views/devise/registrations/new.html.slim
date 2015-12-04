@@ -11,9 +11,7 @@ h2 Sign up
     = f.label :password
     - if @validatable
       em
-        ' (
-        = @minimum_password_length  characters minimum
-        ' )
+        | ( #{@minimum_password_length} #{t("devise.char_min")} )
     = f.password_field :password, autocomplete: "off"
 
   .field
@@ -21,6 +19,6 @@ h2 Sign up
     = f.password_field :password_confirmation, autocomplete: "off"
 
   .actions
-    = f.submit "Sign up"
+    = f.submit t("devise.signup")
 
 = render "devise/shared/links"

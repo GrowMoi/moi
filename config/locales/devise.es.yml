@@ -9,6 +9,7 @@ es:
     password_reset_instructions: "Enviarme instrucciones para recuperar la contraseña"
     new_password: "Nueva contraseña"
     confirm_new_password: "Confirmar nueva contraseña"
+    char_min: "caracteres mínimo"
     confirmations:
       confirmed: "Su cuenta ha sido confirmada."
       confirmed_and_signed_in: "Su cuenta ha sido confirmada. Ha sido identificado correctamente."
