@@ -51,7 +51,6 @@ gem 'carrierwave'
 gem 'rubocop', require: false
 gem "rack-cors", require: "rack/cors"
 gem "newrelic_rpm"
-gem 'slackistrano', require: false
 
 group :doc do
   gem 'yard'
@@ -74,12 +73,16 @@ group :development do
   gem 'meta_request'
   gem 'rack-mini-profiler'
   gem 'annotate'
+  # gem 'neography', github: "maxdemarzi/neography", require: false
+end
+
+group :development do
   gem 'capistrano', '~> 3.4'
   gem 'capistrano-rails'
   gem 'capistrano-passenger'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
-  # gem 'neography', github: "maxdemarzi/neography", require: false
+  gem 'slackistrano', require: false
 end
 
 group :staging do
