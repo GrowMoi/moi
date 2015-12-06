@@ -52,6 +52,8 @@ gem 'rubocop', require: false
 gem 'delayed_job_active_record'
 gem "rack-cors", require: "rack/cors"
 gem "newrelic_rpm"
+gem 'airbrake'
+gem 'foreman'
 
 group :doc do
   gem 'yard'
@@ -82,7 +84,7 @@ group :development do
   # gem 'neography', github: "maxdemarzi/neography", require: false
 end
 
-group :development do
+group :deployment do
   gem 'capistrano', '~> 3.4'
   gem 'capistrano-rails'
   gem 'capistrano-passenger'
@@ -100,14 +102,3 @@ end
 
 # Use puma as the app server
 gem 'puma'
-
-#use airbrake to track errors
-gem 'airbrake'
-
-gem 'foreman'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
