@@ -49,6 +49,7 @@ gem 'searchlight'
 gem 'spellchecker', github: 'nicholasjhenry/spellchecker'
 gem 'carrierwave'
 gem 'rubocop', require: false
+gem 'delayed_job_active_record'
 gem "rack-cors", require: "rack/cors"
 gem "newrelic_rpm"
 

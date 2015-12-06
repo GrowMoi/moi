@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117054412) do
+ActiveRecord::Schema.define(version: 20151206135548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,22 @@ ActiveRecord::Schema.define(version: 20151117054412) do
   end
 
   add_index "contents", ["neuron_id"], name: "index_contents_on_neuron_id", using: :btree
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "neurons", force: :cascade do |t|
     t.string   "title",                      null: false
@@ -113,7 +129,7 @@ ActiveRecord::Schema.define(version: 20151117054412) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.string   "role"
+    t.string   "role",                   default: "cliente",               null: false
     t.string   "uid",                    default: "md5((random())::text)", null: false
     t.string   "provider",               default: "email",                 null: false
     t.json     "tokens"
@@ -140,15 +156,12 @@ ActiveRecord::Schema.define(version: 20151117054412) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
-    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
-  add_foreign_key "versions", "users", column: "owner_id"
 end
