@@ -79,4 +79,17 @@ RSpec.describe Content, :type => :model do
       ).to eq("approve_content")
     }
   end
+
+  describe "schedules spelling analysis" do
+    before do
+      content.description = "new description"
+      content.save
+    end
+
+    it "should call SpellingAnalysis worker" do
+      expect(
+        SpellingAnalysisWorker
+      ).to have_received(:perform).with(content.id)
+    end
+  end
 end
