@@ -38,7 +38,7 @@
 - [documentation](http://www.rubydoc.info/github/GrowMoi/moi/master)
 - [guidelines](https://github.com/GrowMoi/moi/blob/master/guidelines.md)
 - [moi-front-end](https://github.com/GrowMoi/moi-front-end)
-- [api endpoints](moi-staging.herokuapp.com/apipie) _(depends on environment)_
+- [api endpoints](https://moi-staging.herokuapp.com/apipie) _(depends on environment)_
 
 ### emails
 we are using [mailcatcher](http://mailcatcher.me/) on dev environment
