@@ -41,3 +41,6 @@
 
 ### emails
 we are using [mailcatcher](http://mailcatcher.me/) on dev environment
+
+### api
+we are using [apipie](https://github.com/Apipie/apipie-rails#dsl-reference) + [maruku](https://github.com/bhollis/maruku) to document our api using markdown. All endpoints should be documented. Include `Api::BaseDoc` module and use `#doc_for` if you're documenting an endpoint which method isn't defined in the controller itself
