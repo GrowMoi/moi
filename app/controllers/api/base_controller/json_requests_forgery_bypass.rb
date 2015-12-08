@@ -1,6 +1,6 @@
 module Api
   class BaseController < ::ApplicationController
-    module JSONRequestsForgeryBypass
+    module JsonRequestsForgeryBypass
       extend ActiveSupport::Concern
 
       included do
