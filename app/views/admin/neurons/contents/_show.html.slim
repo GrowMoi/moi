@@ -1,15 +1,14 @@
 - formatted_contents.fetch(level).fetch(kind).each do |content|
   .neuron-content
-    div = content.title
+    div
+      = content.title
+      - if content.can_be_approved?
+        span.neuron-moderate-actions
+          = content.toggle_approved
     .content-description
       = content.description
     = content.keywords
     = content.source
-
-    - if content.can_be_approved?
-      .neuron-moderate-actions
-        = content.toggle_approved
-
     = content.media
 
     hr
