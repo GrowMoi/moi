@@ -80,31 +80,11 @@ RSpec.describe Content, :type => :model do
     }
   end
 
-  describe "schedules spelling analysis" do
-    let!(:content) { create :content }
+  describe "spellchecker" do
+    let!(:resource) { create :content }
+    let(:tracked_attribute) { :description }
+    let(:untracked_attribute) { :source }
 
-    before {
-      expect(
-        SpellingAnalysisWorker
-      ).to receive(:perform!).with(content.id).and_call_original
-    }
-
-    it {
-      content.update! description: "new description"
-    }
-  end
-
-  describe "does not schedule spelling analysis if nothing analised changed" do
-    let!(:content) { create :content }
-
-    before {
-      expect(
-        SpellingAnalysisWorker
-      ).not_to receive(:perform!)
-    }
-
-    it {
-      content.update! source: "autor"
-    }
+    include_examples "spellchecker examples"
   end
 end
