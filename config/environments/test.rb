@@ -38,4 +38,15 @@ Moi::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  config.middleware.insert_before 0, "Rack::Cors" do
+    allow do
+      origins "*"
+
+      resource "/api/*",
+               headers: :any,
+               methods: [:get, :post, :delete, :put, :patch, :options, :head],
+               expose:  ["access-token", "expiry", "token-type", "uid", "client"]
+    end
+  end
 end
