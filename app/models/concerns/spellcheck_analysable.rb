@@ -36,7 +36,13 @@ module SpellcheckAnalysable
   end
 
   def missing_spellcheck_analysis?
-    spellcheck_analyses.count != spellcheck_attributes.count
+    spellcheck_analyses.count != filled_spellcheck_attributes.count
+  end
+
+  def filled_spellcheck_attributes
+    spellcheck_attributes.reject do |attribute|
+      send(attribute).blank?
+    end
   end
 
   def spellcheck_attributes

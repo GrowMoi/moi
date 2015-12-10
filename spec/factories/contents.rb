@@ -21,6 +21,9 @@ FactoryGirl.define do
 
     level { Content::LEVELS.sample }
     kind { Content::KINDS.sample }
+    sequence(:title) { |n|
+      "Content #{n}"
+    }
     sequence(:description) { |n|
       "Content's description #{n}"
     }

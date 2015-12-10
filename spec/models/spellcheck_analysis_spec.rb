@@ -4,7 +4,7 @@
 #
 #  id              :integer          not null, primary key
 #  attr_name       :string           not null
-#  words           :json
+#  words           :json             default([])
 #  analysable_id   :integer          not null
 #  analysable_type :string           not null
 #  created_at      :datetime         not null

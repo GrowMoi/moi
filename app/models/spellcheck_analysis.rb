@@ -4,7 +4,7 @@
 #
 #  id              :integer          not null, primary key
 #  attr_name       :string           not null
-#  words           :json
+#  words           :json             default([])
 #  analysable_id   :integer          not null
 #  analysable_type :string           not null
 #  created_at      :datetime         not null
@@ -18,5 +18,11 @@ class SpellcheckAnalysis < ActiveRecord::Base
 
   begin :relationships
     belongs_to :analysable, polymorphic: true
+  end
+
+  begin :scopes
+    scope :for, -> (attr_name) {
+      find_by!(attr_name: attr_name)
+    }
   end
 end
