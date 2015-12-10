@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151206135548) do
+ActiveRecord::Schema.define(version: 20151209140935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,17 @@ ActiveRecord::Schema.define(version: 20151206135548) do
   add_index "search_engines", ["gcse_id"], name: "index_search_engines_on_gcse_id", unique: true, using: :btree
   add_index "search_engines", ["slug"], name: "index_search_engines_on_slug", unique: true, using: :btree
 
+  create_table "spellcheck_analyses", force: :cascade do |t|
+    t.string   "attr_name",       null: false
+    t.json     "words"
+    t.integer  "analysable_id",   null: false
+    t.string   "analysable_type", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "spellcheck_analyses", ["analysable_id", "analysable_type"], name: "index_spellcheck_analyses_on_analysable_id_and_analysable_type", using: :btree
+
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -129,7 +140,7 @@ ActiveRecord::Schema.define(version: 20151206135548) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.string   "role",                   default: "cliente",               null: false
+    t.string   "role"
     t.string   "uid",                    default: "md5((random())::text)", null: false
     t.string   "provider",               default: "email",                 null: false
     t.json     "tokens"
@@ -156,12 +167,15 @@ ActiveRecord::Schema.define(version: 20151206135548) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
+    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
+  add_foreign_key "versions", "users", column: "owner_id"
 end

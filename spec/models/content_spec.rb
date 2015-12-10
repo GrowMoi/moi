@@ -81,15 +81,30 @@ RSpec.describe Content, :type => :model do
   end
 
   describe "schedules spelling analysis" do
-    before do
-      content.description = "new description"
-      content.save
-    end
+    let!(:content) { create :content }
 
-    it "should call SpellingAnalysis worker" do
+    before {
       expect(
         SpellingAnalysisWorker
-      ).to have_received(:perform).with(content.id)
-    end
+      ).to receive(:perform!).with(content.id).and_call_original
+    }
+
+    it {
+      content.update! description: "new description"
+    }
+  end
+
+  describe "does not schedule spelling analysis if nothing analised changed" do
+    let!(:content) { create :content }
+
+    before {
+      expect(
+        SpellingAnalysisWorker
+      ).not_to receive(:perform!)
+    }
+
+    it {
+      content.update! source: "autor"
+    }
   end
 end
