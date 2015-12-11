@@ -2,12 +2,12 @@
   .neuron-content
     div
       strong
-        = content.title_spellchecked
+        = content.spellchecked(:title)
       - if content.can_be_approved?
         span.neuron-moderate-actions
           = content.toggle_approved
     .content-description
-      = content.description_spellchecked
+      = content.spellchecked(:description)
     = content.keywords
     = content.source
     = content.media
