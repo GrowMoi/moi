@@ -107,6 +107,7 @@
       updated: Árbol actualizado
     possible_answers:
       correct: Respuesta correcta
+      incorrect: Respuesta incorrecta
     dashboard:
       neurons_count: Mostrando %{count} neuronas de un total de
       neurons_total_count: "%{count} neuronas"

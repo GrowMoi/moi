@@ -1,0 +1,9 @@
+strong
+  = content.title
+
+ul
+  - content.decorated_possible_answers.each do |possible_answer|
+    li
+      = possible_answer.correct_label
+      span
+        = possible_answer.spellchecked(:text)

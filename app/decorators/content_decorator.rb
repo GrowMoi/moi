@@ -36,7 +36,9 @@ class ContentDecorator < LittleDecorator
               record.source,
               target: "_blank"
     else
-      record.source
+      content_tag(:strong) do
+        t("activerecord.attributes.content.source") + ": "
+      end + record.source
     end
   end
 
@@ -70,6 +72,13 @@ class ContentDecorator < LittleDecorator
     @approved_options[key.to_s]
   end
 
+  def decorated_possible_answers
+    possible_answers.select(&:persisted?)
+                    .map do |possible_answer|
+                      decorate possible_answer
+                    end
+  end
+
   private
 
   def source_is_uri?
@@ -101,6 +110,9 @@ class ContentDecorator < LittleDecorator
   end
 
   def spellcheck_analysis
-    @spellcheck_analysis ||= SpellcheckDecorator.new(record, self)
+    @spellcheck_analysis ||= SpellcheckDecorator.new(
+      record,
+      self
+    )
   end
 end

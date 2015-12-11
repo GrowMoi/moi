@@ -31,8 +31,8 @@ class Neuron < ActiveRecord::Base
     has_many :contents,
              -> {
                includes(
-                :possible_answers,
-                :spellcheck_analyses
+                :spellcheck_analyses,
+                possible_answers: :spellcheck_analyses,
               )
              },
              dependent: :destroy
