@@ -7,7 +7,7 @@ RSpec.describe SpellingAnalysisWorker do
   }
   let!(:content) { create :content }
   let(:description_analysis) {
-    content.spellcheck_analyses.for(:description)
+    content.spellcheck_analyses.for(:description).first
   }
   let(:worker) {
     SpellingAnalysisWorker.new(content)
@@ -35,7 +35,7 @@ RSpec.describe SpellingAnalysisWorker do
 
   before {
     content.description = description
-    content.spellcheck_analyses.for(:description).destroy # mimic schedule
+    content.spellcheck_analyses.for(:description).destroy_all # mimic schedule
 
     expect {
       worker.run!

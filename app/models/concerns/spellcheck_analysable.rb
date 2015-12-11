@@ -18,8 +18,8 @@ module SpellcheckAnalysable
   def expire_spellcheck_analysis!
     spellcheck_attributes.each do |attribute|
       if send("#{attribute}_changed?")
-        spellcheck_analyses.where(
-          attr_name: attribute
+        spellcheck_analyses.for(
+          attribute
         ).destroy_all
       end
     end

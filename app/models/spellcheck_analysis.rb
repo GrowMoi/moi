@@ -22,7 +22,7 @@ class SpellcheckAnalysis < ActiveRecord::Base
 
   begin :scopes
     scope :for, -> (attr_name) {
-      find_by!(attr_name: attr_name)
+      where(attr_name: attr_name)
     }
   end
 end
