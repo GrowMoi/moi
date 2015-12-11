@@ -1,11 +1,6 @@
 class ContentDecorator < LittleDecorator
   IMAGE_EXTENSIONS = %w(jpg jpeg gif png).freeze
 
-  def title
-    content_tag :strong,
-                record.title
-  end
-
   def keywords
     content_tag :div, class: "content-keywords" do
       record.keyword_list.map do |keyword|
@@ -59,14 +54,24 @@ class ContentDecorator < LittleDecorator
   end
 
   def description_spellchecked
-    @spellchecked_description ||= spellcheck_description
-  rescue RuntimeError => e
-    if e.message == "Aspell command not found"
-      # aspell is not present. gracefully fallback
-      # to original description
-      return spellcheck_error
-    else
-      raise e
+    if spellchecked["description"].present?
+      spellchecked["description"].html_safe
+    elsif record.description.present?
+      content_tag(
+        :span,
+        record.description
+      ) + spellcheck_error.html_safe
+    end
+  end
+
+  def title_spellchecked
+    if spellchecked["title"].present?
+      spellchecked["title"].html_safe
+    elsif record.title.present?
+      content_tag(
+        :span,
+        record.title
+      ) + spellcheck_error.html_safe
     end
   end
 
@@ -114,36 +119,38 @@ class ContentDecorator < LittleDecorator
   end
 
   def spellcheck_error
-    if record.description.present?
-      aspell_error = content_tag(
-        :div,
-        I18n.t("views.contents.aspell_not_present"),
-        class: "small text-danger"
-      )
-      (record.description + aspell_error).html_safe
+    content_tag(
+      :span,
+      nil,
+      class: "glyphicon glyphicon-exclamation-sign bs-tooltip spellcheck-error",
+      title: I18n.t("views.contents.aspell_not_present")
+    )
+  end
+
+  def spellchecked
+    @spellchecked ||= spellcheck_analyses.inject({}) do |memo, analysis|
+      if analysis.success?
+        memo[analysis.attr_name] = spellchecked_attr(analysis)
+      end
+      memo
     end
   end
 
-  def spellcheck_description
-    record.description.to_s.split("\n").map do |paragraph|
-      spellcheck_words(paragraph)
-    end.join("\n").html_safe
+  def spellchecked_attr(analysis)
+    analysis.words.inject(
+      record.send(analysis.attr_name)
+    ) do |text, word|
+      text.gsub(
+        word["original"],
+        suggestions_for(word)
+      )
+    end
   end
 
-  def spellcheck_words(content)
-    Spellchecker.check(
-      content,
-      I18n.locale.to_s
-    ).map do |w|
-      if w[:correct]
-        w[:original]
-      else
-        suggestions = w[:suggestions].first(3).join(" | ")
-        content_tag(:span,
-                    w[:original],
-                    class: "bs-tooltip text-danger",
-                    title: suggestions)
-      end
-    end.join(" ").html_safe
+  def suggestions_for(word)
+    content_tag(:span,
+                word["original"],
+                class: "bs-tooltip text-danger",
+                title: word["suggestions"].join(" | "))
   end
 end
