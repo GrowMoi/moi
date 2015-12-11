@@ -49,12 +49,14 @@ gem 'searchlight'
 gem 'spellchecker', github: 'nicholasjhenry/spellchecker'
 gem 'carrierwave'
 gem 'rubocop', require: false
-gem 'delayed_job_active_record'
-gem 'delayed_job_web'
 gem "rack-cors", require: "rack/cors"
 gem "newrelic_rpm"
 gem 'airbrake'
 gem 'foreman'
+
+gem 'delayed_job_active_record'
+gem 'delayed_job_web'
+gem 'daemons' # to manage background processing (delayed_job)
 
 group :doc do
   gem 'yard'
@@ -93,6 +95,8 @@ group :deployment do
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
   gem 'slackistrano', require: false
+
+  gem 'capistrano3-delayed-job'
 end
 
 group :staging do

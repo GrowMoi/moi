@@ -27,7 +27,7 @@ RSpec.describe SpellingAnalysisWorker do
     content.spellcheck_analyses.for(:description).destroy_all # mimic schedule
 
     expect {
-      worker.run!
+      worker.perform
     }.to change {
       SpellcheckAnalysis.count
     }.by(1)

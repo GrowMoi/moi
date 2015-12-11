@@ -8,7 +8,7 @@ class SpellingAnalysisWorker
     @resource = resource
   end
 
-  def run!
+  def perform
     attributes_to_analyse.each do |attribute|
       text = resource.send(attribute)
       create_analysis!(attribute, text) if text.present?

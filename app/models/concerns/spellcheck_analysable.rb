@@ -54,7 +54,7 @@ module SpellcheckAnalysable
   module ClassMethods
     def perform_spellcheck!(id)
       resource = find(id)
-      SpellingAnalysisWorker.new(resource).run!
+      SpellingAnalysisWorker.new(resource).perform
     end
   end
 end
