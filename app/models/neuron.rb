@@ -29,9 +29,6 @@ class Neuron < ActiveRecord::Base
 
   begin :relationships
     has_many :contents,
-             ->{
-               includes(:possible_answers).includes(:keywords)
-             },
              dependent: :destroy
     belongs_to :parent, class: Neuron
   end

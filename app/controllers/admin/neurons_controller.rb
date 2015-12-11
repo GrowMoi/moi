@@ -54,6 +54,14 @@ module Admin
       neuron.parent_id = params[:parent_id]
     end
 
+    def show
+      neuron.contents.includes(
+        :possible_answers,
+        :keywords,
+        :spellcheck_analyses
+      )
+    end
+
     def create
       if neuron.save_with_version
         redirect_to(
