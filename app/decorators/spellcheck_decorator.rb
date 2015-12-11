@@ -25,10 +25,10 @@ class SpellcheckDecorator < LittleDecorator
     analysis.words.inject(
       record.send(analysis.attr_name)
     ) do |text, word|
-      text.gsub(
-        word["original"],
-        suggestions_for(word)
-      )
+      " #{text} ".gsub(
+        /\s#{word["original"]}\s/i,
+        " #{suggestions_for(word)} "
+      ).squish
     end
   end
 
