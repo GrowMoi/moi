@@ -66,10 +66,4 @@ class SpellingAnalysisWorker
       word[:correct]
     end
   end
-
-  class << self
-    def perform!(id)
-      new(Content.find(id)).run!
-    end
-  end
 end

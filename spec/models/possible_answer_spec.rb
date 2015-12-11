@@ -17,4 +17,13 @@ RSpec.describe PossibleAnswer, :type => :model do
     let(:possible_answer) { build :possible_answer }
     it { expect(possible_answer).to be_valid }
   end
+
+  describe "spellchecker" do
+    let!(:resource) { create :possible_answer }
+    let(:attributes) { attributes_for :possible_answer }
+    let(:tracked_attribute) { :text }
+    let(:untracked_attribute) { :correct }
+
+    include_examples "spellchecker examples"
+  end
 end

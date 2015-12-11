@@ -3,12 +3,12 @@ RSpec.shared_examples "spellchecker examples" do
     before {
       expect(
         SpellingAnalysisWorker
-      ).to receive(:perform!).with(resource.id).and_call_original
+      ).to receive(:new).with(resource).and_call_original
     }
 
     it {
       resource.update_attribute tracked_attribute,
-                                "new description"
+                                attributes.fetch(tracked_attribute)
     }
   end
 
@@ -16,12 +16,12 @@ RSpec.shared_examples "spellchecker examples" do
     before {
       expect(
         SpellingAnalysisWorker
-      ).not_to receive(:perform!)
+      ).not_to receive(:new)
     }
 
     it {
       resource.update_attribute untracked_attribute,
-                                "new description"
+                                attributes.fetch(untracked_attribute)
     }
   end
 end

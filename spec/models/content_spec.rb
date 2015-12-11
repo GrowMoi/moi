@@ -82,6 +82,7 @@ RSpec.describe Content, :type => :model do
 
   describe "spellchecker" do
     let!(:resource) { create :content }
+    let(:attributes) { attributes_for :content }
     let(:tracked_attribute) { :description }
     let(:untracked_attribute) { :source }
 

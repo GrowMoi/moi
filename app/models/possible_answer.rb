@@ -1,4 +1,4 @@
-# == Schema Information
+  # == Schema Information
 #
 # Table name: possible_answers
 #
@@ -11,7 +11,13 @@
 #
 
 class PossibleAnswer < ActiveRecord::Base
-  belongs_to :content
+  include SpellcheckAnalysable
+
+  SPELLCHECK_ATTRIBUTES = %w( text ).freeze
+
+  begin :relationships
+    belongs_to :content
+  end
 
   begin :validations
     validates :text, presence: true

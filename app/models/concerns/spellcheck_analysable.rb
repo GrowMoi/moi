@@ -31,15 +31,17 @@ module SpellcheckAnalysable
   # analysis
   def schedule_spellcheck_analysis!
     if missing_spellcheck_analysis?
-      SpellingAnalysisWorker.delay.perform!(id)
+      self.class.delay.perform_spellcheck!(id)
     end
   end
 
   def missing_spellcheck_analysis?
-    spellcheck_analyses.count != filled_spellcheck_attributes.count
+    spellcheck_analyses.count != filtered_spellcheck_attributes.count
   end
 
-  def filled_spellcheck_attributes
+  ##
+  # @note rejects blanks
+  def filtered_spellcheck_attributes
     spellcheck_attributes.reject do |attribute|
       send(attribute).blank?
     end
@@ -47,5 +49,12 @@ module SpellcheckAnalysable
 
   def spellcheck_attributes
     self.class::SPELLCHECK_ATTRIBUTES
+  end
+
+  module ClassMethods
+    def perform_spellcheck!(id)
+      resource = find(id)
+      SpellingAnalysisWorker.new(resource).run!
+    end
   end
 end
