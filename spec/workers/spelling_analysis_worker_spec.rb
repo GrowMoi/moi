@@ -12,28 +12,17 @@ RSpec.describe SpellingAnalysisWorker do
   let(:worker) {
     SpellingAnalysisWorker.new(content)
   }
-  let(:spellcheck_result) {
-    [
-      { original: "texto", correct: true },
-      { original: "con", correct: true },
-      { original: "herror",
-        correct: false,
-        suggestions: ["herrar", "herir", "error"] }
-    ]
-  }
 
-  before {
+  let(:mock_spellcheck) {
     expect(
       Spellchecker
     ).to receive(:check).with(
       description,
       lang
-    ).and_return(
-      spellcheck_result
     )
   }
 
-  before {
+  let(:run_worker!) {
     content.description = description
     content.spellcheck_analyses.for(:description).destroy_all # mimic schedule
 
@@ -44,27 +33,64 @@ RSpec.describe SpellingAnalysisWorker do
     }.by(1)
   }
 
-  it {
-    expect(
-      description_analysis.words.length
-    ).to eq(1)
-  }
+  context "success" do
+    let(:spellcheck_result) {
+      [
+        { original: "texto", correct: true },
+        { original: "con", correct: true },
+        { original: "herror",
+          correct: false,
+          suggestions: ["herrar", "herir", "error"] }
+      ]
+    }
 
-  it {
-    expect(
-      description_analysis.words.first["original"]
-    ).to eq("herror")
-  }
+    before {
+      mock_spellcheck.and_return(
+        spellcheck_result
+      )
+      run_worker!
+    }
 
-  it {
-    expect(
-      description_analysis.words.first["suggestions"]
-    ).to include("error")
-  }
+    it {
+      expect(description_analysis).to be_success
+    }
 
-  it {
-    expect(
-      description_analysis.words.first
-    ).to_not have_key("correct")
-  }
+    it {
+      expect(
+        description_analysis.words.length
+      ).to eq(1)
+    }
+
+    it {
+      expect(
+        description_analysis.words.first["original"]
+      ).to eq("herror")
+    }
+
+    it {
+      expect(
+        description_analysis.words.first["suggestions"]
+      ).to include("error")
+    }
+
+    it {
+      expect(
+        description_analysis.words.first
+      ).to_not have_key("correct")
+    }
+  end
+
+  context "failure" do
+    before {
+      mock_spellcheck.and_raise(
+        RuntimeError,
+        "Aspell command not found"
+      )
+      run_worker!
+    }
+
+    it {
+      expect(description_analysis).to_not be_success
+    }
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151209140935) do
+ActiveRecord::Schema.define(version: 20151211023119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,12 +96,13 @@ ActiveRecord::Schema.define(version: 20151209140935) do
   add_index "search_engines", ["slug"], name: "index_search_engines_on_slug", unique: true, using: :btree
 
   create_table "spellcheck_analyses", force: :cascade do |t|
-    t.string   "attr_name",                    null: false
+    t.string   "attr_name",                       null: false
     t.json     "words",           default: []
-    t.integer  "analysable_id",                null: false
-    t.string   "analysable_type",              null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.integer  "analysable_id",                   null: false
+    t.string   "analysable_type",                 null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.boolean  "success",         default: false
   end
 
   add_index "spellcheck_analyses", ["analysable_id", "analysable_type"], name: "index_spellcheck_analyses_on_analysable_id_and_analysable_type", using: :btree

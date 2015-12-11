@@ -9,6 +9,7 @@
 #  analysable_type :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  success         :boolean          default(FALSE)
 #
 
 require 'rails_helper'
