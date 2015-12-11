@@ -11,16 +11,22 @@ class SpellingAnalysisWorker
   def run!
     attributes_to_analyse.each do |attribute|
       text = resource.send(attribute)
-      if text.present?
-        resource.spellcheck_analyses.create!(
-          attr_name: attribute,
-          words: formatted_mispelled_words_for(text)
-        )
-      end
+      create_analysis!(attribute, text) if text.present?
     end
   end
 
   private
+
+  ##
+  # creates spellcheck analysis only if
+  # there's mispelled words
+  def create_analysis!(attribute, text)
+    words = formatted_mispelled_words_for(text)
+    resource.spellcheck_analyses.create!(
+      attr_name: attribute,
+      words: words
+    ) if words.any?
+  end
 
   ##
   # we'll only analyse attributes that
@@ -47,6 +53,13 @@ class SpellingAnalysisWorker
   def mispelled_words_for(text)
     Spellchecker.check(text, LANG).reject do |word|
       word[:correct]
+    end
+  rescue RuntimeError => e
+    if e.message == "Aspell command not found"
+      # aspell is not present. gracefully fallback
+      []
+    else
+      raise e
     end
   end
 
