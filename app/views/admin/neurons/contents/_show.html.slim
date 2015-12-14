@@ -1,14 +1,22 @@
 - formatted_contents.fetch(level).fetch(kind).each do |content|
   .neuron-content
-    div
-      = content.title
+    p
+      strong
+        = content.spellchecked(:title)
       - if content.can_be_approved?
         span.neuron-moderate-actions
           = content.toggle_approved
+
     .content-description
-      = content.description
-    = content.keywords
-    = content.source
+      = content.spellchecked(:description)
+
+    p = content.keywords
+    p = content.source
     = content.media
+
+    - if content.possible_answers.any?
+      .possible-answers
+        = render "admin/neurons/possible_answers/show",
+                content: content
 
     hr

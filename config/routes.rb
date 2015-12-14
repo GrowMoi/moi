@@ -48,6 +48,10 @@ Moi::Application.routes.draw do
     root "dashboard#index"
   end
 
+  match "/delayed_job" => DelayedJobWeb,
+        anchor: false,
+        via: [:get, :post]
+
   root "home#index"
   
   apipie

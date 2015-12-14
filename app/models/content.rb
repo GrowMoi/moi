@@ -16,7 +16,14 @@
 #
 
 class Content < ActiveRecord::Base
+  include SpellcheckAnalysable
+
   LEVELS = %w(1 2 3).map!(&:to_i)
+  NUMBER_OF_POSSIBLE_ANSWERS = 3
+  SPELLCHECK_ATTRIBUTES = %w(
+    title
+    description
+  ).freeze
   KINDS = %{
     que-es
     como-funciona
@@ -25,7 +32,6 @@ class Content < ActiveRecord::Base
     videos
     enlaces
   }.split("\n").map(&:squish).map(&:to_sym).reject(&:blank?)
-  NUMBER_OF_POSSIBLE_ANSWERS = 3
 
   has_paper_trail ignore: [:created_at, :updated_at, :id]
 

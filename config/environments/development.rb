@@ -39,6 +39,13 @@ Moi::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
+  config.after_initialize do
+    Bullet.enable = true
+    # Bullet.alert = true
+    Bullet.bullet_logger = true
+    Bullet.rails_logger = true
+  end
+
   config.middleware.insert_before 0, "Rack::Cors" do
     allow do
       origins "http://localhost:8100", # development mobileapp

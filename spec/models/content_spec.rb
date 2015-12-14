@@ -79,4 +79,13 @@ RSpec.describe Content, :type => :model do
       ).to eq("approve_content")
     }
   end
+
+  describe "spellchecker" do
+    let!(:resource) { create :content }
+    let(:attributes) { attributes_for :content }
+    let(:tracked_attribute) { :description }
+    let(:untracked_attribute) { :source }
+
+    include_examples "spellchecker examples"
+  end
 end

@@ -1,11 +1,6 @@
 class ContentDecorator < LittleDecorator
   IMAGE_EXTENSIONS = %w(jpg jpeg gif png).freeze
 
-  def title
-    content_tag :strong,
-                record.title
-  end
-
   def keywords
     content_tag :div, class: "content-keywords" do
       record.keyword_list.map do |keyword|
@@ -41,7 +36,9 @@ class ContentDecorator < LittleDecorator
               record.source,
               target: "_blank"
     else
-      record.source
+      content_tag(:strong) do
+        t("activerecord.attributes.content.source") + ": "
+      end + record.source
     end
   end
 
@@ -58,16 +55,8 @@ class ContentDecorator < LittleDecorator
            }
   end
 
-  def description_spellchecked
-    @spellchecked_description ||= spellcheck_description
-  rescue RuntimeError => e
-    if e.message == "Aspell command not found"
-      # aspell is not present. gracefully fallback
-      # to original description
-      return spellcheck_error
-    else
-      raise e
-    end
+  def spellchecked(name)
+    spellcheck_analysis.spellchecked(name.to_s)
   end
 
   def approved_to_s
@@ -81,6 +70,13 @@ class ContentDecorator < LittleDecorator
     }
     return @approved_options if key.nil?
     @approved_options[key.to_s]
+  end
+
+  def decorated_possible_answers
+    possible_answers.select(&:persisted?)
+                    .map do |possible_answer|
+                      decorate possible_answer
+                    end
   end
 
   private
@@ -113,37 +109,10 @@ class ContentDecorator < LittleDecorator
     end
   end
 
-  def spellcheck_error
-    if record.description.present?
-      aspell_error = content_tag(
-        :div,
-        I18n.t("views.contents.aspell_not_present"),
-        class: "small text-danger"
-      )
-      (record.description + aspell_error).html_safe
-    end
-  end
-
-  def spellcheck_description
-    record.description.to_s.split("\n").map do |paragraph|
-      spellcheck_words(paragraph)
-    end.join("\n").html_safe
-  end
-
-  def spellcheck_words(content)
-    Spellchecker.check(
-      content,
-      I18n.locale.to_s
-    ).map do |w|
-      if w[:correct]
-        w[:original]
-      else
-        suggestions = w[:suggestions].first(3).join(" | ")
-        content_tag(:span,
-                    w[:original],
-                    class: "bs-tooltip text-danger",
-                    title: suggestions)
-      end
-    end.join(" ").html_safe
+  def spellcheck_analysis
+    @spellcheck_analysis ||= SpellcheckDecorator.new(
+      record,
+      self
+    )
   end
 end

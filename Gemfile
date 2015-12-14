@@ -3,7 +3,7 @@ ruby "2.1.4"
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.2'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -51,6 +51,12 @@ gem 'carrierwave'
 gem 'rubocop', require: false
 gem "rack-cors", require: "rack/cors"
 gem "newrelic_rpm"
+gem 'airbrake'
+gem 'foreman'
+
+gem 'delayed_job_active_record'
+gem 'delayed_job_web'
+gem 'daemons' # to manage background processing (delayed_job)
 
 group :doc do
   gem 'yard'
@@ -78,16 +84,19 @@ group :development do
   gem 'meta_request'
   gem 'rack-mini-profiler'
   gem 'annotate'
+  gem 'bullet'
   # gem 'neography', github: "maxdemarzi/neography", require: false
 end
 
-group :development do
+group :deployment do
   gem 'capistrano', '~> 3.4'
   gem 'capistrano-rails'
   gem 'capistrano-passenger'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
   gem 'slackistrano', require: false
+
+  gem 'capistrano3-delayed-job'
 end
 
 group :staging do
@@ -99,14 +108,3 @@ end
 
 # Use puma as the app server
 gem 'puma'
-
-#use airbrake to track errors
-gem 'airbrake'
-
-gem 'foreman'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
