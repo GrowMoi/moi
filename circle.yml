@@ -1,6 +1,8 @@
 machine:
   ruby:
     version: 2.1.4
+  environment:
+    CAPYBARA_SERVER_PORT: 5000
 notify:
   webhooks:
     - url: https://vilcabamba.hipchat.com/v2/room/2166553/notification?auth_token=vZuoQbDz2xmmLv23c2vsiqdgiyjsAnjVMUCoTy21

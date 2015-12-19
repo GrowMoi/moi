@@ -15,8 +15,9 @@ Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app)
 end
 
-Capybara.server_port = 5000
-Capybara.always_include_port = true
+server_port = ENV["CAPYBARA_SERVER_PORT"]
+Capybara.server_port = server_port || 80
+Capybara.always_include_port = server_port.present?
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

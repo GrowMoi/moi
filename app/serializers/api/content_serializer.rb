@@ -25,9 +25,5 @@ module Api
                :description,
                :source,
                :title
-
-    def media
-      self.media
-    end
   end
 end

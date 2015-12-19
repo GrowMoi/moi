@@ -23,6 +23,10 @@ class Neuron < ActiveRecord::Base
     }
   end
 
+  scope :published, -> {
+    where(is_public: true)
+  }
+
   scope :not_deleted, -> {
     where(deleted: false)
   }
