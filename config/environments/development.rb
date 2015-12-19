@@ -17,14 +17,14 @@ Moi::Application.configure do
   config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.default_url_options = {
-    host: "localhost",
+    host: Rails.application.secrets.host,
     port: 5000
   }
 
   # deliver to mailcatcher
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "localhost",
+    address: Rails.application.secrets.host,
     port: 1025
   }
 

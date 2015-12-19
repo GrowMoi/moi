@@ -16,7 +16,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  name                   :string
-#  role                   :string
+#  role                   :string           default("cliente"), not null
 #  uid                    :string           not null
 #  provider               :string           default("email"), not null
 #  tokens                 :json
