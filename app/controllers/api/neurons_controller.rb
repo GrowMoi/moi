@@ -1,6 +1,7 @@
 module Api
   class NeuronsController < BaseController
     expose(:neurons) {
+      # TODO: revise scope
       Neuron.published # .accessible_by(current_ability) -> shouldn't be quering only public ?
             .includes(:contents)
             .page(params[:page])

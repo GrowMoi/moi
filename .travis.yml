@@ -10,8 +10,7 @@ addons:
     packages:
       - aspell-es
 env:
-  - RAILS_ENV=test
-  - CAPYBARA_SERVER_PORT=5000
+  - RAILS_ENV=test CAPYBARA_SERVER_PORT=5000
 before_script:
   - /bin/cp $TRAVIS_BUILD_DIR/config/database.yml.example.yml $TRAVIS_BUILD_DIR/config/database.yml
 script:
