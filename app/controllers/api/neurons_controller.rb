@@ -10,10 +10,18 @@ module Api
 
     respond_to :json
 
+    api :GET,
+        "/neurons",
+        "returns paged neurons"
+    param :page, String
     def index
       respond_with neurons, each_serializer: neuron_serializer
     end
 
+    api :GET,
+        "/neurons/:id",
+        "shows neuron"
+    param :id, Integer, required: true
     def show
       respond_with neuron, serializer: neuron_serializer
     end
