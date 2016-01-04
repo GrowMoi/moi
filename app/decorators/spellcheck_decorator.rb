@@ -26,7 +26,7 @@ class SpellcheckDecorator < LittleDecorator
       record.send(analysis.attr_name)
     ) do |text, word|
       " #{text} ".gsub(
-        /\s#{word["original"]}\s/i,
+        regexp_for(word["original"]),
         " #{suggestions_for(word)} "
       ).squish
     end
@@ -47,6 +47,13 @@ class SpellcheckDecorator < LittleDecorator
       nil,
       class: "glyphicon glyphicon-exclamation-sign bs-tooltip spellcheck-error",
       title: I18n.t("views.contents.aspell_not_present")
+    )
+  end
+
+  def regexp_for(word)
+    Regexp.new(
+      "\s#{Regexp.escape(word)}\s",
+      Regexp::IGNORECASE
     )
   end
 end
