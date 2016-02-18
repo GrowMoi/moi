@@ -16,7 +16,7 @@ Capybara.register_driver :poltergeist do |app|
 end
 
 server_port = ENV["CAPYBARA_SERVER_PORT"]
-Capybara.server_port = server_port || 80
+Capybara.server_port = server_port || 31337
 Capybara.always_include_port = server_port.present?
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

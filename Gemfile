@@ -99,7 +99,7 @@ group :deployment do
   gem 'capistrano3-delayed-job'
 end
 
-group :staging do
+group :staging, :integration do
   gem 'rails_12factor'
 end
 
