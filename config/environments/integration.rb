@@ -1,4 +1,4 @@
-Moi::Application.configure do
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # The test environment is used exclusively to run your application's
@@ -24,9 +24,6 @@ Moi::Application.configure do
 
   # Generate digests for assets URLs.
   config.assets.digest = true
-
-  # Version of your assets, change this if you want to expire all your assets.
-  config.assets.version = '1.0'
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = false

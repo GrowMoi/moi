@@ -25,16 +25,6 @@ module Moi
 
     config.encoding = "utf-8"
 
-    # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-    config.action_controller.asset_host = Rails.application.secrets.url
-
-    # Precompile additional assets.
-    # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-    config.assets.precompile += %w(
-      admin.js
-      admin.css
-    )
-
     config.active_record.raise_in_transactional_callbacks = true
     config.active_job.queue_adapter = :delayed_job
   end
