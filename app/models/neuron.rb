@@ -34,7 +34,7 @@ class Neuron < ActiveRecord::Base
   begin :relationships
     has_many :contents,
              dependent: :destroy
-    belongs_to :parent, class: Neuron
+    belongs_to :parent, class_name: "Neuron"
   end
 
   begin :callbacks
