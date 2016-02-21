@@ -29,7 +29,7 @@ class KnowledgeSearch
       search_api.cse.list,
       q: query,
       cx: search_engine.gcse_id,
-      lr: "lang_#{lang}" # "lang_es" | "lang_en"
+      lr: "lang_#{lang}" # "lang_es" | "lang_en"
     )
   end
 
