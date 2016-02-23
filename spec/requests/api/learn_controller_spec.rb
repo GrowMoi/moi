@@ -14,7 +14,7 @@ RSpec.describe Api::ContentsController,
     }
 
     before {
-      post "api/neurons/#{neuron.id}/contents/#{content.id}/learn"
+      post "/api/neurons/#{neuron.id}/contents/#{content.id}/learn"
     }
 
     it {

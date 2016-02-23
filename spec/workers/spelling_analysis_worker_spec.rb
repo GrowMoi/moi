@@ -80,17 +80,34 @@ RSpec.describe SpellingAnalysisWorker do
     }
   end
 
-  context "failure" do
-    before {
-      mock_spellcheck.and_raise(
-        RuntimeError,
-        "Aspell command not found"
-      )
-      run_worker!
-    }
+  context "failures" do
+    describe "known exception" do
+      before {
+        mock_spellcheck.and_raise(
+          Errno::ENOENT,
+          "aspell"
+        )
+        run_worker!
+      }
 
-    it {
-      expect(description_analysis).to_not be_success
-    }
+      it {
+        expect(description_analysis).to_not be_success
+      }
+    end
+
+    describe "unknown exception" do
+      before {
+        mock_spellcheck.and_raise(
+          RuntimeError,
+          "Something bad happened"
+        )
+      }
+
+      it {
+        expect {
+          run_worker!
+        }.to raise_error(RuntimeError)
+      }
+    end
   end
 end
