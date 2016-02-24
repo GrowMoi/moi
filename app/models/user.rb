@@ -25,6 +25,7 @@
 class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
   include Roles
+  include ContentAnnotable
   include ContentLearnable
 
   # Include default devise modules. Others available are:
@@ -40,7 +41,10 @@ class User < ActiveRecord::Base
   begin :relationships
     has_one :profile,
             dependent: :destroy
-    has_many :content_learnings
+    has_many :content_notes,
+             dependent: :destroy
+    has_many :content_learnings,
+             dependent: :destroy
     has_many :learned_contents,
              source: :content,
              through: :content_learnings

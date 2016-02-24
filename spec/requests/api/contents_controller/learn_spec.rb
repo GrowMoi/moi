@@ -2,23 +2,23 @@ require "rails_helper"
 
 RSpec.describe Api::ContentsController,
                type: :request do
-  let(:neuron) {
-    create :neuron, :public
-  }
+  let(:current_user) { create :user }
+  let(:neuron) { create :neuron, :public }
   let!(:content) {
     create :content,
            :approved,
            neuron: neuron
   }
 
+  let(:endpoint) {
+    "/api/neurons/#{neuron.id}/contents/#{content.id}/learn"
+  }
+
   describe "#learn" do
-    let(:current_user) { create :user }
     before { login_as current_user }
 
     before {
-      expect {
-        post "/api/neurons/#{neuron.id}/contents/#{content.id}/learn"
-      }.to change {
+      expect { post endpoint }.to change {
         current_user.learned_contents.count
       }.by(1)
     }
@@ -32,9 +32,7 @@ RSpec.describe Api::ContentsController,
   end
 
   describe "unauthenticated #learn" do
-    before {
-      post "/api/neurons/#{neuron.id}/contents/#{content.id}/learn"
-    }
+    before { post endpoint }
 
     it {
       expect(response).to have_http_status(:unauthorized)
@@ -42,15 +40,16 @@ RSpec.describe Api::ContentsController,
   end
 
   describe "already learnt #learn" do
-    let(:current_user) { create :user }
+    let!(:learning) {
+      create :content_learning,
+             content: content,
+             user: current_user
+    }
+
     before { login_as current_user }
 
     before {
-      current_user.learn(content)
-
-      expect {
-        post "/api/neurons/#{neuron.id}/contents/#{content.id}/learn"
-      }.to_not change {
+      expect { post endpoint }.to_not change {
         current_user.learned_contents.count
       }
     }

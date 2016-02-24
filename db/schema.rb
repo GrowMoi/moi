@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224022809) do
+ActiveRecord::Schema.define(version: 20160224114914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20160224022809) do
 
   add_index "content_learnings", ["content_id"], name: "index_content_learnings_on_content_id", using: :btree
   add_index "content_learnings", ["user_id"], name: "index_content_learnings_on_user_id", using: :btree
+
+  create_table "content_notes", force: :cascade do |t|
+    t.integer  "content_id", null: false
+    t.integer  "user_id",    null: false
+    t.text     "note",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "content_notes", ["content_id"], name: "index_content_notes_on_content_id", using: :btree
+  add_index "content_notes", ["user_id"], name: "index_content_notes_on_user_id", using: :btree
 
   create_table "contents", force: :cascade do |t|
     t.integer  "level",                       null: false
@@ -186,6 +197,8 @@ ActiveRecord::Schema.define(version: 20160224022809) do
 
   add_foreign_key "content_learnings", "contents"
   add_foreign_key "content_learnings", "users"
+  add_foreign_key "content_notes", "contents"
+  add_foreign_key "content_notes", "users"
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
 end
