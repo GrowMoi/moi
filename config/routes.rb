@@ -2,7 +2,15 @@ Moi::Application.routes.draw do
   devise_for :users
 
   namespace :api, defaults: { format: :json } do
-    resources :neurons
+    resources :neurons,
+              only: [:index, :show] do
+      resources :contents,
+                only: [] do
+        member do
+          post :learn
+        end
+      end
+    end
     namespace :auth do
       mount_devise_token_auth_for(
         "User",
@@ -54,6 +62,6 @@ Moi::Application.routes.draw do
         via: [:get, :post]
 
   root "home#index"
-  
+
   apipie
 end

@@ -25,6 +25,7 @@
 class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
   include Roles
+  include ContentLearnable
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable and :omniauthable
@@ -36,7 +37,14 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
 
-  has_one :profile, dependent: :destroy
+  begin :relationships
+    has_one :profile,
+            dependent: :destroy
+    has_many :content_learnings
+    has_many :learned_contents,
+             source: :content,
+             through: :content_learnings
+  end
 
   def to_s
     name

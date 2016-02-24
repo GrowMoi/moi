@@ -1,6 +1,7 @@
 module Api
   class BaseController < ::ApplicationController
-    include DeviseTokenAuth::Concerns::SetUserByToken
+    include NeuronScope
     include JsonRequestsForgeryBypass
+    include DeviseTokenAuth::Concerns::SetUserByToken
   end
 end

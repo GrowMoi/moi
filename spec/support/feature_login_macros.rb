@@ -1,4 +1,4 @@
-module LoginMacros
+module FeatureLoginMacros
   def login_as(user)
     email = I18n.t("activerecord.attributes.user.email")
     password = I18n.t("activerecord.attributes.user.password")
