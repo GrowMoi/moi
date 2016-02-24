@@ -8,6 +8,7 @@ Moi::Application.routes.draw do
                 only: [] do
         member do
           post :learn
+          post :notes
         end
       end
     end

@@ -45,6 +45,7 @@ class Content < ActiveRecord::Base
              ->{ order :id },
              dependent: :destroy
     has_many :content_learnings
+    has_many :content_notes
   end
 
   accepts_nested_attributes_for :possible_answers,
