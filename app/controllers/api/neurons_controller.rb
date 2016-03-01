@@ -1,7 +1,6 @@
 module Api
   class NeuronsController < BaseController
-    # TODO:
-    # require authentication in these endpoints
+    before_action :authenticate_user!
 
     expose(:root_neuron) {
       TreeService::RootFetcher.root_neuron

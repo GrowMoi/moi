@@ -24,6 +24,18 @@ module Api
                :kind,
                :description,
                :source,
-               :title
+               :title,
+               :learnt,
+               :user_notes
+
+    def learnt
+      current_user.already_learnt?(object)
+    end
+
+    def user_notes
+      object.user_note(current_user).try :note
+    end
+
+    alias_method :current_user, :scope
   end
 end
