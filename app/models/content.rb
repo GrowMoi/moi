@@ -16,6 +16,7 @@
 #
 
 class Content < ActiveRecord::Base
+  include ContentAnnotable
   include SpellcheckAnalysable
 
   LEVELS = %w(1 2 3).map!(&:to_i)
