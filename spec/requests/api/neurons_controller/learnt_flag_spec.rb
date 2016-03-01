@@ -4,13 +4,11 @@ RSpec.describe Api::NeuronsController,
                type: :request do
   let(:current_user) { create :user }
   let(:neuron) { create :neuron, :public }
-  let(:content) {
+  let!(:content) {
     create :content,
            :approved,
            neuron: neuron
   }
-
-  let(:endpoint) { "/api/neurons/#{content.id}" }
 
   subject {
     JSON.parse(response.body).fetch("neuron")
@@ -19,7 +17,10 @@ RSpec.describe Api::NeuronsController,
   before { login_as current_user }
 
   describe "not learnt content" do
-    before { get endpoint }
+    before {
+      get "/api/neurons/#{neuron.id}"
+    }
+
     it {
       expect(
         subject["contents"].first["learnt"]
@@ -34,7 +35,9 @@ RSpec.describe Api::NeuronsController,
              user: current_user
     }
 
-    before { get endpoint }
+    before {
+      get "/api/neurons/#{neuron.id}"
+    }
 
     it {
       expect(
