@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  module ContentAnnotable
+  module UserContentAnnotable
     ##
     # @param content [Content] content who
     #   holds the user notes
