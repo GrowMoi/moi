@@ -24,6 +24,13 @@ module Api
                :kind,
                :description,
                :source,
-               :title
+               :title,
+               :learnt
+
+    def learnt
+      current_user.already_learnt?(object)
+    end
+
+    alias_method :current_user, :scope
   end
 end
