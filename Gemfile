@@ -103,6 +103,10 @@ group :staging, :integration do
   gem 'rails_12factor'
 end
 
+group :staging do
+  gem 'cloudinary'
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

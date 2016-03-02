@@ -91,14 +91,18 @@ class ContentDecorator < LittleDecorator
     @media_file ||= record.media.file
   end
 
+  def media_file_extension
+    @media_file_extension ||= media_file.filename.split(".").last
+  end
+
   def rendereable?
     [
       IMAGE_EXTENSIONS
-    ].flatten.include?(media_file.extension)
+    ].flatten.include?(media_file_extension)
   end
 
   def render_media
-    case media_file.extension
+    case media_file_extension
     when *IMAGE_EXTENSIONS
       image_tag record.media_url
     else
