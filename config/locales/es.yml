@@ -357,6 +357,7 @@
         contents: Contenidos
         active: Activa
         is_public: Pública
+        deleted: Eliminada
       content:
         level: "Nivel"
         kind: "Tipo"
