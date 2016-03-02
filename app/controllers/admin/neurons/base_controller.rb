@@ -33,6 +33,7 @@ module Admin
                       :title,
                       :parent_id,
                       :is_public,
+                      :deleted,
                       :contents_attributes => [
                         :id,
                         :kind,
