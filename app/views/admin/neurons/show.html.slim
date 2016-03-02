@@ -16,6 +16,7 @@ ul.nav.nav-tabs.default-tabs
     h3 = decorated_neuron.title
     h5 = decorated_neuron.parent_title
     h5 = decorated_neuron.status_label
+    h5 = decorated_neuron.deleted_label if neuron.deleted?
 
   .tab-pane#contents
     .row.contents_form

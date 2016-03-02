@@ -33,6 +33,13 @@ class NeuronDecorator < LittleDecorator
     end
   end
 
+  def deleted_label
+    content_tag :span,
+                class: "label label-danger" do
+      I18n.t("views.neurons.delete")
+    end
+  end
+
   private
 
   def contents_badge(options)
