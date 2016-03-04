@@ -56,6 +56,12 @@
       restore: restauró este registro
       active_neuron: moderó neurona
       approve_content: moderó contenido
+      "true": "Sí"
+      "false": "No"
+      done:
+        update: Actualizado
+        create: Creado
+        delete: Eliminado
     search_engine:
       edit: Editar motor de búsqueda
       new: Nuevo motor de búsqueda
@@ -360,6 +366,7 @@
         active: Activa
         is_public: Pública
         deleted: Eliminada
+        medium: Multimedia
       content:
         level: "Nivel"
         kind: "Tipo"
@@ -368,6 +375,7 @@
         source: Fuente
         approved: Aprobado
         title: Título
+        media: Multimedia
       search_engine:
         name: Nombre
         gcse_id: CSE id

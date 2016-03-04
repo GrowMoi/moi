@@ -12,5 +12,7 @@
 class ContentMedia < ActiveRecord::Base
   belongs_to :content
 
+  has_paper_trail ignore: [:created_at, :updated_at, :id]
+
   mount_uploader :media, ContentMediaUploader
 end

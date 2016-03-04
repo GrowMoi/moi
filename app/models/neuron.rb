@@ -83,9 +83,10 @@ class Neuron < ActiveRecord::Base
   def save_with_version(opts={})
     changed = changed? # if not already creating version
     contents_changed = contents_any?(changed?: true)
+    medium_changed = content_medium_any?(changed?: true)
     transaction do
       save(opts).tap do |saved|
-        if saved && !changed && contents_changed
+        if saved && !changed && (contents_changed || medium_changed)
           touch_with_version
         end
 
@@ -118,7 +119,11 @@ class Neuron < ActiveRecord::Base
   end
 
   def check_is_public
-    errors.add :deleted if is_public?
+    errors.add(
+      :deleted,
+      I18n.t("activerecord.errors.messages.cannot_delete_neuron",
+              neuron: self)
+    )if is_public?
   end
 
   def eager_contents!
@@ -148,6 +153,14 @@ class Neuron < ActiveRecord::Base
     contents.any? do |content|
       opts.all? do |key, val|
         content.send(key).eql?(val)
+      end
+    end
+  end
+
+  def content_medium_any?(opts)
+    contents.map(&:content_medium).flatten.any? do |media|
+      opts.all? do |key, val|
+        media.send(key).eql?(val)
       end
     end
   end

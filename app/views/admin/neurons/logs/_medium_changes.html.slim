@@ -1,0 +1,6 @@
+h5 = t("views.contents.media")
+.neuron-contents
+  - medium.each do |media|
+    = render "changes", changes: media.changes
+    span.label.label-default = media.event_str
+    hr
