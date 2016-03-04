@@ -20,5 +20,9 @@ h2 = decorated_neuron.title
             = render "content_changes",
                      contents: version.changed_contents
 
+          - if version.medium_changed?
+            = render "medium_changes",
+                     medium: version.changed_medium
+
     .col-xs-2
       .text-muted.small = version.time_ago

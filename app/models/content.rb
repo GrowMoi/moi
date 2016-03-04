@@ -10,7 +10,6 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  source      :string
-#  media       :string
 #  approved    :boolean          default(FALSE)
 #  title       :string
 #
@@ -38,8 +37,6 @@ class Content < ActiveRecord::Base
 
   acts_as_taggable_on :keywords
 
-  mount_uploader :media, ContentMediaUploader
-
   begin :relationships
     belongs_to :neuron, touch: true
     has_many :possible_answers,
@@ -47,12 +44,20 @@ class Content < ActiveRecord::Base
              dependent: :destroy
     has_many :content_learnings
     has_many :content_notes
+    has_many :content_medium,
+             class_name: "ContentMedia"
   end
 
   accepts_nested_attributes_for :possible_answers,
     allow_destroy: true,
     reject_if: ->(attributes) {
       attributes["text"].blank?
+    }
+
+  accepts_nested_attributes_for :content_medium,
+    allow_destroy: true,
+    reject_if: ->(attributes) {
+      attributes["media"].blank?
     }
 
   begin :scopes

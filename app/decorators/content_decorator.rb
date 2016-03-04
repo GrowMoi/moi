@@ -1,6 +1,4 @@
 class ContentDecorator < LittleDecorator
-  IMAGE_EXTENSIONS = %w(jpg jpeg gif png).freeze
-
   def keywords
     content_tag :div, class: "content-keywords" do
       record.keyword_list.map do |keyword|
@@ -9,24 +7,11 @@ class ContentDecorator < LittleDecorator
     end
   end
 
-  def media_for_form
-    if record.media?
-      filename = media_file.filename if rendereable?
-      link_to record.media_url,
-              class: "content-media",
-              target: "_blank" do
-        render_media + filename
-      end
-    end
-  end
-
   def media
-    if record.media?
-      link_to record.media_url,
-              class: "content-media",
-              target: "_blank" do
-        render_media
-      end
+    if decorated_medium.any?
+      decorated_medium.map do |media|
+        media.link
+      end.join.html_safe
     end
   end
 
@@ -81,36 +66,16 @@ class ContentDecorator < LittleDecorator
 
   private
 
+  def decorated_medium
+    @decorated_medium ||= content_medium.map do |content_media|
+      decorate content_media
+    end
+  end
+
   def source_is_uri?
     # taken from
     # http://stackoverflow.com/questions/1805761/check-if-url-is-valid-ruby#answer-1805788
     record.source =~ /\A#{URI::regexp}\z/
-  end
-
-  def media_file
-    @media_file ||= record.media.file
-  end
-
-  def media_file_extension
-    @media_file_extension ||= media_file.filename.split(".").last
-  end
-
-  def rendereable?
-    [
-      IMAGE_EXTENSIONS
-    ].flatten.include?(media_file_extension)
-  end
-
-  def render_media
-    case media_file_extension
-    when *IMAGE_EXTENSIONS
-      image_tag record.media_url
-    else
-      glyphicon = content_tag :span,
-                              nil,
-                              class: "glyphicon glyphicon-paperclip"
-      glyphicon + media_file.filename
-    end
   end
 
   def spellcheck_analysis

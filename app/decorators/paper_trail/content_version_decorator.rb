@@ -1,8 +1,12 @@
 module PaperTrail
   class ContentVersionDecorator < VersionDecorator
-    private
+    def initialize(*args)
+      super(*args)
+      ignore_keys "neuron_id"
+      mandatory_keys "kind", "level"
+    end
 
-    ignore_keys "neuron_id"
+    private
 
     def value_for(key, value)
       case key

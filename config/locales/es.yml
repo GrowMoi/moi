@@ -56,6 +56,12 @@
       restore: restauró este registro
       active_neuron: moderó neurona
       approve_content: moderó contenido
+      "true": "Sí"
+      "false": "No"
+      done:
+        update: Actualizado
+        create: Creado
+        delete: Eliminado
     search_engine:
       edit: Editar motor de búsqueda
       new: Nuevo motor de búsqueda
@@ -77,10 +83,12 @@
       search_query: Términos de búsqueda
       aspell_not_present: "Advertencia: este texto no ha sido revisado ortográficamente"
       attach_media: Adjuntar multimedia
+      remove_media: Eliminar multimedia
       title_tooltip: Título de la pregunta del test
       to_approve: "Por Aprobar"
       test: Test
       basic_info: Información básica
+      media: Multimedia
       levels:
         "1": "Principiante"
         "2": "Intermedio"
@@ -358,6 +366,7 @@
         active: Activa
         is_public: Pública
         deleted: Eliminada
+        medium: Multimedia
       content:
         level: "Nivel"
         kind: "Tipo"
@@ -366,6 +375,7 @@
         source: Fuente
         approved: Aprobado
         title: Título
+        media: Multimedia
       search_engine:
         name: Nombre
         gcse_id: CSE id

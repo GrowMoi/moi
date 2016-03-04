@@ -44,12 +44,16 @@ module Admin
                         :_destroy,
                         :keyword_list,
                         :source,
-                        :media,
-                        :media_cache,
                         :possible_answers_attributes => [
                           :id,
                           :correct,
                           :text
+                        ],
+                        :content_medium_attributes => [
+                          :id,
+                          :_destroy,
+                          :media,
+                          :media_cache
                         ]
                       ]
       rescue ActionController::ParameterMissing

@@ -10,7 +10,6 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  source      :string
-#  media       :string
 #  approved    :boolean          default(FALSE)
 #  title       :string
 #

@@ -10,7 +10,6 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  source      :string
-#  media       :string
 #  approved    :boolean          default(FALSE)
 #  title       :string
 #
@@ -19,7 +18,7 @@ module Api
   class ContentSerializer < ActiveModel::Serializer
     attributes :id,
                :neuron_id,
-               :media_url,
+               :media,
                :level,
                :kind,
                :description,
@@ -34,6 +33,10 @@ module Api
 
     def user_notes
       object.user_note(current_user).try :note
+    end
+
+    def media
+      object.content_medium.map(&:media_url)
     end
 
     alias_method :current_user, :scope
