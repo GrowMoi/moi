@@ -77,10 +77,12 @@
       search_query: Términos de búsqueda
       aspell_not_present: "Advertencia: este texto no ha sido revisado ortográficamente"
       attach_media: Adjuntar multimedia
+      remove_media: Eliminar multimedia
       title_tooltip: Título de la pregunta del test
       to_approve: "Por Aprobar"
       test: Test
       basic_info: Información básica
+      media: Multimedia
       levels:
         "1": "Principiante"
         "2": "Intermedio"

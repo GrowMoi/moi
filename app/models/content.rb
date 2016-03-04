@@ -54,6 +54,12 @@ class Content < ActiveRecord::Base
       attributes["text"].blank?
     }
 
+  accepts_nested_attributes_for :content_medium,
+    allow_destroy: true,
+    reject_if: ->(attributes) {
+      attributes["media"].blank?
+    }
+
   begin :scopes
     scope :eager, -> {
       includes(
