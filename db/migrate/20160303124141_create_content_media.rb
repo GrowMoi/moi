@@ -26,7 +26,7 @@ class CreateContentMedia < ActiveRecord::Migration
           )
           content.update! remove_media: true
         else
-          say "[404] #{content.media}" 
+          say "[404] #{content.media}"
         end
       end
     end

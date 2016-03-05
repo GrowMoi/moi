@@ -390,7 +390,7 @@
       messages:
         <<: *errors_messages
         circular_parent: "%{child} no puede ser padre de %{parent} dado que alguno de sus padres es %{parent}"
-        content_has_description_or_media: Debe incluir una descripción o un archivo
+        content_has_description_media_or_links: Debe incluir una descripción, multimedia o enlaces
         cannot_delete_neuron: "%{neuron} no se puede eliminar porque es pública"
       template:
         <<: *errors_template

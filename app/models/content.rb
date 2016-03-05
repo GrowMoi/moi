@@ -44,6 +44,7 @@ class Content < ActiveRecord::Base
              dependent: :destroy
     has_many :content_learnings
     has_many :content_notes
+    has_many :content_links
     has_many :content_medium,
              class_name: "ContentMedia"
   end
@@ -81,7 +82,7 @@ class Content < ActiveRecord::Base
                       inclusion: {in: LEVELS}
     validates :kind, presence: true,
                      inclusion: {in: KINDS}
-    validate :has_description_or_media
+    validate :has_description_media_or_links
     validates :source, presence: true
   end
 
@@ -106,11 +107,11 @@ class Content < ActiveRecord::Base
 
   private
 
-  def has_description_or_media
-    if description.blank? && !media
+  def has_description_media_or_links
+    if description.blank? && content_medium.empty? && content_links.empty?
       errors.add(
         :base,
-        I18n.t("activerecord.errors.messages.content_has_description_or_media")
+        I18n.t("activerecord.errors.messages.content_has_description_media_or_links")
       )
     end
   end

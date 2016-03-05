@@ -24,6 +24,49 @@ RSpec.describe Content, :type => :model do
     it{ expect(content).to be_valid }
   end
 
+  describe "validates #has_description_media_or_links" do
+    subject { content }
+
+    context "with description" do
+      before {
+        expect(content.content_medium).to be_empty
+        expect(content.content_links).to be_empty
+        expect(content.description).to be_present
+      }
+      it { is_expected.to be_valid }
+    end
+
+    context "with media" do
+      let!(:content) {
+        build :content, description: nil
+      }
+      let!(:build_media) {
+        content.content_medium.build(attributes_for :content_media)
+      }
+      before {
+        expect(content.content_medium).to_not be_empty
+        expect(content.content_links).to be_empty
+        expect(content.description).to_not be_present
+      }
+      it { is_expected.to be_valid }
+    end
+
+    context "with links" do
+      let!(:content) {
+        build :content, description: nil
+      }
+      let!(:build_link) {
+        content.content_links.build(attributes_for :content_link)
+      }
+      before {
+        expect(content.content_medium).to be_empty
+        expect(content.content_links).to_not be_empty
+        expect(content.description).to_not be_present
+      }
+      it { is_expected.to be_valid }
+    end
+  end
+
   describe "neuron should not to be active" do
     it {
       expect(content.neuron.active).to eq(false)
