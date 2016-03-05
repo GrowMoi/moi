@@ -1,11 +1,16 @@
 class ContentMediaDecorator < LittleDecorator
   IMAGE_EXTENSIONS = %w(jpg jpeg gif png).freeze
 
-  def link
-    link_to record.media_url,
-            class: "content-media",
-            target: "_blank" do
-      render
+  def list_group_item
+    content_tag :div,
+                class: "col-xs-3 col-sm-2 content-media" do
+      link_to record.media_url,
+              target: "_blank" do
+        tooltip file.filename,
+                place: "bottom" do
+          render(include_filename: false)
+        end
+      end
     end
   end
 
