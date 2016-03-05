@@ -1,5 +1,7 @@
 .spellcheck-error
-  margin-left: 0.1em
+  margin-left: 5px
+  font-size: 12px
+  color: #aaa
 
 .neuron-content
   .content-description
@@ -11,12 +13,21 @@
       font-weight: 550
   .content-media
     text-align: center
-    display: block
-    img
-      max-width: 100%
-      max-height: 400px
-    .glyphicon
-      margin-right: 0.5em
+    vertical-align: middle
+    &:not(:first-child)
+      padding-left: 5px
+    &:not(:last-child)
+      padding-right: 5px
+    a
+      display: block
+      img
+        max-height: 80px
+        max-width: 100%
+      .glyphicon
+        display: block
+        font-size: 25px
+        margin-top: 15px
+        text-align: center
 
   hr
     margin-top: 10px

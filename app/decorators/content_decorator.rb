@@ -7,11 +7,16 @@ class ContentDecorator < LittleDecorator
     end
   end
 
-  def media
+  def media_list_group
     if decorated_medium.any?
-      decorated_medium.map do |media|
-        media.link
-      end.join.html_safe
+      strong t("views.contents.media") do
+        content_tag :div,
+                    class: "row" do
+          decorated_medium.map do |media|
+            media.list_group_item
+          end.join.html_safe
+        end
+      end
     end
   end
 
@@ -21,10 +26,16 @@ class ContentDecorator < LittleDecorator
               record.source,
               target: "_blank"
     else
-      content_tag(:strong) do
-        t("activerecord.attributes.content.source") + ": "
-      end + record.source
+      strong t("activerecord.attributes.content.source") do
+        record.source
+      end
     end
+  end
+
+  def strong(strong_str, &block)
+    content_tag(:strong) do
+      strong_str + ": "
+    end + yield
   end
 
   def can_be_approved?
