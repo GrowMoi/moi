@@ -15,8 +15,10 @@ module Admin
         neuron.contents.inject({}) do |memo, content|
           memo[content.level] ||= Hash.new
           memo[content.level][content.kind] ||= Array.new
-          content.build_possible_answers!
-          memo[content.level][content.kind] << decorate(content)
+          decorated_content = decorate(content)
+          decorated_content.build_possible_answers!
+          decorated_content.build_one_link!
+          memo[content.level][content.kind] << decorated_content
           memo
         end
       }
@@ -54,6 +56,10 @@ module Admin
                           :_destroy,
                           :media,
                           :media_cache
+                        ],
+                        :content_links_attributes => [
+                          :id,
+                          :link
                         ]
                       ]
       rescue ActionController::ParameterMissing

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160303134953) do
+ActiveRecord::Schema.define(version: 20160305125108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,15 @@ ActiveRecord::Schema.define(version: 20160303134953) do
 
   add_index "content_learnings", ["content_id"], name: "index_content_learnings_on_content_id", using: :btree
   add_index "content_learnings", ["user_id"], name: "index_content_learnings_on_user_id", using: :btree
+
+  create_table "content_links", force: :cascade do |t|
+    t.integer  "content_id", null: false
+    t.string   "link",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "content_links", ["content_id"], name: "index_content_links_on_content_id", using: :btree
 
   create_table "content_media", force: :cascade do |t|
     t.string   "media"
@@ -205,6 +214,7 @@ ActiveRecord::Schema.define(version: 20160303134953) do
 
   add_foreign_key "content_learnings", "contents"
   add_foreign_key "content_learnings", "users"
+  add_foreign_key "content_links", "contents"
   add_foreign_key "content_media", "contents"
   add_foreign_key "content_notes", "contents"
   add_foreign_key "content_notes", "users"

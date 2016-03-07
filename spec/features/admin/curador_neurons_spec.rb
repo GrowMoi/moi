@@ -37,14 +37,45 @@ describe "neurons as curador" do
         select_contents_tab!
         first_textarea.set description
         source_input.set source
+      }
+
+      it "creates content" do
         expect {
           submit_form!
         }.to change{ Content.count }.by(1)
-      }
+      end
 
-      it {
+      it "assigns description" do
+        submit_form!
         expect(created_content.description).to eq(description)
-      }
+      end
+
+      feature "curador can add content links through neurons" do
+        let(:created_link) {
+          created_content.content_links.first
+        }
+        let(:link) {
+          attributes_for(:content_link)[:link]
+        }
+        let(:link_input) {
+          all("input[name*='[link]']").first
+        }
+
+        before {
+          link_input.set link
+        }
+
+        it "creates content link" do
+          expect {
+            submit_form!
+          }.to change { ContentLink.count }.by(1)
+        end
+
+        it "assigns link" do
+          submit_form!
+          expect(created_link.link).to eq(link)
+        end
+      end
     end
 
     feature "created neuron is shown in tree", js: true do

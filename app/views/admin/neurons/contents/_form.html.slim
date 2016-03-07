@@ -38,19 +38,13 @@ fieldset
 
 = render "admin/neurons/contents/media_form",
          f: f
-
-fieldset
-  legend = t("views.contents.test")
-  label.test-question = f.object.title
-  = f.fields_for :possible_answers do |answer_form|
-    = render "admin/neurons/possible_answers/form",
-             f: answer_form
-  = f.link_to_add :possible_answers,
-                  class: "hidden add-possible-answer" do
-    span.glyphicon.glyphicon-plus.text-success
+= render "admin/neurons/contents/links_form",
+         f: f
+= render "admin/neurons/contents/possible_answers_form",
+         f: f
 
 .actions
   = f.link_to_remove class: "btn btn-link" do
     span.glyphicon.glyphicon-remove.text-danger
 
-hr
+hr.content-divider

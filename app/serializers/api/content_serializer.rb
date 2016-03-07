@@ -25,6 +25,7 @@ module Api
                :source,
                :title,
                :learnt,
+               :links,
                :user_notes
 
     def learnt
@@ -37,6 +38,10 @@ module Api
 
     def media
       object.content_medium.map(&:media_url)
+    end
+
+    def links
+      object.content_links.map(&:link)
     end
 
     alias_method :current_user, :scope
