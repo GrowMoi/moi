@@ -19,6 +19,7 @@ class Content < ActiveRecord::Base
   include SpellcheckAnalysable
 
   LEVELS = %w(1 2 3).map!(&:to_i)
+  NUMBER_OF_LINKS = 3
   NUMBER_OF_POSSIBLE_ANSWERS = 3
   SPELLCHECK_ATTRIBUTES = %w(
     title
@@ -30,7 +31,6 @@ class Content < ActiveRecord::Base
     por-que-es
     quien-cuando-donde
     videos
-    enlaces
   }.split("\n").map(&:squish).map(&:to_sym).reject(&:blank?)
 
   has_paper_trail ignore: [:created_at, :updated_at, :id]
@@ -49,17 +49,23 @@ class Content < ActiveRecord::Base
              class_name: "ContentMedia"
   end
 
-  accepts_nested_attributes_for :possible_answers,
-    allow_destroy: true,
-    reject_if: ->(attributes) {
-      attributes["text"].blank?
-    }
+  begin :nested_attributes
+    accepts_nested_attributes_for :possible_answers,
+      reject_if: ->(attributes) {
+        attributes["text"].blank?
+      }
 
-  accepts_nested_attributes_for :content_medium,
-    allow_destroy: true,
-    reject_if: ->(attributes) {
-      attributes["media"].blank?
-    }
+    accepts_nested_attributes_for :content_medium,
+      allow_destroy: true,
+      reject_if: ->(attributes) {
+        attributes["media"].blank?
+      }
+
+    accepts_nested_attributes_for :content_links,
+      reject_if: ->(attributes) {
+        attributes["link"].blank?
+      }
+  end
 
   begin :scopes
     scope :eager, -> {
@@ -84,6 +90,10 @@ class Content < ActiveRecord::Base
                      inclusion: {in: KINDS}
     validate :has_description_media_or_links
     validates :source, presence: true
+  end
+
+  def able_to_have_more_links?
+    content_links.length < Content::NUMBER_OF_LINKS
   end
 
   def kind

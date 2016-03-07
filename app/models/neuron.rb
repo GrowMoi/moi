@@ -44,7 +44,13 @@ class Neuron < ActiveRecord::Base
   accepts_nested_attributes_for :contents,
     allow_destroy: true,
     reject_if: ->(attributes) {
-      attributes["description"].blank? && attributes["media"].blank?
+      required_attrs = %w(
+        description
+        source
+      )
+      required_attrs.all? do |attr|
+        attributes[attr].blank?
+      end
     }
 
   begin :validations

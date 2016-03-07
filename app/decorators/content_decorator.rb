@@ -1,4 +1,10 @@
 class ContentDecorator < LittleDecorator
+  def build_one_link!
+    if content_links.length === 0
+      content_links.build
+    end
+  end
+
   def keywords
     content_tag :div, class: "content-keywords" do
       record.keyword_list.map do |keyword|
@@ -14,6 +20,19 @@ class ContentDecorator < LittleDecorator
                     class: "row" do
           decorated_medium.map do |media|
             media.list_group_item
+          end.join.html_safe
+        end
+      end
+    end
+  end
+
+  def links_list_group
+    if decorated_links.any?
+      content_tag :div,
+                  class: "content-links" do
+        strong t("views.contents.links") do
+          decorated_links.map do |link|
+            link.list_group_item
           end.join.html_safe
         end
       end
@@ -80,6 +99,12 @@ class ContentDecorator < LittleDecorator
   def decorated_medium
     @decorated_medium ||= content_medium.map do |content_media|
       decorate content_media
+    end
+  end
+
+  def decorated_links
+    @decorated_links ||= content_links.map do |content_link|
+      decorate content_link
     end
   end
 

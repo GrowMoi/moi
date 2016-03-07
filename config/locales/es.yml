@@ -39,6 +39,7 @@
       show: "Mostrar Neurona"
       show_changelog: "Mostrar Historial de Cambios"
       contents: "Contenidos"
+      add_content: Agregar contenido
       general: General
       restore: "Neurona restaurada"
       delete: "Neurona eliminada"
@@ -89,6 +90,9 @@
       test: Test
       basic_info: Información básica
       media: Multimedia
+      links: Enlaces
+      link_placeholder: http://www.growmoi.com
+      add_link: Agregar enlace
       levels:
         "1": "Principiante"
         "2": "Intermedio"
@@ -108,7 +112,6 @@
         por-que-es: "Por qué es"
         quien-cuando-donde: "Quién/Cuándo/Dónde"
         videos: "Vídeos"
-        enlaces: "Enlaces"
     profiles:
       new: Nuevo árbol
       edit: Editar árbol
@@ -385,6 +388,8 @@
         biography: Biografía
       possible_answer:
         text: Posible respuesta
+      content_link:
+        link: Enlace
 
     errors:
       messages:
