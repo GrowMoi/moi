@@ -9,11 +9,10 @@ RSpec.describe Api::NeuronsController,
     JSON.parse(response.body).fetch("neuron")
   }
 
-  describe "includes user notes in content" do
-    let!(:content_note) {
-      create :content_note,
-             content: content,
-             user: current_user
+  describe "includes links in content" do
+    let!(:content_link) {
+      create :content_link,
+             content: content
     }
 
     before {
@@ -22,8 +21,8 @@ RSpec.describe Api::NeuronsController,
 
     it {
       expect(
-        subject["contents"].first["user_notes"]
-      ).to eq(content_note.note)
+        subject["contents"].first["links"]
+      ).to include(content_link.link)
     }
   end
 end

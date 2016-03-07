@@ -2,19 +2,12 @@ require "rails_helper"
 
 RSpec.describe Api::NeuronsController,
                type: :request do
-  let(:current_user) { create :user }
-  let(:neuron) { create :neuron, :public }
-  let!(:content) {
-    create :content,
-           :approved,
-           neuron: neuron
-  }
+  include_examples "neurons_controller:current_user"
+  include_examples "neurons_controller:approved_content"
 
   subject {
     JSON.parse(response.body).fetch("neuron")
   }
-
-  before { login_as current_user }
 
   describe "not learnt content" do
     before {
