@@ -3,7 +3,9 @@ module SpellcheckAnalysable
 
   included do
     # relationships
-    has_many :spellcheck_analyses, as: :analysable
+    has_many :spellcheck_analyses,
+             as: :analysable,
+             dependent: :destroy
 
     # callbacks
     before_save :expire_spellcheck_analysis!
