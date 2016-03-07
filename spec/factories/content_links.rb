@@ -14,5 +14,4 @@ FactoryGirl.define do
     content
     link "http://mysharedlink.domain.org"
   end
-
 end
