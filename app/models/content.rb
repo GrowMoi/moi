@@ -39,14 +39,20 @@ class Content < ActiveRecord::Base
 
   begin :relationships
     belongs_to :neuron, touch: true
+
+    # these belong to user
+    has_many :content_learnings
+    has_many :content_notes
+
+
     has_many :possible_answers,
              ->{ order :id },
              dependent: :destroy
-    has_many :content_learnings
-    has_many :content_notes
-    has_many :content_links
+    has_many :content_links,
+             dependent: :destroy
     has_many :content_medium,
-             class_name: "ContentMedia"
+             class_name: "ContentMedia",
+             dependent: :destroy
   end
 
   begin :nested_attributes
