@@ -59,6 +59,16 @@ module Admin
       neuron.eager_contents!
     end
 
+    def edit
+      formatted_contents.each do |level, level_contents|
+        level_contents.each do |kind, contents|
+          contents.each do |decorated_content|
+            decorated_content.build_one_link!
+          end
+        end
+      end
+    end
+
     def create
       if neuron.save_with_version
         redirect_to(

@@ -17,7 +17,6 @@ module Admin
           memo[content.level][content.kind] ||= Array.new
           decorated_content = decorate(content)
           decorated_content.build_possible_answers!
-          decorated_content.build_one_link!
           memo[content.level][content.kind] << decorated_content
           memo
         end
