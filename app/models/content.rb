@@ -44,6 +44,8 @@ class Content < ActiveRecord::Base
     has_many :content_learnings
     has_many :content_notes
 
+    has_one :content_video,
+            dependent: :destroy
 
     has_many :possible_answers,
              ->{ order :id },
@@ -70,6 +72,12 @@ class Content < ActiveRecord::Base
     accepts_nested_attributes_for :content_links,
       reject_if: ->(attributes) {
         attributes["link"].blank?
+      }
+
+    accepts_nested_attributes_for :content_video,
+      allow_destroy: true,
+      reject_if: ->(attributes) {
+        attributes["url"].blank?
       }
   end
 
