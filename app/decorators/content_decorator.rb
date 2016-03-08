@@ -44,11 +44,20 @@ class ContentDecorator < LittleDecorator
       link_to record.source,
               record.source,
               target: "_blank"
-    else
+    elsif record.source.present?
       strong t("activerecord.attributes.content.source") do
         record.source
       end
     end
+  end
+
+  def video_list_group
+    decorated_videos.map do |video|
+      content_tag :div,
+                  class: "text-center" do
+        video.list_group_item
+      end
+    end.join.html_safe
   end
 
   def strong(strong_str, &block)
@@ -99,6 +108,12 @@ class ContentDecorator < LittleDecorator
   def decorated_medium
     @decorated_medium ||= content_medium.map do |content_media|
       decorate content_media
+    end
+  end
+
+  def decorated_videos
+    @decorated_videos ||= content_videos.map do |content_video|
+      decorate content_video
     end
   end
 
