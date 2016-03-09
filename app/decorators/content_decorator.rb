@@ -5,6 +5,12 @@ class ContentDecorator < LittleDecorator
     end
   end
 
+  def build_one_video!
+    if content_videos.length === 0
+      content_videos.build
+    end
+  end
+
   def keywords
     content_tag :div, class: "content-keywords" do
       record.keyword_list.map do |keyword|

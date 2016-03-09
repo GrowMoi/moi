@@ -31,7 +31,6 @@ class Content < ActiveRecord::Base
     como-funciona
     por-que-es
     quien-cuando-donde
-    videos
   }.split("\n").map(&:squish).map(&:to_sym).reject(&:blank?)
 
   has_paper_trail ignore: [:created_at, :updated_at, :id]

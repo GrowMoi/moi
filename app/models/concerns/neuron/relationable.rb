@@ -1,12 +1,11 @@
 class Neuron < ActiveRecord::Base
   module Relationable
-    RELATIONSHIP_MAPPING = {
-      contents: ->{ contents },
-      content_links: ->{ contents.map(&:content_links).flatten },
-      content_medium: ->{ contents.map(&:content_medium).flatten },
-      content_videos: ->{ contents.map(&:content_videos).flatten }
-    }
-    RELATIONSHIPS = RELATIONSHIP_MAPPING.keys.freeze
+    RELATIONSHIPS = [
+      :contents,
+      :content_links,
+      :content_medium,
+      :content_videos
+    ]
 
     def relationships_changed?
       RELATIONSHIPS.any? do |relationship|
@@ -21,13 +20,30 @@ class Neuron < ActiveRecord::Base
       # @param opts [Hash] conditions to match
       # @example contents_any?({kind: kind})
       define_method "#{relationship}_any?" do |opts|
-        relationship_scope = RELATIONSHIP_MAPPING[relationship]
-        relationship_scope.call.any? do |item|
+        send("#{relationship}_scope").any? do |item|
           opts.all? do |key, val|
             item.send(key).eql?(val)
           end
         end
       end
+    end
+
+    private
+
+    def contents_scope
+      contents
+    end
+
+    def content_links_scope
+      contents.map(&:content_links).flatten
+    end
+
+    def content_medium_scope
+      contents.map(&:content_medium).flatten
+    end
+
+    def content_videos_scope
+      contents.map(&:content_videos).flatten
     end
   end
 end

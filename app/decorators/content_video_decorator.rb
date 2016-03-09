@@ -7,7 +7,11 @@ class ContentVideoDecorator < LittleDecorator
   ).freeze
 
   def list_group_item
-    embedded
+    if supported_party?
+      embedded
+    else
+      record.url
+    end
   end
 
   def embedded
@@ -24,6 +28,13 @@ class ContentVideoDecorator < LittleDecorator
 
   private
 
+  def supported_party?
+    @party = SUPPORTED_PARTIES.detect do |party|
+      url.include?(party)
+    end
+    @party.present?
+  end
+
   def url
     @url ||=
       begin
@@ -35,14 +46,7 @@ class ContentVideoDecorator < LittleDecorator
   end
 
   def rendered_url
-    supported_party = SUPPORTED_PARTIES.detect do |party|
-      url.include?(party)
-    end
-    if supported_party.present?
-      send("render_#{supported_party}") || url
-    else
-      url
-    end
+    send("render_#{@party}") || url
   end
 
   def render_youtube
