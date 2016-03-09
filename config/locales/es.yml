@@ -90,6 +90,8 @@
       test: Test
       basic_info: Información básica
       media: Multimedia
+      videos: Vídeos
+      video_placeholder: Video destacado
       links: Enlaces
       link_placeholder: http://www.growmoi.com
       add_link: Agregar enlace
@@ -370,6 +372,8 @@
         is_public: Pública
         deleted: Eliminada
         medium: Multimedia
+        links: Enlaces
+        videos: Vídeos
       content:
         level: "Nivel"
         kind: "Tipo"
@@ -390,6 +394,8 @@
         text: Posible respuesta
       content_link:
         link: Enlace
+      content_video:
+        url: URl
 
     errors:
       messages:

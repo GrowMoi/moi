@@ -3,7 +3,7 @@ fieldset
   .row
     .col-xs-12.content-links-form
       = f.fields_for :content_links do |link_form|
-        = render "admin/neurons/link/form",
+        = render "admin/neurons/content_links/form",
                  f: link_form
 
       - if f.object.able_to_have_more_links?

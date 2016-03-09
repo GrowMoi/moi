@@ -20,6 +20,7 @@ class Content < ActiveRecord::Base
 
   LEVELS = %w(1 2 3).map!(&:to_i)
   NUMBER_OF_LINKS = 3
+  NUMBER_OF_VIDEOS = 1
   NUMBER_OF_POSSIBLE_ANSWERS = 3
   SPELLCHECK_ATTRIBUTES = %w(
     title
@@ -106,7 +107,11 @@ class Content < ActiveRecord::Base
   end
 
   def able_to_have_more_links?
-    content_links.length < Content::NUMBER_OF_LINKS
+    content_links.length < NUMBER_OF_LINKS
+  end
+
+  def able_to_have_more_videos?
+    content_videos.length < NUMBER_OF_VIDEOS
   end
 
   def kind

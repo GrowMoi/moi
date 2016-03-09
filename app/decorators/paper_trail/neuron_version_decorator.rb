@@ -26,6 +26,28 @@ module PaperTrail
       raw_medium.length > 0
     end
 
+    def links_changed?
+      raw_links.length > 0
+    end
+
+    def videos_changed?
+      raw_videos.length > 0
+    end
+
+    def changed_videos
+      @changed_videos ||= decorate(
+        raw_videos,
+        ContentVideoVersionDecorator
+      )
+    end
+
+    def changed_links
+      @changed_links ||= decorate(
+        raw_links,
+        ContentLinkVersionDecorator
+      )
+    end
+
     def changed_contents
       @changed_contents ||= decorate(
         raw_contents,
@@ -73,6 +95,8 @@ module PaperTrail
       Array.new.tap do |keys|
         keys << "contents" if contents_changed?
         keys << "medium" if medium_changed?
+        keys << "links" if links_changed?
+        keys << "videos" if videos_changed?
       end
     end
 
@@ -86,6 +110,20 @@ module PaperTrail
     def raw_medium
       @raw_medium ||= Version.where(
         item_type: "ContentMedia",
+        transaction_id: transaction_id
+      )
+    end
+
+    def raw_links
+      @raw_links ||= Version.where(
+        item_type: "ContentLink",
+        transaction_id: transaction_id
+      )
+    end
+
+    def raw_videos
+      @raw_videos ||= Version.where(
+        item_type: "ContentVideo",
         transaction_id: transaction_id
       )
     end

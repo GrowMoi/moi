@@ -1,0 +1,6 @@
+h5 = t("views.contents.links")
+.neuron-contents
+  - links.each do |link|
+    = render "changes", changes: link.changes
+    span.label.label-default = link.event_str
+    hr

@@ -90,14 +90,17 @@ class Neuron < ActiveRecord::Base
     changed = changed? # if not already creating version
     contents_changed = contents_any?(changed?: true)
     medium_changed = content_medium_any?(changed?: true)
+    links_changed = content_links_any?(changed?: true)
+    videos_changed = content_videos_any?(changed?: true)
+    relationships_changed = contents_changed || medium_changed || links_changed || videos_changed
     transaction do
       save(opts).tap do |saved|
-        if saved && !changed && (contents_changed || medium_changed)
+        if saved && !changed && relationships_changed
           touch_with_version
         end
 
         # only if a version was created
-        if changed || contents_changed
+        if changed || relationships_changed
           yield versions.last if block_given?
         end
       end
@@ -167,6 +170,22 @@ class Neuron < ActiveRecord::Base
     contents.map(&:content_medium).flatten.any? do |media|
       opts.all? do |key, val|
         media.send(key).eql?(val)
+      end
+    end
+  end
+
+  def content_links_any?(opts)
+    contents.map(&:content_links).flatten.any? do |link|
+      opts.all? do |key, val|
+        link.send(key).eql?(val)
+      end
+    end
+  end
+
+  def content_videos_any?(opts)
+    contents.map(&:content_videos).flatten.any? do |video|
+      opts.all? do |key, val|
+        video.send(key).eql?(val)
       end
     end
   end
