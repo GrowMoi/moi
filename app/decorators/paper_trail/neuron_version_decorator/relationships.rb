@@ -3,8 +3,8 @@ module PaperTrail
     module Relationships
       RELATIONSHIP_MAPPING = {
         "contents" => "Content",
-        "medium" => "ContentMedia",
         "links" => "ContentLink",
+        "medium" => "ContentMedia",
         "videos" => "ContentVideo"
       }
       RELATIONSHIPS = RELATIONSHIP_MAPPING.keys
