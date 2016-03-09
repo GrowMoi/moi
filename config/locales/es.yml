@@ -90,11 +90,13 @@
       test: Test
       basic_info: Información básica
       media: Multimedia
+      medium: Multimedia
       videos: Vídeos
       video_placeholder: Video destacado
       links: Enlaces
       link_placeholder: http://www.growmoi.com
       add_link: Agregar enlace
+      contents: Contenidos
       levels:
         "1": "Principiante"
         "2": "Intermedio"
@@ -395,7 +397,7 @@
       content_link:
         link: Enlace
       content_video:
-        url: URl
+        url: URL
 
     errors:
       messages:
