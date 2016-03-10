@@ -10,10 +10,11 @@
     .content-description
       = content.spellchecked(:description)
 
-    p = content.keywords
-    p = content.source
+    = content.video_list_group
     = content.media_list_group
     = content.links_list_group
+    p = content.keywords
+    p = content.source
 
     - if content.possible_answers.any?
       .possible-answers

@@ -13,6 +13,8 @@
 #
 
 class Neuron < ActiveRecord::Base
+  include Relationable
+
   has_paper_trail ignore: [:created_at, :id]
 
   STATES = %w(active inactive)
@@ -88,16 +90,15 @@ class Neuron < ActiveRecord::Base
   # @return [Boolean] if the record was saved or not
   def save_with_version(opts={})
     changed = changed? # if not already creating version
-    contents_changed = contents_any?(changed?: true)
-    medium_changed = content_medium_any?(changed?: true)
+    relationships_changed = relationships_changed?
     transaction do
       save(opts).tap do |saved|
-        if saved && !changed && (contents_changed || medium_changed)
+        if saved && !changed && relationships_changed
           touch_with_version
         end
 
         # only if a version was created
-        if changed || contents_changed
+        if changed || relationships_changed
           yield versions.last if block_given?
         end
       end
@@ -147,27 +148,6 @@ class Neuron < ActiveRecord::Base
     if active_changed?
       self.paper_trail_event = "active_neuron"
       save!
-    end
-  end
-
-  ##
-  # if any of the contents matches the conditions
-  #
-  # @param opts [Hash] conditions to match
-  # @example contents_any?({kind: kind})
-  def contents_any?(opts)
-    contents.any? do |content|
-      opts.all? do |key, val|
-        content.send(key).eql?(val)
-      end
-    end
-  end
-
-  def content_medium_any?(opts)
-    contents.map(&:content_medium).flatten.any? do |media|
-      opts.all? do |key, val|
-        media.send(key).eql?(val)
-      end
     end
   end
 end

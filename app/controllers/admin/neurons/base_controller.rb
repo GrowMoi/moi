@@ -59,6 +59,10 @@ module Admin
                         :content_links_attributes => [
                           :id,
                           :link
+                        ],
+                        :content_videos_attributes => [
+                          :id,
+                          :url
                         ]
                       ]
       rescue ActionController::ParameterMissing

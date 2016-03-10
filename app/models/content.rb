@@ -20,6 +20,7 @@ class Content < ActiveRecord::Base
 
   LEVELS = %w(1 2 3).map!(&:to_i)
   NUMBER_OF_LINKS = 3
+  NUMBER_OF_VIDEOS = 1
   NUMBER_OF_POSSIBLE_ANSWERS = 3
   SPELLCHECK_ATTRIBUTES = %w(
     title
@@ -30,7 +31,6 @@ class Content < ActiveRecord::Base
     como-funciona
     por-que-es
     quien-cuando-donde
-    videos
   }.split("\n").map(&:squish).map(&:to_sym).reject(&:blank?)
 
   has_paper_trail ignore: [:created_at, :updated_at, :id]
@@ -44,11 +44,12 @@ class Content < ActiveRecord::Base
     has_many :content_learnings
     has_many :content_notes
 
-
     has_many :possible_answers,
              ->{ order :id },
              dependent: :destroy
     has_many :content_links,
+             dependent: :destroy
+    has_many :content_videos,
              dependent: :destroy
     has_many :content_medium,
              class_name: "ContentMedia",
@@ -70,6 +71,12 @@ class Content < ActiveRecord::Base
     accepts_nested_attributes_for :content_links,
       reject_if: ->(attributes) {
         attributes["link"].blank?
+      }
+
+    accepts_nested_attributes_for :content_videos,
+      allow_destroy: true,
+      reject_if: ->(attributes) {
+        attributes["url"].blank?
       }
   end
 
@@ -99,7 +106,11 @@ class Content < ActiveRecord::Base
   end
 
   def able_to_have_more_links?
-    content_links.length < Content::NUMBER_OF_LINKS
+    content_links.length < NUMBER_OF_LINKS
+  end
+
+  def able_to_have_more_videos?
+    content_videos.length < NUMBER_OF_VIDEOS
   end
 
   def kind

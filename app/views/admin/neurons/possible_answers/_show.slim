@@ -1,9 +1,11 @@
-strong
-  = content.title
+- if content.decorated_possible_answers.any?
+  h5 = t("views.contents.test")
+  strong
+    = content.title
 
-ul
-  - content.decorated_possible_answers.each do |possible_answer|
-    li
-      = possible_answer.correct_label
-      span
-        = possible_answer.spellchecked(:text)
+  ul
+    - content.decorated_possible_answers.each do |possible_answer|
+      li
+        = possible_answer.correct_label
+        span
+          = possible_answer.spellchecked(:text)

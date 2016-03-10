@@ -26,6 +26,7 @@ module Api
                :title,
                :learnt,
                :links,
+               :videos,
                :user_notes
 
     def learnt
@@ -42,6 +43,10 @@ module Api
 
     def links
       object.content_links.map(&:link)
+    end
+
+    def videos
+      object.content_videos.map(&:url)
     end
 
     alias_method :current_user, :scope

@@ -1,7 +1,7 @@
 module Admin
   class NeuronsController < Neurons::BaseController
     before_action :add_breadcrumbs
-    before_action :build_one_link_for_formatted_contents!,
+    before_action :build_relationships_for_formatted_contents!,
                   only: [:new, :edit]
 
     authorize_resource
@@ -110,11 +110,12 @@ module Admin
 
     private
 
-    def build_one_link_for_formatted_contents!
+    def build_relationships_for_formatted_contents!
       formatted_contents.each do |level, level_contents|
         level_contents.each do |kind, contents|
           contents.each do |decorated_content|
             decorated_content.build_one_link!
+            decorated_content.build_one_video!
           end
         end
       end

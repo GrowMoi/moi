@@ -76,6 +76,33 @@ describe "neurons as curador" do
           expect(created_link.link).to eq(link)
         end
       end
+
+      feature "curador can add content video through neuron" do
+        let(:created_video) {
+          created_content.content_videos.first
+        }
+        let(:url) {
+          attributes_for(:content_video)[:url]
+        }
+        let(:url_input) {
+          all("input[name*='[url]']").first
+        }
+
+        before {
+          url_input.set url
+        }
+
+        it "creates video" do
+          expect {
+            submit_form!
+          }.to change { ContentVideo.count }.by(1)
+        end
+
+        it "assigns url" do
+          submit_form!
+          expect(created_video.url).to eq(url)
+        end
+      end
     end
 
     feature "created neuron is shown in tree", js: true do
