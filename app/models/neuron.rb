@@ -36,6 +36,9 @@ class Neuron < ActiveRecord::Base
   begin :relationships
     has_many :contents,
              dependent: :destroy
+    has_many :approved_contents,
+             -> { Content.approved },
+             class_name: "Content"
     belongs_to :parent, class_name: "Neuron"
   end
 

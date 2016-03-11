@@ -23,15 +23,19 @@ RSpec.describe Api::NeuronsController,
     let(:neurons) {
       body.fetch("neurons")
     }
-
-    let!(:tree) {
-
+    let(:contents) {
+      body.fetch("neurons").map do |neuron|
+        neuron.fetch("contents")
+      end.flatten
     }
+
+    ##
+    # tree
     #     a
     #    / \
-    #   b   c
+    #   b   *c
     #  /\   /\
-    # d e  f g
+    # d *e f *g
     let!(:a) {
       create :neuron,
              :public,
@@ -43,20 +47,42 @@ RSpec.describe Api::NeuronsController,
              :with_approved_content,
              parent: a
     }
+    let!(:c) {
+      create :neuron, # not public
+             :with_content,
+             parent: a
+    }
     let!(:d) {
       create :neuron,
              :public,
              :with_approved_content,
              parent: b
     }
+    let!(:e) {
+      create :neuron,
+             :public,
+             :with_content,
+             parent: b
+    }
+    let!(:f) {
+      create :neuron,
+             :public,
+             :with_approved_content,
+             parent: c
+    }
+    let!(:g) {
+      create :neuron,
+             :with_approved_content,
+             parent: c
+    }
 
     before {
       root_neuron(a)
     }
 
-    before { get "/api/neurons" }
-
     context "when I haven't learnt anything" do
+      before { get "/api/neurons" }
+
       it "includes root neuron" do
         expect_to_see(a)
       end
@@ -65,8 +91,39 @@ RSpec.describe Api::NeuronsController,
         expect_to_see(b)
       end
 
+      it "does not include unpublished children & grandchildren" do
+        expect_to_not_see(c)
+        expect_to_not_see(g)
+      end
+
       it "does not include root grandchildren" do
         expect_to_not_see(d)
+      end
+
+      it "does not include unpublished neuron's public children" do
+        expect_to_not_see(f)
+      end
+    end
+
+    describe "contents scope" do
+      let!(:approved_content) {
+        create :content,
+               :approved,
+               neuron: b
+      }
+      let!(:unapproved_content) {
+        create :content,
+               neuron: b
+      }
+
+      before { get "/api/neurons" }
+
+      it "includes approved content" do
+        expect_to_see(approved_content)
+      end
+
+      it "doesn't include unapproved content" do
+        expect_to_not_see(unapproved_content)
       end
     end
 
@@ -77,13 +134,6 @@ RSpec.describe Api::NeuronsController,
       end
       it "includes learnt contents' neurons published children" do
       end
-    end
-  end
-
-  describe "content scope" do
-    it "includes approved content" do
-    end
-    it "doesn't include unapproved content" do
     end
   end
 end

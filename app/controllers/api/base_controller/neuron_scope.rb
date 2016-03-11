@@ -10,7 +10,7 @@ module Api
         expose(:neurons) {
           # TODO: revise scope (see #neurons_to_learn)
           neuron_scope.neurons # .accessible_by(current_ability) -> shouldn't be quering only public ?
-                .includes(:contents)
+                      .includes(:contents)
         }
         expose(:neurons_to_learn) {
           # TODO: this should be `neurons` scope
