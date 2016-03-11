@@ -33,7 +33,8 @@ module Admin
 
     expose(:initial_neurons) {
       TreeService::DepthFetcher.new(
-        depth: 2
+        depth: 2,
+        scope: neurons
       ).neurons
     }
 

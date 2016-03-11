@@ -63,6 +63,7 @@ RSpec.configure do |config|
     ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
   end
 
+  config.include RootNeuronMockable
   config.include FactoryGirl::Syntax::Methods
   config.include FeatureLoginMacros, type: :feature
   config.include RequestLoginMacros, type: :request
