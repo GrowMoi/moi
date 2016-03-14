@@ -101,9 +101,6 @@ end
 
 group :staging, :integration do
   gem 'rails_12factor'
-end
-
-group :staging do
   gem 'cloudinary'
 end
 
