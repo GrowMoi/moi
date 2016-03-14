@@ -13,21 +13,25 @@ module TreeService
     end
 
     def neurons
-      scoped
+      @neurons ||= scoped
     end
 
     private
 
     def scoped
       public_scope.where(
-        id: pool.map(&:id)
+        id: pool_ids + children_for(pool_ids)
       )
     end
 
-    def pool
+    def pool_ids
       [
-        root_neuron
-      ] + children_for(root_neuron)
+        root_neuron.id
+      ] + learnt_neurons.ids
+    end
+
+    def learnt_neurons
+      @learnt_neurons ||= LearntNeuronsFetcher.new(user)
     end
 
     def public_scope

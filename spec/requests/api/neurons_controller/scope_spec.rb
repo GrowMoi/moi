@@ -31,11 +31,13 @@ RSpec.describe Api::NeuronsController,
 
     ##
     # tree
-    #     a
-    #    / \
-    #   b   *c
-    #  /\   /\
-    # d *e f *g
+    #       a
+    #      / \
+    #     b   *c
+    #    /\   /\
+    #   d *e f *g
+    #  /\
+    # h *i
     let!(:a) {
       create :neuron,
              :public,
@@ -60,8 +62,7 @@ RSpec.describe Api::NeuronsController,
     }
     let!(:e) {
       create :neuron,
-             :public,
-             :with_content,
+             :with_approved_content,
              parent: b
     }
     let!(:f) {
@@ -74,6 +75,17 @@ RSpec.describe Api::NeuronsController,
       create :neuron,
              :with_approved_content,
              parent: c
+    }
+    let!(:h) {
+      create :neuron,
+             :public,
+             :with_approved_content,
+             parent: d
+    }
+    let!(:i) {
+      create :neuron,
+             :with_approved_content,
+             parent: d
     }
 
     before {
@@ -127,12 +139,65 @@ RSpec.describe Api::NeuronsController,
       end
     end
 
-    context "when I have learnt some contents" do
+    context "when I have learnt contents" do
+      let!(:learning) {
+        create :content_learning,
+               user: current_user,
+               content: b.contents.first
+      }
+
+      before { get "/api/neurons" }
+
       it "includes learnt contents' published neurons" do
+        expect_to_see(a)
+        expect_to_see(b)
       end
+
       it "doesn't include learnt unpublished neurons" do
+        expect_to_not_see(e)
       end
+
       it "includes learnt contents' neurons published children" do
+        expect_to_see(d)
+      end
+
+      it "doesn't include unlearnt neurons" do
+        expect_to_not_see(h)
+      end
+    end
+
+    context "when I have learnt deeper contents" do
+      let!(:learnings) {
+        [
+          create(
+            :content_learning,
+            user: current_user,
+            content: b.contents.first
+          ),
+          create(
+            :content_learning,
+            user: current_user,
+            content: d.contents.first
+          )
+        ]
+      }
+
+      before { get "/api/neurons" }
+
+      it "includes learnt content's published neurons" do
+        expect_to_see(a)
+        expect_to_see(b)
+        expect_to_see(d)
+      end
+
+      it "doesn't include unpublished neurons" do
+        expect_to_not_see(c)
+        expect_to_not_see(e)
+        expect_to_not_see(i)
+      end
+
+      it "includes published children" do
+        expect_to_see(h)
       end
     end
   end

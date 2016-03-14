@@ -17,7 +17,11 @@ module TreeService
     private
 
     def ids_for(collection)
-      collection.map(&:id)
+      if collection.first.is_a?(Neuron)
+        collection.map(&:id)
+      else
+        collection
+      end
     end
   end
 end
