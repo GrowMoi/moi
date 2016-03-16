@@ -46,7 +46,10 @@ module Api
     end
 
     def videos
-      object.content_videos.map(&:url)
+      ActiveModel::ArraySerializer.new(
+        object.content_videos,
+        each_serializer: ContentVideoSerializer
+      )
     end
 
     alias_method :current_user, :scope

@@ -2,13 +2,9 @@ require "rails_helper"
 
 RSpec.describe Api::ContentsController,
                type: :request do
+  include_examples "neurons_controller:approved_content"
+
   let(:current_user) { create :user }
-  let(:neuron) { create :neuron, :public }
-  let!(:content) {
-    create :content,
-           :approved,
-           neuron: neuron
-  }
 
   let(:endpoint) {
     "/api/neurons/#{neuron.id}/contents/#{content.id}/learn"

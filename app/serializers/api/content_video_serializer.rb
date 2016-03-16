@@ -9,8 +9,9 @@
 #  updated_at :datetime         not null
 #
 
-class ContentVideo < ActiveRecord::Base
-  include Embeddable
-  belongs_to :content
-  has_paper_trail ignore: [:created_at, :updated_at, :id]
+module Api
+  class ContentVideoSerializer < ActiveModel::Serializer
+    attributes :url,
+               :thumbnail
+  end
 end

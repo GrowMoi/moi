@@ -34,5 +34,18 @@ FactoryGirl.define do
     trait :with_parent do
       parent { create(:neuron) }
     end
+    trait :with_content do
+      after(:create) do |neuron|
+        create :content,
+               neuron: neuron
+      end
+    end
+    trait :with_approved_content do
+      after(:create) do |neuron|
+        create :content,
+               :approved,
+               neuron: neuron
+      end
+    end
   end
 end

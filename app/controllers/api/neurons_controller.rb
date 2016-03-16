@@ -14,7 +14,7 @@ module Api
     param :page, String
     def index
       respond_with(
-        neurons_to_learn,
+        neurons,
         meta: {
           root_id: root_neuron.id
         },

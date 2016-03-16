@@ -16,5 +16,9 @@ module Api
     attributes :id,
                :title
     has_many :contents
+
+    def contents
+      object.approved_contents
+    end
   end
 end
