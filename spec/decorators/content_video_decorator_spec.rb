@@ -13,7 +13,7 @@ describe ContentVideoDecorator do
       let(:url) { "http://domain.com" }
       it {
         expect(
-          subject.send(:url)
+          subject.send(:list_group_item)
         ).to eq("//domain.com")
       }
     end
@@ -22,7 +22,7 @@ describe ContentVideoDecorator do
       let(:url) { "bla bla bla" }
       it {
         expect(
-          subject.send(:url)
+          subject.send(:list_group_item)
         ).to eq(url)
       }
     end
@@ -34,13 +34,13 @@ describe ContentVideoDecorator do
       let(:url) {
         "https://www.youtube.com/watch?b=2&a=1&v=#{youtube_id}"
       }
-      let(:rendered_url) {
+      let(:embedded_url) {
         "//www.youtube.com/embed/#{youtube_id}"
       }
       it {
         expect(
-          subject.send(:rendered_url)
-        ).to eq(rendered_url)
+          subject.send(:embedded_url)
+        ).to eq(embedded_url)
       }
     end
   end
