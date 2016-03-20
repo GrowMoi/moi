@@ -13,10 +13,10 @@ module Api
       api :POST,
           "/auth/user/sign_in",
           "login"
-      description "authenticate using email and password"
+      description "authenticate using email and password. Response includes user's content preferences"
       param :email, String, required: true
       param :password, String, required: true
-      example '{"success":true,"data":{"id":1,"email":"somebody@example.com","name":"Somebody","role":"role","uid":"somebody@example.com","provider":"email"}}'
+      example '{"success":true,"data":{"id":1,"email":"somebody@example.com","name":"Somebody","role":"role","uid":"somebody@example.com","provider":"email","content_preferences":[{"kind":"que-es","level":1},...]}}'
     end
 
     doc_for :sign_out do
@@ -24,6 +24,17 @@ module Api
           "/auth/user/sign_out",
           "log out"
       description "aka end session"
+    end
+
+    private
+
+    def render_create_success
+      render json: {
+        data: UserSerializer.new(
+          @resource,
+          root: false
+        )
+      }
     end
   end
 end

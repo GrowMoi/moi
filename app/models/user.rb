@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   include Roles
   include ContentLearnable
   include UserContentAnnotable
+  include UserContentPreferenceable
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable and :omniauthable
@@ -48,6 +49,9 @@ class User < ActiveRecord::Base
     has_many :learned_contents,
              source: :content,
              through: :content_learnings
+    has_many :content_preferences,
+             class_name: "UserContentPreference",
+             dependent: :destroy
   end
 
   def to_s
