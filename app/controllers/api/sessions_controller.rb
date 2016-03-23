@@ -30,10 +30,7 @@ module Api
 
     def render_create_success
       render json: {
-        data: UserSerializer.new(
-          @resource,
-          root: false
-        )
+        data: UserSerializer.new(@resource)
       }
     end
   end
