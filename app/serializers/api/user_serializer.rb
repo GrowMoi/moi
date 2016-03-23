@@ -22,35 +22,26 @@
 #  tokens                 :json
 #
 
-require 'rails_helper'
+module Api
+  class UserSerializer < ActiveModel::Serializer
+    root false
 
-RSpec.describe User, :type => :model do
-  describe "factory" do
-    let(:user) { build :user }
+    attributes :id,
+               :email,
+               :name,
+               :role,
+               :uid,
+               :provider
 
-    it { expect(user).to be_valid }
-  end
+    has_many :content_preferences
 
-  describe "gets notified if role changes" do
-    let(:user) { create :user }
-
-    it {
-      expect {
-        user.update! role: "curador"
-      }.to change {
-        ActionMailer::Base.deliveries.count
-      }.by(1)
-    }
-  end
-
-  describe "#content_preferences" do
-    let(:user) { create :user }
-    let(:preferences) { Content::KINDS }
-
-    it "creates them when persisting" do
-      expect { user }.to change {
-        UserContentPreference.count
-      }.by(preferences.count)
+    def content_preferences
+      object.content_preferences.map do |preference|
+        {
+          kind: preference.kind,
+          level: preference.level
+        }
+      end
     end
   end
 end

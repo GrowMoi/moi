@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309195300) do
+ActiveRecord::Schema.define(version: 20160323023358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,6 +174,16 @@ ActiveRecord::Schema.define(version: 20160309195300) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
+  create_table "user_content_preferences", force: :cascade do |t|
+    t.integer  "user_id",                null: false
+    t.string   "kind",                   null: false
+    t.integer  "level",      default: 1, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "user_content_preferences", ["user_id"], name: "index_user_content_preferences_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",                      null: false
     t.string   "encrypted_password",     default: "",                      null: false
@@ -230,4 +240,5 @@ ActiveRecord::Schema.define(version: 20160309195300) do
   add_foreign_key "content_videos", "contents"
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
+  add_foreign_key "user_content_preferences", "users"
 end

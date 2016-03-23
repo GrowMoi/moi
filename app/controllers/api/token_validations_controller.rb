@@ -23,5 +23,14 @@ module Api
         :"uid" => "user id (email)"
       }
     end
+
+    private
+
+    def render_validate_token_success
+      render json: {
+        success: true,
+        data: UserSerializer.new(@resource)
+      }
+    end
   end
 end
