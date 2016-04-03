@@ -10,7 +10,7 @@ module Api
 
     api :GET,
         "/neurons",
-        "returns paged neurons"
+        "returns tree neurons"
     param :page, String
     def index
       respond_with(

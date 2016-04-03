@@ -5,6 +5,8 @@ Moi::Application.routes.draw do
     resources :content_preferences, only: :update
     resources :neurons,
               only: [:index, :show] do
+      resources :recommended_contents,
+                only: :show
       resources :contents,
                 only: [] do
         member do
