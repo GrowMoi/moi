@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.describe Api::NeuronsController,
                type: :request do
+  include CollectionExpectationHelpers
+
   describe "unauthenticated #index" do
     let!(:neuron) {
       # we rely on root being present
@@ -96,24 +98,24 @@ RSpec.describe Api::NeuronsController,
       before { get "/api/neurons" }
 
       it "includes root neuron" do
-        expect_to_see(a)
+        expect_to_see_in_collection(a)
       end
 
       it "includes root children" do
-        expect_to_see(b)
+        expect_to_see_in_collection(b)
       end
 
       it "does not include unpublished children & grandchildren" do
-        expect_to_not_see(c)
-        expect_to_not_see(g)
+        expect_to_not_see_in_collection(c)
+        expect_to_not_see_in_collection(g)
       end
 
       it "does not include root grandchildren" do
-        expect_to_not_see(d)
+        expect_to_not_see_in_collection(d)
       end
 
       it "does not include unpublished neuron's public children" do
-        expect_to_not_see(f)
+        expect_to_not_see_in_collection(f)
       end
     end
 
@@ -131,11 +133,11 @@ RSpec.describe Api::NeuronsController,
       before { get "/api/neurons" }
 
       it "includes approved content" do
-        expect_to_see(approved_content)
+        expect_to_see_in_collection(approved_content)
       end
 
       it "doesn't include unapproved content" do
-        expect_to_not_see(unapproved_content)
+        expect_to_not_see_in_collection(unapproved_content)
       end
     end
 
@@ -149,20 +151,20 @@ RSpec.describe Api::NeuronsController,
       before { get "/api/neurons" }
 
       it "includes learnt contents' published neurons" do
-        expect_to_see(a)
-        expect_to_see(b)
+        expect_to_see_in_collection(a)
+        expect_to_see_in_collection(b)
       end
 
       it "doesn't include learnt unpublished neurons" do
-        expect_to_not_see(e)
+        expect_to_not_see_in_collection(e)
       end
 
       it "includes learnt contents' neurons published children" do
-        expect_to_see(d)
+        expect_to_see_in_collection(d)
       end
 
       it "doesn't include unlearnt neurons" do
-        expect_to_not_see(h)
+        expect_to_not_see_in_collection(h)
       end
     end
 
@@ -185,38 +187,20 @@ RSpec.describe Api::NeuronsController,
       before { get "/api/neurons" }
 
       it "includes learnt content's published neurons" do
-        expect_to_see(a)
-        expect_to_see(b)
-        expect_to_see(d)
+        expect_to_see_in_collection(a)
+        expect_to_see_in_collection(b)
+        expect_to_see_in_collection(d)
       end
 
       it "doesn't include unpublished neurons" do
-        expect_to_not_see(c)
-        expect_to_not_see(e)
-        expect_to_not_see(i)
+        expect_to_not_see_in_collection(c)
+        expect_to_not_see_in_collection(e)
+        expect_to_not_see_in_collection(i)
       end
 
       it "includes published children" do
-        expect_to_see(h)
+        expect_to_see_in_collection(h)
       end
     end
   end
-end
-
-def expect_to_see(resource)
-  collection = send(resource.class.to_s.pluralize.downcase)
-  expect(
-    collection.detect do |n|
-      n["id"] == resource.id
-    end
-  ).to be_present
-end
-
-def expect_to_not_see(resource)
-  collection = send(resource.class.to_s.pluralize.downcase)
-  expect(
-    collection.detect do |n|
-      n["id"] == resource.id
-    end
-  ).to_not be_present
 end
