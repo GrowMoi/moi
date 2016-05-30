@@ -12,7 +12,13 @@ module Api
     }
 
     def index
-      respond_with(neurons, each_serializer: Api::NeuronSerializer)
+      respond_with(
+        neurons,
+        meta: {
+          total_items: neurons.count
+        },
+        each_serializer: Api::NeuronSerializer
+      )
     end
 
     api :GET,
