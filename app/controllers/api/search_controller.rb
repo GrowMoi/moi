@@ -15,7 +15,7 @@ module Api
       respond_with(
         neurons,
         meta: {
-          total_items: neurons.count
+          total_items: neurons.total_count
         },
         each_serializer: Api::NeuronSerializer
       )
