@@ -23,15 +23,19 @@ module Api
 
     api :POST,
         "/neurons/:neuron_id/contents/:content_id/notes",
-        "a user takes notes of a content"
+        "To store the notes a user takes of a content. IMPORTANT: If no notes are given then current notes are **deleted** from DB"
     param :neuron_id, Integer, required: true
     param :content_id, Integer, required: true
-    param :notes, String, required: true
+    param :notes, String
     def notes
-      current_user.annotate_content(
-        content,
-        params[:note]
-      )
+      if params[:note].present?
+        current_user.annotate_content(
+          content,
+          params[:note]
+        )
+      else
+        current_user.unannotate_content!(content)
+      end
       render nothing: true,
              status: :ok
     end

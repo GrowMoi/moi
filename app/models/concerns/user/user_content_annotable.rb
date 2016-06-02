@@ -12,6 +12,13 @@ class User < ActiveRecord::Base
     end
 
     ##
+    # @param content [Content] target
+    #   content whose notes are **deleted**
+    def unannotate_content!(content)
+      content_note_for(content).destroy
+    end
+
+    ##
     # @param content [Content] content to
     #   look for in the notes
     # @return [ContentNote] annotations for
