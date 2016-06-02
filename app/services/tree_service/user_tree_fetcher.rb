@@ -3,6 +3,10 @@ module TreeService
     extend Forwardable
 
     SERIALIZER = "Api::TreeNeuronSerializer"
+    ATTRIBUTES = %w(
+      id
+      title
+    ).map(&:to_sym).freeze
 
     attr_reader :scope, :children_fetcher
 
@@ -24,7 +28,9 @@ module TreeService
     private
 
     def children_for(neuron)
-      children_fetcher.children_for(neuron).map do |child|
+      children_fetcher.children_for(neuron)
+                      .select(*ATTRIBUTES)
+                      .map do |child|
         serialize(child)
       end
     end

@@ -2,9 +2,11 @@ module Api
   class TreeNeuronSerializer < ActiveModel::Serializer
     root false
 
-    attributes :id,
-               :title,
-               :children
+    ATTRIBUTES = TreeService::UserTreeFetcher::ATTRIBUTES + [
+      :children
+    ].freeze
+
+    attributes *ATTRIBUTES
 
     def children
       @children
