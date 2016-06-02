@@ -47,5 +47,6 @@ FactoryGirl.define do
                neuron: neuron
       end
     end
+    trait :visible_for_api
   end
 end
