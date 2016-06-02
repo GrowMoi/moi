@@ -8,15 +8,15 @@ module Api
         "/tree",
         "returns tree for current user"
     def show
-      respond_with tree, root: :tree
+      respond_with tree: tree
     end
 
     private
 
     def tree
-      Neuron.where(
-        id: TreeService::RootFetcher.root_neuron.id
-      )
+      TreeService::UserTreeFetcher.new(
+        current_user
+      ).root
     end
   end
 end

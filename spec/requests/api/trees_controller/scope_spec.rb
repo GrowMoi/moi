@@ -11,7 +11,7 @@ RSpec.describe Api::TreesController,
   }
 
   let!(:root_neuron) {
-    create :neuron, :visible_for_api
+    create :neuron_visible_for_api
   }
 
   describe "root has right attributes" do
@@ -26,10 +26,9 @@ RSpec.describe Api::TreesController,
       title
       children
     ).each do |field|
-      it {
-        binding.pry
-        expect(root)
-      }
+      it "includes #{field}" do
+        expect(root).to have_key(field)
+      end
     end
   end
 end
