@@ -38,26 +38,56 @@ RSpec.describe Api::RecommendedContentsController,
   }
 
   describe "scope" do
-    let!(:approved_content) {
-      create :content,
-             :approved,
-             kind: kind,
-             neuron: child
-    }
-    let!(:unapproved_content) {
-      create :content,
-             kind: kind,
-             neuron: child
-    }
+    describe ":approved flag" do
+      let!(:approved_content) {
+        create :content,
+               :approved,
+               :with_media,
+               kind: kind,
+               neuron: child
+      }
+      let!(:unapproved_content) {
+        create :content,
+               :with_media,
+               kind: kind,
+               neuron: child
+      }
 
-    before { get endpoint }
+      before { get endpoint }
 
-    it "includes children neuron's approved content" do
-      expect_to_see_in_collection(approved_content)
+      it "includes children neuron's approved content" do
+        expect_to_see_in_collection(approved_content)
+      end
+
+      it "doesn't include children neuron's unapproved content" do
+        expect_to_not_see_in_collection(unapproved_content)
+      end
     end
 
-    it "doesn't include children neuron's unapproved content" do
-      expect_to_not_see_in_collection(unapproved_content)
+    describe ":with_media" do
+      let!(:content_with_media) {
+        create :content,
+               :approved,
+               :with_media,
+               kind: kind,
+               neuron: child
+      }
+      let!(:content_without_media) {
+        create :content,
+               :approved,
+               kind: kind,
+               neuron: child
+      }
+
+      before { get endpoint }
+
+      it "we only recommend contents with media" do
+        expect_to_see_in_collection(content_with_media)
+      end
+
+      it "doesn't include content without media" do
+        expect_to_not_see_in_collection(content_without_media)
+      end
     end
   end
 
@@ -67,6 +97,7 @@ RSpec.describe Api::RecommendedContentsController,
       1.upto(count).map do
         create :content,
                :approved,
+               :with_media,
                kind: kind,
                neuron: child
       end
@@ -75,6 +106,8 @@ RSpec.describe Api::RecommendedContentsController,
     let!(:other_content) {
       other_kind = (Content::KINDS - Array(kind)).sample
       create :content,
+             :approved,
+             :with_media,
              kind: other_kind,
              neuron: child
     }
@@ -110,6 +143,7 @@ RSpec.describe Api::RecommendedContentsController,
       2.times.map do
         create :content,
                :approved,
+               :with_media,
                kind: kind,
                neuron: child,
                level: user_preferences.level
@@ -119,6 +153,7 @@ RSpec.describe Api::RecommendedContentsController,
     let!(:second_prio_content) {
       create :content,
              :approved,
+             :with_media,
              kind: kind,
              neuron: child,
              level: user_preferences.level - 1
@@ -127,6 +162,7 @@ RSpec.describe Api::RecommendedContentsController,
     let!(:low_prio_content) {
       create :content,
              :approved,
+             :with_media,
              kind: kind,
              neuron: child,
              level: user_preferences.level + 1

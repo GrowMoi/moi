@@ -47,10 +47,12 @@ module TreeService
     end
 
     def contents_scope
-      Content.approved.where(
-        kind: kind,
-        neuron_id: children_neurons.pluck(:id)
-      )
+      Content.approved
+             .with_media
+             .where(
+               kind: kind,
+               neuron_id: children_neurons.pluck(:id)
+             )
     end
 
     def children_neurons

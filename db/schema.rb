@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323023358) do
+ActiveRecord::Schema.define(version: 20160602001552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,8 +74,10 @@ ActiveRecord::Schema.define(version: 20160323023358) do
     t.string   "source"
     t.boolean  "approved",    default: false
     t.string   "title"
+    t.integer  "media_count", default: 0
   end
 
+  add_index "contents", ["media_count"], name: "index_contents_on_media_count", using: :btree
   add_index "contents", ["neuron_id"], name: "index_contents_on_neuron_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|

@@ -10,7 +10,8 @@
 #
 
 class ContentMedia < ActiveRecord::Base
-  belongs_to :content
+  belongs_to :content,
+             counter_cache: :media_count
 
   has_paper_trail ignore: [:created_at, :updated_at, :id]
 
