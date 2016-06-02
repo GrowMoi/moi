@@ -12,6 +12,7 @@
 #  source      :string
 #  approved    :boolean          default(FALSE)
 #  title       :string
+#  media_count :integer          default(0)
 #
 
 require 'rails_helper'

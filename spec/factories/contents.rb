@@ -12,6 +12,7 @@
 #  source      :string
 #  approved    :boolean          default(FALSE)
 #  title       :string
+#  media_count :integer          default(0)
 #
 
 FactoryGirl.define do
@@ -29,6 +30,7 @@ FactoryGirl.define do
     sequence(:source) { |n|
       "Content's source #{n}"
     }
+
     trait :with_keywords do
       keyword_list {
         1.upto(10).map do |i|
@@ -36,10 +38,17 @@ FactoryGirl.define do
         end.sample(2).join(", ")
       }
     end
+
     trait :approved do
       after(:create) do |content|
         content.update! approved: true
         content.neuron.reload.touch
+      end
+    end
+
+    trait :with_media do
+      after(:create) do |content|
+        create(:content_media, content: content)
       end
     end
   end

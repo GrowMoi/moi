@@ -12,6 +12,7 @@
 #  source      :string
 #  approved    :boolean          default(FALSE)
 #  title       :string
+#  media_count :integer          default(0)
 #
 
 class Content < ActiveRecord::Base
@@ -89,6 +90,9 @@ class Content < ActiveRecord::Base
     }
     scope :approved, ->(status=true) {
       where(approved: status)
+    }
+    scope :with_media, -> {
+      where("media_count > 0")
     }
   end
 
