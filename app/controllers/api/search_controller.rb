@@ -11,6 +11,11 @@ module Api
        .page(params[:page]).per(8)
     }
 
+    api :GET,
+        "/search",
+        "returns search from query"
+    param :page, Integer
+    param :query, String
     def index
       respond_with(
         neurons,
@@ -20,11 +25,5 @@ module Api
         each_serializer: Api::NeuronSerializer
       )
     end
-
-    api :GET,
-        "/search",
-        "returns search from query"
-    param :page, Integer
-    param :query, String
   end
 end
