@@ -38,29 +38,48 @@ RSpec.describe Api::ContentsController,
     }
   end
 
-  describe "updates content notes" do
+  context "existing content notes" do
     let!(:existing_note) {
       create :content_note,
              content: content,
              user: current_user
     }
 
-    let(:note) { "This is the new note" }
     before { login_as current_user }
 
-    before {
-      expect {
-        post endpoint, note: note
-      }.to_not change {
-        current_user.content_notes.count
-      }
-    }
+    describe "updates content notes" do
+      let(:note) { "This is the new note" }
 
-    it {
-      expect(response).to be_success
-      expect(content_note.id).to eq(existing_note.id)
-      expect(content_note.content).to eq(content)
-      expect(content_note.note).to eq(note)
-    }
+      before {
+        expect {
+          post endpoint, note: note
+        }.to_not change {
+          current_user.content_notes.count
+        }
+      }
+
+      it {
+        expect(response).to be_success
+        expect(content_note.id).to eq(existing_note.id)
+        expect(content_note.content).to eq(content)
+        expect(content_note.note).to eq(note)
+      }
+    end
+
+    describe "deletes content notes" do
+      before {
+        expect {
+          post endpoint
+        }.to change {
+          current_user.content_notes.count
+        }.by(-1)
+      }
+
+      it {
+        expect(
+          current_user.content_notes
+        ).to_not include(existing_note)
+      }
+    end
   end
 end
