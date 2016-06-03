@@ -9,21 +9,21 @@ RSpec.describe Api::NeuronsController,
     JSON.parse(response.body).fetch("neuron")
   }
 
-  describe "not learnt content" do
+  describe "not read content" do
     before {
       get "/api/neurons/#{neuron.id}"
     }
 
     it {
       expect(
-        subject["contents"].first["learnt"]
+        subject["contents"].first["read"]
       ).to be_falsey
     }
   end
 
-  describe "learnt content" do
-    let!(:learning) {
-      create :content_learning,
+  describe "read content" do
+    let!(:reading) {
+      create :content_reading,
              content: content,
              user: current_user
     }
@@ -34,7 +34,7 @@ RSpec.describe Api::NeuronsController,
 
     it {
       expect(
-        subject["contents"].first["learnt"]
+        subject["contents"].first["read"]
       ).to be_truthy
     }
   end

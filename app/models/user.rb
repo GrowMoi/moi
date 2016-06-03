@@ -25,7 +25,7 @@
 class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
   include Roles
-  include ContentLearnable
+  include ContentReadable
   include UserContentAnnotable
   include UserContentPreferenceable
 
@@ -49,6 +49,11 @@ class User < ActiveRecord::Base
     has_many :learned_contents,
              source: :content,
              through: :content_learnings
+    has_many :content_readings,
+             dependent: :destroy
+    has_many :read_contents,
+             source: :content,
+             through: :content_readings
     has_many :content_preferences,
              class_name: "UserContentPreference",
              dependent: :destroy

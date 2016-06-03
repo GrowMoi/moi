@@ -12,7 +12,7 @@ Moi::Application.routes.draw do
       resources :contents,
                 only: [] do
         member do
-          post :learn
+          post :read
           post :notes
         end
       end

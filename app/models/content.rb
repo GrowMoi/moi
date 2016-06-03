@@ -42,6 +42,7 @@ class Content < ActiveRecord::Base
     belongs_to :neuron, touch: true
 
     # these belong to user
+    has_many :content_readings
     has_many :content_learnings
     has_many :content_notes
 

@@ -24,13 +24,13 @@ module Api
                :description,
                :source,
                :title,
-               :learnt,
+               :read,
                :links,
                :videos,
                :user_notes
 
-    def learnt
-      current_user.already_learnt?(object)
+    def read
+      current_user.already_read?(object)
     end
 
     def user_notes

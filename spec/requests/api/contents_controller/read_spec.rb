@@ -7,27 +7,27 @@ RSpec.describe Api::ContentsController,
   let(:current_user) { create :user }
 
   let(:endpoint) {
-    "/api/neurons/#{neuron.id}/contents/#{content.id}/learn"
+    "/api/neurons/#{neuron.id}/contents/#{content.id}/read"
   }
 
-  describe "#learn" do
+  describe "#read" do
     before { login_as current_user }
 
     before {
       expect { post endpoint }.to change {
-        current_user.learned_contents.count
+        current_user.read_contents.count
       }.by(1)
     }
 
     it {
       expect(response).to have_http_status(:created)
       expect(
-        current_user.learned_contents
+        current_user.read_contents
       ).to include(content)
     }
   end
 
-  describe "unauthenticated #learn" do
+  describe "unauthenticated #read" do
     before { post endpoint }
 
     it {
@@ -35,9 +35,9 @@ RSpec.describe Api::ContentsController,
     }
   end
 
-  describe "already learnt #learn" do
-    let!(:learning) {
-      create :content_learning,
+  describe "already read #read" do
+    let!(:reading) {
+      create :content_reading,
              content: content,
              user: current_user
     }
@@ -46,7 +46,7 @@ RSpec.describe Api::ContentsController,
 
     before {
       expect { post endpoint }.to_not change {
-        current_user.learned_contents.count
+        current_user.read_contents.count
       }
     }
 
