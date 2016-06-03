@@ -3,7 +3,7 @@ module TreeService
     extend Forwardable
 
     attr_reader :user
-    def_delegators :@children_fetcher, :children_for
+    def_delegators :@children_fetcher, :children_ids_for
 
     def initialize(user)
       @user = user
@@ -20,7 +20,7 @@ module TreeService
 
     def scoped
       public_scope.where(
-        id: pool_ids + children_for(pool_ids)
+        id: pool_ids + children_ids_for(pool_ids)
       )
     end
 

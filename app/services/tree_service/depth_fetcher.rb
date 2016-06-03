@@ -3,7 +3,7 @@ module TreeService
     extend Forwardable
 
     attr_reader :depth
-    def_delegators :@children_fetcher, :children_for
+    def_delegators :@children_fetcher, :children_ids_for
 
     def initialize(options)
       @depth = options.fetch :depth
@@ -16,7 +16,7 @@ module TreeService
       levels = { 0 => [root_neuron] }
       (1..depth).each do |level|
         parents = levels.fetch(level-1)
-        levels[level] = children_for(parents)
+        levels[level] = children_ids_for(parents)
       end
       levels.values.flatten
     end

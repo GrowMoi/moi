@@ -2,6 +2,7 @@ Moi::Application.routes.draw do
   devise_for :users
 
   namespace :api, defaults: { format: :json } do
+    resource :tree, only: :show
     resources :search, only: :index
     resources :content_preferences, only: :update
     resources :neurons,

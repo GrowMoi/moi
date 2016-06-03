@@ -4,6 +4,8 @@ RSpec.describe Api::NeuronsController,
                type: :request do
   include CollectionExpectationHelpers
 
+  pending "/api/neurons deprecated in favour of /api/tree"
+
   describe "unauthenticated #index" do
     let!(:neuron) {
       # we rely on root being present
@@ -17,7 +19,7 @@ RSpec.describe Api::NeuronsController,
   end
 
   describe "neuron scope" do
-    include_examples "neurons_controller:current_user"
+    include_examples "requests:current_user"
 
     let(:body) {
       JSON.parse(response.body)

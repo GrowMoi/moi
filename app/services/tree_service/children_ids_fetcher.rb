@@ -11,7 +11,11 @@ module TreeService
         parent_id: ids_for(
           Array(collection)
         )
-      ).select(:id)
+      )
+    end
+
+    def children_ids_for(collection)
+      children_for(collection).select(:id)
     end
 
     private

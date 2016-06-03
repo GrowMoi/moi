@@ -10,7 +10,8 @@ module Api
 
     api :GET,
         "/neurons",
-        "returns tree neurons"
+        "returns tree neurons. Deprecated in favour of /api/tree",
+        deprecated: true
     param :page, String
     def index
       respond_with(
