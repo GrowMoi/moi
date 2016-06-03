@@ -7,12 +7,12 @@ module Api
     }
 
     api :POST,
-        "/neurons/:neuron_id/contents/:content_id/learn",
-        "a user learns a content"
+        "/neurons/:neuron_id/contents/:content_id/read",
+        "a user reads a content"
     param :neuron_id, Integer, required: true
     param :content_id, Integer, required: true
-    def learn
-      if current_user.learn(content)
+    def read
+      if current_user.read(content)
         status = :created
       else
         status = :unprocessable_entity
