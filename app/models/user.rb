@@ -44,6 +44,9 @@ class User < ActiveRecord::Base
             dependent: :destroy
     has_many :content_notes,
              dependent: :destroy
+    has_many :learning_tests,
+             dependent: :destroy,
+             class_name: "ContentLearningTest"
     has_many :content_learnings,
              dependent: :destroy
     has_many :learned_contents,

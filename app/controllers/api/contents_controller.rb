@@ -17,7 +17,7 @@ module Api
       {
         "status":"created",
         "perform_test":false,
-        "test_contents":[]
+        "test":null
       }
     }
     example %q{
@@ -25,80 +25,87 @@ module Api
       {
         "status":"created",
         "perform_test":true,
-        "test_contents":[
-          {
-            "id":6,
-            "title":"Content 6",
-            "possible_answers":[
-              {
-                "id":7,
-                "text":"Possible answer 7"
-              },
-              {
-                "id":8,
-                "text":"Possible answer 8"
-              },
-              {
-                "id":9,
-                "text":"Possible answer 9"
-              }
-            ]
-          },
-          {
-            "id":7,
-            "title":"Content 7",
-            "possible_answers":[
-              {
-                "id":10,
-                "text":"Possible answer 10"
-              },
-              {
-                "id":11,
-                "text":"Possible answer 11"
-              },
-              {
-                "id":12,
-                "text":"Possible answer 12"
-              }
-            ]
-          },
-          {
-            "id":8,
-            "title":"Content 8",
-            "possible_answers":[
-              {
-                "id":13,
-                "text":"Possible answer 13"
-              },
-              {
-                "id":14,
-                "text":"Possible answer 14"
-              },
-              {
-                "id":15,
-                "text":"Possible answer 15"
-              }
-            ]
-          },
-          {
-            "id":9,
-            "title":"Content 9",
-            "possible_answers":[
-              {
-                "id":16,
-                "text":"Possible answer 16"
-              },
-              {
-                "id":17,
-                "text":"Possible answer 17"
-              },
-              {
-                "id":18,
-                "text":"Possible answer 18"
-              }
-            ]
-          }
-        ]
+        "test": {
+          "id": 1,
+          "questions": [
+            {
+              "content_id":6,
+              "title":"Content 6",
+              "media_url": "some_url",
+              "possible_answers":[
+                {
+                  "id":7,
+                  "text":"Possible answer 7"
+                },
+                {
+                  "id":8,
+                  "text":"Possible answer 8"
+                },
+                {
+                  "id":9,
+                  "text":"Possible answer 9"
+                }
+              ]
+            },
+            {
+              "content_id":7,
+              "title":"Content 7",
+              "media_url": null,
+              "possible_answers":[
+                {
+                  "id":10,
+                  "text":"Possible answer 10"
+                },
+                {
+                  "id":11,
+                  "text":"Possible answer 11"
+                },
+                {
+                  "id":12,
+                  "text":"Possible answer 12"
+                }
+              ]
+            },
+            {
+              "content_id":8,
+              "title":"Content 8",
+              "media_url": "some_url",
+              "possible_answers":[
+                {
+                  "id":13,
+                  "text":"Possible answer 13"
+                },
+                {
+                  "id":14,
+                  "text":"Possible answer 14"
+                },
+                {
+                  "id":15,
+                  "text":"Possible answer 15"
+                }
+              ]
+            },
+            {
+              "content_id":9,
+              "title":"Content 9",
+              "media_url": "some_url",
+              "possible_answers":[
+                {
+                  "id":16,
+                  "text":"Possible answer 16"
+                },
+                {
+                  "id":17,
+                  "text":"Possible answer 17"
+                },
+                {
+                  "id":18,
+                  "text":"Possible answer 18"
+                }
+              ]
+            }
+          ]
+        }
       }
     }
     def read
@@ -106,7 +113,7 @@ module Api
         response = {
           status: :created,
           perform_test: test_fetcher.perform_test?,
-          test_contents: test_fetcher.test_contents
+          test: test_fetcher.user_test_for_api
         }
       else
         response = { status: :unprocessable_entity }

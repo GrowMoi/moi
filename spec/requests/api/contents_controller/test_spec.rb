@@ -23,7 +23,7 @@ RSpec.describe Api::ContentsController,
       expect(json_response["perform_test"]).to be_falsey
     }
     it {
-      expect(json_response["test_contents"]).to be_empty
+      expect(json_response["test"]).to be_nil
     }
   end
 
@@ -55,16 +55,35 @@ RSpec.describe Api::ContentsController,
       expect(json_response["perform_test"]).to be_truthy
     }
 
-    it {
+    it "questions include needed info" do
       %w(
-        id
         title
+        media_url
+        content_id
         possible_answers
       ).each do |key|
         expect(
-          json_response["test_contents"].first
+          json_response["test"]["questions"].first
         ).to have_key(key)
       end
-    }
+    end
+
+    describe "creates proper test" do
+      let(:user_test) {
+        current_user.learning_tests.first
+      }
+
+      it {
+        expect(user_test).to be_present
+      }
+
+      it {
+        expect(
+          user_test.questions.map do |question|
+            question["content_id"]
+          end
+        ).to include(content.id)
+      }
+    end
   end
 end
