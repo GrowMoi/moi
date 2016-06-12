@@ -75,6 +75,7 @@ group :test, :development do
   gem 'poltergeist', '~> 1.6'
   gem 'database_cleaner', '~> 1.3.0'
   gem 'connection_pool'
+  gem 'rspec_junit_formatter'
 end
 
 group :development do
