@@ -6,6 +6,3 @@ machine:
 test:
   override:
     - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml
-notify:
-  webhooks:
-    - url: https://vilcabamba.hipchat.com/v2/room/2166553/notification?auth_token=vZuoQbDz2xmmLv23c2vsiqdgiyjsAnjVMUCoTy21
