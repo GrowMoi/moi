@@ -7,6 +7,7 @@
 #  content_id :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  neuron_id  :integer          not null
 #
 
 class ContentReading < ActiveRecord::Base
@@ -17,4 +18,12 @@ class ContentReading < ActiveRecord::Base
             presence: true
   validates :content_id,
             presence: true
+
+  before_save :cache_neuron_id
+
+  private
+
+  def cache_neuron_id
+    self.neuron_id = content.neuron.id
+  end
 end

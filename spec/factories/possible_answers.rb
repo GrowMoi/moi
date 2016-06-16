@@ -15,6 +15,9 @@ FactoryGirl.define do
     content
     sequence(:text) { |n| "Possible answer #{n}" }
     correct { [true, false].sample }
-  end
 
+    trait :correct do
+      correct true
+    end
+  end
 end

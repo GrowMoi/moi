@@ -51,5 +51,21 @@ FactoryGirl.define do
         create(:content_media, content: content)
       end
     end
+
+    trait :with_possible_answers do
+      after(:create) do |content|
+        3.times do
+          create :possible_answer, content: content
+        end
+      end
+    end
+
+    trait :with_correct_possible_answers do
+      after(:create) do |content|
+        3.times do
+          create :possible_answer, :correct, content: content
+        end
+      end
+    end
   end
 end

@@ -11,19 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160603010429) do
+ActiveRecord::Schema.define(version: 20160615235654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "content_learning_tests", force: :cascade do |t|
+    t.integer  "user_id",                    null: false
+    t.json     "questions",                  null: false
+    t.json     "answers"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "completed",  default: false
+  end
+
+  add_index "content_learning_tests", ["completed"], name: "index_content_learning_tests_on_completed", using: :btree
+  add_index "content_learning_tests", ["user_id"], name: "index_content_learning_tests_on_user_id", using: :btree
 
   create_table "content_learnings", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.integer  "content_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "neuron_id",  null: false
   end
 
   add_index "content_learnings", ["content_id"], name: "index_content_learnings_on_content_id", using: :btree
+  add_index "content_learnings", ["neuron_id"], name: "index_content_learnings_on_neuron_id", using: :btree
   add_index "content_learnings", ["user_id"], name: "index_content_learnings_on_user_id", using: :btree
 
   create_table "content_links", force: :cascade do |t|
@@ -60,9 +74,11 @@ ActiveRecord::Schema.define(version: 20160603010429) do
     t.integer  "content_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "neuron_id",  null: false
   end
 
   add_index "content_readings", ["content_id"], name: "index_content_readings_on_content_id", using: :btree
+  add_index "content_readings", ["neuron_id"], name: "index_content_readings_on_neuron_id", using: :btree
   add_index "content_readings", ["user_id"], name: "index_content_readings_on_user_id", using: :btree
 
   create_table "content_videos", force: :cascade do |t|
@@ -243,13 +259,16 @@ ActiveRecord::Schema.define(version: 20160603010429) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
+  add_foreign_key "content_learning_tests", "users"
   add_foreign_key "content_learnings", "contents"
+  add_foreign_key "content_learnings", "neurons"
   add_foreign_key "content_learnings", "users"
   add_foreign_key "content_links", "contents"
   add_foreign_key "content_media", "contents"
   add_foreign_key "content_notes", "contents"
   add_foreign_key "content_notes", "users"
   add_foreign_key "content_readings", "contents"
+  add_foreign_key "content_readings", "neurons"
   add_foreign_key "content_readings", "users"
   add_foreign_key "content_videos", "contents"
   add_foreign_key "possible_answers", "contents"
