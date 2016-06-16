@@ -8,6 +8,7 @@
 #  answers    :json
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  completed  :boolean          default(FALSE)
 #
 
 FactoryGirl.define do
@@ -18,7 +19,7 @@ FactoryGirl.define do
       contents = times.map do
         create :content,
                :with_media,
-               :with_possible_answers
+               :with_correct_possible_answers
       end
       TreeService::LearningTestCreator.new(
         user: user,

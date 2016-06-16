@@ -11,19 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160609125901) do
+ActiveRecord::Schema.define(version: 20160615235654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "content_learning_tests", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.json     "questions",  null: false
+    t.integer  "user_id",                    null: false
+    t.json     "questions",                  null: false
     t.json     "answers"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "completed",  default: false
   end
 
+  add_index "content_learning_tests", ["completed"], name: "index_content_learning_tests_on_completed", using: :btree
   add_index "content_learning_tests", ["user_id"], name: "index_content_learning_tests_on_user_id", using: :btree
 
   create_table "content_learnings", force: :cascade do |t|

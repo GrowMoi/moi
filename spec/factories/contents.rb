@@ -59,5 +59,13 @@ FactoryGirl.define do
         end
       end
     end
+
+    trait :with_correct_possible_answers do
+      after(:create) do |content|
+        3.times do
+          create :possible_answer, :correct, content: content
+        end
+      end
+    end
   end
 end
