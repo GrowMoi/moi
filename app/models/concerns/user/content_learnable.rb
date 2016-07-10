@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
     def already_learnt_any?(contents)
       ContentLearning.where(
         user: self,
-        content: contents.select(:id)
+        content: contents.pluck(:id)
       ).exists?
     end
   end
