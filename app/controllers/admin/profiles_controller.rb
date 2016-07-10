@@ -18,7 +18,7 @@ module Admin
     }
 
     expose(:initial_neurons) {
-      TreeService::DepthFetcher.new(
+      TreeService::ByDepthFetcher.new(
         depth: 2,
         scope: decorated_profile.neurons
       ).neurons

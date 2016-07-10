@@ -6,26 +6,31 @@ module TreeService
     ATTRIBUTES = %w(
       id
       title
+      parent_id
     ).map(&:to_sym).freeze
 
-    attr_reader :scope, :children_fetcher
+    attr_reader :scope,
+                :children_fetcher,
+                :depth,
+                :root,
+                :depth_calculator
 
     def initialize(user)
-      @scope = PublicScopeFetcher.new(
-        user
-      ).neurons
-      @children_fetcher = ChildrenIdsFetcher.new(
-        scope
-      )
-    end
-
-    def root
-      serialize(
-        RootFetcher.root_neuron
-      )
+      @scope = PublicScopeFetcher.new(user).neurons
+      @children_fetcher = ChildrenIdsFetcher.new(scope)
+      @depth = 0
+      @depth_calculator = NeuronDepthCalculator.new
+      @root = serialize(RootFetcher.root_neuron)
     end
 
     private
+
+    def update_tree_depth(neuron)
+      neuron_depth = depth_calculator.for(neuron)
+      if neuron_depth > depth
+        @depth = neuron_depth
+      end
+    end
 
     def children_for(neuron)
       children_fetcher.children_for(neuron)
@@ -37,6 +42,7 @@ module TreeService
 
     def serialize(neuron)
       serializer_klass.new(neuron).tap do |serializer|
+        update_tree_depth(serializer.object)
         serializer.children = children_for(
           serializer.object
         )
