@@ -1,5 +1,5 @@
 module TreeService
-  class DepthFetcher
+  class ByDepthFetcher
     extend Forwardable
 
     attr_reader :depth

@@ -8,8 +8,7 @@ module Api
         "/tree",
         "returns tree for current user"
     example %q{
-      { "tree":
-        { "root":
+      { "tree": { "root":
           { "id": 1,
             "title": "Neurona 1",
             "children": [
@@ -25,20 +24,17 @@ module Api
                 "children": []}
             ]
           }
-        }
+        },
+        "meta": { "depth": 2 }
       }
     }
-
     def show
-      respond_with tree: { root: root }
+      respond_with tree: { root: user_tree.root },
+                   meta: { depth: user_tree.depth }
     end
 
-    private
-
-    def root
-      TreeService::UserTreeFetcher.new(
-        current_user
-      ).root
-    end
+    expose(:user_tree) {
+      TreeService::UserTreeFetcher.new current_user
+    }
   end
 end
