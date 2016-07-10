@@ -11,9 +11,11 @@ module Api
       { "tree": { "root":
           { "id": 1,
             "title": "Neurona 1",
+            "state": "florecida",
             "children": [
               { "id": 2,
                 "title": "Neurona 2",
+                "state": "descubierta",
                 "children": [
                   { "id": 3,
                     "title": "Neurona 3",
@@ -21,6 +23,7 @@ module Api
                 ] },
               { "id": 4,
                 "title": "Neurona 4",
+                "state": "descubierta",
                 "children": []}
             ]
           }

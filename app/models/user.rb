@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
   include Roles
   include ContentReadable
+  include ContentLearnable
   include UserContentAnnotable
   include UserContentPreferenceable
 
