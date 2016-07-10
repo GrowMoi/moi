@@ -4,5 +4,6 @@ module RootNeuronMockable
       :@@root_neuron,
       neuron
     )
+    neuron
   end
 end

@@ -6,9 +6,7 @@ RSpec.describe Api::TreesController,
 
   include_examples "requests:current_user"
 
-  let!(:root) {
-    create :neuron_visible_for_api
-  }
+  let!(:root) { create :neuron_visible_for_api }
 
   let(:response_depth) {
     JSON.parse(response.body)
