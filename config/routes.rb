@@ -68,7 +68,6 @@ Moi::Application.routes.draw do
         anchor: false,
         via: [:get, :post]
 
-  root "home#index"
-
+  root to: redirect("/apipie")
   apipie
 end
