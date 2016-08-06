@@ -108,6 +108,13 @@ class Neuron < ActiveRecord::Base
     end
   end
 
+  def eager_contents!
+    self.contents = contents.eager
+    self
+  end
+
+  private
+  
   ##
   # validates parent is not a child or child of any of their
   # children
@@ -133,15 +140,8 @@ class Neuron < ActiveRecord::Base
       :deleted,
       I18n.t("activerecord.errors.messages.cannot_delete_neuron",
               neuron: self)
-    )if is_public?
+    ) if is_public?
   end
-
-  def eager_contents!
-    self.contents = contents.eager
-    self
-  end
-
-  private
 
   ##
   # marks `active` flag as true if any of the contents
