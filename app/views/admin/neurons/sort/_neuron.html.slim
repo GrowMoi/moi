@@ -1,0 +1,5 @@
+li data-id="#{neuron.id}"
+  = neuron.title
+  ol
+    - neuron.children_neurons.each do |child_neuron|
+      = render "admin/neurons/sort/neuron", neuron: child_neuron

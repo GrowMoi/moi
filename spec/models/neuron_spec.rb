@@ -10,6 +10,7 @@
 #  active     :boolean          default(FALSE)
 #  deleted    :boolean          default(FALSE)
 #  is_public  :boolean          default(FALSE)
+#  position   :integer          default(0)
 #
 
 require 'rails_helper'
@@ -28,6 +29,17 @@ RSpec.describe Neuron, :type => :model do
 
     it {
       expect(neuron.parent).to be_present
+    }
+  end
+
+  describe "assigns position" do
+    let!(:parent) { create :neuron }
+    let!(:child1) { create :neuron, parent: parent }
+    let!(:child2) { create :neuron, parent: parent }
+
+    it {
+      expect(child1.position).to eq(1)
+      expect(child2.position).to eq(2)
     }
   end
 

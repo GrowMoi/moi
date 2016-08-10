@@ -46,6 +46,7 @@
       deleted: Eliminado
       active: "Activa"
       inactive: "Inactiva"
+      sort_tree: Ordenar árbol
       public_status:
         "true": Pública
         "false": No es pública
@@ -376,6 +377,7 @@
         medium: Multimedia
         links: Enlaces
         videos: Vídeos
+        position: Posición
       content:
         level: "Nivel"
         kind: "Tipo"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615235654) do
+ActiveRecord::Schema.define(version: 20160810190348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,10 +130,12 @@ ActiveRecord::Schema.define(version: 20160615235654) do
     t.boolean  "active",     default: false
     t.boolean  "deleted",    default: false
     t.boolean  "is_public",  default: false
+    t.integer  "position",   default: 0
   end
 
   add_index "neurons", ["deleted"], name: "index_neurons_on_deleted", using: :btree
   add_index "neurons", ["parent_id"], name: "index_neurons_on_parent_id", using: :btree
+  add_index "neurons", ["position"], name: "index_neurons_on_position", using: :btree
   add_index "neurons", ["title"], name: "index_neurons_on_title", using: :btree
 
   create_table "possible_answers", force: :cascade do |t|

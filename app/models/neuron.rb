@@ -10,6 +10,7 @@
 #  active     :boolean          default(FALSE)
 #  deleted    :boolean          default(FALSE)
 #  is_public  :boolean          default(FALSE)
+#  position   :integer          default(0)
 #
 
 class Neuron < ActiveRecord::Base
@@ -44,6 +45,7 @@ class Neuron < ActiveRecord::Base
 
   begin :callbacks
     after_touch :update_active_state!
+    before_create :set_position!
   end
 
   accepts_nested_attributes_for :contents,
@@ -108,13 +110,18 @@ class Neuron < ActiveRecord::Base
     end
   end
 
+  def children_neurons
+    @children_neurons ||= self.class.where(parent_id: id)
+                                    .order(:position)
+  end
+
   def eager_contents!
     self.contents = contents.eager
     self
   end
 
   private
-  
+
   ##
   # validates parent is not a child or child of any of their
   # children
@@ -151,6 +158,12 @@ class Neuron < ActiveRecord::Base
     if active_changed?
       self.paper_trail_event = "active_neuron"
       save!
+    end
+  end
+
+  def set_position!
+    if parent.present?
+      self.position = parent.children_neurons.maximum(:position).to_i + 1
     end
   end
 end

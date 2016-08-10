@@ -51,12 +51,8 @@ module TreeService
              .with_media
              .where(
                kind: kind,
-               neuron_id: children_neurons.pluck(:id)
+               neuron_id: neuron.children_neurons.pluck(:id)
              )
-    end
-
-    def children_neurons
-      Neuron.where(parent_id: neuron.id)
     end
 
     def preference

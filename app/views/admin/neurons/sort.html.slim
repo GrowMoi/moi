@@ -1,0 +1,5 @@
+- content_for :title, t("views.neurons.sort_tree")
+
+ol.sortable-tree
+  - top_level_neurons.each do |neuron|
+    = render "admin/neurons/sort/neuron", neuron: neuron

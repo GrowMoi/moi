@@ -13,6 +13,7 @@ module Admin
         scope = Neuron.not_deleted
       end
       scope.includes(contents: :possible_answers)
+           .order(:position)
     }
 
     expose(:possible_parents) {
@@ -40,6 +41,10 @@ module Admin
 
     expose(:root_neuron) {
       TreeService::RootFetcher.root_neuron
+    }
+
+    expose(:top_level_neurons) {
+      Neuron.where(parent_id: nil)
     }
 
     def index
@@ -109,7 +114,18 @@ module Admin
       )
     end
 
+    def reorder
+      TreeService::SortingService.sort_neurons!(
+        JSON.parse(params[:tree])
+      )
+      render nothing: true
+    end
+
     private
+
+    def breadcrumb_for_sort
+      add_breadcrumb t("views.neurons.sort_tree")
+    end
 
     def build_relationships_for_formatted_contents!
       formatted_contents.each do |level, level_contents|
