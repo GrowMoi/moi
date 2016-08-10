@@ -114,6 +114,10 @@ module Admin
       )
     end
 
+    def sorting_tree
+      render layout: nil
+    end
+
     def reorder
       TreeService::SortingService.sort_neurons!(
         JSON.parse(params[:tree])

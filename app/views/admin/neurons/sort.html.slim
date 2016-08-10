@@ -1,5 +1,11 @@
 - content_for :title, t("views.neurons.sort_tree")
 
-ol.sortable-tree
-  - top_level_neurons.each do |neuron|
-    = render "admin/neurons/sort/neuron", neuron: neuron
+blockquote
+  p Ordenar el árbol puede ser pesado para la base de datos, por lo tanto el sistema realizará una sola operación a la vez
+
+.sortable-tree-placeholder = t("views.loading")
+
+.sortable-tree-status.pull-right
+
+.sortable-tree-wrapper
+  ol.sortable-tree

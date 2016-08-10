@@ -12,6 +12,7 @@
     submitting: "Enviando.."
     unauthorized: "No tienes permiso para realizar esta acción"
     search_engines: Motores de búsqueda
+    loading: "Cargando.."
     pagination:
       previous: "&lt;"
       next: "&gt;"

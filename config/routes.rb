@@ -53,6 +53,7 @@ Moi::Application.routes.draw do
       end
       collection do
         get :sort
+        get :sorting_tree
         post :reorder
       end
     end
