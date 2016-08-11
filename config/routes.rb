@@ -51,6 +51,11 @@ Moi::Application.routes.draw do
         post :delete
         post :restore
       end
+      collection do
+        get :sort
+        get :sorting_tree
+        post :reorder
+      end
     end
 
     resource :external_search, only: :create

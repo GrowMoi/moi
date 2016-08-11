@@ -1,0 +1,6 @@
+li data-id="#{neuron.id}"
+  span.toggle-children.glyphicon.glyphicon-triangle-right
+  = neuron.title
+  ol
+    - neuron.children_neurons.each do |child_neuron|
+      = render "admin/neurons/sort/neuron", neuron: child_neuron

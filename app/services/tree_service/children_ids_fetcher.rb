@@ -11,7 +11,7 @@ module TreeService
         parent_id: ids_for(
           Array(collection)
         )
-      )
+      ).order(:position)
     end
 
     def children_ids_for(collection)

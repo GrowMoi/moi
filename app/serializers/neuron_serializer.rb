@@ -10,6 +10,7 @@
 #  active     :boolean          default(FALSE)
 #  deleted    :boolean          default(FALSE)
 #  is_public  :boolean          default(FALSE)
+#  position   :integer          default(0)
 #
 
 class NeuronSerializer < ActiveModel::Serializer
