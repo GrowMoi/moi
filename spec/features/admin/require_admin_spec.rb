@@ -18,7 +18,7 @@ describe %Q{
 
   context "non-admin" do
     let!(:user) { create :user }
-    
+
     let(:initial_path) {
       # root_path
       "/apipie"
@@ -31,9 +31,12 @@ describe %Q{
 
     it {
       expect(current_path).to eq(initial_path)
+    }
+
+    pending "ATM we only show apipie view" do
       expect(page).to have_text(
         I18n.t("views.unauthorized")
       )
-    }
+    end
   end
 end
