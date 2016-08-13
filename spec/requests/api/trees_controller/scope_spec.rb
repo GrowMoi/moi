@@ -59,12 +59,27 @@ RSpec.describe Api::TreesController,
       get endpoint
     }
 
-    it "includes visible neuron" do
-      expect_to_see_in_collection(a)
+    it "doesn't include neurons if I haven't learnt anything" do
+      expect_to_not_see_in_collection(a)
+      expect_to_not_see_in_collection(b)
     end
 
-    it "doesn't include non-public neuron" do
-      expect_to_not_see_in_collection(b)
+    describe "when I read something" do
+      before {
+        create :content_learning,
+               user: current_user,
+               content: root.contents.first
+      }
+
+      before { get endpoint }
+
+      it "includes visible neuron" do
+        expect_to_see_in_collection(a)
+      end
+
+      it "doesn't include non-public neuron" do
+        expect_to_not_see_in_collection(b)
+      end
     end
 
     describe "root grandchildren" do

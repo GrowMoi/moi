@@ -12,6 +12,14 @@ RSpec.describe Api::TreesController,
     )
   }
 
+  let!(:root_learning) {
+    # learn something on root so that
+    # we can see root's children
+    create :content_learning,
+           user: current_user,
+           content: root.contents.first
+  }
+
   let(:response_root) {
     JSON.parse(response.body)
         .fetch("tree")

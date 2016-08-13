@@ -20,14 +20,18 @@ module TreeService
 
     def scoped
       public_scope.where(
-        id: pool_ids + children_ids_for(pool_ids)
+        id: scope_ids + children_ids_for(pool_ids)
       )
     end
 
-    def pool_ids
+    def scope_ids
       [
         root_neuron.id
-      ] + learnt_neurons.ids
+      ] + pool_ids
+    end
+
+    def pool_ids
+      learnt_neurons.ids
     end
 
     def learnt_neurons
