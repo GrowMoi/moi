@@ -103,8 +103,8 @@ RSpec.describe Api::NeuronsController,
         expect_to_see_in_collection(a)
       end
 
-      it "includes root children" do
-        expect_to_see_in_collection(b)
+      it "doesn't include root children" do
+        expect_to_not_see_in_collection(b)
       end
 
       it "does not include unpublished children & grandchildren" do
@@ -118,28 +118,6 @@ RSpec.describe Api::NeuronsController,
 
       it "does not include unpublished neuron's public children" do
         expect_to_not_see_in_collection(f)
-      end
-    end
-
-    describe "contents scope" do
-      let!(:approved_content) {
-        create :content,
-               :approved,
-               neuron: b
-      }
-      let!(:unapproved_content) {
-        create :content,
-               neuron: b
-      }
-
-      before { get "/api/neurons" }
-
-      it "includes approved content" do
-        expect_to_see_in_collection(approved_content)
-      end
-
-      it "doesn't include unapproved content" do
-        expect_to_not_see_in_collection(unapproved_content)
       end
     end
 
@@ -167,6 +145,28 @@ RSpec.describe Api::NeuronsController,
 
       it "doesn't include unlearnt neurons" do
         expect_to_not_see_in_collection(h)
+      end
+
+      describe "contents scope" do
+        let!(:approved_content) {
+          create :content,
+                 :approved,
+                 neuron: b
+        }
+        let!(:unapproved_content) {
+          create :content,
+                 neuron: b
+        }
+
+        before { get "/api/neurons" }
+
+        it "includes approved content" do
+          expect_to_see_in_collection(approved_content)
+        end
+
+        it "doesn't include unapproved content" do
+          expect_to_not_see_in_collection(unapproved_content)
+        end
       end
     end
 
