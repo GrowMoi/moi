@@ -7,5 +7,10 @@ blockquote
 
 .sortable-tree-status.pull-right
 
+.sortable-tree-actions
+  => link_to "expandir todo", "#", data: { action: "expand" }
+  ' /
+  = link_to "contraer todo", "#", data: { action: "collapse" }
+
 .sortable-tree-wrapper
   ol.sortable-tree

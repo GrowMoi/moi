@@ -15,3 +15,4 @@
 //= require handlebars
 //= require jquery-sortable-min.js
 //= require_tree ./admin
+//= require_tree ./admin/sortable_tree

@@ -44,7 +44,7 @@ class SpellcheckService
     mispelled_words.map do |word|
       {
         original: word[:original],
-        suggestions: word[:suggestions].sample(SUGGESTIONS) # or .first(3)
+        suggestions: word[:suggestions].first(SUGGESTIONS) # or .sample(3)
       }
     end
   end

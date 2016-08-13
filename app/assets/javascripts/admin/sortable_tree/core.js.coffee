@@ -22,6 +22,7 @@ loadSortableTree = ->
   if $(placeholder).length > 0
     NProgress.start()
     $container.load "/admin/neurons/sorting_tree", ->
+      $(document).trigger "sortable_tree:shown"
       NProgress.done()
       $(placeholder).remove()
       $container.sortable
