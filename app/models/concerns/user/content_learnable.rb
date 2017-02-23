@@ -10,5 +10,16 @@ class User < ActiveRecord::Base
         content: contents.pluck(:id)
       ).exists?
     end
+
+    ##
+    # @param content [Content]
+    # @return [Boolean] wether if the user
+    #   has already learnt a content
+    def already_learnt?(content)
+      ContentLearning.where(
+        user: self,
+        content: content
+      ).exists?
+    end
   end
 end
