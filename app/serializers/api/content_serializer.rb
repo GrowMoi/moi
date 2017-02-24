@@ -25,12 +25,17 @@ module Api
                :source,
                :title,
                :read,
+               :learnt,
                :links,
                :videos,
                :user_notes
 
     def read
       current_user.already_read?(object)
+    end
+
+    def learnt
+      current_user.already_learnt?(object)
     end
 
     def user_notes
