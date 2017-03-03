@@ -15,7 +15,7 @@ module Api
           "sign up providing email"
       description "create new account for moi. Responds with created user if successful"
       param :name, String, required: true
-      param :age, String, required: false
+      param :birthday, Date, required: false
       param :password, String, required: true
       param :city, String, required: false
       param :confirm_password, String, required: true
@@ -26,7 +26,7 @@ module Api
     protected
 
     def configure_permitted_parameters
-      devise_parameter_sanitizer.for(:sign_up).push(:name)
+      devise_parameter_sanitizer.for(:sign_up).push(:name,:birthday,:country,:city)
     end
   end
 end
