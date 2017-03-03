@@ -1,5 +1,5 @@
 Moi::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "api/registrations" }
 
   namespace :api, defaults: { format: :json } do
     resource :tree, only: :show
@@ -24,7 +24,8 @@ Moi::Application.routes.draw do
         at: "user",
         controllers: {
           sessions: "api/sessions",
-          token_validations: "api/token_validations"
+          token_validations: "api/token_validations",
+          registrations: "api/registrations"
         }
       )
     end
