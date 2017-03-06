@@ -15,9 +15,22 @@ class User < ActiveRecord::Base
       Content::KINDS.each do |kind|
         content_preferences.where(
           kind: kind,
-          order: UserContentPreference::DEFAULT_ORDER[kind.to_sym]
+          order: assign_order_by_kind(kind)
         ).first_or_create
       end
     end
+
+    ##
+    # update order field existing ones
+    def assign_order_content_preferences!
+      content_preferences.each do |preference|
+        preference.update(order: assign_order_by_kind(preference.kind))
+      end
+    end
+
+    def assign_order_by_kind(kind)
+      UserContentPreference::DEFAULT_ORDER[kind.to_sym]
+    end
+
   end
 end

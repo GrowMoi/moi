@@ -42,8 +42,4 @@ class UserContentPreference < ActiveRecord::Base
     read_attribute(:kind).try :to_sym
   end
 
-  def order
-    read_attribute(:order) || DEFAULT_ORDER[self.kind.to_sym]
-  end
-
 end
