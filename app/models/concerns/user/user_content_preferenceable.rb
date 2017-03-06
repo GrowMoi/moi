@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
     def create_content_preferences!
       Content::KINDS.each do |kind|
         content_preferences.where(
-          kind: kind
+          kind: kind,
+          order: UserContentPreference::DEFAULT_ORDER[kind.to_sym]
         ).first_or_create
       end
     end
