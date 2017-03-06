@@ -23,7 +23,7 @@ RSpec.describe Api::ContentPreferencesController,
   describe "update content preferences" do
     before {
       expect {
-        put endpoint, level: preference.level
+        put endpoint, level: preference.level, order: preference.order
       }.to_not change(UserContentPreference, :count)
     }
 
@@ -59,6 +59,18 @@ RSpec.describe Api::ContentPreferencesController,
       expect {
         put endpoint, level: 5
       }.to_not change(user_preference, :level)
+    }
+
+    it {
+      expect(response.status).to eq(422)
+    }
+  end
+
+  describe "order out of bounds" do
+    before {
+      expect {
+        put endpoint, order: 99
+      }.to_not change(user_preference, :order)
     }
 
     it {

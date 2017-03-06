@@ -8,18 +8,27 @@
 #  level      :integer          default(1), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  order      :integer
 #
 
 class UserContentPreference < ActiveRecord::Base
+  extend IntegersEnumerable
+
+  DEFAULT_ORDER = integers_enumerable(Content::KINDS)
+  ORDER = DEFAULT_ORDER.values
+
   belongs_to :user
   validates :user,
             :kind,
             :level,
+            :order,
             presence: true
   validates :kind,
             inclusion: { in: Content::KINDS }
   validates :level,
             inclusion: { in: Content::LEVELS }
+  validates :order,
+            inclusion: { in: ORDER }
 
   ##
   # @param [String] kind
@@ -32,4 +41,9 @@ class UserContentPreference < ActiveRecord::Base
   def kind
     read_attribute(:kind).try :to_sym
   end
+
+  def order
+    read_attribute(:order) || DEFAULT_ORDER[self.kind.to_sym]
+  end
+
 end
