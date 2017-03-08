@@ -13,12 +13,11 @@ module Api
     api :PUT,
         "/content_preferences/:kind",
         "update kind preference"
-    description "update level and order for a given kind preference for the current user"
+    description "update level for a given kind preference for the current user"
     param :kind, String, required: true
     param :level, Integer, required: true
-    param :order, Integer, required: true
     def update
-      if content_preference.update(level: params[:level], order: params[:order])
+      if content_preference.update(level: params[:level])
         render nothing: true,
                status: :accepted
       else
