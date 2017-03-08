@@ -15,7 +15,11 @@ module TreeService
     def result
       @answers.map do |answer|
         correct_answer = correct_answer?(answer)
-        learn!(answer) if correct_answer
+        if correct_answer
+          learn!(answer)
+        else
+          unread!(answer)
+        end
         {
           correct: !!correct_answer,
           content_id: answer["content_id"]
@@ -30,6 +34,14 @@ module TreeService
         user: user_test.user,
         content_id: answer["content_id"]
       )
+    end
+
+    def unread!(answer)
+      content_reading = ContentReading.where(
+        user: user_test.user,
+        content_id: answer["content_id"]
+      ).first
+      content_reading.destroy if content_reading
     end
 
     def correct_answer?(answer)
