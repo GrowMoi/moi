@@ -14,7 +14,8 @@
 module Api
   class NeuronSerializer < ActiveModel::Serializer
     attributes :id,
-               :title
+               :title,
+               :parent_id
     has_many :contents
 
     def contents
