@@ -8,6 +8,7 @@
 #  level      :integer          default(1), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  order      :integer
 #
 
 FactoryGirl.define do
@@ -15,5 +16,6 @@ FactoryGirl.define do
     user
     kind { Content::KINDS.sample }
     level { Content::LEVELS.sample }
+    order { UserContentPreference::ORDER.sample }
   end
 end

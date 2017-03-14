@@ -6,6 +6,7 @@ Moi::Application.routes.draw do
     resource :learn, controller: :learn, only: :create
     resources :search, only: :index
     resources :content_preferences, only: :update
+    resource :order_preferences, controller: :order, only: :update
     resources :neurons,
               only: [:index, :show] do
       resources :recommended_contents,

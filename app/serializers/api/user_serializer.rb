@@ -39,7 +39,8 @@ module Api
       object.content_preferences.map do |preference|
         {
           kind: preference.kind,
-          level: preference.level
+          level: preference.level,
+          order: preference.order
         }
       end
     end
