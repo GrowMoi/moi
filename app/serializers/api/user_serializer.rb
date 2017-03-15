@@ -16,10 +16,13 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  name                   :string
-#  role                   :string
+#  role                   :string           default("cliente"), not null
 #  uid                    :string           not null
 #  provider               :string           default("email"), not null
 #  tokens                 :json
+#  birthday               :date
+#  city                   :string
+#  country                :string
 #
 
 module Api
@@ -31,7 +34,10 @@ module Api
                :name,
                :role,
                :uid,
-               :provider
+               :provider,
+               :country,
+               :birthday,
+               :city
 
     has_many :content_preferences
 
