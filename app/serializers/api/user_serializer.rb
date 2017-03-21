@@ -37,9 +37,7 @@ module Api
                :provider,
                :country,
                :birthday,
-               :age,
-               :city,
-               :last_contents_learnt
+               :city
 
     has_many :content_preferences
 
@@ -49,26 +47,6 @@ module Api
           kind: preference.kind,
           level: preference.level,
           order: preference.order
-        }
-      end
-    end
-
-    def age
-      birthday = object.birthday
-      if birthday
-        now = Time.now.utc.to_date
-        now.year - birthday.year - ((now.month > birthday.month || (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
-      end
-    end
-
-    def last_contents_learnt
-      object.content_learnings.last(4).map do |content_learnt|
-        content = content_learnt.content
-        {
-          id: content.id,
-          media: content.content_medium.map(&:media_url),
-          title: content.title,
-          neuron_id: content.neuron_id
         }
       end
     end
