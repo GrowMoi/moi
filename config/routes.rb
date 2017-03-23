@@ -20,6 +20,12 @@ Moi::Application.routes.draw do
       end
     end
 
+    namespace :users do
+      resource :account,
+                only: [:update]
+    end
+
+
     resources :users,
               only: [] do
       member do
