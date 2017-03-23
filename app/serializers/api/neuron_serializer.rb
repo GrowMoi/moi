@@ -14,11 +14,17 @@
 module Api
   class NeuronSerializer < ActiveModel::Serializer
     attributes :id,
-               :title
+               :title,
+               :can_read
     has_many :contents
 
     def contents
       object.approved_contents
+    end
+
+    def can_read
+      visible_neurons = TreeService::PublicScopeFetcher.new(@scope).neurons
+      visible_neurons.map(&:id).include?(object.id)
     end
   end
 end
