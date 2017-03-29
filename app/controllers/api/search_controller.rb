@@ -3,11 +3,10 @@ module Api
     before_action :authenticate_user!
     respond_to :json
 
-    expose(:neurons) {
-      NeuronSearch.new(
+    expose(:contents) {
+      ContentSearch.new(
         q: params[:query]
       ).results
-       .send('active')
        .page(params[:page]).per(8)
     }
 
@@ -18,11 +17,11 @@ module Api
     param :query, String
     def index
       respond_with(
-        neurons,
+        contents,
         meta: {
-          total_items: neurons.total_count
+          total_items: contents.total_count
         },
-        each_serializer: Api::NeuronSerializer
+        each_serializer: Api::ContentSerializer
       )
     end
   end
