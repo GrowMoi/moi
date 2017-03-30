@@ -3,11 +3,16 @@ module Api
     before_action :authenticate_user!
     respond_to :json
 
-    expose(:contents) {
-      ContentSearch.new(
-        q: params[:query]
-      ).results
-       .page(params[:page]).per(8)
+    expose(:search_results) {
+
+      neuron_results = NeuronSearch.new(q:params[:query]).results
+      content_results = ContentSearch.new(q: params[:query]).results
+
+      results = neuron_results.concat(content_results)
+
+      Kaminari.paginate_array(results)
+        .page(params[:page])
+        .per(8)
     }
 
     api :GET,
@@ -17,11 +22,11 @@ module Api
     param :query, String
     def index
       respond_with(
-        contents,
+        search_results,
         meta: {
-          total_items: contents.total_count
+          total_items: search_results.total_count
         },
-        each_serializer: Api::ContentSerializer
+        serializer: Api::SearchSerializer
       )
     end
   end
