@@ -19,6 +19,14 @@ Moi::Application.routes.draw do
         end
       end
     end
+
+    resources :users,
+              only: [] do
+      member do
+        get :profile
+      end
+    end
+
     namespace :auth do
       mount_devise_token_auth_for(
         "User",
