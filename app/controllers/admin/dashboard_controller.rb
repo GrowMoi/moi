@@ -2,7 +2,7 @@ module Admin
   class DashboardController < AdminController::Base
 
     expose(:neurons) {
-      NeuronSearch.new(
+      NeuronAdminSearch.new(
         q: params[:q]
       ).results
        .send(neuron_scope)
