@@ -31,5 +31,26 @@ module Api
       )
     end
 
+    expose(:search_results) {
+      users_results = UserSearch.new(q:params[:query], id:current_user.id).results
+      Kaminari.paginate_array(users_results)
+        .page(params[:page])
+        .per(8)
+    }
+
+    api :GET,
+        "/users/search",
+        "returns search from query"
+    param :page, Integer
+    param :query, String
+    def search
+      respond_with(
+        search_results,
+        meta: {
+          total_items: search_results.total_count
+        },
+        serializer: Api::SearchUsersSerializer
+      )
+    end
   end
 end

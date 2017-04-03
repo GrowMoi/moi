@@ -25,6 +25,7 @@ Moi::Application.routes.draw do
                 only: [:update]
     end
 
+    match "users/search" => 'users#search', via: :get
 
     resources :users,
               only: [] do
