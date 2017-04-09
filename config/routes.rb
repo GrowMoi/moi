@@ -16,6 +16,7 @@ Moi::Application.routes.draw do
         member do
           post :read
           post :notes
+          post :media_open
         end
       end
     end

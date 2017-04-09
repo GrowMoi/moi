@@ -141,6 +141,21 @@ module Api
              status: :ok
     end
 
+    api :POST,
+        "/neurons/:neuron_id/contents/:content_id/media_open",
+        ""
+    def media_open
+      if current_user.media_seen(params)
+        render nothing: true,
+             status: :ok
+      else
+        response = { status: :unprocessable_entity }
+        render json: response,
+             status: response[:status]
+      end
+
+    end
+
     private
 
     def test_fetcher
