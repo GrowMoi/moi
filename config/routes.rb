@@ -31,6 +31,8 @@ Moi::Application.routes.draw do
     namespace :users do
       resource :account,
                 only: [:update]
+      resource :tree_image,
+                only: [:update]
     end
 
     match "users/search" => 'users#search', via: :get

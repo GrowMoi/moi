@@ -23,6 +23,7 @@
 #  birthday               :date
 #  city                   :string
 #  country                :string
+#  tree_image             :string
 #
 
 class User < ActiveRecord::Base
@@ -34,6 +35,8 @@ class User < ActiveRecord::Base
   include UserContentPreferenceable
   include UserMediaSeen
   include UserStatistics
+
+  mount_base64_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable and :omniauthable

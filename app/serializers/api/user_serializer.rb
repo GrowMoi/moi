@@ -37,7 +37,8 @@ module Api
                :provider,
                :country,
                :birthday,
-               :city
+               :city,
+               :tree_image
 
     has_many :content_preferences
 
@@ -49,6 +50,10 @@ module Api
           order: preference.order
         }
       end
+    end
+
+    def tree_image
+      object.tree_image.url
     end
   end
 end
