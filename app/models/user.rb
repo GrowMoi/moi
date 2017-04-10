@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
   include UserContentAnnotable
   include UserContentPreferenceable
   include UserMediaSeen
+  include UserStatistics
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable and :omniauthable

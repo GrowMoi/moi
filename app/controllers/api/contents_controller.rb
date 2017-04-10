@@ -145,7 +145,7 @@ module Api
         "/neurons/:neuron_id/contents/:content_id/media_open",
         ""
     def media_open
-      if current_user.media_seen(params)
+      if current_user.media_seen(params["media_id"])
         render nothing: true,
              status: :ok
       else

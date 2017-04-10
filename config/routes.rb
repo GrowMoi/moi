@@ -21,6 +21,13 @@ Moi::Application.routes.draw do
       end
     end
 
+    resources :analytics,
+                only: [:statistics] do
+      collection do
+        get :statistics
+      end
+    end
+
     namespace :users do
       resource :account,
                 only: [:update]
