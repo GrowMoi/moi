@@ -14,10 +14,8 @@ module Api
 
       def update
         if user.update(tree_image: params[:image])
-          render status: 200, json: {
-    				message: "Successfully added user with ID: " + user.id.to_s,
-    				tree_image: user.tree_image
-    			}
+          render  nothing:true,
+                  status: :accepted
         else
           @errors = current_user.errors
           render  nothing: true,
