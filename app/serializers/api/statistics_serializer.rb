@@ -5,7 +5,8 @@ module Api
                 :user_created_at,
                 :user_updated_at,
                 :images_opened_in_count,
-                :total_neurons_learnt
+                :total_neurons_learnt,
+                :user_tests
 
     def notes_created
       object["total_notes"]
@@ -29,6 +30,10 @@ module Api
 
     def total_neurons_learnt
       object["total_neurons_learnt"]
+    end
+
+    def user_tests
+      object["user_tests"]
     end
   end
 end

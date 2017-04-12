@@ -13,7 +13,7 @@ module TreeService
     end
 
     def result
-      @answers.map do |answer|
+      answers_result = @answers.map do |answer|
         correct_answer = correct_answer?(answer)
         if correct_answer
           learn!(answer)
@@ -25,6 +25,9 @@ module TreeService
           content_id: answer["content_id"]
         }
       end
+      @user_test.answers = answers_result
+      @user_test.save
+      answers_result
     end
 
     private
