@@ -16,7 +16,15 @@ Moi::Application.routes.draw do
         member do
           post :read
           post :notes
+          post :media_open
         end
+      end
+    end
+
+    resources :analytics,
+                only: [:statistics] do
+      collection do
+        get :statistics
       end
     end
 
