@@ -143,7 +143,12 @@ module Api
 
     api :POST,
         "/neurons/:neuron_id/contents/:content_id/media_open",
-        ""
+        "Save a record when an image is opened."
+    description "Save a record when an image is opened."
+    param :neuron_id, Integer, required: true
+    param :content_id, Integer, required: true
+    param :media_id, Integer, required: true
+
     def media_open
       if current_user.media_seen(params["media_id"])
         render nothing: true,

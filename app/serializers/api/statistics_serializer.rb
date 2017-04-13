@@ -1,6 +1,6 @@
 module Api
   class StatisticsSerializer < ActiveModel::Serializer
-    attributes  :notes_created,
+    attributes  :total_notes,
                 :user_sign_in_count,
                 :user_created_at,
                 :user_updated_at,
@@ -8,7 +8,7 @@ module Api
                 :total_neurons_learnt,
                 :user_tests
 
-    def notes_created
+    def total_notes
       object["total_notes"]
     end
 

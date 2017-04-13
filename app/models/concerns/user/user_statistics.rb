@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   module UserStatistics
 
-    def generate_statistics()
+    def generate_statistics
       statistics = {}
       statistics["total_notes"] = ContentNote.where(user: self).size
       statistics["user_sign_in_count"] = self.sign_in_count
