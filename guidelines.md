@@ -23,6 +23,8 @@ Te recomendamos utilizar [Sublime Text](http://www.sublimetext.com/) o [Atom](ht
 
 En SublimeText, las opciones `trim_trailing_white_space_on_save` y `ensure_newline_at_eof_on_save` te van a salvar la vida
 
+En SublimeText, las opciones `trim_trailing_white_space_on_save` y `ensure_newline_at_eof_on_save` te van a salvar la vida
+
 De preferencia, el código que escribamos va a estar en inglés. Esto es solamente para hacerlo estándar y por si tenemos que integrar personas de un mercado global al equipo.
 
 Documentamos utilizando [YARD](http://yardoc.org/). [Yard guides](http://yardoc.org/guides/index.html)
