@@ -3,6 +3,7 @@ language: ruby
 cache: bundler
 rvm:
   - 2.1.4
+  - 2.2.3
 bundler_args: --without development
 addons:
   postgresql: 9.3
@@ -20,3 +21,4 @@ script:
 notifications:
   email: false
   slack: vilcabamba:CneKnHTsIp8fYHEgcQw7lu6s
+  hipchat: e98639ae2cd22ef7198d27d2f66cea@2166553
