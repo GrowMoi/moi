@@ -48,6 +48,7 @@ gem 'google-api-client'
 gem 'searchlight'
 gem 'spellchecker', github: 'nicholasjhenry/spellchecker'
 gem 'carrierwave'
+gem 'carrierwave-base64'
 gem 'rubocop', require: false
 gem "rack-cors", require: "rack/cors"
 gem "newrelic_rpm"

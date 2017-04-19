@@ -23,6 +23,7 @@
 #  birthday               :date
 #  city                   :string
 #  country                :string
+#  tree_image             :string
 #
 
 require 'rails_helper'

@@ -36,7 +36,8 @@ module Api
                :birthday,
                :age,
                :city,
-               :last_contents_learnt
+               :last_contents_learnt,
+               :tree_image
 
     def age
       birthday = object.birthday
@@ -56,6 +57,10 @@ module Api
           neuron_id: content.neuron_id
         }
       end
+    end
+
+    def tree_image
+      object.tree_image.url
     end
   end
 end
