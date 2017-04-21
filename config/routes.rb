@@ -96,6 +96,11 @@ Moi::Application.routes.draw do
     root "dashboard#index"
   end
 
+  namespace :tutor do
+    resource :dashboard, only: :index
+    root "dashboard#index"
+  end
+
   match "/delayed_job" => DelayedJobWeb,
         anchor: false,
         via: [:get, :post]
