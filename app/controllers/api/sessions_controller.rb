@@ -30,7 +30,7 @@ module Api
 
     def render_create_success
       if @resource.tutor?
-        render :nothing => true, :status => 401
+        render :nothing => true, :status => 403
       else
         render json: {
           data: UserSerializer.new(@resource)
