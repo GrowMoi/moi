@@ -1,12 +1,17 @@
 module TreeService
   class RecommendedNeuronsFetcher
 
-    attr_reader :user, :neurons, :neurons_tree, :recommended
+    attr_reader :user,
+                :neurons,
+                :scope,
+                :children_fetcher,
+                :recommended
 
     def initialize(options)
       @neurons = []
       @user = options.fetch(:user)
-      @neurons_tree = UserTreeFetcher.new(user).children_fetcher
+      @scope = PublicScopeFetcher.new(user).neurons
+      @children_fetcher = ChildrenIdsFetcher.new(scope)
     end
 
     def recommended
@@ -16,7 +21,7 @@ module TreeService
     private
 
     def fetch_pool!
-      neurons_tree.scope.each do |neuron|
+      children_fetcher.scope.each do |neuron|
         unless user.already_learnt_any?(neuron.contents)
           neurons << neuron
         end
