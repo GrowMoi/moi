@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170409155548) do
+ActiveRecord::Schema.define(version: 20170424144407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -205,14 +205,15 @@ ActiveRecord::Schema.define(version: 20170409155548) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
-  create_table "tree_levels", force: :cascade do |t|
-    t.integer  "user_id",                null: false
-    t.integer  "level",      default: 1, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "tasks", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "content_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "tree_levels", ["user_id"], name: "index_tree_levels_on_user_id", using: :btree
+  add_index "tasks", ["content_id"], name: "index_tasks_on_content_id", using: :btree
+  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
 
   create_table "user_content_preferences", force: :cascade do |t|
     t.integer  "user_id",                null: false
@@ -300,6 +301,5 @@ ActiveRecord::Schema.define(version: 20170409155548) do
   add_foreign_key "content_videos", "contents"
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
-  add_foreign_key "tree_levels", "users"
   add_foreign_key "user_content_preferences", "users"
 end

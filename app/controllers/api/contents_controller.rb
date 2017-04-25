@@ -161,6 +161,24 @@ module Api
 
     end
 
+    api :POST,
+        "/neurons/:neuron_id/contents/:id/tasks",
+        "To store the tasks a user."
+    param :id, Integer, required: true
+    def tasks
+      init_task = current_user.create_tasks(params[:id])
+
+      unless init_task.nil?
+        response = { exist: init_task }
+        render json: response,
+             status: :ok
+      else
+        response = { status: :unprocessable_entity }
+        render json: response,
+             status: response[:status]
+      end
+    end
+
     private
 
     def test_fetcher
