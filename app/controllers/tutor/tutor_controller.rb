@@ -1,11 +1,11 @@
-module Admin
-  module AdminController
+module Tutor
+  module TutorController
     class Base < ::ApplicationController
-      layout "admin"
+      layout "tutor"
 
       before_action :authenticate_user!
       before_action :restrict_cliente!
-      before_action :restrict_tutor!
+      before_action :restrict_admin!
 
       private
 
@@ -16,16 +16,10 @@ module Admin
         ) if current_user.cliente?
       end
 
-      def restrict_tutor!
+      def restrict_admin!
         redirect_to(
-          tutor_root_path,
-          error: I18n.t("views.unauthorized")
-        ) if current_user.tutor?
-      end
-
-      # for navbar
-      def nav_item
-        self.class.name
+          admin_root_path
+        ) if current_user.admin?
       end
     end
   end
