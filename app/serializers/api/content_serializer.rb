@@ -28,7 +28,8 @@ module Api
                :learnt,
                :links,
                :videos,
-               :user_notes
+               :user_notes,
+               :tasks
 
     def read
       current_user.already_read?(object)

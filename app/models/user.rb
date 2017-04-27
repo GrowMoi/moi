@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
   include UserContentPreferenceable
   include UserMediaSeen
   include UserStatistics
+  include UserAnotateTasks
 
   mount_base64_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
 
@@ -68,6 +69,8 @@ class User < ActiveRecord::Base
              through: :content_readings
     has_many :content_preferences,
              class_name: "UserContentPreference",
+             dependent: :destroy
+    has_many :tasks,
              dependent: :destroy
   end
 
