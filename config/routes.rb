@@ -34,6 +34,8 @@ Moi::Application.routes.draw do
                 only: [:update]
       resource :tree_image,
                 only: [:update]
+      resource :recommended_neurons,
+                only: [:show]
     end
 
     match "users/search" => 'users#search', via: :get
