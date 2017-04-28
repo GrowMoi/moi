@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: tasks
+# Table name: ContentTask
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer          not null
@@ -9,9 +9,7 @@
 #  updated_at :datetime         not null
 #
 
-FactoryGirl.define do
-  factory :task do
-    
-  end
-
+class ContentTask < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :content
 end

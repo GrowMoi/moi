@@ -166,7 +166,7 @@ module Api
         "To store the tasks a user."
     param :id, Integer, required: true
     def tasks
-      init_task = current_user.create_tasks(params[:id])
+      init_task = current_user.create_content_task(params[:id])
 
       unless init_task.nil?
         response = { exist: init_task }

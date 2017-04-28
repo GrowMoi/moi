@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: tasks
+# Table name: content_task
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer          not null
@@ -11,6 +11,6 @@
 
 require 'rails_helper'
 
-RSpec.describe Task, :type => :model do
+RSpec.describe ContentTask, :type => :model do
   pending "add some examples to (or delete) #{__FILE__}"
 end

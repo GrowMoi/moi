@@ -45,7 +45,7 @@ class Content < ActiveRecord::Base
     has_many :content_readings
     has_many :content_learnings
     has_many :content_notes
-    has_many :tasks
+    has_many :content_tasks
 
     has_many :possible_answers,
              ->{ order :id },
