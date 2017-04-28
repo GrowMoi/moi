@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170424144407) do
+ActiveRecord::Schema.define(version: 20170428143221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,16 @@ ActiveRecord::Schema.define(version: 20170424144407) do
   add_index "content_readings", ["content_id"], name: "index_content_readings_on_content_id", using: :btree
   add_index "content_readings", ["neuron_id"], name: "index_content_readings_on_neuron_id", using: :btree
   add_index "content_readings", ["user_id"], name: "index_content_readings_on_user_id", using: :btree
+
+  create_table "content_tasks", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "content_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "content_tasks", ["content_id"], name: "index_content_tasks_on_content_id", using: :btree
+  add_index "content_tasks", ["user_id"], name: "index_content_tasks_on_user_id", using: :btree
 
   create_table "content_videos", force: :cascade do |t|
     t.integer  "content_id", null: false
@@ -204,16 +214,6 @@ ActiveRecord::Schema.define(version: 20170424144407) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
-
-  create_table "tasks", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "content_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "tasks", ["content_id"], name: "index_tasks_on_content_id", using: :btree
-  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
 
   create_table "user_content_preferences", force: :cascade do |t|
     t.integer  "user_id",                null: false
