@@ -1,0 +1,26 @@
+nav.navbar.navbar-default.navbar-fixed-top.navbar-tutor
+  .container.navbar-tutor-container
+    .navbar-header
+      button.navbar-toggle.collapsed aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" type="button"
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+    #navbar.navbar-collapse.collapse
+      ul.nav.navbar-nav.navbar-tutor-first-section
+        li.item-moi.active
+          = image_tag("moi_navbar_brain.png")
+          a.link-moi href="/moi"  MOI
+        li.item-client
+          = image_tag("moi_navbar_client.png")
+          a.link-client href="/ususario"  Usuario
+        li.item-tree
+          = image_tag("moi_navbar_tree.png")
+          a.link-tree href="/mitree"  Mi Árbol
+        li.item-analytics
+          = image_tag("moi_navbar_chart.png")
+          a.link-analytics href="/analytics"  Análisis
+      ul.nav.navbar-nav.navbar-right.navbar-tutor-last-item
+        li.item-tutor
+          = image_tag("moi_navbar_tutor.png")
+          a.link-tutor href="/tutor"  Tutor
