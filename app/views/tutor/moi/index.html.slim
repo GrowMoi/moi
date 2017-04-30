@@ -1,0 +1,16 @@
+.container-tutor-internal.container-moi
+  .left-container#list-clients
+    - for client in clients
+      .row-client
+        .image-selector-container
+          = image_tag("row_selected.png")
+        .image-avatar-container
+          .active = image_tag("client_avatar.png")
+          .inactive = image_tag("client_avatar_inactive.png")
+        .user-name
+          = client.name
+  .right-container
+
+    button.action-button = "Seleccione análisis"
+
+

@@ -100,9 +100,11 @@ Moi::Application.routes.draw do
     root "dashboard#index"
   end
 
-  namespace :tutor do
-    resource :dashboard, only: :index
-    root "dashboard#index"
+  namespace :tutor, only: :index do
+    resources :moi do
+
+    end
+    root "moi#index"
   end
 
   match "/delayed_job" => DelayedJobWeb,
