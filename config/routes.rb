@@ -100,8 +100,11 @@ Moi::Application.routes.draw do
     root "dashboard#index"
   end
 
-  namespace :tutor, only: :index do
-    resources :moi do
+  namespace :tutor do
+    resources :moi, only: :index  do
+
+    end
+    resources :client, only: [:index, :show]  do
 
     end
     root "moi#index"
