@@ -1,7 +1,7 @@
 .container-tutor-internal.container-moi
   .left-container#list-clients
     - for client in clients
-      .row-client
+      .row-client(id="user_#{client.id}")
         .image-selector-container
           = image_tag("row_selected.png")
         .image-avatar-container
