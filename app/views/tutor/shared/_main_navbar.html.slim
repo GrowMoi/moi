@@ -8,18 +8,18 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-tutor
         span.icon-bar
     #navbar.navbar-collapse.collapse
       ul.nav.navbar-nav.navbar-tutor-first-section
-        li(class=(params[:controller] == 'tutor/moi' ? 'item-moi active' : 'item-moi'))
+        li.item-moi(class=(params[:controller] == 'tutor/moi' ? 'active' : ''))
           = image_tag("moi_navbar_brain.png")
-          = link_to "MOI", tutor_moi_index_path, class:"link-moi"
-        li(class=(params[:controller] == 'tutor/client' ? 'item-client active' : 'item-client'))
+          = link_to "MOI", tutor_moi_index_path, class:"link-moi", id:"link-moi"
+        li.item-client(class=(params[:controller] == 'tutor/client' ? 'active' : ''))
           = image_tag("moi_navbar_client.png")
           = link_to "Usuario", tutor_client_index_path, class:"link-client", id:"client-link"
         li.item-tree
           = image_tag("moi_navbar_tree.png")
           a.link-tree href="/mitree"  Mi Árbol
-        li.item-analytics
+        li.item-analysis(class=(params[:controller] == 'tutor/analysis' ? 'active' : ''))
           = image_tag("moi_navbar_chart.png")
-          a.link-analytics href="/analytics"  Análisis
+          = link_to "Análisis", tutor_analysis_index_path, class:"link-analysis", id:"link-analysis"
       ul.nav.navbar-nav.navbar-right.navbar-tutor-last-item
         li.item-tutor
           = image_tag("moi_navbar_tutor.png")

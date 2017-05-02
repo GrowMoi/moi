@@ -1,2 +1,19 @@
 .container-tutor-internal.container-client
+  .left-container
+    .user-image-status
+      = image_tag("user_image_status.png")
+    .grid-info-container
+      .row-info.row-info-header
+        .first-cell.first-cell-header
+          | N°.
+        .second-cell.second-cell-header
+          | Descripción
+      .row-info
+        .first-cell
+          = @statistics["total_neurons_learnt"]
+        .second-cell
+          | Neuronas aprendidas
+    .link-activity-container
+      = link_to "Actividad", tutor_analysis_index_path, class:"link-user-client"
+  .right-container
 

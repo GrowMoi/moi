@@ -101,12 +101,10 @@ Moi::Application.routes.draw do
   end
 
   namespace :tutor do
-    resources :moi, only: :index  do
+    resources :moi, only: :index
+    resources :client, only: [:index, :show]
+    resources :analysis, only: :index
 
-    end
-    resources :client, only: [:index, :show]  do
-
-    end
     root "moi#index"
   end
 
