@@ -14,9 +14,9 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-tutor
         li.item-client(class=(params[:controller] == 'tutor/client' ? 'active' : ''))
           = image_tag("moi_navbar_client.png")
           = link_to "Usuario", tutor_client_index_path, class:"link-client", id:"client-link"
-        li.item-tree
+        li.item-tree(class=(params[:controller] == 'tutor/tree' ? 'active' : ''))
           = image_tag("moi_navbar_tree.png")
-          a.link-tree href="/mitree"  Mi Árbol
+          = link_to "Mi Árbol", tutor_tree_index_path, class:"link-tree", id:"link-tree"
         li.item-analysis(class=(params[:controller] == 'tutor/analysis' ? 'active' : ''))
           = image_tag("moi_navbar_chart.png")
           = link_to "Análisis", tutor_analysis_index_path, class:"link-analysis", id:"link-analysis"

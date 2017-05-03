@@ -104,6 +104,7 @@ Moi::Application.routes.draw do
     resources :moi, only: :index
     resources :client, only: [:index, :show]
     resources :analysis, only: :index
+    resources :tree, only: :index
 
     root "moi#index"
   end
