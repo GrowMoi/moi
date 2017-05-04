@@ -72,6 +72,9 @@ class User < ActiveRecord::Base
              dependent: :destroy
     has_many :content_tasks,
              dependent: :destroy
+    has_many :all_tasks,
+             source: :content,
+             through: :content_tasks
   end
 
   def to_s

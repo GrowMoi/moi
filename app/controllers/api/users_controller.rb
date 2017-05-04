@@ -52,5 +52,26 @@ module Api
         serializer: Api::SearchUsersSerializer
       )
     end
+
+    expose(:all_tasks) {
+      results = current_user.all_tasks
+      Kaminari.paginate_array(results)
+        .page(params[:page])
+        .per(4)
+    }
+
+    api :GET,
+        "/users/content_tasks",
+        "returns all contents saved by user"
+    param :page, Integer
+    def content_tasks
+      respond_with(
+        all_tasks,
+        meta: {
+          total_items: all_tasks.total_count
+        },
+        serializer: Api::ContentTasksSerializer
+      )
+    end
   end
 end
