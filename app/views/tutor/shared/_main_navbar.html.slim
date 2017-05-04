@@ -21,6 +21,11 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-tutor
           = image_tag("moi_navbar_chart.png")
           = link_to "Análisis", tutor_analysis_index_path, class:"link-analysis", id:"link-analysis"
       ul.nav.navbar-nav.navbar-right.navbar-tutor-last-item
-        li.item-tutor
+        li.item-tutor.dropdown
           = image_tag("moi_navbar_tutor.png")
-          a.link-tutor href="/tutor"  Tutor
+          a.link-tutor.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
+            | Tutor
+            span.caret
+          ul.dropdown-menu.dropdown-tutor
+            li.tutor-option-logout
+              = link_to "Cerrar sesión", destroy_user_session_path, class:"link-tutor-logout", :method => :delete

@@ -1,4 +1,5 @@
 $base-grey: #F2F2F2
+$dark-grey: #d1d5c8
 $border-color-1: #D1D5C8
 $bucket-height: 10rem
 $bucket-width: 12rem
@@ -96,6 +97,32 @@ $base-color-purple: #DA4694
     @extend .navbar-tutor-item-styles
     .link-tutor
       +navbar-border-bottom($base-color-purple)
+      position: relative
 
     .item-tutor
       +navbar-item-arrow($base-color-purple)
+      &.open, &.open:hover
+        a
+          background-color: transparent
+
+      .caret
+        position: absolute
+        bottom: 1.8rem
+        right: 3rem
+
+      .dropdown-tutor
+        background-color: $base-grey
+
+        .tutor-option-logout
+          border: none
+          display: flex
+          justify-content: center
+          align-items: center
+          margin-right: 0
+          width: 100%
+
+          &:hover
+            background-color: $dark-grey
+
+          .link-tutor-logout
+            padding: 0.5rem

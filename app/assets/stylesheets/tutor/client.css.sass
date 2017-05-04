@@ -28,7 +28,7 @@ $white: white
     background-color: $base-color-green
 
   .left-container
-    flex-basis: 50%
+    flex-basis: 40%
     display: flex
     flex-direction: column
     justify-content: space-around
@@ -113,7 +113,25 @@ $white: white
         margin-left: 0.5rem
 
   .right-container
-    flex-basis: 50%
+    flex-basis: 60%
     display: flex
     justify-content: center
     align-items: center
+    position: relative
+    padding: 1.5rem 0
+    margin-right: 0.5rem
+
+    .tree_landscape
+      position: absolute
+      width: 100%
+      z-index: 0
+
+    .tree_frame
+      position: absolute
+      width: 100%
+      z-index: 1
+
+    .tree-image
+      position: absolute
+      z-index: 2
+      width: 100%

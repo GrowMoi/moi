@@ -13,8 +13,21 @@
           = @statistics["total_neurons_learnt"]
         .second-cell
           | Neuronas aprendidas
+      .row-info
+        .first-cell
+          = @statistics["total_content_readings"]
+        .second-cell
+          | Contenidos leidos
+      .row-info
+        .first-cell
+          = @statistics["total_right_questions"]
+        .second-cell
+          | Preguntas aprobadas
+
     .link-activity-container
       = link_to "Actividad", tutor_analysis_index_path, class:"link-user-client"
   .right-container
-    = image_tag(@client.tree_image.url)
+    = image_tag("client_tree_landscape.png", class:"tree_landscape")
+    = image_tag("client_tree_frame.png", class:"tree_frame")
+    = image_tag(@client.tree_image.url, class:"tree-image")
 

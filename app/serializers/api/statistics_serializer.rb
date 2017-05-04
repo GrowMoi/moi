@@ -6,7 +6,8 @@ module Api
                 :user_updated_at,
                 :images_opened_in_count,
                 :total_neurons_learnt,
-                :user_tests
+                :user_tests,
+                :total_content_readings
 
     def total_notes
       object["total_notes"]
@@ -34,6 +35,10 @@ module Api
 
     def user_tests
       object["user_tests"]
+    end
+
+    def total_content_readings
+      object["total_content_readings"]
     end
   end
 end
