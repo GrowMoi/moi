@@ -10,22 +10,22 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-tutor
       ul.nav.navbar-nav.navbar-tutor-first-section
         li.item-moi(class=(params[:controller] == 'tutor/moi' ? 'active' : ''))
           = image_tag("moi_navbar_brain.png")
-          = link_to "MOI", tutor_moi_index_path, class:"link-moi", id:"link-moi"
+          = link_to t("views.tutor.navbar.moi"), tutor_moi_index_path, class:"link-moi", id:"link-moi"
         li.item-client(class=(params[:controller] == 'tutor/client' ? 'active' : ''))
           = image_tag("moi_navbar_client.png")
-          = link_to "Usuario", tutor_client_index_path, class:"link-client", id:"client-link"
+          = link_to t("views.tutor.navbar.client"), tutor_client_index_path, class:"link-client", id:"client-link"
         li.item-tree(class=(params[:controller] == 'tutor/tree' ? 'active' : ''))
           = image_tag("moi_navbar_tree.png")
-          = link_to "Mi Árbol", tutor_tree_index_path, class:"link-tree", id:"link-tree"
+          = link_to t("views.tutor.navbar.tree"), tutor_tree_index_path, class:"link-tree", id:"link-tree"
         li.item-analysis(class=(params[:controller] == 'tutor/analysis' ? 'active' : ''))
           = image_tag("moi_navbar_chart.png")
-          = link_to "Análisis", tutor_analysis_index_path, class:"link-analysis", id:"link-analysis"
+          = link_to t("views.tutor.navbar.analisys"), tutor_analysis_index_path, class:"link-analysis", id:"link-analysis"
       ul.nav.navbar-nav.navbar-right.navbar-tutor-last-item
         li.item-tutor.dropdown
           = image_tag("moi_navbar_tutor.png")
           a.link-tutor.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
-            | Tutor
+            = t("views.tutor.navbar.tutor")
             span.caret
           ul.dropdown-menu.dropdown-tutor
             li.tutor-option-logout
-              = link_to "Cerrar sesión", destroy_user_session_path, class:"link-tutor-logout", :method => :delete
+              = link_to t("views.tutor.navbar.logout"), destroy_user_session_path, class:"link-tutor-logout", :method => :delete

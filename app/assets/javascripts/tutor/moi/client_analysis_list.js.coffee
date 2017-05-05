@@ -4,7 +4,7 @@ loadAnalysisSelectableList = ->
 
   $(listId).selectable
     create: (event, ui) ->
-      $(listId).addClass('disabled')
+      $(linkId).addClass('disabled')
       return
     selected: (event, ui) ->
       if $(linkId).hasClass('disabled')
