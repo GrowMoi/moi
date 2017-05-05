@@ -1,0 +1,40 @@
+.container-tutor-internal.container-analysis.analysis-details
+
+  .row-analysis-info
+    .container-analysis-info
+      .header
+        | Neuronas aprendidas
+      .body
+        = @statistics["total_neurons_learnt"]
+
+    .container-analysis-info
+      .header
+        | Contenidos leidos
+      .body
+        = @statistics["total_content_readings"]
+
+  .row-analysis-info
+    .container-analysis-info
+      .header
+        | Preguntas aprobadas
+      .body
+        = @statistics["total_right_questions"]
+
+    .container-analysis-info
+      .header
+        | Total de notas agregadas
+      .body
+        = @statistics["total_notes"]
+
+  .row-analysis-info
+    .container-analysis-info
+      .header
+        | Imágenes abiertas
+      .body
+        = @statistics["images_opened_in_count"]
+
+    .container-analysis-info
+      .header
+        | Total de sesiones iniciadas
+      .body
+        = @statistics["user_sign_in_count"]

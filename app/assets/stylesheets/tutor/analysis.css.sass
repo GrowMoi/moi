@@ -1,4 +1,9 @@
 $base-color-red: #F0755C
+$base-color-red-opacity: #F2A597
+$max-height: 50rem
+$border-color-1: #D1D5C8
+$inactive-color: #AFAFAE
+$white: white
 
 .container-analysis
   border: 0.1rem solid $base-color-red
@@ -8,3 +13,119 @@ $base-color-red: #F0755C
 
   &:before
     background-color: $base-color-red
+
+  .disabled
+    pointer-events: none
+    cursor: default
+
+  .left-container
+    flex-basis: 50%
+    display: flex
+    flex-direction: column
+    max-height: $max-height
+    overflow-y: scroll
+
+    .row-client
+      display: flex
+      align-items: center
+      border-bottom: 0.1rem solid $border-color-1
+      padding: 0.5rem
+      cursor: pointer
+      margin: 0.3rem 0
+    .image-selector-container
+      display: none
+      flex-basis: 10%
+      img
+        width: 4rem
+    .image-avatar-container
+      flex-basis: 20%
+      padding-left: 0.5rem
+      .active
+        img
+          width: 7rem
+          display: none
+      .inactive
+        img
+          width: 7rem
+          display: block
+
+    .user-name
+      font-size: 2.5rem
+      color: $inactive-color
+      font-weight: bold
+
+    & .ui-selected
+      .image-selector-container
+        display: block
+      .image-avatar-container
+        border-left: 0.1rem solid $border-color-1
+      .active
+        img
+          display: block
+      .inactive
+        img
+          display: none
+      .user-name
+        color: $base-color-red
+
+  .right-container
+    flex-basis: 50%
+    display: flex
+    justify-content: flex-end
+    align-items: flex-end
+    padding: 1rem
+
+    .action-button
+      background-color: $base-color-red
+      width: 12rem
+
+    .analysis-link
+      background-color: $base-color-red
+      width: 15rem
+      padding: 0.5rem
+      height: 6rem
+      text-decoration: none
+      display: flex
+      justify-content: center
+      align-items: center
+      text-align: center
+      color: $white
+      border-radius: 0.5rem
+      font-size: 18px
+
+      &:hover
+        color: $white
+
+      &.disabled
+        background-color: $inactive-color
+
+  &.analysis-details
+    display: flex
+    flex-direction: column
+
+    .row-analysis-info
+      display: flex
+      justify-content: space-around
+
+    .container-analysis-info
+      color: $white
+      flex-basis: 40%
+      padding: 1rem
+      .header
+        padding: 1rem
+        background-color: $base-color-red-opacity
+        border-top-left-radius: 0.5rem
+        border-top-right-radius: 0.5rem
+        display: flex
+        align-items: center
+        justify-content: center
+        font-weight: bold
+
+      .body
+        border-bottom-left-radius: 0.5rem
+        border-bottom-right-radius: 0.5rem
+        padding: 1rem
+        background-color: $base-color-red
+        display: flex
+        align-items: center
+        justify-content: center
