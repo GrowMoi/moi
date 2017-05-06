@@ -139,6 +139,7 @@
         total_notes: "Total de notas agregadas"
         images_opened_in_count: "Imágenes abiertas"
         user_sign_in_count: "Total de sesiones iniciadas"
+        used_time: "Tiempo de uso"
       client:
         select_user: "Antes se debe seleccionar un usuario"
         activity: "Actividad"
