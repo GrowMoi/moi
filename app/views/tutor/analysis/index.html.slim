@@ -1,6 +1,14 @@
 .container-tutor-internal.container-analysis
+  = form_tag tutor_analysis_index_path, method: "get", class:"search-form search-form-analysis" do
+    .search-form-container.search-form-container-analysis
+      .input-serction
+        = image_tag "icon_search.png", class: "search-form-icon-search"
+        = text_field_tag :search, params[:search], class:"search-form-input"
+      .button-section
+        = submit_tag "", name: nil, class:"search-form-submit"
+        = image_tag "icon_reload.png", class: "search-form-icon-reload"
   .left-container#list-clients-analysis
-    - for client in clients
+    - for client in @clients
       .row-client(id="user_#{client.id}")
         .image-selector-container
           = image_tag("row_selected_red.png")
@@ -11,4 +19,4 @@
           = client.name
 
   .right-container
-    = link_to t("views.tutor.analysis.analyze"), tutor_analysis_index_path, class:"analysis-link", id:"analysis-link"
+    = link_to t("views.tutor.analysis.analyze"), tutor_analysis_index_path, class:"user-link analysis-link", id:"analysis-link"

@@ -1,15 +1,16 @@
 module Tutor
   class AnalysisController < TutorController::Base
 
-    expose(:clients) {
-      User.where(:role => :cliente)
-    }
-
     expose(:client_data) {
       User.where(id: params[:id], role: :cliente)
     }
 
     def index
+      if params[:search]
+        @clients =  UserClientSearch.new(q:params[:search]).results
+      else
+        @clients = User.where(:role => :cliente)
+      end
     end
 
     def show

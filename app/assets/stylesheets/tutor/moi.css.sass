@@ -2,6 +2,7 @@ $base-color-blue: #47BAE8
 $max-height: 50rem
 $border-color-1: #D1D5C8
 $inactive-color: #AFAFAE
+$white: white
 
 .container-moi
   border: 0.1rem solid $base-color-blue
@@ -72,3 +73,18 @@ $inactive-color: #AFAFAE
     .action-button
       background-color: $base-color-blue
       width: 12rem
+
+    .analysis-user-link
+      background-color: $base-color-blue
+      color: $white
+
+      &:hover
+        color: $white
+
+      &.disabled
+        background-color: $inactive-color
+        pointer-events: none
+
+  .search-form-moi
+    .search-form-container-moi
+      border: 0.1rem solid $base-color-blue

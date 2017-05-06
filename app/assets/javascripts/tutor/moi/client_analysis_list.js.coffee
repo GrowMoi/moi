@@ -1,24 +1,29 @@
 loadAnalysisSelectableList = ->
   listId = '#list-clients-analysis'
-  linkId = '#analysis-link'
+  analisysLink = '#analysis-link'
 
   $(listId).selectable
     create: (event, ui) ->
-      $(linkId).addClass('disabled')
-      return
+      $(analisysLink).addClass('disabled')
+
     selected: (event, ui) ->
-      if $(linkId).hasClass('disabled')
-        $(linkId).removeClass('disabled')
-      $(ui).addClass('visible')
-      regex = /user_(\d*)/g
-      regexUrl = /\/\w*\/\w*/g
-      userId = regex.exec(ui.selected.id)[1]
-      $analysisLink = $(linkId)
-      href = $analysisLink.attr('href')
-      href = regexUrl.exec(href)[0]
-      $analysisLink.attr('href', "#{href}/#{userId}")
-      return
+      if $(analisysLink).hasClass('disabled')
+        $(analisysLink).removeClass('disabled')
+
+      if $(ui.selected).hasClass('selectedfilter')
+        $(ui.selected).removeClass('selectedfilter').removeClass('ui-selected')
+      else
+        $(ui.selected).addClass('visible')
+        regex = /user_(\d*)/g
+        regexUrl = /\/\w*\/\w*/g
+        userId = regex.exec(ui.selected.id)[1]
+        $analysisLink = $(analisysLink)
+        analisysHref = $analysisLink.attr('href')
+        analisysHref = regexUrl.exec(analisysHref)[0]
+        $analysisLink.attr('href', "#{analisysHref}/#{userId}")
+
     unselected: (event, ui) ->
-      $(linkId).addClass('disabled')
-      return
+      $(analisysLink).addClass('disabled')
+      $(ui.unselected).removeClass('selectedfilter')
+
 $(document).on "ready page:load", loadAnalysisSelectableList
