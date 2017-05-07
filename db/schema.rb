@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170428143221) do
+ActiveRecord::Schema.define(version: 20170504175809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,10 +83,11 @@ ActiveRecord::Schema.define(version: 20170428143221) do
   add_index "content_readings", ["user_id"], name: "index_content_readings_on_user_id", using: :btree
 
   create_table "content_tasks", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "content_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id",                    null: false
+    t.integer  "content_id",                 null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "deleted",    default: false
   end
 
   add_index "content_tasks", ["content_id"], name: "index_content_tasks_on_content_id", using: :btree

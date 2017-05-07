@@ -18,6 +18,7 @@ Moi::Application.routes.draw do
           post :notes
           post :media_open
           post :tasks
+          post :task_update
         end
       end
     end
