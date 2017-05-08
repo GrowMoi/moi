@@ -147,10 +147,10 @@ module Api
     description "Save a record when an image is opened."
     param :neuron_id, Integer, required: true
     param :content_id, Integer, required: true
-    param :media_id, Integer, required: true
+    param :media_url, String, required: true
 
     def media_open
-      if current_user.media_seen(params["media_id"])
+      if current_user.media_seen(params["media_url"])
         render nothing: true,
              status: :ok
       else
