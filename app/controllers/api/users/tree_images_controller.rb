@@ -14,13 +14,19 @@ module Api
 
       def update
         if user.update(tree_image: params[:image])
-          render  nothing:true,
-                  status: :accepted
+          response = {
+            status: :accepted,
+            user: user
+          }
         else
           @errors = current_user.errors
-          render  nothing: true,
-                  status: unprocessable_entity
+          response = {
+            nothing: true,
+            status: :unprocessable_entity
+          }
         end
+        render json: response,
+               status: response[:status]
       end
     end
   end
