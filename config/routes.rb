@@ -12,7 +12,7 @@ Moi::Application.routes.draw do
       resources :recommended_contents,
                 only: :show
       resources :contents,
-                only: [] do
+                only: [:show] do
         member do
           post :read
           post :notes

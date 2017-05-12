@@ -6,6 +6,8 @@ module Api
       neuron.contents.find(params[:id])
     }
 
+    respond_to :json
+
     api :POST,
         "/neurons/:neuron_id/contents/:content_id/read",
         "a user reads a content. response includes test if needed"
@@ -200,6 +202,17 @@ module Api
     rescue ActiveRecord::RecordNotFound
       render nothing: true,
              status: :not_found
+    end
+
+    api :GET,
+        "/neurons/:neuron_id/contents/:id",
+        "shows content"
+    param :id, Integer, required: true
+    def show
+      respond_with(
+        content,
+        serializer: Api::ContentSerializer
+      )
     end
 
     private
