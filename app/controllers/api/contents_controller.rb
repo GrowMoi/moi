@@ -179,6 +179,29 @@ module Api
       end
     end
 
+    expose(:content_task) {
+      current_user.content_tasks.find_by_content_id(
+        params[:id]
+      )
+    }
+
+    api :POST,
+        "/api/neurons/:neuron_id/contents/:id/task_update",
+        "update task's user"
+    param :id, Integer, required: true
+    def task_update
+      if content_task.update(deleted: true)
+        render nothing: true,
+               status: :accepted
+      else
+        render nothing: true,
+               status: :unprocessable_entity
+      end
+    rescue ActiveRecord::RecordNotFound
+      render nothing: true,
+             status: :not_found
+    end
+
     private
 
     def test_fetcher

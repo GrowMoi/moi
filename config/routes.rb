@@ -18,6 +18,7 @@ Moi::Application.routes.draw do
           post :notes
           post :media_open
           post :tasks
+          post :task_update
         end
       end
     end
@@ -39,7 +40,7 @@ Moi::Application.routes.draw do
     end
 
     match "users/search" => 'users#search', via: :get
-
+    match "users/content_tasks" => 'users#content_tasks', via: :get
     resources :users,
               only: [] do
       member do

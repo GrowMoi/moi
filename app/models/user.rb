@@ -71,7 +71,11 @@ class User < ActiveRecord::Base
              class_name: "UserContentPreference",
              dependent: :destroy
     has_many :content_tasks,
+             -> { where deleted: false },
              dependent: :destroy
+    has_many :all_tasks,
+             source: :content,
+             through: :content_tasks
   end
 
   def to_s
