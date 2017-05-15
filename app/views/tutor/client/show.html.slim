@@ -25,7 +25,7 @@
           = t("views.tutor.client.total_right_questions")
 
     .link-activity-container
-      = link_to t("views.tutor.client.activity"), tutor_analysis_index_path, class:"link-user-client-activity", id:"link-user-client-activity"
+      = link_to t("views.tutor.client.activity"), tutor_analysis_path(params['id']), class:"link-user-client-activity", id:"link-user-client-activity"
   .right-container
     = image_tag("client_tree_landscape.png", class:"tree_landscape")
     = image_tag("client_tree_frame.png", class:"tree_frame")

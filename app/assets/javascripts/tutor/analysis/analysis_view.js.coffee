@@ -5,6 +5,7 @@ loadAnalysisSelectableList = ->
   $(listId).selectable
     create: (event, ui) ->
       $(analisysLink).addClass('disabled')
+      return
 
     selected: (event, ui) ->
       if $(analisysLink).hasClass('disabled')
@@ -21,9 +22,11 @@ loadAnalysisSelectableList = ->
         analisysHref = $analysisLink.attr('href')
         analisysHref = regexUrl.exec(analisysHref)[0]
         $analysisLink.attr('href', "#{analisysHref}/#{userId}")
+      return
 
     unselected: (event, ui) ->
       $(analisysLink).addClass('disabled')
       $(ui.unselected).removeClass('selectedfilter')
+      return
 
 $(document).on "ready page:load", loadAnalysisSelectableList

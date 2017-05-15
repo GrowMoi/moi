@@ -130,7 +130,7 @@
       neurons_total_count: "%{count} neuronas"
     tutor:
       moi:
-        analyze: "Seleccione análisis"
+        analyze: "Enviar solicitud"
       analysis:
         analyze: "Seleccione análisis"
         total_neurons_learnt: "Neuronas aprendidas"
