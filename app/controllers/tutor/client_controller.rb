@@ -11,6 +11,7 @@ module Tutor
     end
 
     def index
+      render
     end
 
     def total_right_questions(tests)

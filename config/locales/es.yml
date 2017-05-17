@@ -131,6 +131,8 @@
     tutor:
       moi:
         analyze: "Enviar solicitud"
+        title_clients: "Usuarios"
+        title_students: "Mis Alumnos"
       analysis:
         analyze: "Seleccione análisis"
         total_neurons_learnt: "Neuronas aprendidas"
