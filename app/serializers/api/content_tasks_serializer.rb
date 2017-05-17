@@ -4,7 +4,7 @@ module Api
 
     def content_tasks
       result = select_only(Content)
-      serialize_with(BasicContentSerializer, result)
+      serialize_with(ContentSerializer, result)
     end
 
     def serialize_with(serializer_type, result)

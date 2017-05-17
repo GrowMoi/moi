@@ -5,6 +5,15 @@ class User < ActiveRecord::Base
     #
     # @param content [Content] content to read
     def read(content)
+      # Delete content of the content_tasks if there is
+      ContentTask.where(
+        user: self,
+        content: content )
+      .first.destroy! if ContentTask.where(
+        user: self,
+        content: content
+      ).first
+
       return false if already_read?(content)
 
       content_readings.create!(
