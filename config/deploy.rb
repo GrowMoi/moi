@@ -11,8 +11,6 @@ set :slack_icon_url, 'https://fbcdn-photos-c-a.akamaihd.net/hphotos-ak-xtf1/v/t1
 # delayed_job
 set :delayed_job_prefix, :moi_backend
 
-# Default branch is :master
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :branch, ENV['BRANCH'] || 'master'
 
 # Default deploy_to directory is /var/www/my_app_name
@@ -41,6 +39,8 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 
 set :rbenv_ruby, '2.1.4'
 
+set :passenger_restart_with_touch, true
+
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
@@ -56,5 +56,3 @@ namespace :deploy do
   end
 
 end
-
-after 'deploy:finished', 'airbrake:deploy'

@@ -1,7 +1,8 @@
 ### moi
 server {
   listen 80;
-  server_name moi-backend.shiriculapo.com www.moi-backend.shiriculapo.com;
+  server_name moi-backend.growmoi.com www.moi-backend.growmoi.com
+              moi-backend.shiriculapo.com www.moi-backend.shiriculapo.com;
   root /home/growmoi/moi/current/public;
 
   passenger_enabled on;
