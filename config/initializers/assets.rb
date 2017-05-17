@@ -16,5 +16,5 @@ Rails.application.config.assets.precompile += %w(
   admin.css
   tutor.js
   tutor.css
-  tutor/fonts
+  *.woff
 )
