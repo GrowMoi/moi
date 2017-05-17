@@ -75,7 +75,7 @@ module Api
     end
 
     expose(:all_notes) {
-      results = current_user.content_notes
+      results = current_user.content_notes.order(created_at: :desc)
       Kaminari.paginate_array(results)
         .page(params[:page])
         .per(2)

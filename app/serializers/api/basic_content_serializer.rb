@@ -12,10 +12,15 @@ module Api
     attributes :id,
                :neuron_id,
                :media,
-               :title
+               :title,
+               :read
 
     def media
       object.content_medium.map(&:media_url)
+    end
+
+    def read
+      current_user.already_read?(object)
     end
 
     alias_method :current_user, :scope
