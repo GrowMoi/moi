@@ -29,7 +29,8 @@ module Api
                :links,
                :videos,
                :user_notes,
-               :content_tasks
+               :content_tasks,
+               :neuron_can_read
 
     def read
       current_user.already_read?(object)
@@ -49,6 +50,11 @@ module Api
 
     def links
       object.content_links.map(&:link)
+    end
+
+    def neuron_can_read
+      visible_neurons = TreeService::PublicScopeFetcher.new(@scope).neurons
+      visible_neurons.map(&:id).include?(object.neuron.id)
     end
 
     def videos
