@@ -10,9 +10,5 @@
  *
  *= require_self
  *= require bootstrap
- *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
- *= require nprogress
- *= require chosen.min
- *= require bootstrap-tagsinput
  *= require_tree ./tutor
  */

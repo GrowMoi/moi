@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
       statistics["images_opened_in_count"] = UserSeenImage.where(user: self).size
       statistics["total_neurons_learnt"] = TreeService::LearntNeuronsFetcher.new(self).ids.uniq.size
       statistics["user_tests"] = AnalyticService::TestStatistic.new(self).results
+      statistics["user_tests"] = AnalyticService::TestStatistic.new(self).results
+      statistics["total_content_readings"] = self.content_readings.size
       statistics
     end
   end

@@ -128,6 +128,34 @@
     dashboard:
       neurons_count: Mostrando %{count} neuronas de un total de
       neurons_total_count: "%{count} neuronas"
+    tutor:
+      moi:
+        analyze: "Enviar solicitud"
+        title_clients: "Usuarios"
+        title_students: "Mis Alumnos"
+      analysis:
+        analyze: "Seleccione análisis"
+        total_neurons_learnt: "Neuronas aprendidas"
+        total_content_readings: "Contenidos leidos"
+        total_right_questions: "Preguntas aprobadas"
+        total_notes: "Total de notas agregadas"
+        images_opened_in_count: "Imágenes abiertas"
+        user_sign_in_count: "Total de sesiones iniciadas"
+        used_time: "Tiempo de uso"
+      client:
+        select_user: "Antes se debe seleccionar un usuario"
+        activity: "Actividad"
+        description: "Descripción"
+        total_neurons_learnt: "Neuronas aprendidas"
+        total_content_readings: "Contenidos leidos"
+        total_right_questions: "Preguntas aprobadas"
+      navbar:
+        moi: "MOI"
+        tree: "Mi Árbol"
+        client: "Usuario"
+        analisys: "Análisis"
+        tutor: "Tutor"
+        logout: "Cerrar sesión"
 
   date:
     formats:

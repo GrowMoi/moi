@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: ContentTask
+# Table name: content_tasks
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer          not null
