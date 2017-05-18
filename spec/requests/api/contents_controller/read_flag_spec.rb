@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Api::NeuronsController,
+RSpec.describe Api::ContentsController,
                type: :request do
   include_examples "requests:current_user"
   include_examples "neurons_controller:approved_content"
@@ -16,7 +16,7 @@ RSpec.describe Api::NeuronsController,
 
     describe "not read content" do
       before {
-        get "/api/neurons/#{neuron.id}/contents/#{neuron.id}"
+        get "/api/neurons/#{neuron.id}/contents/#{content.id}"
       }
 
       it {
@@ -34,7 +34,7 @@ RSpec.describe Api::NeuronsController,
       }
 
       before {
-        get "/api/neurons/#{neuron.id}/contents/#{neuron.id}"
+        get "/api/neurons/#{neuron.id}/contents/#{content.id}"
       }
 
       it {
@@ -52,7 +52,7 @@ RSpec.describe Api::NeuronsController,
       }
 
       before {
-        get "/api/neurons/#{neuron.id}/contents/#{neuron.id}"
+        get "/api/neurons/#{neuron.id}/contents/#{content.id}"
       }
 
       it {
