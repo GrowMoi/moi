@@ -42,16 +42,12 @@ loadSelectableList = ->
       if $(analisysUserLink).hasClass('disabled')
         $(analisysUserLink).removeClass('disabled')
 
-      if $(ui.selected).hasClass('selectedfilter')
-        $(ui.selected).removeClass('selectedfilter').removeClass('ui-selected')
-        $(analisysUserLink).addClass('disabled')
-      else
-        $(ui.selected).addClass('visible')
-        $(ui.selected).addClass('selectedfilter').addClass('ui-selected')
-        regexUser = /user_(\d*)/
-        userId = regexUser.exec(ui.selected.id)[1]
-        sessionStorage.setItem('userId', userId)
-        customizeNavbarLink()
+      $(ui.selected).addClass('visible')
+      $(ui.selected).addClass('selectedfilter').addClass('ui-selected')
+      regexUser = /user_(\d*)/
+      userId = regexUser.exec(ui.selected.id)[1]
+      sessionStorage.setItem('userId', userId)
+      customizeNavbarLink()
       return
 
     unselected: (event, ui) ->
