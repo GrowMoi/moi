@@ -281,10 +281,12 @@ ActiveRecord::Schema.define(version: 20170508044528) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
+    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "content_learning_tests", "users"
@@ -302,4 +304,5 @@ ActiveRecord::Schema.define(version: 20170508044528) do
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
   add_foreign_key "user_content_preferences", "users"
+  add_foreign_key "versions", "users", column: "owner_id"
 end

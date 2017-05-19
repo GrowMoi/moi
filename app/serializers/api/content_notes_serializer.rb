@@ -1,10 +1,10 @@
 module Api
-  class ContentTasksSerializer < ActiveModel::Serializer
-    attributes  :content_tasks
+  class ContentNotesSerializer < ActiveModel::Serializer
+    attributes  :content_notes
 
-    def content_tasks
-      result = select_only(Content)
-      serialize_with(ContentSerializer, result)
+    def content_notes
+      result = select_only(ContentNote)
+      serialize_with(ContentNoteSerializer, result)
     end
 
     def serialize_with(serializer_type, result)

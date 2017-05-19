@@ -73,5 +73,26 @@ module Api
         serializer: Api::ContentTasksSerializer
       )
     end
+
+    expose(:all_notes) {
+      results = current_user.content_notes.order(created_at: :desc)
+      Kaminari.paginate_array(results)
+        .page(params[:page])
+        .per(2)
+    }
+
+    api :GET,
+        "/users/content_notes",
+        "returns all notes saved by user"
+    param :page, Integer
+    def content_notes
+      respond_with(
+        all_notes,
+        meta: {
+          total_items: all_notes.total_count
+        },
+        serializer: Api::ContentNotesSerializer
+      )
+    end
   end
 end
