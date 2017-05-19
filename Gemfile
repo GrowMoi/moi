@@ -40,6 +40,7 @@ gem 'devise'
 gem 'devise_token_auth', github: "lynndylanhurley/devise_token_auth"
 gem 'decent_exposure'
 gem 'kaminari'
+gem 'lograge'
 gem 'breadcrumbs_on_rails'
 gem 'cancan'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
