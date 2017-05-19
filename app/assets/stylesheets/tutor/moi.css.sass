@@ -18,12 +18,13 @@ $white: white
     display: flex
     flex-direction: column
     max-height: $max-height
-    overflow-y: scroll
+    overflow: hidden
 
     .title
       text-align: center
       font-size: 2.5rem
       font-weight: bold
+      color: $base-color-blue
       border-bottom: 0.1rem solid $border-color-1
 
     .row-client
@@ -57,6 +58,9 @@ $white: white
       font-size: 2.5rem
       color: $inactive-color
       font-weight: bold
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
 
     & .ui-selected
       .image-selector-container
@@ -74,9 +78,13 @@ $white: white
 
   .left-container
     @extend .common-user-list
+    .list-clients-wrapper
+      overflow-y: scroll
 
   .center-container
     @extend .common-user-list
+    .list-students-wrapper
+      overflow-y: scroll
 
   .right-container
     flex-basis: 33.333333333%
