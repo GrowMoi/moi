@@ -515,7 +515,7 @@ DEPENDENCIES
   websocket-rails
   yard
 
-  RUBY VERSION
+RUBY VERSION
    ruby 2.1.4p265
 
 BUNDLED WITH
