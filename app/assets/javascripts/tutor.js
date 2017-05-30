@@ -5,4 +5,5 @@
 //= require jquery_ujs
 //= require jquery-ui/widgets/selectable
 //= require bootstrap
+//= require websocket_rails/main
 //= require_tree ./tutor

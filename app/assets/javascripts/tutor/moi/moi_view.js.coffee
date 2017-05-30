@@ -1,3 +1,4 @@
+dispatcher = null
 customizeNavbarLink = ->
   userId = sessionStorage.getItem('userId')
   if userId
@@ -55,5 +56,20 @@ loadSelectableList = ->
       $(ui.unselected).removeClass('selectedfilter')
       return
 
+sendInvitation = ->
+  if (dispatcher && dispatcher.trigger)
+    dispatcher.trigger('send_invitation')
+  return
+
+connectionWS = ->
+  dispatcher = new WebSocketRails(window.location.host + '/websocket')
+
+  dispatcher.bind 'client_connected', (data) ->
+    console.log('Connection has been established: ', data)
+    return
+  return
+
+$(document).on "ready page:load", connectionWS
 $(document).on "ready page:load", loadSelectableList
 $(document).on "ready page:load", loadUserLinks
+$(document).on "click", "#button-send-invitation", sendInvitation
