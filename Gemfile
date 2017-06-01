@@ -59,6 +59,7 @@ gem "rack-cors", require: "rack/cors"
 gem "newrelic_rpm"
 gem 'airbrake'
 gem 'foreman'
+gem 'pusher'
 
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'

@@ -12,20 +12,13 @@
     .title = t("views.tutor.moi.title_clients")
     .list-clients-wrapper
       #list-clients
-        - for client in @clients
-          .row-client(id="user_#{client.id}")
-            .image-selector-container
-              = image_tag("row_selected.png")
-            .image-avatar-container
-              .active = image_tag("client_avatar.png")
-              .inactive = image_tag("client_avatar_inactive.png")
-            .user-name
-              = client.name
+        - for client in clients
+          = render "client", client: client
   .center-container
     .title = t("views.tutor.moi.title_students")
     .list-students-wrapper
       #list-students
+        - for client in my_clients
+          = render "client", client: client
   .right-container
-    = link_to t("views.tutor.moi.analyze"), tutor_analysis_index_path, class: "user-link analysis-user-link", id: "analysis-user-link"
-
-
+    = link_to t("views.tutor.moi.analyze"), tutor_user_tutors_path, class: "user-link analysis-user-link", id: "analysis-user-link", method: :post

@@ -7,6 +7,16 @@ Moi::Application.routes.draw do
     resources :search, only: :index
     resources :content_preferences, only: :update
     resource :order_preferences, controller: :order, only: :update
+    resources :notifications, only: [] do
+      collection do
+        get :new, path: "new"
+      end
+    end
+    resources :user_tutors, only: [] do
+      member do
+        post :respond
+      end
+    end
     resources :neurons,
               only: [:index, :show] do
       resources :recommended_contents,
@@ -106,6 +116,7 @@ Moi::Application.routes.draw do
     resources :client, only: [:index, :show]
     resources :analysis, only: [:index, :show]
     resources :tree, only: :index
+    resources :user_tutors, only: :create
 
     root "moi#index"
   end

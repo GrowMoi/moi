@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170508044528) do
+ActiveRecord::Schema.define(version: 20170531041409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -236,6 +236,18 @@ ActiveRecord::Schema.define(version: 20170508044528) do
 
   add_index "user_seen_images", ["user_id"], name: "index_user_seen_images_on_user_id", using: :btree
 
+  create_table "user_tutors", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "tutor_id",   null: false
+    t.string   "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_tutors", ["status"], name: "index_user_tutors_on_status", using: :btree
+  add_index "user_tutors", ["tutor_id"], name: "index_user_tutors_on_tutor_id", using: :btree
+  add_index "user_tutors", ["user_id"], name: "index_user_tutors_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",                      null: false
     t.string   "encrypted_password",     default: "",                      null: false
@@ -281,12 +293,10 @@ ActiveRecord::Schema.define(version: 20170508044528) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
-    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "content_learning_tests", "users"
@@ -304,5 +314,6 @@ ActiveRecord::Schema.define(version: 20170508044528) do
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
   add_foreign_key "user_content_preferences", "users"
-  add_foreign_key "versions", "users", column: "owner_id"
+  add_foreign_key "user_tutors", "users"
+  add_foreign_key "user_tutors", "users", column: "tutor_id"
 end

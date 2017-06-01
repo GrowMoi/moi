@@ -133,6 +133,7 @@
         analyze: "Enviar solicitud"
         title_clients: "Usuarios"
         title_students: "Mis Alumnos"
+        user_notification: "%{tutor_name} ha realizado una solicitud para ser tu tutor."
       analysis:
         analyze: "Seleccione análisis"
         total_neurons_learnt: "Neuronas aprendidas"
