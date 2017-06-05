@@ -134,6 +134,9 @@
         title_clients: "Usuarios"
         title_students: "Mis Alumnos"
         user_notification: "%{tutor_name} ha realizado una solicitud para ser tu tutor."
+        tutor_request:
+          created: "se ha enviado una solicitud a %{name} para ser su tutor"
+          not_created: "ups, ya existe una solicitud de tutoría a %{name}"
       analysis:
         analyze: "Seleccione análisis"
         total_neurons_learnt: "Neuronas aprendidas"

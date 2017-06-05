@@ -8,6 +8,7 @@ class UserTutor < ActiveRecord::Base
   validate :unique_request_for_user, on: :create
 
   scope :pending, -> { where status: nil }
+  scope :accepted, -> { where status: "accepted" }
 
   after_create :delayed_notify_user!
 

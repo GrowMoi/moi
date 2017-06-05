@@ -10,10 +10,14 @@ module Tutor
     }
 
     expose(:my_clients) {
-      current_user.tutor_requests_sent.map &:user
+      current_user.tutor_requests_sent.accepted.map &:user
     }
 
-    expose(:clients) { all_clients - my_clients }
+    expose(:clients) {
+      all_clients.where.not(
+        id: my_clients.map(&:id)
+      ).page(params[:page])
+    }
 
     def index
     end

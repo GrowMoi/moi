@@ -14,6 +14,8 @@
       #list-clients
         - for client in clients
           = render "client", client: client
+      = paginate clients
+
   .center-container
     .title = t("views.tutor.moi.title_students")
     .list-students-wrapper

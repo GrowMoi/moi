@@ -81,7 +81,8 @@ class User < ActiveRecord::Base
              class_name: "UserTutor",
              dependent: :destroy
     has_many :tutor_requests_received,
-             class_name: "UserTutor"
+             class_name: "UserTutor",
+             dependent: :destroy
   end
 
   def to_s

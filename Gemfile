@@ -60,6 +60,7 @@ gem "newrelic_rpm"
 gem 'airbrake'
 gem 'foreman'
 gem 'pusher'
+gem 'jquery-infinite-pages'
 
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'
