@@ -3,6 +3,6 @@ class NeuronSearch < Searchlight::Search
   searches :q
 
   def search_q
-    search.where("unaccent(neurons.title) ILIKE :q", q: "%#{q}%")
+    search.where("unaccent(neurons.title) ILIKE :q", q: "%#{q}%").where(['is_public', true])
   end
 end
