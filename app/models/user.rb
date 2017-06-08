@@ -76,6 +76,13 @@ class User < ActiveRecord::Base
     has_many :all_tasks,
              source: :content,
              through: :content_tasks
+    has_many :tutor_requests_sent,
+             foreign_key: :tutor_id,
+             class_name: "UserTutor",
+             dependent: :destroy
+    has_many :tutor_requests_received,
+             class_name: "UserTutor",
+             dependent: :destroy
   end
 
   def to_s

@@ -15,7 +15,7 @@ customizeNavbarLink = ->
     if $analisysUserLink[0]
       analisysUserHref = $analisysUserLink.attr('href')
       analisysUserHref = regexUrl.exec(analisysUserHref)[0]
-      $analisysUserLink.attr('href', "#{analisysUserHref}/#{userId}")
+      $analisysUserLink.attr('href', "#{analisysUserHref}/?user_id=#{userId}")
   return
 
 loadUserLinks = ->

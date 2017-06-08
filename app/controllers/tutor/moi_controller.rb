@@ -1,12 +1,25 @@
 module Tutor
   class MoiController < TutorController::Base
 
-    def index
+    expose(:all_clients) {
       if params[:search]
-        @clients =  UserClientSearch.new(q:params[:search]).results
+        UserClientSearch.new(q:params[:search]).results
       else
-        @clients = User.where(:role => :cliente)
+        User.where(:role => :cliente)
       end
+    }
+
+    expose(:my_clients) {
+      current_user.tutor_requests_sent.accepted.map &:user
+    }
+
+    expose(:clients) {
+      all_clients.where.not(
+        id: my_clients.map(&:id)
+      ).page(params[:page])
+    }
+
+    def index
     end
   end
 end
