@@ -7,6 +7,7 @@ module Admin
       ).results
        .send(neuron_scope)
        .accessible_by(current_ability, :index)
+       .pending_contents_count_sorted
        .page(params[:page]).per(18)
     }
     expose(:decorated_neurons) {

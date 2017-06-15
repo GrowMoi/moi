@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170531041409) do
+ActiveRecord::Schema.define(version: 20170614173434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,18 +135,20 @@ ActiveRecord::Schema.define(version: 20170531041409) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "neurons", force: :cascade do |t|
-    t.string   "title",                      null: false
+    t.string   "title",                                  null: false
     t.integer  "parent_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "active",     default: false
-    t.boolean  "deleted",    default: false
-    t.boolean  "is_public",  default: false
-    t.integer  "position",   default: 0
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "active",                 default: false
+    t.boolean  "deleted",                default: false
+    t.boolean  "is_public",              default: false
+    t.integer  "position",               default: 0
+    t.integer  "pending_contents_count", default: 0
   end
 
   add_index "neurons", ["deleted"], name: "index_neurons_on_deleted", using: :btree
   add_index "neurons", ["parent_id"], name: "index_neurons_on_parent_id", using: :btree
+  add_index "neurons", ["pending_contents_count"], name: "index_neurons_on_pending_contents_count", using: :btree
   add_index "neurons", ["position"], name: "index_neurons_on_position", using: :btree
   add_index "neurons", ["title"], name: "index_neurons_on_title", using: :btree
 

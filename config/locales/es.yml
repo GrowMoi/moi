@@ -411,6 +411,7 @@
         links: Enlaces
         videos: Vídeos
         position: Posición
+        pending_contents_count: cantidad de contenidos pendientes
       content:
         level: "Nivel"
         kind: "Tipo"

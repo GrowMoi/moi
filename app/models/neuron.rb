@@ -16,7 +16,7 @@
 class Neuron < ActiveRecord::Base
   include Relationable
 
-  has_paper_trail ignore: [:created_at, :id]
+  has_paper_trail ignore: [:created_at, :id, :pending_contents_count]
 
   STATES = %w(active inactive)
 
@@ -26,12 +26,10 @@ class Neuron < ActiveRecord::Base
     }
   end
 
-  scope :published, -> {
-    where(is_public: true)
-  }
-
-  scope :not_deleted, -> {
-    where(deleted: false)
+  scope :published, -> { where(is_public: true) }
+  scope :not_deleted, -> { where(deleted: false) }
+  scope :pending_contents_count_sorted, -> {
+    order(pending_contents_count: :desc)
   }
 
   begin :relationships
@@ -46,6 +44,7 @@ class Neuron < ActiveRecord::Base
   begin :callbacks
     after_touch :update_active_state!
     before_create :set_position!
+    before_update :counter_cache_pending_contents!
   end
 
   accepts_nested_attributes_for :contents,
@@ -118,6 +117,12 @@ class Neuron < ActiveRecord::Base
   def eager_contents!
     self.contents = contents.eager
     self
+  end
+
+  ##
+  # counter cache pending contents
+  def counter_cache_pending_contents!
+    self.pending_contents_count = contents.approved(false).count
   end
 
   private
