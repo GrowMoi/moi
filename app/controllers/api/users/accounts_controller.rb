@@ -17,6 +17,7 @@ module Api
       param :password, String, "if you want to update your account's password"
       param :city, String
       param :country, String
+      param :school, String
       param :email, String
       def update
         if current_user.valid_password?(user_params[:current_password])
@@ -43,6 +44,7 @@ module Api
                                     :password,
                                     :city,
                                     :country,
+                                    :school,
                                     :email,
                                     :current_password
                                   )

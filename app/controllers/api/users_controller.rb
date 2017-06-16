@@ -16,6 +16,7 @@ module Api
         "name": "Jhon Doe"
         "city": "Quito",
         "country": "Ecuador",
+        "school": "Alejandrino",
         "email": "example@gmail.com",
         "id": "2",
         "last_contents_learnt": [

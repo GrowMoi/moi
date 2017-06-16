@@ -33,6 +33,7 @@ module Api
                :email,
                :name,
                :country,
+               :school,
                :birthday,
                :age,
                :city,

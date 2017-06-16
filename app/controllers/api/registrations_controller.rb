@@ -21,12 +21,13 @@ module Api
       param :confirm_password, String, required: true
       param :country, String, required: false
       param :email, String, required: true
+      param :school, String, required: true
     end
 
     protected
 
     def configure_permitted_parameters
-      devise_parameter_sanitizer.for(:sign_up).push(:name,:birthday,:country,:city)
+      devise_parameter_sanitizer.for(:sign_up).push(:name,:birthday,:country,:city,:school)
     end
   end
 end
