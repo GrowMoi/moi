@@ -36,6 +36,7 @@ module Api
                :uid,
                :provider,
                :country,
+               :school,
                :birthday,
                :city,
                :tree_image
