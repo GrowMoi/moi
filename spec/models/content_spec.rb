@@ -108,7 +108,7 @@ RSpec.describe Content, :type => :model do
     }
   end
 
-  describe "papertrail should registre event: approve_content", versioning: true do
+  describe "papertrail should registre event: active_neuron", versioning: true do
     #the event if registre only when change approved value
     let(:content) {
       create :content, :approved
@@ -119,7 +119,7 @@ RSpec.describe Content, :type => :model do
     it {
       expect(
        content.neuron.versions.last.event
-      ).to eq("approve_content")
+      ).to eq("active_neuron")
     }
   end
 

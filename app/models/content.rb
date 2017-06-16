@@ -126,6 +126,7 @@ class Content < ActiveRecord::Base
   def log_approve_neuron
     if self.approved_changed?
       self.neuron.paper_trail_event = "approve_content"
+      self.neuron.counter_cache_pending_contents!
       self.neuron.touch_with_version
     end
   end

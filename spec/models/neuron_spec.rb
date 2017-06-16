@@ -144,10 +144,6 @@ RSpec.describe Neuron, :type => :model do
       }
 
       it {
-        is_expected.to change(PaperTrail::Version, :count).by(2)
-      }
-
-      it {
         subject.call
         expect(
           versions[0].transaction_id
