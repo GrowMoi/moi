@@ -13,5 +13,18 @@ RSpec.describe Api::NotificationsController,
         user_tutors.first["id"]
       ).to eq(tutor_request.id)
     end
+
+    it "paginated" do
+      user = create :user
+      user_tutors = 3.times.map do
+        create :user_tutor, user: user
+      end
+      login_as user
+      get "/api/notifications/new"
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body["user_tutors"].count).to eq(Api::NotificationsController::PER_PAGE)
+      expect(parsed_body["meta"]["total_pages"]).to eq(2)
+      expect(parsed_body["meta"]["total_count"]).to eq(user_tutors.count)
+    end
   end
 end

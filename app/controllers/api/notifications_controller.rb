@@ -1,11 +1,16 @@
 module Api
   class NotificationsController < BaseController
+    PER_PAGE = 2
+
     before_action :authenticate_user!
 
     expose(:user_tutors) {
       current_user.tutor_requests_received
                   .includes(:tutor)
                   .pending
+                  .order(:id)
+                  .page(params[:page])
+                  .per(PER_PAGE)
     }
 
     api :GET,
@@ -21,7 +26,11 @@ module Api
         each_serializer: Api::UserTutorSerializer
       )
       render json: {
-        user_tutors: serialized_user_tutors
+        user_tutors: serialized_user_tutors,
+        meta: {
+          total_count: user_tutors.total_count,
+          total_pages: user_tutors.total_pages
+        }
       }
     end
   end
