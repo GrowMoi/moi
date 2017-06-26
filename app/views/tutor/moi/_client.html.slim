@@ -4,5 +4,8 @@
   .image-avatar-container
     .active = image_tag("client_avatar.png")
     .inactive = image_tag("client_avatar_inactive.png")
-  .user-name
-    = client.name
+  .user-info
+    .user-name
+      = client.name
+    .user-email
+      = client.email
