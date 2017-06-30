@@ -146,6 +146,7 @@
         images_opened_in_count: "Imágenes abiertas"
         user_sign_in_count: "Total de sesiones iniciadas"
         used_time: "Tiempo de uso"
+        reading_time_content: "Tiempo de lectura: Contenido %{id}"
       client:
         select_user: "Antes se debe seleccionar un usuario"
         activity: "Actividad"
@@ -219,6 +220,11 @@
       - :year
 
   time:
+    units:
+      seconds: segundos
+      minutes: minutos
+      hours: horas
+      days: "días"
     formats:
       default: "%A, %d de %B de %Y %H:%M:%S %z"
       short: "%d de %b %H:%M"

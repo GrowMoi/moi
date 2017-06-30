@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170616020124) do
+ActiveRecord::Schema.define(version: 20170629045241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,16 @@ ActiveRecord::Schema.define(version: 20170616020124) do
 
   add_index "content_notes", ["content_id"], name: "index_content_notes_on_content_id", using: :btree
   add_index "content_notes", ["user_id"], name: "index_content_notes_on_user_id", using: :btree
+
+  create_table "content_reading_times", force: :cascade do |t|
+    t.integer  "content_id", null: false
+    t.integer  "user_id",    null: false
+    t.float    "time",       null: false
+    t.datetime "created_at", null: false
+  end
+
+  add_index "content_reading_times", ["content_id"], name: "index_content_reading_times_on_content_id", using: :btree
+  add_index "content_reading_times", ["user_id"], name: "index_content_reading_times_on_user_id", using: :btree
 
   create_table "content_readings", force: :cascade do |t|
     t.integer  "user_id",    null: false
@@ -310,6 +320,8 @@ ActiveRecord::Schema.define(version: 20170616020124) do
   add_foreign_key "content_media", "contents"
   add_foreign_key "content_notes", "contents"
   add_foreign_key "content_notes", "users"
+  add_foreign_key "content_reading_times", "contents"
+  add_foreign_key "content_reading_times", "users"
   add_foreign_key "content_readings", "contents"
   add_foreign_key "content_readings", "neurons"
   add_foreign_key "content_readings", "users"

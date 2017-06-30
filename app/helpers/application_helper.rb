@@ -78,4 +78,16 @@ module ApplicationHelper
     render "admin/neurons/moi_tree/tree",
            options: opts
   end
+
+  ##
+  # Renders ms in human readable
+  def humanize_ms(msecs)
+    secs = msecs / 1000.0
+    [[60, :seconds], [60, :minutes], [24, :hours], [1000, :days]].map{ |count, name|
+      if secs > 0
+        secs, n = secs.divmod(count)
+        "#{n.to_i} #{t('time.units.' + name.to_s)}"
+      end
+    }.compact.reverse.join(' ')
+  end
 end

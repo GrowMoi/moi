@@ -29,6 +29,7 @@ Moi::Application.routes.draw do
           post :media_open
           post :tasks
           post :task_update
+          post :reading_time
         end
       end
     end
