@@ -14,7 +14,8 @@ module Api
         "respond (accept or reject) a **pending** tutor request"
     param :response, UserTutor::STATUSES, required: true
     def respond
-      user_tutor.update(status: params[:response])
+      user_tutor.update_attributes(status: params[:response])
+      user_tutor.destroy if user_tutor.status == "rejected"
       render json: UserTutorSerializer.new(user_tutor),
              status: :accepted
     end

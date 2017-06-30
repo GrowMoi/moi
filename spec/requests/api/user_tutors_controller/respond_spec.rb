@@ -17,8 +17,10 @@ RSpec.describe Api::UserTutorsController,
       user = create :user
       tutor_request = create :user_tutor, user: user
       login_as user
-      post "/api/user_tutors/#{tutor_request.id}/respond",
-           response: :rejected
+      expect {
+        post "/api/user_tutors/#{tutor_request.id}/respond",
+             response: :rejected
+      }.to change { UserTutor.count }.by(-1)
       user_tutor = JSON.parse(response.body)["user_tutor"]
       expect(user_tutor["status"]).to eq("rejected")
     end

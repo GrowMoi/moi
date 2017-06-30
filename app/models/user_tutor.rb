@@ -38,7 +38,7 @@ class UserTutor < ActiveRecord::Base
   end
 
   def unique_request_for_user
-    if self.class.where(user_id: user_id).exists?
+    if self.class.where(user_id: user_id, tutor_id: tutor_id).exists?
       errors.add(:user_id, :invalid)
     end
   end
