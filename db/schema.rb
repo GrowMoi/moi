@@ -11,11 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170616020124) do
+ActiveRecord::Schema.define(version: 20170709234453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "unaccent"
+
+  create_table "content_favorites", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "content_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "content_favorites", ["content_id"], name: "index_content_favorites_on_content_id", using: :btree
+  add_index "content_favorites", ["user_id"], name: "index_content_favorites_on_user_id", using: :btree
 
   create_table "content_learning_tests", force: :cascade do |t|
     t.integer  "user_id",                    null: false
