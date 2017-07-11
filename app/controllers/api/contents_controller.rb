@@ -223,7 +223,7 @@ module Api
       init_favorite = current_user.create_content_favorite(params[:id])
 
       unless init_favorite.nil?
-        response = { exist: init_favorite }
+        response = { favorite: init_favorite }
         render json: response,
              status: :ok
       else

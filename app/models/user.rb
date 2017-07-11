@@ -86,6 +86,9 @@ class User < ActiveRecord::Base
              dependent: :destroy
     has_many :content_favorites,
              dependent: :destroy
+    has_many :all_favorites,
+             source: :content,
+             through: :content_favorites
   end
 
   def to_s

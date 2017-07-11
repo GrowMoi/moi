@@ -7,9 +7,10 @@ class User < ActiveRecord::Base
       if content_favorite.empty?
         content_favorite = ContentFavorite.new(user_id: self.id, content_id: content_id)
         content_favorite.save
-        false
-      else
         true
+      else
+        content_favorite.first.destroy
+        false
       end
 
     end

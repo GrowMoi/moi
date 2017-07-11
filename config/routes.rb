@@ -53,6 +53,8 @@ Moi::Application.routes.draw do
     match "users/search" => 'users#search', via: :get
     match "users/content_tasks" => 'users#content_tasks', via: :get
     match "users/content_notes" => 'users#content_notes', via: :get
+    match "users/content_favorites" => 'users#content_favorites', via: :get
+
     resources :users,
               only: [] do
       member do

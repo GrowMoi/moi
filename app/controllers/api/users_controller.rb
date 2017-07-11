@@ -95,5 +95,26 @@ module Api
         serializer: Api::ContentNotesSerializer
       )
     end
+
+    expose(:all_favorites) {
+      results = current_user.all_favorites
+      Kaminari.paginate_array(results)
+        .page(params[:page])
+        .per(4)
+    }
+
+    api :GET,
+        "/users/content_favorites",
+        "returns all content-favorites saved by user"
+    param :page, Integer
+    def content_favorites
+      respond_with(
+        all_favorites,
+        meta: {
+          total_items: all_favorites.total_count
+        },
+        serializer: Api::ContentTasksSerializer
+      )
+    end
   end
 end
