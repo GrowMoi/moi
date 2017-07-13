@@ -64,6 +64,12 @@ module Tutor
         content_id: content_id
       ).sum(:time)
     end
+
+    def show_content_title(id)
+      Content.find(id).title
+    end
+
     helper_method :reading_time_for_content
+    helper_method :show_content_title
   end
 end

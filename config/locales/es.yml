@@ -146,7 +146,7 @@
         images_opened_in_count: "Imágenes abiertas"
         user_sign_in_count: "Total de sesiones iniciadas"
         used_time: "Tiempo de uso"
-        reading_time_content: "Tiempo de lectura: Contenido %{id}"
+        reading_time_content: "Tiempo de lectura por contenido"
       client:
         select_user: "Antes se debe seleccionar un usuario"
         activity: "Actividad"
