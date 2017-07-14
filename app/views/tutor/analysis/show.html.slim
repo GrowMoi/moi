@@ -48,6 +48,16 @@
           = t("views.tutor.analysis.used_time")
         .body
           = @statistics["used_time"]
+    .row-analysis-info
+      .row-title
+          = t("views.tutor.analysis.content_readings_by_branch")
+    .row-analysis-info
+      - @statistics["content_readings_by_branch"].each do |neuron, count|
+        .container-analysis-info
+          .header
+            = neuron
+          .body
+            = count
 
     - if grouped_reading_time_content_ids.any?
       .row-analysis-info
