@@ -2,7 +2,7 @@ module AnalyticService
   class ContentReadingsByBranch
     def initialize(user)
       @user = user
-   end
+    end
 
     def results
       root_children.inject({}) do |memo, child|
@@ -23,7 +23,7 @@ module AnalyticService
         neuron
       ).children_ids
       children_ids.push(neuron.id)
-      ContentReading.where(neuron_id: children_ids).count
+      ContentReading.where(neuron_id: children_ids, user_id: @user.id).count
     end
   end
 end

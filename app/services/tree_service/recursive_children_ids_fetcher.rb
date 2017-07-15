@@ -1,7 +1,7 @@
 module TreeService
   class RecursiveChildrenIdsFetcher
     def initialize(neuron)
-     @neuron = neuron
+      @neuron = neuron
       @ids = []
     end
 
