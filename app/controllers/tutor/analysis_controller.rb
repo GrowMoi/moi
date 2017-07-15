@@ -66,7 +66,8 @@ module Tutor
     end
 
     def show_content_title(id)
-      Content.find(id).title
+      title = Content.find(id).title
+      title.humanize
     end
 
     helper_method :reading_time_for_content
