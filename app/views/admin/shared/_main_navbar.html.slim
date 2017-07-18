@@ -15,6 +15,8 @@ nav.navbar.navbar-default.navbar-static-top.main-navbar
         - if can? :manage, Profile
           = nav_item "profiles", admin_profiles_path
 
+        = nav_item "notifications", admin_notifications_path
+
       ul.nav.navbar-nav.navbar-right
         li.dropdown.current-user-dropdown
           = link_to "#", data: {toggle: "dropdown"} do

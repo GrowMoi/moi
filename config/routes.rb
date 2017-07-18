@@ -79,6 +79,7 @@ Moi::Application.routes.draw do
     resource :dashboard, only: :index
     resources :users
     resources :profiles
+    resources :notifications
 
     # settings
     resources :settings, only: :index
