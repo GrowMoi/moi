@@ -76,6 +76,25 @@
       active_status:
         "true": Activo
         "false": Inactivo
+
+    notification:
+      new: "Nueva Notificación"
+      show: "Mostrar Notificación"
+      back: "Regresar"
+      title: "Título"
+      date: "Fecha de creación"
+      description: "Contenido:"
+      media: "Media:"
+      video: "Video:"
+      action: Action
+      send: "Enviar Notificación"
+      add_link: Agregar enlace
+      attach_media: Adjuntar multimedia
+      video_placeholder: Video destacado
+      remove_media: Eliminar multimedia
+      link_placeholder: http://www.growmoi.com
+      videos: Vídeos
+
     contents:
       new: "Nuevo Contenido"
       edit: "Editar Contenido"
@@ -387,6 +406,7 @@
       settings: Preferencias
       search_engine: Motor de búsqueda
       profile: Árbol
+      notification: "Notificaciones"
     attributes:
       user:
         username: "Nombre de usuario"
@@ -436,6 +456,10 @@
         link: Enlace
       content_video:
         url: URL
+      notification:
+        title: "Título"
+        date: "Fecha de creación"
+        description: "Descripción"
 
     errors:
       messages:
