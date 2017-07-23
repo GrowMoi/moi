@@ -5,7 +5,9 @@ class NotificationVideo < ActiveRecord::Base
     ).freeze
 
     def supported_party?
-      supported_party.present?
+      if url.present?
+        supported_party.present?
+      end
     end
 
     def embedded_url

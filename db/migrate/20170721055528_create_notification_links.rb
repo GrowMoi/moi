@@ -6,7 +6,7 @@ class CreateNotificationLinks < ActiveRecord::Migration
                    null: false,
                    index: true,
                    foreign_key: true
-      t.string :link, null: false
+      t.string :link
       t.timestamps null: false
     end
   end

@@ -12,6 +12,5 @@
 
 class NotificationLink < ActiveRecord::Base
   belongs_to :notification
-  validates :link, presence: true
   has_paper_trail ignore: [:created_at, :updated_at, :id]
 end

@@ -64,7 +64,9 @@ class NotificationDecorator < LittleDecorator
     decorated_videos.map do |video|
       content_tag :div,
                   class: "text-center" do
-        video.list_group_item
+        if video.url.present?
+          video.list_group_item
+        end
       end
     end.join.html_safe
   end

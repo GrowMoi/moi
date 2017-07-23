@@ -19,6 +19,8 @@ class Notification < ActiveRecord::Base
 
   acts_as_taggable_on :keywords
 
+  after_create :delayed_notify_user!
+
   begin :relationships
     belongs_to :user
 
@@ -63,6 +65,66 @@ class Notification < ActiveRecord::Base
 
   def able_to_have_more_videos?
     notification_videos.length < NUMBER_OF_VIDEOS
+  end
+
+
+  def delayed_notify_user!
+    unless Rails.env.test?
+      if Rails.env.production?
+        delay.send_pusher_notification!
+      else
+        send_pusher_notification!
+      end
+    end
+  end
+
+  def send_pusher_notification!
+    formated = format_notification(self)
+    user_channel_general = "usernotifications.general"
+    Pusher.trigger(user_channel_general, 'new-notification', formated)
+  end
+
+  def format_notification(notification_created)
+    json = notification_created.as_json(
+      only: [
+        :id,
+        :title,
+        :description,
+        :user_id
+      ],
+      include: {
+        notification_links: {
+          only: :link
+        },
+        notification_medium: {
+          only: :media
+        },
+        notification_videos: {
+          only: [
+            :url,
+            :thumbnail
+          ]
+        }
+      }
+    )
+
+    if json.key?("notification_links")
+      link_urls = json["notification_links"].map {|l| l["link"] }
+      json["links"] = link_urls.compact
+      json.delete("notification_links")
+    end
+    if json.key?("notification_videos")
+      video_urls = json["notification_videos"].map {|v| v["url"] }
+      json["videos"] = video_urls.compact
+      json.delete("notification_videos")
+    end
+    if json.key?("notification_medium")
+      media_urls = json["notification_medium"].map {|m| m["media"]["url"] }
+      json["media"] = media_urls.compact
+      json.delete("notification_medium")
+    end
+
+    json
   end
 
 end

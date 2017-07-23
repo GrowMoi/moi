@@ -76,8 +76,10 @@
       active_status:
         "true": Activo
         "false": Inactivo
-
+    notifications:
+      new: "Nueva Notificación"
     notification:
+      index: "Notificaciones"
       new: "Nueva Notificación"
       show: "Mostrar Notificación"
       back: "Regresar"
