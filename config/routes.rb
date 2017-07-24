@@ -10,6 +10,7 @@ Moi::Application.routes.draw do
     resources :notifications, only: [] do
       collection do
         get :new, path: "new"
+        get :generic, path: "generic"
       end
     end
     resources :user_tutors, only: [] do
