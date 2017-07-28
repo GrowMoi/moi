@@ -24,10 +24,12 @@ loadUserLinks = ->
   return
 
 loadSelectableList = ->
-  listClientsId = '#list-clients'
+  listClientsId = '#list-select'
   analisysUserLink = '#analysis-user-link'
 
   $(listClientsId).selectable
+    filter: '.row-client'
+
     create: (event, ui) ->
       userId = sessionStorage.getItem('userId')
       if userId
