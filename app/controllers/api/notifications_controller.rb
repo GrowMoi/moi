@@ -11,8 +11,8 @@ module Api
                   .includes(:tutor)
                   .pending
                   .order(:id)
-                  .page(params[:page])
-                  .per(PER_PAGE)
+                  .page(params[:page] || 1)
+                  .per(params[:per_page] || PER_PAGE)
     }
 
     expose(:generic_notifications) {
