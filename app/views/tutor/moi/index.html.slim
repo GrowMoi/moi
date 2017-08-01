@@ -1,4 +1,4 @@
-.container-tutor-internal.container-moi#list-select
+.container-tutor-internal.container-moi
   = form_tag tutor_moi_index_path, method: "get", class:"search-form search-form-moi" do
     .search-form-container.search-form-container-moi
       .input-serction
@@ -8,19 +8,21 @@
         = submit_tag "", name: nil, class:"search-form-submit"
         = image_tag "icon_reload.png", class: "search-form-icon-reload"
 
-  .left-container
-    .title = t("views.tutor.moi.title_clients")
-    .list-clients-wrapper
-      #list-clients
-        - for client in clients
-          = render "client", client: client
-      = paginate clients
+  #list-select
+    .list-container
+      .title = t("views.tutor.moi.title_clients")
+      .list-clients-wrapper.list-users
+        #list-clients
+          - for client in clients
+            = render "client", client: client
+        = paginate clients
 
-  .center-container
-    .title = t("views.tutor.moi.title_students")
-    .list-students-wrapper
-      #list-students
-        - for client in my_clients
-          = render "client", client: client
-  .right-container
+    .list-container.list-users
+      .title = t("views.tutor.moi.title_students")
+      .list-students-wrapper
+        #list-students
+          - for client in my_clients
+            = render "client", client: client
+
+  .options-container
     = link_to t("views.tutor.moi.analyze"), tutor_user_tutors_path, class: "user-link analysis-user-link", id: "analysis-user-link", method: :post

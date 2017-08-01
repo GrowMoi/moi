@@ -29,27 +29,36 @@ loadSelectableList = ->
 
   $(listClientsId).selectable
     filter: '.row-client'
-
     create: (event, ui) ->
       userId = sessionStorage.getItem('userId')
       if userId
-        $(this).find("#user_#{userId}").addClass('selectedfilter').addClass('ui-selected')
+        user = $(this).find("#user_#{userId}")
+        user.addClass('selectedfilter').addClass('ui-selected')
         if $(analisysUserLink).hasClass('disabled')
           $(analisysUserLink).removeClass('disabled')
+
+        isStudent = (user.parent().attr('id') == 'list-students')
+        if isStudent
+          $(analisysUserLink).addClass('disabled')
       else
         $(analisysUserLink).addClass('disabled')
       return
 
     selected: (event, ui) ->
-      if $(analisysUserLink).hasClass('disabled')
+      user = $(ui.selected)
+      if $(analisysUserLink).hasClass('disabled') || isStudent
         $(analisysUserLink).removeClass('disabled')
 
-      $(ui.selected).addClass('visible')
-      $(ui.selected).addClass('selectedfilter').addClass('ui-selected')
+      user.addClass('visible')
+      user.addClass('selectedfilter').addClass('ui-selected')
       regexUser = /user_(\d*)/
       userId = regexUser.exec(ui.selected.id)[1]
       sessionStorage.setItem('userId', userId)
       customizeNavbarLink()
+
+      isStudent = (user.parent().attr('id') == 'list-students')
+      if isStudent
+        $(analisysUserLink).addClass('disabled')
       return
 
     unselected: (event, ui) ->

@@ -14,7 +14,6 @@ $white: white
     background-color: $base-color-blue
 
   .common-user-list
-    flex-basis: 33.333333333%
     display: flex
     flex-direction: column
     max-height: $max-height
@@ -85,18 +84,17 @@ $white: white
       .user-email
         color: $base-color-blue
 
-  .left-container
-    @extend .common-user-list
-    .list-clients-wrapper
-      overflow-y: scroll
+  #list-select
+    display: flex
+    flex-basis: 70%
 
-  .center-container
-    @extend .common-user-list
-    .list-students-wrapper
-      overflow-y: scroll
+    .list-container
+      @extend .common-user-list
+      .list-users
+        overflow-y: scroll
 
-  .right-container
-    flex-basis: 33.333333333%
+  .options-container
+    flex-basis: 30%
     display: flex
     justify-content: flex-end
     align-items: flex-end
