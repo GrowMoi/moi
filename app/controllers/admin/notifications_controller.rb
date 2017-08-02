@@ -13,7 +13,7 @@ module Admin
     }
 
     def index
-      @notifications = Notification.all
+      @notifications = Notification.where(user: current_user)
       render
     end
 
@@ -46,16 +46,11 @@ module Admin
           :_destroy,
           :media,
           :media_cache
-        ],
-        :notification_links_attributes => [
-          :id,
-          :link
         ]
       )
     end
 
     def build_relationships!
-      decorated_notification.build_one_link!
       decorated_notification.build_one_video!
     end
   end

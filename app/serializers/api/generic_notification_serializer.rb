@@ -4,14 +4,10 @@ module Api
         :title,
         :description,
         :user_id,
-        :links,
         :videos,
-        :media
-
-    def links
-      link_urls = object.notification_links.map {|l| l[:link] }
-      link_urls.compact
-    end
+        :media,
+        :type,
+        :created_at
 
     def videos
       video_urls = object.notification_videos.map {|v| v[:url] }
@@ -21,6 +17,14 @@ module Api
     def media
       media_urls = object.notification_medium.map {|m| m[:media] }
       media_urls.compact
+    end
+
+    def created_at
+      object.created_at
+    end
+
+    def type
+      'generic'
     end
   end
 end

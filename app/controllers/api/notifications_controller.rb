@@ -1,157 +1,131 @@
 module Api
   class NotificationsController < BaseController
+    PAGE = 1
     PER_PAGE = 2
 
     before_action :authenticate_user!
 
-    before_action :generic_notifications
-
-    expose(:user_tutors) {
+    expose(:tutor_notifications) {
       current_user.tutor_requests_received
-                  .includes(:tutor)
-                  .pending
-                  .order(:id)
-                  .page(params[:page] || 1)
-                  .per(params[:per_page] || PER_PAGE)
     }
 
-    expose(:generic_notifications) {
+    expose(:admin_notifications) {
       Notification.all
-                  .includes(:notification_links)
-                  .includes(:notification_medium)
-                  .includes(:notification_videos)
-                  .order(created_at: :desc)
-                  .page(params[:page] || 1)
-                  .per(params[:per_page] || PER_PAGE)
+    }
+
+    expose(:total_user_notifications) {
+      serialized_admin = serialize_notifications(
+                            admin_notifications,
+                            Api::GenericNotificationSerializer
+                          ).as_json
+      serialized_tutor = serialize_notifications(
+                            tutor_notifications,
+                            Api::UserTutorSerializer
+                          ).as_json
+      serialized_admin + serialized_tutor
     }
 
     api :GET,
-        "/notifications/new",
+        "/notifications",
         "get new notifications for current user"
     example %q{
-      // pending user tutor request
-      {
-        "user_tutors":[
-          {
-            "id":1,
-            "status":null,
-            "tutor": {
-              "id":2,
-              "email":"user-2@moi.org",
-              "name":"User 2",
-              "role":"cliente",
-              "uid":"user-2@moi.org",
-              "provider":"email",
-              "country":null,
-              "birthday":null,
-              "city":null,
-              "tree_image":null,
-              "content_preferences":[
-                {
-                  "kind":"que-es",
-                  "level":1,
-                  "order":0
-                },
-                {
-                  "kind":"como-funciona",
-                  "level":1,
-                  "order":1
-                },
-                {
-                  "kind":"por-que-es",
-                  "level":1,
-                  "order":2
-                },
-                {
-                  "kind":"quien-cuando-donde",
-                  "level":1,
-                  "order":3
-                }
-              ]
-            }
-          }
-        ]
+      "notifications": [
+        {
+          "id": 14,
+          "title": "Notification 1",
+          "description": "Consequatur nesciunt neque accusamus ipsum consectetur",
+          "user_id": 1,
+          "videos": [
+            "https://www.youtube.com/watch?v=JFOQc3tOT98"
+          ],
+          "media": [
+            "1501675636-nature-q-c-640-480-2.jpg"
+          ],
+          "type": "generic",
+          "created_at": "2017-08-02T07:07:14.351-05:00"
+        },
+        {
+          "id": 13,
+          "title": "Notification 2",
+          "description": "Consequatur nesciunt neque accusamus ipsum consectetur",
+          "user_id": 1,
+          "videos": [
+            "https://www.youtube.com/watch?v=JFOQc3tOT98"
+          ],
+          "media": [
+            "1501621362-nature-q-c-640-480-2.jpg"
+          ],
+          "type": "generic",
+          "created_at": "2017-08-01T16:02:41.576-05:00"
+        },
+        {
+          "id": 1,
+          "status": null,
+          "tutor": {
+            "id": 4,
+            "email": "tutor1@test.com",
+            "created_at": "2017-08-01T15:59:41.764-05:00",
+            "updated_at": "2017-08-01T16:00:22.912-05:00",
+            "name": "tutor1",
+            "role": "tutor",
+            "uid": "tutor1@test.com",
+            "provider": "email",
+            "birthday": null,
+            "city": null,
+            "country": null,
+            "tree_image": {
+              "url": null
+            },
+            "school": null
+          },
+          "type": "request",
+          "created_at": "2017-08-01T16:00:33.895-05:00"
+        }
+      ],
+      "meta": {
+        "total_count": 11,
+        "total_pages": 4
       }
     }
-    def new
-      serialized_user_tutors = ActiveModel::ArraySerializer.new(
-        user_tutors,
-        each_serializer: Api::UserTutorSerializer
-      )
+    def index
+      notification_items = paginate_notifications(total_user_notifications)
       render json: {
-        user_tutors: serialized_user_tutors,
+        notifications: notification_items,
         meta: {
-          total_count: user_tutors.total_count,
-          total_pages: user_tutors.total_pages
+          total_count: notification_items.total_count,
+          total_pages: notification_items.total_pages
         }
       }
     end
 
-    api :GET,
-        "/notifications/generic",
-        "get generic notifications"
-        example %q{
-          {
-            "notifications": [
-              {
-                "id": 6,
-                "title": "Libero debitis et ea sunt temporibus",
-                "description": "Adipisci eligendi eos molestiae dolorem nostrum eu",
-                "user_id": 1,
-                "links": [
-                  "http://google.com"
-                ],
-                "videos": [
-                  "https://www.youtube.com/watch?v=exneSCE60AY"
-                ],
-                "media": [
-                  "1500831441-7.jpg",
-                  "1500831441-download.jpg"
-                ]
-              },
-              {
-                "id": 3,
-                "title": "Dicta omnis dolor mollitia similique",
-                "description": "Beatae magnam aut ut est est nostrum ipsum consequuntur cum libero sed",
-                "user_id": 1,
-                "links": [
-                  "http://google.com"
-                ],
-                "videos": [
-                  "Ducimus non quis aut exercitation in ipsum est dolore est perferendis sunt et fuga Earum est sunt ut at dolor"
-                ],
-                "media": []
-              },
-              {
-                "id": 2,
-                "title": "Deserunt et sit ratione aut id sed iure proident non ut eu cillum minim recusandae Fugiat ut proident",
-                "description": "Quo nulla unde quas debitis aliquam exercitation nulla dignissimos qui lorem dolor ea do quisquam",
-                "user_id": 1,
-                "links": [],
-                "videos": [
-                  "Facilis voluptatem vitae est assumenda vel quasi repellendus Exercitation inventore itaque"
-                ],
-                "media": []
-              }
-            ],
-            "meta": {
-              "total_count": 4,
-              "total_pages": 2
-            }
-          }
-    }
-    def generic
-      serialized_user_tutors = ActiveModel::ArraySerializer.new(
-        generic_notifications,
-        each_serializer: Api::GenericNotificationSerializer
-      )
-      render json: {
-        notifications: serialized_user_tutors,
-        meta: {
-          total_count: generic_notifications.total_count,
-          total_pages: generic_notifications.total_pages
-        }
-      }
+    private
+
+    def paginate_notifications(notifications_data)
+      sorted_notifications = sort_notifications(notifications_data)
+      Kaminari.paginate_array(sorted_notifications)
+              .page(params[:page] || PAGE)
+              .per(params[:per_page] || PER_PAGE)
     end
+
+    def sort_notifications(notifications_data)
+      notifications_data.sort_by {|elem| elem[:created_at]}.reverse
+    end
+
+    def serialize_notifications(notifications_data, serializer)
+      serialized = ActiveModel::ArraySerializer.new(
+        notifications_data,
+        each_serializer: serializer
+      )
+      serialized
+    end
+
+    def serialize_tutor_notifications(notifications_data)
+      serialized = ActiveModel::ArraySerializer.new(
+        notifications_data,
+        each_serializer: Api::UserTutorSerializer
+      )
+      serialized
+    end
+
   end
 end

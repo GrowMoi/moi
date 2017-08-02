@@ -9,8 +9,7 @@ Moi::Application.routes.draw do
     resource :order_preferences, controller: :order, only: :update
     resources :notifications, only: [] do
       collection do
-        get :new, path: "new"
-        get :generic, path: "generic"
+        get :index
       end
     end
     resources :user_tutors, only: [] do

@@ -12,7 +12,6 @@
 
 class Notification < ActiveRecord::Base
 
-  NUMBER_OF_LINKS = 3
   NUMBER_OF_VIDEOS = 1
 
   has_paper_trail ignore: [:created_at, :updated_at, :id]
@@ -24,8 +23,6 @@ class Notification < ActiveRecord::Base
   begin :relationships
     belongs_to :user
 
-    has_many :notification_links,
-              dependent: :destroy
     has_many :notification_videos,
               dependent: :destroy
     has_many :notification_medium,
@@ -41,11 +38,6 @@ class Notification < ActiveRecord::Base
         attributes["media"].blank?
       }
 
-    accepts_nested_attributes_for :notification_links,
-      reject_if: ->(attributes) {
-        attributes["link"].blank?
-      }
-
     accepts_nested_attributes_for :notification_videos,
       allow_destroy: true,
       reject_if: ->(attributes) {
@@ -57,10 +49,6 @@ class Notification < ActiveRecord::Base
     scope :with_media, -> {
       where("media_count > 0")
     }
-  end
-
-  def able_to_have_more_links?
-    notification_links.length < NUMBER_OF_LINKS
   end
 
   def able_to_have_more_videos?
@@ -93,9 +81,6 @@ class Notification < ActiveRecord::Base
         :user_id
       ],
       include: {
-        notification_links: {
-          only: :link
-        },
         notification_medium: {
           only: :media
         },
@@ -108,11 +93,6 @@ class Notification < ActiveRecord::Base
       }
     )
 
-    if json.key?("notification_links")
-      link_urls = json["notification_links"].map {|l| l["link"] }
-      json["links"] = link_urls.compact
-      json.delete("notification_links")
-    end
     if json.key?("notification_videos")
       video_urls = json["notification_videos"].map {|v| v["url"] }
       json["videos"] = video_urls.compact

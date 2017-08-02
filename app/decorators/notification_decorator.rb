@@ -1,11 +1,5 @@
 class NotificationDecorator < LittleDecorator
 
-  def build_one_link!
-    if notification_links.length === 0
-      notification_links.build
-    end
-  end
-
   def build_one_video!
     if notification_videos.length === 0
       notification_videos.build
