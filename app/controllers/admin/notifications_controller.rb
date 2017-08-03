@@ -13,7 +13,7 @@ module Admin
     }
 
     def index
-      @notifications = Notification.where(user: current_user)
+      @notifications = Notification.where(user: current_user).order(created_at: :desc)
       render
     end
 

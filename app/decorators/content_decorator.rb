@@ -1,4 +1,9 @@
 class ContentDecorator < LittleDecorator
+  def build_one_link!
+    if content_links.length === 0
+      content_links.build
+    end
+  end
 
   def build_one_video!
     if content_videos.length === 0

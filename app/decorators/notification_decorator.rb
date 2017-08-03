@@ -28,19 +28,6 @@ class NotificationDecorator < LittleDecorator
     end
   end
 
-  def links_list_group
-    if decorated_links.any?
-      content_tag :div,
-                  class: "notification-links" do
-        strong t("views.notifications.links") do
-          decorated_links.map do |link|
-            link.list_group_item
-          end.join.html_safe
-        end
-      end
-    end
-  end
-
   def source
 
     if source_is_uri?
@@ -82,12 +69,6 @@ class NotificationDecorator < LittleDecorator
   def decorated_videos
     @decorated_videos ||= notification_videos.map do |notification_video|
       decorate notification_video
-    end
-  end
-
-  def decorated_links
-    @decorated_links ||= notification_links.map do |notification_link|
-      decorate notification_link
     end
   end
 
