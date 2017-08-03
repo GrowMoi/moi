@@ -15,7 +15,7 @@ module Api
     end
 
     def media
-      media_urls = object.notification_medium.map {|m| m[:media] }
+      media_urls = object.notification_medium.map(&:media_url)
       media_urls.compact
     end
 
