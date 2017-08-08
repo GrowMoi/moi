@@ -7,6 +7,7 @@
 #  content_id :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  deleted    :boolean          default(FALSE)
 #
 
 class ContentTask < ActiveRecord::Base

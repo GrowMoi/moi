@@ -1,0 +1,14 @@
+fieldset.notification-fieldset
+  legend = t("views.notification.links")
+  .row
+    .col-xs-12.notification-links-form
+      = f.fields_for :notification_links do |link_form|
+        = render "admin/notifications/notification_links/form",
+                 f: link_form
+
+      - if f.object.able_to_have_more_links?
+        = f.link_to_add :notification_links,
+                        class: "btn btn-sm btn-default add-notification-link bs-tooltip",
+                        title: t("views.notification.add_link"),
+                        data: { placement: "left" } do
+          span.glyphicon.glyphicon-plus.text-success

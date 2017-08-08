@@ -1,0 +1,26 @@
+.notifications-page
+  - content_for :title, t("views.notification.show")
+
+  .notification-content
+    .notification-row
+      .button-back
+        = link_to t("views.notification.back"), admin_notifications_path
+
+    .notification-row
+      strong=t("views.notification.title")
+      .item
+        = notification.title
+
+    .notification-row
+      strong=t("views.notification.description")
+      .item
+        = notification.description
+
+    .notification-row
+      strong=t("views.notification.video")
+      = decorated_notification.video_list_group
+
+    .notification-row
+      = decorated_notification.media_list_group
+
+

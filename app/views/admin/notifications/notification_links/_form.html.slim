@@ -1,0 +1,7 @@
+.nested-notification-link
+  = f.hidden_field :id
+
+  .form-group
+    = f.text_field :link,
+                   placeholder: t("views.notification.link_placeholder"),
+                   class: "form-control"

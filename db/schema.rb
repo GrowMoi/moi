@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170709234453) do
+ActiveRecord::Schema.define(version: 20170721055528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,16 @@ ActiveRecord::Schema.define(version: 20170709234453) do
 
   add_index "content_notes", ["content_id"], name: "index_content_notes_on_content_id", using: :btree
   add_index "content_notes", ["user_id"], name: "index_content_notes_on_user_id", using: :btree
+
+  create_table "content_reading_times", force: :cascade do |t|
+    t.integer  "content_id", null: false
+    t.integer  "user_id",    null: false
+    t.float    "time",       null: false
+    t.datetime "created_at", null: false
+  end
+
+  add_index "content_reading_times", ["content_id"], name: "index_content_reading_times_on_content_id", using: :btree
+  add_index "content_reading_times", ["user_id"], name: "index_content_reading_times_on_user_id", using: :btree
 
   create_table "content_readings", force: :cascade do |t|
     t.integer  "user_id",    null: false
@@ -161,6 +171,44 @@ ActiveRecord::Schema.define(version: 20170709234453) do
   add_index "neurons", ["pending_contents_count"], name: "index_neurons_on_pending_contents_count", using: :btree
   add_index "neurons", ["position"], name: "index_neurons_on_position", using: :btree
   add_index "neurons", ["title"], name: "index_neurons_on_title", using: :btree
+
+  create_table "notification_links", force: :cascade do |t|
+    t.integer  "notification_id", null: false
+    t.string   "link"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "notification_links", ["notification_id"], name: "index_notification_links_on_notification_id", using: :btree
+
+  create_table "notification_media", force: :cascade do |t|
+    t.string   "media"
+    t.integer  "notification_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "notification_media", ["notification_id"], name: "index_notification_media_on_notification_id", using: :btree
+
+  create_table "notification_videos", force: :cascade do |t|
+    t.integer  "notification_id", null: false
+    t.string   "url"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "notification_videos", ["notification_id"], name: "index_notification_videos_on_notification_id", using: :btree
+
+  create_table "notifications", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "media_count", default: 0
+    t.integer  "user_id",                 null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "possible_answers", force: :cascade do |t|
     t.integer  "content_id",                 null: false
@@ -320,10 +368,15 @@ ActiveRecord::Schema.define(version: 20170709234453) do
   add_foreign_key "content_media", "contents"
   add_foreign_key "content_notes", "contents"
   add_foreign_key "content_notes", "users"
+  add_foreign_key "content_reading_times", "contents"
+  add_foreign_key "content_reading_times", "users"
   add_foreign_key "content_readings", "contents"
   add_foreign_key "content_readings", "neurons"
   add_foreign_key "content_readings", "users"
   add_foreign_key "content_videos", "contents"
+  add_foreign_key "notification_links", "notifications"
+  add_foreign_key "notification_media", "notifications"
+  add_foreign_key "notification_videos", "notifications"
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
   add_foreign_key "user_content_preferences", "users"
