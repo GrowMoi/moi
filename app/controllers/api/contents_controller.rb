@@ -215,6 +215,24 @@ module Api
       )
     end
 
+    api :POST,
+        "/neurons/:neuron_id/contents/:id/favorites",
+        "To store content favorites a user."
+    param :id, Integer, required: true
+    def favorites
+      init_favorite = current_user.create_content_favorite(params[:id])
+
+      unless init_favorite.nil?
+        response = { favorite: init_favorite }
+        render json: response,
+             status: :ok
+      else
+        response = { status: :unprocessable_entity }
+        render json: response,
+             status: response[:status]
+      end
+    end
+
     private
 
     def test_fetcher

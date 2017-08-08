@@ -29,7 +29,8 @@ module Api
           level: content.level,
           read: current_user.already_read?(content),
           learnt: current_user.already_learnt?(content),
-          title: content.title
+          title: content.title,
+          favorite: is_favorite?(content)
         }
       end
     end
@@ -41,5 +42,11 @@ module Api
 
     alias_method :current_user, :scope
 
+    def is_favorite?(content)
+      ContentFavorite.where(
+        user: current_user,
+        content: content
+      ).exists?
+    end
   end
 end

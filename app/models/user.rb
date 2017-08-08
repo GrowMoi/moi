@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   include UserMediaSeen
   include UserStatistics
   include UserContentTasks
+  include UserContentFavorites
 
   mount_base64_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
 
@@ -83,6 +84,11 @@ class User < ActiveRecord::Base
     has_many :tutor_requests_received,
              class_name: "UserTutor",
              dependent: :destroy
+    has_many :content_favorites,
+             dependent: :destroy
+    has_many :all_favorites,
+             source: :content,
+             through: :content_favorites
   end
 
   def to_s
