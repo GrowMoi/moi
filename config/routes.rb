@@ -12,6 +12,11 @@ Moi::Application.routes.draw do
         get :index
       end
     end
+    resources :awards, only: [] do
+      collection do
+        get :index
+      end
+    end
     resources :user_tutors, only: [] do
       member do
         post :respond
@@ -80,6 +85,7 @@ Moi::Application.routes.draw do
     resources :users
     resources :profiles
     resources :notifications
+    resources :awards
 
     # settings
     resources :settings, only: :index

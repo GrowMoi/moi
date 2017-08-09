@@ -27,6 +27,7 @@
       settings: Preferencias
       profiles: Árboles
       notifications: Notificaciones
+      awards: Premios
     users:
       new: "Nuevo Usuario"
       edit: "Editar Usuario"
@@ -78,6 +79,7 @@
         "false": Inactivo
     notifications:
       new: "Nueva Notificación"
+      create: "Crear Notificación"
     notification:
       index: "Notificaciones"
       new: "Nueva Notificación"
@@ -88,14 +90,29 @@
       description: "Contenido:"
       media: "Media:"
       video: "Video:"
-      action: Action
-      send: "Enviar Notificación"
+      action: "Accion"
+      send: "Crear Notificación"
       add_link: Agregar enlace
       attach_media: Adjuntar multimedia
       video_placeholder: Video destacado
       remove_media: Eliminar multimedia
       link_placeholder: http://www.growmoi.com
       videos: Vídeos
+
+    awards:
+      new: "Nuevo premio"
+      index: "Premios"
+      create: "Crear Premio"
+      send: "Crear Premio"
+      back: "Regresar"
+      form_new:
+        name: "Nombre:"
+        description: "Descripcion:"
+        image: "Imagen:"
+      grid_info:
+        date: "Fecha de creación"
+        name: "Nombre"
+        action: "Acción"
 
     contents:
       new: "Nuevo Contenido"

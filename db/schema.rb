@@ -11,11 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721055528) do
+ActiveRecord::Schema.define(version: 20170807002444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "unaccent"
+
+  create_table "awards", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "image"
+    t.json     "settings"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "content_favorites", force: :cascade do |t|
     t.integer  "user_id",    null: false
@@ -79,6 +88,16 @@ ActiveRecord::Schema.define(version: 20170721055528) do
 
   add_index "content_notes", ["content_id"], name: "index_content_notes_on_content_id", using: :btree
   add_index "content_notes", ["user_id"], name: "index_content_notes_on_user_id", using: :btree
+
+  create_table "content_reading_times", force: :cascade do |t|
+    t.integer  "content_id", null: false
+    t.integer  "user_id",    null: false
+    t.float    "time",       null: false
+    t.datetime "created_at", null: false
+  end
+
+  add_index "content_reading_times", ["content_id"], name: "index_content_reading_times_on_content_id", using: :btree
+  add_index "content_reading_times", ["user_id"], name: "index_content_reading_times_on_user_id", using: :btree
 
   create_table "content_readings", force: :cascade do |t|
     t.integer  "user_id",    null: false
@@ -266,6 +285,16 @@ ActiveRecord::Schema.define(version: 20170721055528) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
+  create_table "user_awards", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "award_id",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_awards", ["award_id"], name: "index_user_awards_on_award_id", using: :btree
+  add_index "user_awards", ["user_id"], name: "index_user_awards_on_user_id", using: :btree
+
   create_table "user_content_preferences", force: :cascade do |t|
     t.integer  "user_id",                null: false
     t.string   "kind",                   null: false
@@ -358,6 +387,8 @@ ActiveRecord::Schema.define(version: 20170721055528) do
   add_foreign_key "content_media", "contents"
   add_foreign_key "content_notes", "contents"
   add_foreign_key "content_notes", "users"
+  add_foreign_key "content_reading_times", "contents"
+  add_foreign_key "content_reading_times", "users"
   add_foreign_key "content_readings", "contents"
   add_foreign_key "content_readings", "neurons"
   add_foreign_key "content_readings", "users"
