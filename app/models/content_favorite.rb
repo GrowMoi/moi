@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: tasks
+# Table name: content_favorites
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer          not null

@@ -2,12 +2,13 @@
 #
 # Table name: notifications
 #
-#  id         :integer          not null, primary key
-#  title      :string
-#  text       :text
-#  user_id    :integer          not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :integer          not null, primary key
+#  title       :string
+#  description :text
+#  media_count :integer          default(0)
+#  user_id     :integer          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 
 require 'rails_helper'

@@ -18,9 +18,10 @@ ActiveRecord::Schema.define(version: 20170807002444) do
   enable_extension "unaccent"
 
   create_table "awards", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",        null: false
     t.text     "description"
     t.string   "image"
+    t.string   "category",    null: false
     t.json     "settings"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false

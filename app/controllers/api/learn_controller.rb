@@ -26,7 +26,10 @@ needs to be a JSON-encoded string having the following format:
     ]
     }
     def create
-      render json: { result: answerer.result }
+      render json: {
+        result: answerer.result,
+        awards: reward
+      }
     end
 
     private
@@ -37,5 +40,75 @@ needs to be a JSON-encoded string having the following format:
         answers: JSON.parse(params[:answers])
       ).process!
     end
+
+    def reward
+      awards_by_test = reward_by(:test, &method(:build_test_award))
+      awards_by_content = reward_by(:content, &method(:build_content_award))
+      awards_by_test + awards_by_content
+    end
+
+    def reward_by(category, &callback)
+      awards = Award.where(category: category)
+      user_awards = []
+      if awards.any?
+        awards.each do |award|
+          award_was_given = UserAward.where(user_id: current_user.id, award_id: award.id)
+          if award_was_given.empty?
+            user_awards = user_awards + callback.call(award)
+          end
+        end
+      end
+      user_awards
+    end
+
+    def build_test_award(award)
+      items = []
+      tests_aproved = award.settings["number"].to_i
+      results = current_user.learning_tests
+            .completed
+            .limit(tests_aproved)
+            .order(updated_at: :desc)
+            .map(&:answers)
+            .flatten()
+            .map { |answer| answer["correct"] }
+            .uniq
+      enable_award = results.size == 1 && results[0] == true
+      if enable_award
+        formated_award = add_relation_format_award(award)
+        items.push(formated_award) if formated_award
+      end
+      items
+    end
+
+    def build_content_award(award)
+      items = []
+      award_all_contents = award.settings["all"]
+      award_custom_contents = award.settings["number"].to_i
+      user_content_learnings = current_user.content_learnings.size
+
+      if award_all_contents
+        total_contents = Content.where(approved: false).size
+        if total_contents == user_content_learnings
+          formated_award = add_relation_format_award(award)
+          items.push(formated_award)  if formated_award
+        end
+      end
+
+      if award_custom_contents && (user_content_learnings >= award_custom_contents)
+        formated_award = add_relation_format_award(award)
+        items.push(formated_award)  if formated_award
+      end
+
+      items
+    end
+
+    def add_relation_format_award(award)
+      relation = UserAward.new(user_id: current_user.id, award_id: award.id)
+      if relation.save
+        award_serialized = Api::AwardSerializer.new(award).as_json
+        return award_serialized["award"]
+      end
+    end
+
   end
 end
