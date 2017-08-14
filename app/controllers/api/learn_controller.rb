@@ -63,7 +63,7 @@ needs to be a JSON-encoded string having the following format:
 
     def build_test_award(award)
       items = []
-      tests_aproved = award.settings["number"].to_i
+      tests_aproved = award.settings["quantity"].to_i
       results = current_user.learning_tests
             .completed
             .limit(tests_aproved)
@@ -82,8 +82,8 @@ needs to be a JSON-encoded string having the following format:
 
     def build_content_award(award)
       items = []
-      award_all_contents = award.settings["all"]
-      award_custom_contents = award.settings["number"].to_i
+      award_all_contents = award.settings["learn_all_contents"]
+      award_custom_contents = award.settings["quantity"].to_i
       user_content_learnings = current_user.content_learnings.size
 
       if award_all_contents
