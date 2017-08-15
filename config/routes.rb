@@ -12,7 +12,7 @@ Moi::Application.routes.draw do
         get :index
       end
     end
-    resources :awards, only: [] do
+    resources :achievements, only: [] do
       collection do
         get :index
       end
@@ -85,7 +85,7 @@ Moi::Application.routes.draw do
     resources :users
     resources :profiles
     resources :notifications
-    resources :awards
+    resources :achievements
 
     # settings
     resources :settings, only: :index

@@ -1,25 +1,25 @@
 showHideItems = (selectedVal) ->
   aprovedContentContainer = '.aproved-content'
-  questionNumberContainer = '.question-number'
+  testNumberContainer = '.test-number'
   contentNumberContainer = '.content-number'
 
   if (selectedVal == 'test')
     $(aprovedContentContainer).hide()
     $(contentNumberContainer).hide()
-    $(questionNumberContainer).show()
+    $(testNumberContainer).show()
 
   if (selectedVal == 'content')
     $(aprovedContentContainer).show()
     $(contentNumberContainer).hide()
-    $(questionNumberContainer).hide()
+    $(testNumberContainer).hide()
 
   if (selectedVal == 'personalized')
     $(contentNumberContainer).show()
-    $(questionNumberContainer).hide()
+    $(testNumberContainer).hide()
 
   if (selectedVal == 'all')
     $(contentNumberContainer).hide()
-    $(questionNumberContainer).hide()
+    $(testNumberContainer).hide()
 
 enableSelectorEvents = ->
   categorySelector = '.category-selector'

@@ -1,19 +1,19 @@
 # == Schema Information
 #
-# Table name: user_awards
+# Table name: user_achievements
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer          not null
-#  award_id   :integer          not null
+#  achievement_id   :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
-class UserAward < ActiveRecord::Base
+class UserAchievement < ActiveRecord::Base
   belongs_to :user
-  belongs_to :award
+  belongs_to :achievement
   validates :user_id,
             presence: true
-  validates :award_id,
+  validates :achievement_id,
             presence: true
 end

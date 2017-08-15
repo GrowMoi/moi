@@ -28,7 +28,7 @@ needs to be a JSON-encoded string having the following format:
     def create
       render json: {
         result: answerer.result,
-        awards: reward
+        achievements: reward
       }
     end
 
@@ -42,28 +42,28 @@ needs to be a JSON-encoded string having the following format:
     end
 
     def reward
-      awards_by_test = reward_by(:test, &method(:build_test_award))
-      awards_by_content = reward_by(:content, &method(:build_content_award))
-      awards_by_test + awards_by_content
+      achievements_by_test = reward_by(:test, &method(:build_test_achievement))
+      achievements_by_content = reward_by(:content, &method(:build_content_achievement))
+      achievements_by_test + achievements_by_content
     end
 
     def reward_by(category, &callback)
-      awards = Award.where(category: category)
-      user_awards = []
-      if awards.any?
-        awards.each do |award|
-          award_was_given = UserAward.where(user_id: current_user.id, award_id: award.id)
-          if award_was_given.empty?
-            user_awards = user_awards + callback.call(award)
+      achievements = Achievement.where(category: category)
+      user_achievements = []
+      if achievements.any?
+        achievements.each do |achievement|
+          achievement_was_given = UserAchievement.where(user_id: current_user.id, achievement_id: achievement.id)
+          if achievement_was_given.empty?
+            user_achievements = user_achievements + callback.call(achievement)
           end
         end
       end
-      user_awards
+      user_achievements
     end
 
-    def build_test_award(award)
+    def build_test_achievement(achievement)
       items = []
-      tests_aproved = award.settings["quantity"].to_i
+      tests_aproved = achievement.settings["quantity"].to_i
       results = current_user.learning_tests
             .completed
             .limit(tests_aproved)
@@ -72,41 +72,41 @@ needs to be a JSON-encoded string having the following format:
             .flatten()
             .map { |answer| answer["correct"] }
             .uniq
-      enable_award = results.size == 1 && results[0] == true
-      if enable_award
-        formated_award = add_relation_format_award(award)
-        items.push(formated_award) if formated_award
+      enable_achievement = results.size == 1 && results[0] == true
+      if enable_achievement
+        formated_achievement = add_relation_format_achievement(achievement)
+        items.push(formated_achievement) if formated_achievement
       end
       items
     end
 
-    def build_content_award(award)
+    def build_content_achievement(achievement)
       items = []
-      award_all_contents = award.settings["learn_all_contents"]
-      award_custom_contents = award.settings["quantity"].to_i
+      achievement_all_contents = achievement.settings["learn_all_contents"]
+      achievement_custom_contents = achievement.settings["quantity"].to_i
       user_content_learnings = current_user.content_learnings.size
 
-      if award_all_contents
+      if achievement_all_contents
         total_contents = Content.where(approved: false).size
         if total_contents == user_content_learnings
-          formated_award = add_relation_format_award(award)
-          items.push(formated_award)  if formated_award
+          formated_achievement = add_relation_format_achievement(achievement)
+          items.push(formated_achievement)  if formated_achievement
         end
       end
 
-      if award_custom_contents && (user_content_learnings >= award_custom_contents)
-        formated_award = add_relation_format_award(award)
-        items.push(formated_award)  if formated_award
+      if achievement_custom_contents && (user_content_learnings >= achievement_custom_contents)
+        formated_achievement = add_relation_format_achievement(achievement)
+        items.push(formated_achievement)  if formated_achievement
       end
 
       items
     end
 
-    def add_relation_format_award(award)
-      relation = UserAward.new(user_id: current_user.id, award_id: award.id)
+    def add_relation_format_achievement(achievement)
+      relation = UserAchievement.new(user_id: current_user.id, achievement_id: achievement.id)
       if relation.save
-        award_serialized = Api::AwardSerializer.new(award).as_json
-        return award_serialized["award"]
+        achievement_serialized = Api::AchievementSerializer.new(achievement).as_json
+        return achievement_serialized["achievement"]
       end
     end
 

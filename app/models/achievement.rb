@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: awards
+# Table name: achievements
 #
 #  id          :integer          not null, primary key
 #  name        :string           not null
@@ -12,7 +12,7 @@
 #  updated_at  :datetime         not null
 #
 
-class Award < ActiveRecord::Base
+class Achievement < ActiveRecord::Base
 
   has_paper_trail ignore: [:created_at, :updated_at, :id]
 

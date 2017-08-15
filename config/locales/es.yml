@@ -27,7 +27,7 @@
       settings: Preferencias
       profiles: Árboles
       notifications: Notificaciones
-      awards: Premios
+      achievements: Logros
     users:
       new: "Nuevo Usuario"
       edit: "Editar Usuario"
@@ -99,11 +99,11 @@
       link_placeholder: http://www.growmoi.com
       videos: Vídeos
 
-    awards:
-      new: "Nuevo premio"
-      index: "Premios"
-      create: "Crear Premio"
-      send: "Crear Premio"
+    achievements:
+      new: "Nuevo logro"
+      index: "Logros"
+      create: "Crear Logro"
+      send: "Enviar"
       back: "Regresar"
       form_new:
         name: "Nombre:"
@@ -112,11 +112,11 @@
         settings: "Configuraciones:"
         attach_image: "Adjuntar imagen:"
         remove_image: "Eliminar imagen:"
-        settings_category: "Entregar premio por:"
+        settings_category: "Entregar logro por:"
         settings_aproved_content: "Cantidad de contenidos aprendidos:"
-        settings_question_number: "Número de preguntas correctas:"
+        settings_test_number: "Número de tests:"
         settings_content_number: "Número de contenidos aprendidos:"
-        settings_test: "Preguntas correctas por test"
+        settings_test: "Tests resueltos correctamente"
         settings_content: "Contenidos aprendidos"
         settings_all: "Todos"
         settings_personalized: "Personalizado"

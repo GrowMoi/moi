@@ -4,7 +4,7 @@
 #
 #  id              :integer          not null, primary key
 #  notification_id :integer          not null
-#  url             :string
+#  url             :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #

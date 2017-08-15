@@ -1,5 +1,5 @@
 module Api
-  class AwardSerializer < ActiveModel::Serializer
+  class AchievementSerializer < ActiveModel::Serializer
     attributes :id,
         :name,
         :description,

@@ -1,15 +1,15 @@
 module Api
-  class AwardsController < BaseController
+  class AchievementsController < BaseController
 
     before_action :authenticate_user!
 
     api :GET,
-        "/awards",
-        "get user awards"
+        "/achievements",
+        "get user achievements"
     example %q{}
     def index
       render json: {
-        awards: [],
+        achievements: [],
         meta: {}
       }
     end

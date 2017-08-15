@@ -1,6 +1,6 @@
-class CreateAwards < ActiveRecord::Migration
+class CreateAchievements < ActiveRecord::Migration
   def change
-    create_table :awards do |t|
+    create_table :achievements do |t|
       t.string :name, null: false
       t.text :description
       t.string :image

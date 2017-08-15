@@ -1,4 +1,4 @@
-class AwardDecorator < LittleDecorator
+class AchievementDecorator < LittleDecorator
 
   IMAGE_EXTENSIONS = %w(jpg jpeg gif png).freeze
 
@@ -63,7 +63,6 @@ class AwardDecorator < LittleDecorator
   end
 
   def file
-    binding.pry
     @file ||= record.image.file
   end
 

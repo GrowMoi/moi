@@ -1,0 +1,17 @@
+.achievements-page
+  - content_for :title, t("views.achievements.index")
+
+  .achievement-create
+    = link_to t("views.achievements.create"),
+              new_admin_achievement_path,
+              class: "btn btn-sm btn-default"
+  .achievement-list-container
+    .achievement-row-header
+      .item.first =t("views.achievements.grid_info.date")
+      .item.second =t("views.achievements.grid_info.name")
+      .item.third =t("views.achievements.grid_info.action")
+    - @achievements.each do |n|
+      .achievement-row
+        .item.first= l(n.created_at, :format => :short)
+        .item.second= n.name
+        .item.third= link_to t("views.achievements.show"), admin_achievement_path(n)
