@@ -87,7 +87,7 @@ needs to be a JSON-encoded string having the following format:
       user_content_learnings = current_user.content_learnings.size
 
       if achievement_all_contents
-        total_contents = Content.where(approved: false).size
+        total_contents = Content.where(approved: :true).size
         if total_contents == user_content_learnings
           formated_achievement = add_relation_format_achievement(achievement)
           items.push(formated_achievement)  if formated_achievement
