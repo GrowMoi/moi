@@ -2,9 +2,9 @@ class AchievementDecorator < LittleDecorator
 
   IMAGE_EXTENSIONS = %w(jpg jpeg gif png).freeze
 
-  def list_group_item
+  def image_list_group
     content_tag :div,
-                class: "col-xs-3 col-sm-2 notification-media" do
+                class: "achievement_image" do
       link_to record.image_url,
               target: "_blank" do
         tooltip file.filename,

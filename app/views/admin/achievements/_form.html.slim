@@ -1,0 +1,60 @@
+= form_for [:admin, achievement] do |f|
+
+  = render "admin/shared/form_errors", resource: achievement
+
+  .form-group
+    legend =t("views.achievements.form.name")
+    = f.text_field :name, class: "form-control"
+
+  .form-group
+    legend =t("views.achievements.form.description")
+    = f.text_area :description, class: "form-control"
+
+  .form-group
+    legend =t("views.achievements.form.image")
+    .row
+      .col-xs-12
+        .form-group
+          = tooltip t("views.achievements.form.attach_image"),
+                    place: "left",
+                    class: "btn btn-xs btn-default content-media-uploader" do
+            .glyphicon.glyphicon-cloud-upload
+
+          .hidden
+            = f.file_field :image
+
+          span.content-media-name-on-form
+            - if f.object.image?
+              = decorate(f.object).link_for_form
+
+  .form-group
+    legend =t("views.achievements.form.settings")
+
+    label =t("views.achievements.settings.category")
+    .achievement-categories.settings-options-container.row-settings
+      = select_tag  :achievement_category,
+                    options_for_select(achievement_categories, selected_achievement_category),
+                    class: "category-selector"
+
+    .aproved-content.row-settings
+      label =t("views.achievements.settings.aproved_content")
+      .settings-options-container
+        = select_tag  :achievement_aproved_content,
+                      options_for_select(achievement_aproved_contents, selected_aproved_contents),
+                      class: "aproved-content-selector"
+    .test-number.row-settings
+      label =t("views.achievements.settings.test_number")
+      .settings-options-container
+        = number_field_tag  :achievement_test_number, achievement.settings['quantity'], class: "settings-number-field"
+
+    .content-number.row-settings
+      label =t("views.achievements.settings.content_number")
+      .settings-options-container
+        = number_field_tag  :achievement_content_number, achievement.settings['quantity'], class: "settings-number-field"
+
+  .actions
+    = f.submit t("views.achievements.send"),
+              class: "btn btn-primary",
+              data: { disable_with: t("views.submitting")}
+
+    = link_to t("views.achievements.back"), admin_achievements_path

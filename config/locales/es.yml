@@ -101,29 +101,42 @@
 
     achievements:
       new: "Nuevo logro"
+      show: "Ver"
+      edit: "Editar"
       index: "Logros"
       create: "Crear Logro"
       send: "Enviar"
       back: "Regresar"
-      form_new:
+      created: "Logro creado"
+      updated: "Logro actualizado"
+
+      form:
         name: "Nombre:"
         description: "Descripcion:"
         image: "Imagen:"
         settings: "Configuraciones:"
         attach_image: "Adjuntar imagen:"
         remove_image: "Eliminar imagen:"
-        settings_category: "Entregar logro por:"
-        settings_aproved_content: "Cantidad de contenidos aprendidos:"
-        settings_test_number: "Número de tests:"
-        settings_content_number: "Número de contenidos aprendidos:"
-        settings_test: "Tests resueltos correctamente"
-        settings_content: "Contenidos aprendidos"
-        settings_all: "Todos"
-        settings_personalized: "Personalizado"
+      settings:
+        category: "Entregar logro por:"
+        aproved_content: "Cantidad de contenidos aprendidos:"
+        test_number: "Número de tests:"
+        content_number: "Número de contenidos aprendidos:"
+        test: "Tests resueltos correctamente"
+        content: "Contenidos aprendidos"
+        all: "Todos"
+        personalized: "Personalizado"
+        quantity: "Cantidad:"
+
       grid_info:
         date: "Fecha de creación"
         name: "Nombre"
         action: "Acción"
+
+      data_show:
+        title: "Detalles"
+        settings: "Configuraciones"
+        image: "Imagen"
 
     contents:
       new: "Nuevo Contenido"

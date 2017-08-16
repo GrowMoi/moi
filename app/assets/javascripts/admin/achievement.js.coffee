@@ -1,17 +1,17 @@
-showHideItems = (selectedVal) ->
+showHideItemsCategories = (selectedVal) ->
   aprovedContentContainer = '.aproved-content'
-  testNumberContainer = '.test-number'
-  contentNumberContainer = '.content-number'
 
   if (selectedVal == 'test')
     $(aprovedContentContainer).hide()
-    $(contentNumberContainer).hide()
-    $(testNumberContainer).show()
 
   if (selectedVal == 'content')
     $(aprovedContentContainer).show()
-    $(contentNumberContainer).hide()
-    $(testNumberContainer).hide()
+
+  return
+
+showHideItemsAprovedContent = (selectedVal) ->
+  testNumberContainer = '.test-number'
+  contentNumberContainer = '.content-number'
 
   if (selectedVal == 'personalized')
     $(contentNumberContainer).show()
@@ -21,17 +21,22 @@ showHideItems = (selectedVal) ->
     $(contentNumberContainer).hide()
     $(testNumberContainer).hide()
 
+  return
+
 enableSelectorEvents = ->
   categorySelector = '.category-selector'
   aprovedContentSelector = '.aproved-content-selector'
-  selectedVal = $("select option:selected").val()
-  showHideItems(selectedVal)
+  categoryVal = $(".achievement-categories select option:selected").val()
+  aprovedContentVal = $(".aproved-content select option:selected").val()
+
+  showHideItemsCategories(categoryVal)
+  showHideItemsAprovedContent(aprovedContentVal)
 
   $(categorySelector).change (e, data) ->
-    showHideItems(data.selected)
+    showHideItemsCategories(data.selected)
 
   $(aprovedContentSelector).change (e, data) ->
-    showHideItems(data.selected)
+    showHideItemsAprovedContent(data.selected)
 
   return
 
