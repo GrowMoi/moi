@@ -10,27 +10,26 @@ module Admin
       decorate achievement
     }
 
+    expose(:learn_all_contents_status) {
+      result = ""
+      if achievement.settings["learn_all_contents"] == true
+        result = "true"
+      else
+        result = "false"
+      end
+      result
+    }
+
+    expose(:learn_all_contents_value) {
+      achievement.settings["learn_all_contents"]
+    }
+
     expose(:achievement_categories) {
       [
         [I18n.t("views.achievements.settings.test"), "test"],
-        [I18n.t("views.achievements.settings.content"), "content"]
+        [I18n.t("views.achievements.settings.content"), "content"],
+        [I18n.t("views.achievements.settings.time"), "time"]
       ]
-    }
-
-    expose(:achievement_aproved_contents) {
-      [
-        [I18n.t("views.achievements.settings.all"), "all"],
-        [I18n.t("views.achievements.settings.personalized"), "personalized"]
-      ]
-    }
-
-    expose(:selected_aproved_contents) {
-      if achievement.settings["learn_all_contents"] == true
-        result = "all"
-      else
-        result = "personalized"
-      end
-      result
     }
 
     expose(:selected_achievement_category) {
@@ -67,23 +66,27 @@ module Admin
     private
 
     def build_settings
-      category = params.require(:achievement_category)
+      category = params.require(:select_category)
       achievement.category = category
       settings = {}
       if achievement.category == "content"
-        aproved_content = params.require(:achievement_aproved_content)
-        if aproved_content == "all"
+        learn_all_contents = params.require(:check_box_learn_all_contents)
+        if learn_all_contents == "true"
           settings["learn_all_contents"] = true
-          settings["quantity"] = 0
-        else
+          settings["quantity"] = nil
+        elsif learn_all_contents == "false"
           settings["learn_all_contents"] = false
-          settings["quantity"] = params.require(:achievement_content_number)
+          settings["quantity"] = params.require(:number_field_quantity)
         end
       end
 
       if achievement.category == "test"
         settings["learn_all_contents"] = false
-        settings["quantity"] = params.require(:achievement_test_number)
+        settings["quantity"] = params.require(:number_field_quantity)
+      end
+
+      if achievement.category == "time"
+        settings["learn_all_contents"] = true
       end
 
       settings
@@ -93,6 +96,7 @@ module Admin
 
       params.require(:achievement).permit(
         :name,
+        :label,
         :description,
         :image
       )

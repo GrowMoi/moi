@@ -7,14 +7,13 @@ module Api
     PER_PAGE = 5
 
     expose(:user_achievements) {
-      UserAchievement.where(user:current_user)
-                  .includes(:achievement)
-                  .order(created_at: :desc)
-                  .page(params[:page] || PAGE)
-                  .per(params[:per_page] || PER_PAGE)
+      Achievement.all
+                .order(created_at: :desc)
+                .page(params[:page] || PAGE)
+                .per(params[:per_page] || PER_PAGE)
     }
 
-    expose(:achievements) {
+    expose(:achievements_all) {
       result = []
       user_achievements.each do |user_achievement|
         result.push(user_achievement.achievement)
@@ -27,7 +26,7 @@ module Api
         "get user achievements"
     example %q{}
     def index
-      result = serialize_achievements(achievements)
+      result = serialize_achievements(user_achievements)
       render json: {
         achievements: result,
         meta: {
@@ -42,7 +41,8 @@ module Api
     def serialize_achievements(achievements_data)
       serialized = ActiveModel::ArraySerializer.new(
         achievements_data,
-        each_serializer: Api::AchievementSerializer
+        each_serializer: Api::AchievementSerializer,
+        scope: current_user
       )
       serialized
     end

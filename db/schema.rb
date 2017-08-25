@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20170807002444) do
 
   create_table "achievements", force: :cascade do |t|
     t.string   "name",        null: false
+    t.string   "label",       null: false
     t.text     "description"
     t.string   "image"
     t.string   "category",    null: false

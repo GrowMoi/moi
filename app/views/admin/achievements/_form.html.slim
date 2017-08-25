@@ -7,6 +7,10 @@
     = f.text_field :name, class: "form-control"
 
   .form-group
+    legend =t("views.achievements.form.label")
+    = f.text_field :label, class: "form-control"
+
+  .form-group
     legend =t("views.achievements.form.description")
     = f.text_area :description, class: "form-control"
 
@@ -31,26 +35,30 @@
     legend =t("views.achievements.form.settings")
 
     label =t("views.achievements.settings.category")
-    .achievement-categories.settings-options-container.row-settings
-      = select_tag  :achievement_category,
+    .select-category-container.settings-options-container.row-settings
+      = select_tag  :select_category,
                     options_for_select(achievement_categories, selected_achievement_category),
-                    class: "category-selector"
+                    class: "select-category",
+                    id: "select-category"
 
-    .aproved-content.row-settings
-      label =t("views.achievements.settings.aproved_content")
-      .settings-options-container
-        = select_tag  :achievement_aproved_content,
-                      options_for_select(achievement_aproved_contents, selected_aproved_contents),
-                      class: "aproved-content-selector"
-    .test-number.row-settings
-      label =t("views.achievements.settings.test_number")
-      .settings-options-container
-        = number_field_tag  :achievement_test_number, achievement.settings['quantity'], class: "settings-number-field"
+    .input-quantity-container
+      span.number-field-container
+        =t("views.achievements.settings.number")
 
-    .content-number.row-settings
-      label =t("views.achievements.settings.content_number")
-      .settings-options-container
-        = number_field_tag  :achievement_content_number, achievement.settings['quantity'], class: "settings-number-field"
+        = number_field_tag  :number_field_quantity,
+                            achievement.settings['quantity'],
+                            class: "number-field-quantity",
+                            id: "number-field-quantity"
+
+      span.check-box-container
+        = hidden_field_tag :check_box_learn_all_contents, learn_all_contents_value
+        = check_box_tag :check_box_learn_all_contents,
+                        learn_all_contents_status,
+                        learn_all_contents_value,
+                        class: "check-box-learn-all-contents",
+                        id: "check-box-learn-all-contents"
+
+        span =t("views.achievements.settings.all")
 
   .actions
     = f.submit t("views.achievements.send"),

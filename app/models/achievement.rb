@@ -4,6 +4,7 @@
 #
 #  id          :integer          not null, primary key
 #  name        :string           not null
+#  label       :string           not null
 #  description :text
 #  image       :string
 #  category    :string           not null
@@ -20,7 +21,11 @@ class Achievement < ActiveRecord::Base
 
   validates :name,
             presence: true
+  validates :label,
+            presence: true
   validates :category,
+            presence: true
+  validates :image,
             presence: true
   validates :settings,
             presence: true

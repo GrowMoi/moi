@@ -1,43 +1,61 @@
-showHideItemsCategories = (selectedVal) ->
-  aprovedContentContainer = '.aproved-content'
+enableInputQuantity = (category) ->
+  $inputQuantity = $('.input-quantity-container')
+  $checkboxContainer = $('.check-box-container')
 
-  if (selectedVal == 'test')
-    $(aprovedContentContainer).hide()
-
-  if (selectedVal == 'content')
-    $(aprovedContentContainer).show()
-
-  return
-
-showHideItemsAprovedContent = (selectedVal) ->
-  testNumberContainer = '.test-number'
-  contentNumberContainer = '.content-number'
-
-  if (selectedVal == 'personalized')
-    $(contentNumberContainer).show()
-    $(testNumberContainer).hide()
-
-  if (selectedVal == 'all')
-    $(contentNumberContainer).hide()
-    $(testNumberContainer).hide()
+  if (category == 'test')
+    $inputQuantity.show()
+    $checkboxContainer.hide()
+  if (category == 'content')
+    $inputQuantity.show()
+    $checkboxContainer.show()
+  if (category == 'time')
+    $inputQuantity.hide()
+    $checkboxContainer.hide()
 
   return
 
-enableSelectorEvents = ->
-  categorySelector = '.category-selector'
-  aprovedContentSelector = '.aproved-content-selector'
-  categoryVal = $(".achievement-categories select option:selected").val()
-  aprovedContentVal = $(".aproved-content select option:selected").val()
+formatValue = (value) ->
+  if ($.type(value) == 'string')
+      return $.parseJSON(value)
+  return value
 
-  showHideItemsCategories(categoryVal)
-  showHideItemsAprovedContent(aprovedContentVal)
+enableInputNumber = (checked) ->
+  $numberField = $('#number-field-quantity')
+  if (checked)
+    $numberField.addClass('disabled')
+  else
+    $numberField.removeClass('disabled')
+  return
 
-  $(categorySelector).change (e, data) ->
-    showHideItemsCategories(data.selected)
+enableEvents = ->
+  $learnAllContents = $('#check-box-learn-all-contents')
+  $category = $('#select-category')
+  categorySelected = $category.val()
+  isChecked = formatValue($learnAllContents.val())
 
-  $(aprovedContentSelector).change (e, data) ->
-    showHideItemsAprovedContent(data.selected)
+  if (isChecked)
+    $learnAllContents.attr('checked', true)
+    $learnAllContents.val('true')
+  else
+    $learnAllContents.attr('checked', false)
+    $learnAllContents.val('false')
+
+  enableInputQuantity(categorySelected)
+  enableInputNumber(isChecked)
+
+  $learnAllContents.change (e, data) ->
+    checked = formatValue(this.checked)
+
+    if (checked)
+      this.value = "true"
+    else
+      this.value = "false"
+
+    enableInputNumber(checked)
+
+  $category.change (e, data) ->
+    enableInputQuantity(data.selected)
 
   return
 
-$(document).on 'ready page:load', enableSelectorEvents
+$(document).on 'ready page:load', enableEvents

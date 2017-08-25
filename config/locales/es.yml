@@ -117,6 +117,7 @@
         settings: "Configuraciones:"
         attach_image: "Adjuntar imagen:"
         remove_image: "Eliminar imagen:"
+        label: "Etiqueta:"
       settings:
         category: "Entregar logro por:"
         aproved_content: "Cantidad de contenidos aprendidos:"
@@ -124,9 +125,11 @@
         content_number: "Número de contenidos aprendidos:"
         test: "Tests resueltos correctamente"
         content: "Contenidos aprendidos"
+        time: "Tiempo que toma aprender todos los contenidos"
         all: "Todos"
         personalized: "Personalizado"
         quantity: "Cantidad:"
+        number: "Especifique un numero:"
 
       grid_info:
         date: "Fecha de creación"

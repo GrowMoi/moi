@@ -5,7 +5,11 @@
       margin: 2rem 0
     .button-back
       display: flex
-      justify-content: flex-end
+      justify-content: space-around
+
+  .disabled
+    pointer-events: none
+    opacity: 0.6
 
   .nested-achievement-media
     display: flex
@@ -20,7 +24,7 @@
     align-items: center
 
   .chosen-container
-    width: 250px !important
+    width: 100% !important
 
   .row-settings
     margin-bottom: 2rem
@@ -28,6 +32,13 @@
     .settings-number-field
       padding-left: 0.5rem
       width: 6rem
+
+  .input-quantity-container
+    .number-field-quantity
+      margin: 0 1rem
+      padding-left: 0.5rem
+    .check-box-learn-all-contents
+      margin-right: 0.5rem
 
   .achievement-create
     margin: 2rem 0
