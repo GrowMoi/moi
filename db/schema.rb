@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721055528) do
+ActiveRecord::Schema.define(version: 20170825152554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -200,6 +200,16 @@ ActiveRecord::Schema.define(version: 20170721055528) do
 
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
+  create_table "players", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.float    "score"
+    t.integer  "quiz_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "players", ["quiz_id"], name: "index_players_on_quiz_id", using: :btree
+
   create_table "possible_answers", force: :cascade do |t|
     t.integer  "content_id",                 null: false
     t.string   "text",                       null: false
@@ -221,6 +231,12 @@ ActiveRecord::Schema.define(version: 20170721055528) do
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
+
+  create_table "quizzes", force: :cascade do |t|
+    t.string   "level",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "search_engines", force: :cascade do |t|
     t.string   "name",                      null: false
@@ -265,6 +281,15 @@ ActiveRecord::Schema.define(version: 20170721055528) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
+  create_table "tree_levels", force: :cascade do |t|
+    t.integer  "user_id",                null: false
+    t.integer  "level",      default: 1, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "tree_levels", ["user_id"], name: "index_tree_levels_on_user_id", using: :btree
 
   create_table "user_content_preferences", force: :cascade do |t|
     t.integer  "user_id",                null: false
@@ -365,8 +390,10 @@ ActiveRecord::Schema.define(version: 20170721055528) do
   add_foreign_key "notification_links", "notifications"
   add_foreign_key "notification_media", "notifications"
   add_foreign_key "notification_videos", "notifications"
+  add_foreign_key "players", "quizzes"
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
+  add_foreign_key "tree_levels", "users"
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"

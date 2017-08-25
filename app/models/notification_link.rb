@@ -4,11 +4,10 @@
 #
 #  id              :integer          not null, primary key
 #  notification_id :integer          not null
-#  link            :string           not null
+#  link            :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
-
 
 class NotificationLink < ActiveRecord::Base
   belongs_to :notification
