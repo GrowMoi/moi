@@ -72,7 +72,8 @@ module Admin
       end
 
       if achievement.category == "time"
-        settings["learn_all_contents"] = true
+        settings["learn_all_contents"] = false
+        settings["quantity"] = nil
       end
 
       settings

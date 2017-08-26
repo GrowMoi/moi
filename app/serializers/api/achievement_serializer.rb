@@ -21,6 +21,21 @@ module Api
         data["current_contents_learnt"] = scope.learned_contents.size
       end
 
+      if object.category == "time"
+        user_content_learnings = ContentLearning.where(user: scope).order(created_at: :desc)
+        if user_content_learnings.empty?
+          data["exists_contents_learnt"] = false
+        else
+          data["exists_contents_learnt"] = true
+          last_content_learnt = user_content_learnings.first
+          first_content_learnt = user_content_learnings.last
+          data["first_content_learnt_at"] = first_content_learnt.created_at
+          data["last_content_learnt_at"] = last_content_learnt.created_at
+          data["time_elapsed"] = (last_content_learnt.created_at - first_content_learnt.created_at).to_i
+        end
+
+      end
+
       if object.category == "test"
         tests_to_approve = object.settings["quantity"].to_i
         tests = scope.learning_tests
