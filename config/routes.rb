@@ -85,7 +85,7 @@ Moi::Application.routes.draw do
     resources :users
     resources :profiles
     resources :notifications
-    resources :achievements
+    resources :achievements, except: [:create, :destroy]
 
     # settings
     resources :settings, only: :index

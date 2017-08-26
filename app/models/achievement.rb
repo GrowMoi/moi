@@ -25,8 +25,6 @@ class Achievement < ActiveRecord::Base
             presence: true
   validates :category,
             presence: true
-  validates :image,
-            presence: true
   validates :settings,
             presence: true
 end

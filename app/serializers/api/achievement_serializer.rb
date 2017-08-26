@@ -10,15 +10,15 @@ module Api
     def meta
       data = {}
       if object.category == "content"
-        data["total_contents"] = Content.where(approved: :true).size
-        learn_all = object.settings["learn_all_contents"]
-        data["learn_all_contents"] = learn_all
+        data["learn_all_contents"] = object.settings["learn_all_contents"] || false
         data["current_contents_learnt"] = scope.learned_contents.size
+        data["needs_learn"] = object.settings["quantity"].to_i
+      end
 
-        if !learn_all
-          data["needs_learn"] = object.settings["quantity"].to_i
-        end
-
+      if object.category == "content_all"
+        data["total_contents"] = Content.where(approved: :true).size
+        data["learn_all_contents"] = object.settings["learn_all_contents"] || true
+        data["current_contents_learnt"] = scope.learned_contents.size
       end
 
       if object.category == "test"

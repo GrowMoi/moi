@@ -3,15 +3,19 @@ class AchievementDecorator < LittleDecorator
   IMAGE_EXTENSIONS = %w(jpg jpeg gif png).freeze
 
   def image_list_group
-    content_tag :div,
-                class: "achievement_image" do
-      link_to record.image_url,
-              target: "_blank" do
-        tooltip file.filename,
-                place: "bottom" do
-          render(include_filename: false)
+    if record.image?
+      content_tag :div,
+                  class: "achievement_image" do
+        link_to record.image_url,
+                target: "_blank" do
+          tooltip file.filename,
+                  place: "bottom" do
+            render(include_filename: false)
+          end
         end
       end
+    else
+      content_tag(:p, I18n.t("views.achievements.data_show.no_image"))
     end
   end
 

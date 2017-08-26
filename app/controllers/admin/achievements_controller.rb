@@ -10,24 +10,11 @@ module Admin
       decorate achievement
     }
 
-    expose(:learn_all_contents_status) {
-      result = ""
-      if achievement.settings["learn_all_contents"] == true
-        result = "true"
-      else
-        result = "false"
-      end
-      result
-    }
-
-    expose(:learn_all_contents_value) {
-      achievement.settings["learn_all_contents"]
-    }
-
     expose(:achievement_categories) {
       [
         [I18n.t("views.achievements.settings.test"), "test"],
         [I18n.t("views.achievements.settings.content"), "content"],
+        [I18n.t("views.achievements.settings.content_all"), "content_all"],
         [I18n.t("views.achievements.settings.time"), "time"]
       ]
     }
@@ -70,14 +57,13 @@ module Admin
       achievement.category = category
       settings = {}
       if achievement.category == "content"
-        learn_all_contents = params.require(:check_box_learn_all_contents)
-        if learn_all_contents == "true"
-          settings["learn_all_contents"] = true
-          settings["quantity"] = nil
-        elsif learn_all_contents == "false"
-          settings["learn_all_contents"] = false
-          settings["quantity"] = params.require(:number_field_quantity)
-        end
+        settings["learn_all_contents"] = false
+        settings["quantity"] = params.require(:number_field_quantity)
+      end
+
+      if achievement.category == "content_all"
+        settings["learn_all_contents"] = true
+        settings["quantity"] = nil
       end
 
       if achievement.category == "test"

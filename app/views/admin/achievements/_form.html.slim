@@ -33,32 +33,22 @@
 
   .form-group
     legend =t("views.achievements.form.settings")
+    .settings-form-group
+      label =t("views.achievements.settings.category")
+      .select-category-container.settings-options-container.row-settings
+        = select_tag  :select_category,
+                      options_for_select(achievement_categories, selected_achievement_category),
+                      class: "select-category",
+                      id: "select-category"
 
-    label =t("views.achievements.settings.category")
-    .select-category-container.settings-options-container.row-settings
-      = select_tag  :select_category,
-                    options_for_select(achievement_categories, selected_achievement_category),
-                    class: "select-category",
-                    id: "select-category"
+      .input-quantity-container
+        span.number-field-container
+          =t("views.achievements.settings.number")
 
-    .input-quantity-container
-      span.number-field-container
-        =t("views.achievements.settings.number")
-
-        = number_field_tag  :number_field_quantity,
-                            achievement.settings['quantity'],
-                            class: "number-field-quantity",
-                            id: "number-field-quantity"
-
-      span.check-box-container
-        = hidden_field_tag :check_box_learn_all_contents, learn_all_contents_value
-        = check_box_tag :check_box_learn_all_contents,
-                        learn_all_contents_status,
-                        learn_all_contents_value,
-                        class: "check-box-learn-all-contents",
-                        id: "check-box-learn-all-contents"
-
-        span =t("views.achievements.settings.all")
+          = number_field_tag  :number_field_quantity,
+                              achievement.settings['quantity'],
+                              class: "number-field-quantity",
+                              id: "number-field-quantity"
 
   .actions
     = f.submit t("views.achievements.send"),

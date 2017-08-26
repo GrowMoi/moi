@@ -124,7 +124,8 @@
         test_number: "Número de tests:"
         content_number: "Número de contenidos aprendidos:"
         test: "Tests resueltos correctamente"
-        content: "Contenidos aprendidos"
+        content: "Aprender contenidos"
+        content_all: "Aprender todos los contenidos"
         time: "Tiempo que toma aprender todos los contenidos"
         all: "Todos"
         personalized: "Personalizado"
@@ -134,12 +135,14 @@
       grid_info:
         date: "Fecha de creación"
         name: "Nombre"
+        label: "Etiqueta"
         action: "Acción"
 
       data_show:
         title: "Detalles"
         settings: "Configuraciones"
         image: "Imagen"
+        no_image: "-- no se ha añadido una imagen --"
 
     contents:
       new: "Nuevo Contenido"
