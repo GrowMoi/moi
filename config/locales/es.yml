@@ -289,6 +289,11 @@
       - :year
 
   time:
+    units:
+      seconds: segundos
+      minutes: minutos
+      hours: horas
+      days: "días"
     formats:
       default: "%A, %d de %B de %Y %H:%M:%S %z"
       short: "%d de %b %H:%M"

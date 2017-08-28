@@ -31,7 +31,7 @@ module Api
           first_content_learnt = user_content_learnings.last
           data["first_content_learnt_at"] = first_content_learnt.created_at
           data["last_content_learnt_at"] = last_content_learnt.created_at
-          data["time_elapsed"] = (last_content_learnt.created_at - first_content_learnt.created_at).to_i
+          data["time_elapsed"] = (last_content_learnt.created_at - scope.created_at).to_i
         end
 
       end
