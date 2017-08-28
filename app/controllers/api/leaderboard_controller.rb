@@ -35,7 +35,8 @@ module Api
           id: user.id,
           email: user.email,
           name: user.name,
-          current_contents_learnt: user.learned_contents.size
+          current_contents_learnt: user.learned_contents.size,
+          total_contents: Content.where(approved: :true).size
         }
 
         if user.learned_contents.empty?
