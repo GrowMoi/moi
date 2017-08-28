@@ -6,7 +6,7 @@ module Api
     PAGE = 1
     PER_PAGE = 10
 
-    @user_position = 0
+    @user_data = {}
 
     expose(:all_clents) {
       User.where(role: :cliente)
@@ -23,7 +23,7 @@ module Api
         meta: {
           total_count: leaders.total_count,
           total_pages: leaders.total_pages,
-          user_position: @user_position
+          user_data: @user_data
         }
       }
     end
@@ -65,11 +65,12 @@ module Api
       user_times.each.with_index do |user, i|
         position = i + 1
         if user[:id] == current_user.id
-          @user_position = position
+          @user_data = user
         end
         user[:time_humanized] = humanize_ms(user[:time_elapsed])
         user[:position] = position
       end
+      user_times
     end
 
     def paginate_leaders(leaders_data)
