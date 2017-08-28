@@ -105,7 +105,7 @@ needs to be a JSON-encoded string having the following format:
     def add_relation_format_achievement(achievement)
       relation = UserAchievement.new(user_id: current_user.id, achievement_id: achievement.id)
       if relation.save
-        achievement_serialized = Api::AchievementSerializer.new(achievement).as_json
+        achievement_serialized = Api::AchievementSerializer.new(achievement, scope: current_user).as_json
         return achievement_serialized["achievement"]
       end
     end

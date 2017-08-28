@@ -17,6 +17,11 @@ Moi::Application.routes.draw do
         get :index
       end
     end
+    resources :leaderboard, only: [] do
+      collection do
+        get :index
+      end
+    end
     resources :user_tutors, only: [] do
       member do
         post :respond
