@@ -27,8 +27,8 @@ class CreateAchievements < ActiveRecord::Migration
                               learn_all_contents: false,
                               quantity: 30
                             })
-        Achievement.create!(name: "Tests correctos",
-                            label: "Tests resueltos correctamente",
+        Achievement.create!(name: "Tests sin errores",
+                            label: "Tests sin errores",
                             description: "",
                             category: "test",
                             settings: {

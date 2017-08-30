@@ -12,10 +12,60 @@ module Api
       User.where(role: :cliente)
     }
 
+    expose(:total_content_available) {
+      Content.joins(:neuron)
+            .where(approved: :true, neurons: {is_public: true})
+            .size
+    }
+
     api :GET,
         "/leaderboard",
-        ""
-    example %q{}
+        "Get leaderboard"
+    example %q{
+      "leaders": [
+        {
+          "id": 1,
+          "email": "usuario1@test.com",
+          "name": "usuario1",
+          "current_contents_learnt": 68,
+          "total_contents": 71,
+          "time_elapsed": 9409558493,
+          "position": 1
+        },
+        {
+          "id": 3,
+          "email": "usuario3@test.com",
+          "name": "usuario3",
+          "current_contents_learnt": 14,
+          "total_contents": 71,
+          "time_elapsed": 3067483,
+          "position": 2
+        },
+        {
+          "id": 2,
+          "email": "usuario2@test.com",
+          "name": "usuario2",
+          "current_contents_learnt": 9,
+          "total_contents": 71,
+          "time_elapsed": 3992873,
+          "position": 3
+        }
+      ],
+      "meta": {
+        "total_count": 3,
+        "total_pages": 1,
+        "user_data": {
+          "id": 1,
+          "email": "usuario1@test.com",
+          "name": "usuario1",
+          "current_contents_learnt": 68,
+          "total_contents": 71,
+          "time_elapsed": 9409558493,
+          "position": 1
+        }
+      }
+    }
+
     def index
       leaders = paginate_leaders(generate_leaders)
       render json: {
@@ -39,7 +89,7 @@ module Api
           email: user.email,
           name: user.name,
           current_contents_learnt: user.learned_contents.size,
-          total_contents: Content.where(approved: :true).size
+          total_contents: total_content_available
         }
 
         if user.learned_contents.empty?
@@ -47,12 +97,13 @@ module Api
         else
           user_content_learnings = ContentLearning.where(user: user).order(created_at: :asc)
           last_content_learnt = user_content_learnings.last
-          time_diff = (last_content_learnt.created_at - current_user.created_at).to_i
-          data[:time_elapsed] = time_diff
+          time_diff = last_content_learnt.created_at - user.created_at
+          milliseconds = (time_diff.to_f.round(3)*1000).to_i
+          data[:time_elapsed] = milliseconds
         end
         user_times.push(data)
       end
-       user_times = sort_times(user_times)
+      user_times = sort_times(user_times)
       user_times = add_times_index(user_times)
       user_times
     end
@@ -67,7 +118,6 @@ module Api
         if user[:id] == current_user.id
           @user_data = user
         end
-        user[:time_humanized] = humanize_ms(user[:time_elapsed])
         user[:position] = position
       end
       user_times
@@ -77,16 +127,6 @@ module Api
       Kaminari.paginate_array(leaders_data)
               .page(params[:page] || PAGE)
               .per(params[:per_page] || PER_PAGE)
-    end
-
-    def humanize_ms(msecs)
-      secs = msecs / 1000.0
-      [[60, :seconds], [60, :minutes], [24, :hours], [1000, :days]].map{ |count, name|
-        if secs > 0
-          secs, n = secs.divmod(count)
-          "#{n.to_i} #{t('time.units.' + name.to_s)}"
-        end
-      }.compact.reverse.join(' ')
     end
 
   end

@@ -16,7 +16,9 @@ module Api
       end
 
       if object.category == "content_all"
-        data["total_contents"] = Content.where(approved: :true).size
+        data["total_contents"] = Content.joins(:neuron)
+                                        .where(approved: :true, neurons: {is_public: true})
+                                        .size
         data["learn_all_contents"] = object.settings["learn_all_contents"] || true
         data["current_contents_learnt"] = scope.learned_contents.size
       end
@@ -28,10 +30,9 @@ module Api
         else
           data["exists_contents_learnt"] = true
           last_content_learnt = user_content_learnings.first
-          first_content_learnt = user_content_learnings.last
-          data["first_content_learnt_at"] = first_content_learnt.created_at
-          data["last_content_learnt_at"] = last_content_learnt.created_at
-          data["time_elapsed"] = (last_content_learnt.created_at - scope.created_at).to_i
+          time_diff = last_content_learnt.created_at - scope.created_at
+          milliseconds = (time_diff.to_f.round(3)*1000).to_i
+          data["time_elapsed"] = milliseconds
         end
 
       end

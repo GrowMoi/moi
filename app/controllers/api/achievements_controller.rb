@@ -23,8 +23,62 @@ module Api
 
     api :GET,
         "/achievements",
-        "get user achievements"
-    example %q{}
+        "Get user achievements"
+    example %q{
+      "achievements": [
+        {
+          "id": 4,
+          "name": "Tiempo aprender contenidos",
+          "label": "Tiempo hasta el último contenido aprendido",
+          "description": "",
+          "category": "time",
+          "meta": {
+            "exists_contents_learnt": true,
+            "time_elapsed": 9409558493
+          }
+        },
+        {
+          "id": 3,
+          "name": "Tests sin errores",
+          "label": "Tests sin errores",
+          "description": "",
+          "category": "test",
+          "meta": {
+            "current_tests_ok": 4,
+            "needs_tests_ok": 4
+          }
+        },
+        {
+          "id": 2,
+          "name": "Contenidos aprendidos",
+          "label": "Contenidos aprendidos",
+          "description": "",
+          "category": "content",
+          "meta": {
+            "learn_all_contents": false,
+            "current_contents_learnt": 68,
+            "needs_learn": 30
+          }
+        },
+        {
+          "id": 1,
+          "name": "Contenidos aprendidos en total",
+          "label": "Contenidos aprendidos en total",
+          "description": "",
+          "category": "content_all",
+          "meta": {
+            "total_contents": 71,
+            "learn_all_contents": true,
+            "current_contents_learnt": 68
+          }
+        }
+      ],
+      "meta": {
+        "total_count": 4,
+        "total_pages": 1
+      }
+    }
+
     def index
       result = serialize_achievements(user_achievements)
       render json: {
