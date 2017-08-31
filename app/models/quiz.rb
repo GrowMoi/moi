@@ -9,4 +9,13 @@
 #
 
 class Quiz < ActiveRecord::Base
+
+  begin :relationships
+    has_many :players,
+            dependent: :destroy
+  end
+
+  begin :nested_attributes
+    accepts_nested_attributes_for :players
+  end
 end

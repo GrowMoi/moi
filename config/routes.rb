@@ -80,6 +80,7 @@ Moi::Application.routes.draw do
     resources :users
     resources :profiles
     resources :notifications
+    resources :quizzes
 
     # settings
     resources :settings, only: :index
