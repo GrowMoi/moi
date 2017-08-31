@@ -96,7 +96,8 @@
       remove_media: Eliminar multimedia
       link_placeholder: http://www.growmoi.com
       videos: Vídeos
-
+    quizzes:
+      new: "Nuevo Test"
     contents:
       new: "Nuevo Contenido"
       edit: "Editar Contenido"
@@ -409,6 +410,7 @@
       search_engine: Motor de búsqueda
       profile: Árbol
       notification: "Notificaciones"
+      quiz: "Test"
     attributes:
       user:
         username: "Nombre de usuario"

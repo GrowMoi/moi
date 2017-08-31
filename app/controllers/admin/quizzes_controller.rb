@@ -1,10 +1,17 @@
 module Admin
   class QuizzesController < AdminController::Base
 
+    before_action :build_relationships!,
+                  only: [:new, :create]
+
     authorize_resource
 
     expose(:quiz, attributes: :quiz_params)
     expose(:quizzes)
+
+    def new
+      render
+    end
 
     def create
       if quiz.save
@@ -31,11 +38,16 @@ module Admin
     def permitted_attributes
       allowed = [:level, :quizzes_attributes => [
                     :id,
+                    :_destroy,
                     :quiz_id,
                     :score,
                     :name
                   ]
                 ]
+    end
+
+    def build_relationships!
+      quiz.players.build
     end
   end
 end

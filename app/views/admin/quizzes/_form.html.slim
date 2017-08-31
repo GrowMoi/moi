@@ -1,0 +1,20 @@
+= nested_form_for [:admin, quiz] do |f|
+  = render "admin/shared/form_errors",
+           resource: quiz
+
+  .form-group
+    = f.label :level
+    = f.text_field :level,
+                   class: "form-control",
+                   required: true
+
+  .players-form
+    = f.fields_for :players, :wrapper => false do |player|
+      = player.label :name
+      = player.text_field :name,
+                     class: "form-control",
+                     required: true
+
+    = f.link_to_add "Agregar Jugador", :players, :class => "btn-sm btn btn-default"
+
+  = f.submit :Guardar, class: "btn btn-primary", data: {disable_with: "Almacenando"}
