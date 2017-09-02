@@ -33,7 +33,7 @@ class CreateAchievements < ActiveRecord::Migration
                             category: "test",
                             settings: {
                               learn_all_contents: false,
-                              quantity: 4
+                              quantity: nil
                             })
         Achievement.create!(name: "Tiempo aprender contenidos",
                             label: "Tiempo hasta el último contenido aprendido",

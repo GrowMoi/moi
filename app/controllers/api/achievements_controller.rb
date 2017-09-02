@@ -78,6 +78,7 @@ module Api
         "total_pages": 1
       }
     }
+    param :user_id, Integer
 
     def index
       result = serialize_achievements(user_achievements)
@@ -93,10 +94,16 @@ module Api
     private
 
     def serialize_achievements(achievements_data)
+      if params[:user_id]
+        user_scope =  User.find(params[:user_id])
+      else
+        user_scope = current_user
+      end
+
       serialized = ActiveModel::ArraySerializer.new(
         achievements_data,
         each_serializer: Api::AchievementSerializer,
-        scope: current_user
+        scope: user_scope
       )
       serialized
     end

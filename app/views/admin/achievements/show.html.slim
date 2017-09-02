@@ -31,11 +31,13 @@
           = t("views.achievements.settings.test")
         - if achievement.category == "content"
           = t("views.achievements.settings.content")
+        - if achievement.category == "content_all"
+          = t("views.achievements.settings.content_all")
         - if achievement.category == "time"
           = t("views.achievements.settings.time")
 
       .item
-        -if achievement.category != "time"
+        -if achievement.category != "time" && achievement.category != "test"
           label.item-label =t("views.achievements.settings.quantity")
           - if achievement.settings["learn_all_contents"]
             = t("views.achievements.settings.all")

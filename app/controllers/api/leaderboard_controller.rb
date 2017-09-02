@@ -65,6 +65,7 @@ module Api
         }
       }
     }
+    param :user_id, Integer
 
     def index
       leaders = paginate_leaders(generate_leaders)
@@ -113,9 +114,10 @@ module Api
     end
 
     def add_times_index(user_times)
+      user_id = params[:user_id] || current_user.id
       user_times.each.with_index do |user, i|
         position = i + 1
-        if user[:id] == current_user.id
+        if user[:id] == user_id.to_i
           @user_data = user
         end
         user[:position] = position

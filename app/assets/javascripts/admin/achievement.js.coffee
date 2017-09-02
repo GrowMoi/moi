@@ -2,7 +2,7 @@ enableInputQuantity = (category) ->
   $inputQuantity = $('.input-quantity-container')
 
   if (category == 'test')
-    $inputQuantity.show()
+    $inputQuantity.hide()
   if (category == 'content')
     $inputQuantity.show()
   if (category == 'content_all')

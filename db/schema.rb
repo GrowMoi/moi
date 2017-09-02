@@ -290,6 +290,7 @@ ActiveRecord::Schema.define(version: 20170807002444) do
   create_table "user_achievements", force: :cascade do |t|
     t.integer  "user_id",        null: false
     t.integer  "achievement_id", null: false
+    t.json     "meta"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end

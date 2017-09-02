@@ -26,7 +26,11 @@ needs to be a JSON-encoded string having the following format:
     ]
     }
     def create
-      render json: { result: answerer.result }
+      answerer_result = answerer.result
+      update_user_test_achievement
+      render json: {
+        result: answerer_result
+      }
     end
 
     private
@@ -36,6 +40,34 @@ needs to be a JSON-encoded string having the following format:
         user_test: user_test,
         answers: JSON.parse(params[:answers])
       ).process!
+    end
+
+    def update_user_test_achievement
+      test_achievement = Achievement.where(category: :test).first
+      user_test_achievement = UserAchievement.where(
+        user_id: current_user.id,
+        achievement_id: test_achievement.id
+      ).first
+      last_max_test_value = user_test_achievement.meta["max_tests_ok"] || 0
+      new_max_test_value = last_max_test_value + 1
+      last_learning_tests = current_user.learning_tests
+              .completed
+              .limit(new_max_test_value)
+              .order(updated_at: :desc)
+              .map { |test|
+                correct_answers = test["answers"].map { |a|
+                  a["correct"]
+                }.uniq
+                correct_answers.size == 1 && correct_answers[0] == true
+              }.uniq
+
+      result = last_learning_tests.size == 1 && last_learning_tests[0] == true
+
+      if result
+        user_test_achievement.meta["max_tests_ok"] = new_max_test_value
+        user_test_achievement.save
+      end
+
     end
 
   end

@@ -38,25 +38,12 @@ module Api
       end
 
       if object.category == "test"
-        tests_to_approve = object.settings["quantity"].to_i
-        tests = scope.learning_tests
-            .completed
-            .limit(tests_to_approve)
-            .order(updated_at: :desc)
-            .map(&:answers)
-
-        test_ok_count = 0
-        tests.each do |test|
-          results = test.map { |answer| answer["correct"] }.uniq
-          is_test_ok = results.size == 1 && results[0] == true
-          if is_test_ok
-            test_ok_count = test_ok_count + 1
-          else
-            break
-          end
-        end
-        data["current_tests_ok"] = test_ok_count
-        data["needs_tests_ok"] = tests_to_approve
+        test_achievement = Achievement.where(category: :test).first
+        user_test_achievement = UserAchievement.where(
+          user_id: scope.id,
+          achievement_id: test_achievement.id
+        ).first
+        data["current_tests_ok"] = user_test_achievement.meta["max_tests_ok"] || 0
       end
 
       data
