@@ -30,17 +30,17 @@ class UserAchievementTest
   private
 
   def get_learning_tests
-    learning_tests = @user.learning_tests
-    result = []
-    if learning_tests.exists?
-      result = learning_tests.completed
+    @user.learning_tests
+        .completed
         .order(updated_at: :desc)
         .map do |test|
-          correct_answers = test["answers"].map {|a| a["correct"]}.uniq
-          correct_answers.size == 1 && correct_answers[0] == true
+          is_correct = false
+          if test["answers"].present?
+            correct_answers = test["answers"].map {|a| a["correct"]}.uniq
+            is_correct = correct_answers.size == 1 && correct_answers[0] == true
+          end
+          is_correct
         end
-    end
-    result
   end
 
   def get_max_tests_ok(test_results)
