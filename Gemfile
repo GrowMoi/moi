@@ -61,6 +61,7 @@ gem 'airbrake'
 gem 'foreman'
 gem 'pusher'
 gem 'jquery-infinite-pages'
+gem 'enumerize', '~> 2.0'
 
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'

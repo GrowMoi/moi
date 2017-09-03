@@ -9,6 +9,24 @@
 #
 
 class Quiz < ActiveRecord::Base
+  extend Enumerize
+
+  LEVELS = [
+    'easy',
+    'medium',
+    'hard'
+  ].freeze
+
+  begin :enumerables
+    enum unidad_medida: LEVELS
+  end
+
+  begin :validations
+    validates :level,
+              presence: true
+    validates :level,
+              inclusion: { in: LEVELS }
+  end
 
   begin :relationships
     has_many :players,
@@ -16,6 +34,6 @@ class Quiz < ActiveRecord::Base
   end
 
   begin :nested_attributes
-    accepts_nested_attributes_for :players
+    accepts_nested_attributes_for :players, allow_destroy: true
   end
 end
