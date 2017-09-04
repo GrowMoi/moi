@@ -21,6 +21,15 @@ module Api
       result
     }
 
+    expose(:user_selected) {
+      if params[:user_id]
+        selected = User.find(params[:user_id])
+      else
+        selected = current_user
+      end
+      selected
+    }
+
     api :GET,
         "/achievements",
         "Get user achievements"
@@ -44,8 +53,7 @@ module Api
           "description": "",
           "category": "test",
           "meta": {
-            "current_tests_ok": 4,
-            "needs_tests_ok": 4
+            "current_tests_ok": 4
           }
         },
         {
@@ -81,14 +89,21 @@ module Api
     param :user_id, Integer
 
     def index
-      result = serialize_achievements(user_achievements)
-      render json: {
-        achievements: result,
-        meta: {
-          total_count: user_achievements.total_count,
-          total_pages: user_achievements.total_pages
+      if is_client?(user_selected)
+        result = serialize_achievements(user_achievements)
+        render json: {
+          achievements: result,
+          meta: {
+            total_count: user_achievements.total_count,
+            total_pages: user_achievements.total_pages
+          }
         }
-      }
+      else
+        render json: {
+          achievements: [],
+          meta: {}
+        }
+      end
     end
 
     private
@@ -106,6 +121,10 @@ module Api
         scope: user_scope
       )
       serialized
+    end
+
+    def is_client?(user)
+      user.present? && user.cliente?
     end
 
   end

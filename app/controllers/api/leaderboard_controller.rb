@@ -6,7 +6,7 @@ module Api
     PAGE = 1
     PER_PAGE = 10
 
-    @user_data = {}
+    @user_data = nil
 
     expose(:all_clents) {
       User.where(role: :cliente)
@@ -16,6 +16,15 @@ module Api
       Content.joins(:neuron)
             .where(approved: :true, neurons: {is_public: true})
             .size
+    }
+
+    expose(:user_selected) {
+      if params[:user_id]
+        selected = User.find(params[:user_id])
+      else
+        selected = current_user
+      end
+      selected
     }
 
     api :GET,
@@ -68,20 +77,29 @@ module Api
     param :user_id, Integer
 
     def index
-      leaders = paginate_leaders(generate_leaders)
-      render json: {
-        leaders: leaders,
-        meta: {
-          total_count: leaders.total_count,
-          total_pages: leaders.total_pages,
-          user_data: @user_data
+      if is_client?(user_selected)
+        leaders_gen = generate_leaders(user_selected)
+        leaders = paginate_leaders(leaders_gen)
+        render json: {
+          leaders: leaders,
+          meta: {
+            total_count: leaders.total_count,
+            total_pages: leaders.total_pages,
+            user_data: @user_data
+          }
         }
-      }
+      else
+        render json: {
+          leaders: [],
+          meta: {}
+        }
+      end
+
     end
 
     private
 
-    def generate_leaders
+    def generate_leaders(user_client)
       user_times = []
       users = all_clents
       users.find_each do |user|
@@ -105,7 +123,7 @@ module Api
         user_times.push(data)
       end
       user_times = sort_times(user_times)
-      user_times = add_times_index(user_times)
+      user_times = add_times_index(user_times, user_client)
       user_times
     end
 
@@ -113,8 +131,8 @@ module Api
       user_times.sort_by {|d| [d[:current_contents_learnt], -d[:time_elapsed]]}.reverse
     end
 
-    def add_times_index(user_times)
-      user_id = params[:user_id] || current_user.id
+    def add_times_index(user_times, user_client)
+      user_id = user_client.id
       user_times.each.with_index do |user, i|
         position = i + 1
         if user[:id] == user_id.to_i
@@ -129,6 +147,10 @@ module Api
       Kaminari.paginate_array(leaders_data)
               .page(params[:page] || PAGE)
               .per(params[:per_page] || PER_PAGE)
+    end
+
+    def is_client?(user)
+      user.present? && user.cliente?
     end
 
   end

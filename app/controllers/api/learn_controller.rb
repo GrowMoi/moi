@@ -27,7 +27,9 @@ needs to be a JSON-encoded string having the following format:
     }
     def create
       answerer_result = answerer.result
-      update_user_test_achievement
+      if is_client?(current_user)
+        update_user_test_achievement
+      end
       render json: {
         result: answerer_result
       }
@@ -68,6 +70,10 @@ needs to be a JSON-encoded string having the following format:
         user_test_achievement.save
       end
 
+    end
+
+    def is_client?(user)
+      user.present? && user.cliente?
     end
 
   end
