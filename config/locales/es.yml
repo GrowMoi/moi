@@ -98,6 +98,9 @@
       videos: Vídeos
     quizzes:
       new: "Nuevo Test"
+    players:
+      remove_player: Eliminar Jugador
+      add_player: Agregar Jugador
     contents:
       new: "Nuevo Contenido"
       edit: "Editar Contenido"
@@ -410,7 +413,8 @@
       search_engine: Motor de búsqueda
       profile: Árbol
       notification: "Notificaciones"
-      quiz: "Test"
+      quiz: Test
+      player: Jugador
     attributes:
       user:
         username: "Nombre de usuario"
@@ -464,6 +468,11 @@
         title: "Título"
         date: "Fecha de creación"
         description: "Descripción"
+      quiz:
+        level: Nivel
+      player:
+        name: Nombre
+        score: Puntaje
 
     errors:
       messages:

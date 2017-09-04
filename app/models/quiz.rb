@@ -34,6 +34,9 @@ class Quiz < ActiveRecord::Base
   end
 
   begin :nested_attributes
-    accepts_nested_attributes_for :players, allow_destroy: true
+    accepts_nested_attributes_for :players, allow_destroy: true,
+                                            reject_if: ->(attributes) {
+                                              attributes["name"].nil?
+                                            }
   end
 end

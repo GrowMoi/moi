@@ -11,20 +11,19 @@
                    required: true
 
   .players-form
-    = f.fields_for :players, :wrapper => false do |player|
+    = f.fields_for :players, quiz.players, :wrapper => false do |player|
       = player.label :name
       = player.text_field :name,
                      class: "form-control",
                      required: true
       = player.link_to_remove class: "btn btn-link bs-tooltip",
-                        title: t("views.contents.remove_media"),
+                        title: t("views.players.remove_player"),
                         data: { placement: "right" } do
        span.glyphicon.glyphicon-remove.text-danger
-      = player.hidden_field :quiz_id
 
     = f.link_to_add :players,
                    class: "btn btn-sm btn-default add-content-link bs-tooltip",
-                   title: t("views.contents.add_link"),
+                   title: t("views.players.add_player"),
                    data: { placement: "left" } do
      span.glyphicon.glyphicon-plus.text-success
 

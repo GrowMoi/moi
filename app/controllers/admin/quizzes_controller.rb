@@ -2,7 +2,7 @@ module Admin
   class QuizzesController < AdminController::Base
 
     before_action :build_relationships!,
-                  only: [:new, :create]
+                  only: [:new]
 
     authorize_resource
 
@@ -39,7 +39,6 @@ module Admin
       allowed = [ :level,
                   :players_attributes => [
                     :id,
-                    :quiz_id,
                     :name,
                     :_destroy
                   ]

@@ -12,4 +12,9 @@
 
 class Player < ActiveRecord::Base
   belongs_to :quiz
+
+  begin :validations
+    validates :name,
+              presence: true
+  end
 end
