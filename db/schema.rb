@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170807002444) do
+ActiveRecord::Schema.define(version: 20170905105937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,16 +91,6 @@ ActiveRecord::Schema.define(version: 20170807002444) do
   add_index "content_notes", ["content_id"], name: "index_content_notes_on_content_id", using: :btree
   add_index "content_notes", ["user_id"], name: "index_content_notes_on_user_id", using: :btree
 
-  create_table "content_reading_times", force: :cascade do |t|
-    t.integer  "content_id", null: false
-    t.integer  "user_id",    null: false
-    t.float    "time",       null: false
-    t.datetime "created_at", null: false
-  end
-
-  add_index "content_reading_times", ["content_id"], name: "index_content_reading_times_on_content_id", using: :btree
-  add_index "content_reading_times", ["user_id"], name: "index_content_reading_times_on_user_id", using: :btree
-
   create_table "content_readings", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.integer  "content_id", null: false
@@ -164,6 +154,16 @@ ActiveRecord::Schema.define(version: 20170807002444) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "leaderboards", force: :cascade do |t|
+    t.integer  "user_id",                               null: false
+    t.integer  "time_elapsed",    limit: 8, default: 0
+    t.integer  "contents_learnt",           default: 0
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "leaderboards", ["user_id"], name: "index_leaderboards_on_user_id", using: :btree
 
   create_table "neurons", force: :cascade do |t|
     t.string   "title",                                  null: false
@@ -376,10 +376,12 @@ ActiveRecord::Schema.define(version: 20170807002444) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
+    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "content_learning_tests", "users"
@@ -390,8 +392,6 @@ ActiveRecord::Schema.define(version: 20170807002444) do
   add_foreign_key "content_media", "contents"
   add_foreign_key "content_notes", "contents"
   add_foreign_key "content_notes", "users"
-  add_foreign_key "content_reading_times", "contents"
-  add_foreign_key "content_reading_times", "users"
   add_foreign_key "content_readings", "contents"
   add_foreign_key "content_readings", "neurons"
   add_foreign_key "content_readings", "users"
@@ -404,4 +404,5 @@ ActiveRecord::Schema.define(version: 20170807002444) do
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"
+  add_foreign_key "versions", "users", column: "owner_id"
 end

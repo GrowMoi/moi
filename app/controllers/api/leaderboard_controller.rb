@@ -18,13 +18,9 @@ module Api
             .size
     }
 
-    expose(:user_selected) {
-      if params[:user_id]
-        selected = User.find(params[:user_id])
-      else
-        selected = current_user
-      end
-      selected
+    expose(:all_leaders) {
+      Leaderboard.includes(:user)
+                .order(contents_learnt: :desc, time_elapsed: :asc)
     }
 
     api :GET,
@@ -77,15 +73,22 @@ module Api
     param :user_id, Integer
 
     def index
+      user_selected = get_user_selected
       if is_client?(user_selected)
-        leaders_gen = generate_leaders(user_selected)
-        leaders = paginate_leaders(leaders_gen)
+        leaders =  all_leaders.page(params[:page] || PAGE).per(params[:per_page] || PER_PAGE)
+        user_index = all_leaders.pluck(:user_id).index(user_selected.id)
+        user_info = all_leaders.find_by_user_id(user_selected.id)
+        serialized_data = Api::LeaderboardSerializer.new(user_info).as_json
+        user_data = serialized_data["leaderboard"]
+        user_data[:position] = user_index + 1
+        leaderboard = serialize_leaderboard(leaders)
         render json: {
-          leaders: leaders,
+          leaders: leaderboard,
           meta: {
             total_count: leaders.total_count,
             total_pages: leaders.total_pages,
-            user_data: @user_data
+            user_data: user_data,
+            total_contents: total_content_available
           }
         }
       else
@@ -99,52 +102,25 @@ module Api
 
     private
 
-    def generate_leaders(user_client)
-      user_times = []
-      users = all_clents
-      users.find_each do |user|
-        data = {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          current_contents_learnt: user.learned_contents.size,
-          total_contents: total_content_available
-        }
+    def serialize_leaderboard(leaders)
+      serialized = ActiveModel::ArraySerializer.new(
+        leaders,
+        each_serializer: Api::LeaderboardSerializer
+      )
+      serialized
+    end
 
-        if user.learned_contents.empty?
-          data[:time_elapsed] = 0
-        else
-          user_content_learnings = ContentLearning.where(user: user).order(created_at: :asc)
-          last_content_learnt = user_content_learnings.last
-          time_diff = last_content_learnt.created_at - user.created_at
-          milliseconds = (time_diff.to_f.round(3)*1000).to_i
-          data[:time_elapsed] = milliseconds
-        end
-        user_times.push(data)
+    def get_user_selected
+      if params[:user_id]
+        selected = User.find(params[:user_id])
+      else
+        selected = current_user
       end
-      user_times = sort_times(user_times)
-      user_times = add_times_index(user_times, user_client)
-      user_times
+      selected
     end
 
-    def sort_times(user_times)
-      user_times.sort_by {|d| [d[:current_contents_learnt], -d[:time_elapsed]]}.reverse
-    end
-
-    def add_times_index(user_times, user_client)
-      user_id = user_client.id
-      user_times.each.with_index do |user, i|
-        position = i + 1
-        if user[:id] == user_id.to_i
-          @user_data = user
-        end
-        user[:position] = position
-      end
-      user_times
-    end
-
-    def paginate_leaders(leaders_data)
-      Kaminari.paginate_array(leaders_data)
+    def paginate_leaders(leaders)
+      Kaminari.paginate_array(leaders)
               .page(params[:page] || PAGE)
               .per(params[:per_page] || PER_PAGE)
     end

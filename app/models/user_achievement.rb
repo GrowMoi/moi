@@ -5,6 +5,7 @@
 #  id             :integer          not null, primary key
 #  user_id        :integer          not null
 #  achievement_id :integer          not null
+#  meta           :json
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
