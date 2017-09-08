@@ -43,7 +43,13 @@ module Api
           user_id: scope.id,
           achievement_id: test_achievement.id
         ).first
-        data["current_tests_ok"] = user_test_achievement.meta["max_tests_ok"] || 0
+
+        data["current_tests_ok"] = 0
+
+        if user_test_achievement.present?
+          data["current_tests_ok"] = user_test_achievement.meta["max_tests_ok"]
+        end
+
       end
 
       data

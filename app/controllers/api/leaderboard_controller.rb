@@ -76,11 +76,13 @@ module Api
       user_selected = get_user_selected
       if is_client?(user_selected)
         leaders =  all_leaders.page(params[:page] || PAGE).per(params[:per_page] || PER_PAGE)
-        user_index = all_leaders.pluck(:user_id).index(user_selected.id)
-        user_info = all_leaders.find_by_user_id(user_selected.id)
-        serialized_data = Api::LeaderboardSerializer.new(user_info).as_json
-        user_data = serialized_data["leaderboard"]
-        user_data[:position] = user_index + 1
+        if exists_relation(user_selected)
+          user_index = all_leaders.pluck(:user_id).index(user_selected.id)
+          user_info = all_leaders.find_by_user_id(user_selected.id)
+          serialized_data = Api::LeaderboardSerializer.new(user_info).as_json
+          user_data = serialized_data["leaderboard"]
+          user_data[:position] = user_index + 1
+        end
         leaderboard = serialize_leaderboard(leaders)
         render json: {
           leaders: leaderboard,
@@ -110,6 +112,11 @@ module Api
       serialized
     end
 
+    def exists_relation(user_selected)
+      relation = Leaderboard.where(user_id: user_selected.id)
+      relation.present?
+    end
+
     def get_user_selected
       if params[:user_id]
         selected = User.find(params[:user_id])
@@ -117,12 +124,6 @@ module Api
         selected = current_user
       end
       selected
-    end
-
-    def paginate_leaders(leaders)
-      Kaminari.paginate_array(leaders)
-              .page(params[:page] || PAGE)
-              .per(params[:per_page] || PER_PAGE)
     end
 
     def is_client?(user)
