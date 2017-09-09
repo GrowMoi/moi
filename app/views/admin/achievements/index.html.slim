@@ -1,0 +1,15 @@
+.achievements-page
+  - content_for :title, t("views.achievements.index")
+
+  .achievement-list-container
+    .achievement-row-header
+      .item.first =t("views.achievements.grid_info.date")
+      .item.second =t("views.achievements.grid_info.name")
+      .item.third =t("views.achievements.grid_info.label")
+      .item.fourth =t("views.achievements.grid_info.action")
+    - @achievements.each do |n|
+      .achievement-row
+        .item.first = l(n.created_at, :format => :short)
+        .item.second = n.name
+        .item.third = n.label
+        .item.fourth = link_to t("views.achievements.show"), admin_achievement_path(n)

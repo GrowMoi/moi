@@ -12,6 +12,16 @@ Moi::Application.routes.draw do
         get :index
       end
     end
+    resources :achievements, only: [] do
+      collection do
+        get :index
+      end
+    end
+    resources :leaderboard, only: [] do
+      collection do
+        get :index
+      end
+    end
     resources :user_tutors, only: [] do
       member do
         post :respond
@@ -80,6 +90,7 @@ Moi::Application.routes.draw do
     resources :users
     resources :profiles
     resources :notifications
+    resources :achievements, except: [:create, :destroy]
 
     # settings
     resources :settings, only: :index

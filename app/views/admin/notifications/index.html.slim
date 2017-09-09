@@ -2,7 +2,7 @@
   - content_for :title, t("views.notification.index")
 
   .notification-create
-    = link_to "Crear notificación",
+    = link_to t("views.notifications.create"),
               new_admin_notification_path,
               class: "btn btn-sm btn-default"
 

@@ -19,4 +19,7 @@ class ContentLearningTest < ActiveRecord::Base
   scope :uncompleted, -> {
     where(completed: false)
   }
+  scope :completed, -> {
+    where(completed: true)
+  }
 end

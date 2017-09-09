@@ -27,6 +27,7 @@
       settings: Preferencias
       profiles: Árboles
       notifications: Notificaciones
+      achievements: Logros
     users:
       new: "Nuevo Usuario"
       edit: "Editar Usuario"
@@ -78,6 +79,7 @@
         "false": Inactivo
     notifications:
       new: "Nueva Notificación"
+      create: "Crear Notificación"
     notification:
       index: "Notificaciones"
       new: "Nueva Notificación"
@@ -88,14 +90,59 @@
       description: "Contenido:"
       media: "Media:"
       video: "Video:"
-      action: Action
-      send: "Enviar Notificación"
+      action: "Accion"
+      send: "Crear Notificación"
       add_link: Agregar enlace
       attach_media: Adjuntar multimedia
       video_placeholder: Video destacado
       remove_media: Eliminar multimedia
       link_placeholder: http://www.growmoi.com
       videos: Vídeos
+
+    achievements:
+      new: "Nuevo logro"
+      show: "Ver"
+      edit: "Editar"
+      index: "Logros"
+      create: "Crear Logro"
+      send: "Enviar"
+      back: "Regresar"
+      created: "Logro creado"
+      updated: "Logro actualizado"
+
+      form:
+        name: "Nombre:"
+        description: "Descripcion:"
+        image: "Imagen:"
+        settings: "Configuraciones:"
+        attach_image: "Adjuntar imagen:"
+        remove_image: "Eliminar imagen:"
+        label: "Etiqueta:"
+      settings:
+        category: "Entregar logro por:"
+        aproved_content: "Cantidad de contenidos aprendidos:"
+        test_number: "Número de tests:"
+        content_number: "Número de contenidos aprendidos:"
+        test: "Tests resueltos correctamente"
+        content: "Aprender contenidos"
+        content_all: "Aprender todos los contenidos"
+        time: "Tiempo que toma aprender todos los contenidos"
+        all: "Todos"
+        personalized: "Personalizado"
+        quantity: "Cantidad:"
+        number: "Especifique un numero:"
+
+      grid_info:
+        date: "Fecha de creación"
+        name: "Nombre"
+        label: "Etiqueta"
+        action: "Acción"
+
+      data_show:
+        title: "Detalles"
+        settings: "Configuraciones"
+        image: "Imagen"
+        no_image: "-- no se ha añadido una imagen --"
 
     contents:
       new: "Nuevo Contenido"
@@ -242,6 +289,11 @@
       - :year
 
   time:
+    units:
+      seconds: segundos
+      minutes: minutos
+      hours: horas
+      days: "días"
     formats:
       default: "%A, %d de %B de %Y %H:%M:%S %z"
       short: "%d de %b %H:%M"

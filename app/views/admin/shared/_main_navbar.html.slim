@@ -16,6 +16,8 @@ nav.navbar.navbar-default.navbar-static-top.main-navbar
           = nav_item "profiles", admin_profiles_path
         - if can? :manage, Notification
           = nav_item "notifications", admin_notifications_path
+        - if can? :manage, Achievement
+          = nav_item "achievements", admin_achievements_path
 
       ul.nav.navbar-nav.navbar-right
         li.dropdown.current-user-dropdown
