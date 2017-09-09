@@ -32,40 +32,38 @@ module Api
           "id": 1,
           "email": "usuario1@test.com",
           "name": "usuario1",
-          "current_contents_learnt": 68,
-          "total_contents": 71,
+          "contents_learnt": 68,
           "time_elapsed": 9409558493,
-          "position": 1
+          "user_id": 10
         },
         {
           "id": 3,
           "email": "usuario3@test.com",
           "name": "usuario3",
-          "current_contents_learnt": 14,
-          "total_contents": 71,
+          "contents_learnt": 14,
           "time_elapsed": 3067483,
-          "position": 2
+          "user_id": 12
         },
         {
           "id": 2,
           "email": "usuario2@test.com",
           "name": "usuario2",
-          "current_contents_learnt": 9,
-          "total_contents": 71,
+          "contents_learnt": 9,
           "time_elapsed": 3992873,
-          "position": 3
+          "user_id": 22
         }
       ],
       "meta": {
         "total_count": 3,
         "total_pages": 1,
+        "total_contents": 71,
         "user_data": {
           "id": 1,
           "email": "usuario1@test.com",
           "name": "usuario1",
-          "current_contents_learnt": 68,
-          "total_contents": 71,
+          "contents_learnt": 68,
           "time_elapsed": 9409558493,
+          "user_id": 10,
           "position": 1
         }
       }
