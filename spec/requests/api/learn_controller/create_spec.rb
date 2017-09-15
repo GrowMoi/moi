@@ -16,6 +16,8 @@ RSpec.describe Api::LearnController,
 
   before { login_as current_user }
 
+  before { create :achievement }
+
   let(:json_response) {
     JSON.parse response.body
   }

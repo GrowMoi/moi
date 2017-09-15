@@ -1,0 +1,58 @@
+= form_for [:admin, achievement] do |f|
+
+  = render "admin/shared/form_errors", resource: achievement
+
+  .form-group
+    legend =t("views.achievements.form.name")
+    = f.text_field :name, class: "form-control"
+
+  .form-group
+    legend =t("views.achievements.form.label")
+    = f.text_field :label, class: "form-control"
+
+  .form-group
+    legend =t("views.achievements.form.description")
+    = f.text_area :description, class: "form-control"
+
+  .form-group
+    legend =t("views.achievements.form.image")
+    .row
+      .col-xs-12
+        .form-group
+          = tooltip t("views.achievements.form.attach_image"),
+                    place: "left",
+                    class: "btn btn-xs btn-default content-media-uploader" do
+            .glyphicon.glyphicon-cloud-upload
+
+          .hidden
+            = f.file_field :image
+
+          span.content-media-name-on-form
+            - if f.object.image?
+              = decorate(f.object).link_for_form
+
+  .form-group
+    legend =t("views.achievements.form.settings")
+    .settings-form-group
+      label =t("views.achievements.settings.category")
+      .select-category-container.settings-options-container.row-settings
+        = select_tag  :select_category,
+                      options_for_select(achievement_categories, selected_achievement_category),
+                      class: "select-category",
+                      id: "select-category"
+
+      .input-quantity-container
+        span.number-field-container
+          =t("views.achievements.settings.number")
+
+          = number_field_tag  :number_field_quantity,
+                              achievement.settings['quantity'],
+                              class: "number-field-quantity",
+                              id: "number-field-quantity"
+
+  .actions
+    = f.submit t("views.achievements.send"),
+              class: "btn btn-primary",
+              data: { disable_with: t("views.submitting")}
+
+    = link_to t("views.achievements.back"), admin_achievements_path
