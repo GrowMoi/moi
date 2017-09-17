@@ -100,11 +100,10 @@
       videos: Vídeos
     quizzes:
       new: Nuevo Test
-      index: Quizzes
-      create: Nuevo Quiz
-      show: Ver Quiz
-      created: Quiz creado
-      updated: Quiz actualizado
+      create: Nuevo Test
+      show: Ver Test
+      created: Test creado
+      updated: Test actualizado
       date: Fecha de creación
       players: Jugadores
       level: Nivel

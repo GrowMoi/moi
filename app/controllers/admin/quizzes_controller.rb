@@ -1,6 +1,8 @@
 module Admin
   class QuizzesController < AdminController::Base
+    include Breadcrumbs
 
+    before_action :add_breadcrumbs
     before_action :build_relationships!,
                   only: [:new]
 
@@ -12,6 +14,10 @@ module Admin
     }
 
     def new
+      render
+    end
+
+    def show
       render
     end
 
@@ -50,5 +56,10 @@ module Admin
     def build_relationships!
       quiz.players.build
     end
+
+    def resource
+      @resource ||= quiz.id
+    end
+
   end
 end
