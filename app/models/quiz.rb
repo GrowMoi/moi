@@ -18,7 +18,7 @@ class Quiz < ActiveRecord::Base
   ].freeze
 
   begin :enumerables
-    enum unidad_medida: LEVELS
+    enum levels: LEVELS
   end
 
   begin :validations

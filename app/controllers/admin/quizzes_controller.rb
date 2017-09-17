@@ -7,7 +7,9 @@ module Admin
     authorize_resource
 
     expose(:quiz, attributes: :quiz_params)
-    expose(:quizzes)
+    expose(:quizzes) {
+      Quiz.order(created_at: :desc)
+    }
 
     def new
       render
@@ -15,7 +17,7 @@ module Admin
 
     def create
       if quiz.save
-        redirect_to admin_users_path, notice: I18n.t("views.users.created")
+        redirect_to admin_quizzes_path, notice: I18n.t("views.quizzes.created")
       else
         render :new
       end
@@ -23,7 +25,7 @@ module Admin
 
     def update
       if quiz.save
-        redirect_to admin_users_path, notice: I18n.t("views.users.updated")
+        redirect_to admin_users_path, notice: I18n.t("views.quizzes.updated")
       else
         render :edit
       end

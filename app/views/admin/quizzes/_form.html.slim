@@ -6,9 +6,8 @@
 
   .form-group
     = f.label :level
-    = f.text_field :level,
-                   class: "form-control",
-                   required: true
+    = f.select :level, :collection => Quiz.levels.keys.to_a,
+                       class: "form-control"
 
   .players-form
     = f.fields_for :players, quiz.players, :wrapper => false do |player|

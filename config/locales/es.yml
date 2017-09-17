@@ -99,7 +99,16 @@
       link_placeholder: http://www.growmoi.com
       videos: Vídeos
     quizzes:
-      new: "Nuevo Test"
+      new: Nuevo Test
+      index: Quizzes
+      create: Nuevo Quiz
+      show: Ver Quiz
+      created: Quiz creado
+      updated: Quiz actualizado
+      date: Fecha de creación
+      players: Jugadores
+      level: Nivel
+      score: Resultado
     players:
       remove_player: Eliminar Jugador
       add_player: Agregar Jugador

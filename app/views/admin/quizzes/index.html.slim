@@ -1,0 +1,24 @@
+.quizzes-page
+  - content_for :title, t("views.quizzes.index")
+
+  table.table.table-striped
+    thead
+      tr
+        th =t("views.quizzes.date")
+        th =t("views.quizzes.level")
+        th =t("views.quizzes.players")
+        th =t("views.quizzes.score")
+    tbody
+    -quizzes.each do |q|
+      tr
+        td = l(q.created_at, :format => :short)
+        td = q.level
+        td
+          -q.players.each do |q|
+            .name = q.name
+        td = link_to t("views.quizzes.show"), admin_quiz_path(q)
+
+  .notification-create.pull-right
+    = link_to t("views.quizzes.create"),
+              new_admin_quiz_path,
+              class: "btn btn-sm btn-default"
