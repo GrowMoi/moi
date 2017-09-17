@@ -23,17 +23,9 @@ module Admin
 
     def create
       if quiz.save
-        redirect_to admin_quizzes_path, notice: I18n.t("views.quizzes.created")
+        redirect_to admin_quiz_path(quiz), notice: I18n.t("views.quizzes.created")
       else
         render :new
-      end
-    end
-
-    def update
-      if quiz.save
-        redirect_to admin_users_path, notice: I18n.t("views.quizzes.updated")
-      else
-        render :edit
       end
     end
 

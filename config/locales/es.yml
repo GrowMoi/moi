@@ -108,9 +108,14 @@
       players: Jugadores
       level: Nivel
       score: Resultado
+      winner: Ganador(a)
+      status: Estado
+      end: Terminado
+      progress: En Progreso
     players:
       remove_player: Eliminar Jugador
       add_player: Agregar Jugador
+      link: Link del test
     achievements:
       new: "Nuevo logro"
       show: "Ver"
