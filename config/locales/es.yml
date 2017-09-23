@@ -28,6 +28,7 @@
       profiles: Árboles
       notifications: Notificaciones
       achievements: Logros
+      quiz: Tests
     users:
       new: "Nuevo Usuario"
       edit: "Editar Usuario"
