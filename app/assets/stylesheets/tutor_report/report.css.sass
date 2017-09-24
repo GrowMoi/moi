@@ -1,0 +1,127 @@
+$base-color-green: #77BF5D
+$white: white
+
+.layout-report-body
+  background-color: #d3e9d8
+.container-report
+
+  .card-report
+    display: flex
+    background-color: #e7eee2
+    box-shadow: 0 0 2rem rgba(0,0,0,0.3)
+    border-radius: 1rem
+    padding: 1rem
+    margin: 2rem 0
+
+  .card-user-info
+    flex-direction: column
+  .user-details
+    display: flex
+
+  .title-container
+    display: flex
+    justify-content: center
+    align-items: center
+    .title-logo
+      img
+        height: 5rem
+        margin-right: 2rem
+    .title
+      text-transform: uppercase
+      font-weight: bold
+      font-size: 5rem
+  .sub-title
+    text-align: center
+    font-size: 2rem
+    margin-top: 2rem
+    margin-bottom: 2rem
+    color: #00a0e6
+
+  .profile-container
+    flex-basis: 50%
+    border-bottom: 0.1rem solid $base-color-green
+    border-right: 0.1rem solid $base-color-green
+    .user-avatar
+      text-align: center
+      img
+        width: 15rem
+    .user-name
+      padding: 0 2rem
+      text-align: center
+      font-size: 2.3rem
+      font-weight: bold
+      color: $base-color-green
+
+  .grid-info-container
+    flex-basis: 50%
+    display: flex
+    flex-direction: column
+    padding: 0 2rem
+    color: $base-color-green
+    border-bottom: 0.1rem solid $base-color-green
+    .row-info
+      display: flex
+      justify-content: flex-start
+      align-items: center
+      margin: 0.5rem 0
+      border-bottom: 0.1rem solid $base-color-green
+      padding: 0.5rem 0
+
+      .first-cell
+        flex-basis: 20%
+        padding-left: 1rem
+        border-left: 0.4rem solid $base-color-green
+
+      .second-cell
+        flex-basis: 80%
+        padding-left: 1rem
+
+      .first-cell-header
+        color: $white
+        background-color: $base-color-green
+        height: 4rem
+        display: flex
+        align-items: center
+        border-bottom-left-radius: 0.5rem
+        border-top-left-radius: 0.5rem
+
+      .second-cell-header
+        color: $white
+        background-color: $base-color-green
+        height: 4rem
+        display: flex
+        align-items: center
+        border-bottom-right-radius: 0.5rem
+        border-top-right-radius: 0.5rem
+        border-left: 0.1rem solid $white
+
+    .row-info-header
+      padding: 0
+      border: none
+      font-weight: bold
+
+  .image-tree-container
+    position: relative
+    height: 420px
+
+    .tree-image-position
+      width: 700px
+      height: 393px
+      position: absolute
+      top: 15px
+      margin-left: auto
+      margin-right: auto
+      left: 0
+      right: 0
+
+    .tree-landscape
+      @extend .tree-image-position
+      z-index: 0
+
+    .tree-frame
+      @extend .tree-image-position
+      z-index: 1
+
+    .tree-image
+      @extend .tree-image-position
+      z-index: 2
