@@ -6,10 +6,14 @@ module TreeService
     end
 
     def player_test
-      @player_test ||= ContentLearningQuiz.create!(
-        player: @player,
-        questions: questions
-      )
+      unless @player.learning_quiz
+        @player_test ||= ContentLearningQuiz.create!(
+          player: @player,
+          questions: questions
+        )
+      else
+        @player.learning_quiz
+      end
     end
 
     private

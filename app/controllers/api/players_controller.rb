@@ -10,7 +10,7 @@ module Api
     }
 
     expose(:player_test) {
-      Player.find(params[:id]).learning_quizzes.last
+      Player.find(params[:id]).learning_quiz
     }
 
     api :GET,
@@ -100,7 +100,8 @@ module Api
         quiz_id: player.quiz_id,
         player_name: player.name,
         player_id: player.id,
-        questions: quiz_fetcher.player_test_for_api
+        questions: quiz_fetcher.player_test_for_api,
+        answers: player_test.answers
       }
     end
 

@@ -19,7 +19,7 @@ class Player < ActiveRecord::Base
   end
 
   begin :relationships
-    has_many :learning_quizzes,
+    has_one :learning_quiz,
              dependent: :destroy,
              class_name: "ContentLearningQuiz"
   end
