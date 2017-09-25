@@ -17,4 +17,10 @@ class Player < ActiveRecord::Base
     validates :name,
               presence: true
   end
+
+  begin :relationships
+    has_many :learning_quizzes,
+             dependent: :destroy,
+             class_name: "ContentLearningQuiz"
+  end
 end

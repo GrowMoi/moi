@@ -9,6 +9,10 @@ module Api
       Player.find(params[:id])
     }
 
+    expose(:player_test) {
+      Player.find(params[:id]).learning_quizzes.last
+    }
+
     api :GET,
         "/quiz/:quiz_id/player/:player_id",
         "get new notifications for current user"
@@ -96,8 +100,31 @@ module Api
         quiz_id: player.quiz_id,
         player_name: player.name,
         player_id: player.id,
-        questions: []
+        questions: quiz_fetcher.player_test_for_api
       }
     end
+
+    def answer
+      answerer_result = answerer.result
+      render json: {
+        result: answerer_result
+      }
+    end
+
+    private
+
+    def answerer
+      TreeService::AnswerQuiz.new(
+        player_test: player_test,
+        answers: JSON.parse(params[:answers])
+      ).process!
+    end
+
+    def quiz_fetcher
+      @quiz_fetcher ||= TreeService::QuizFetcher.new(
+        player
+      )
+    end
+
   end
 end

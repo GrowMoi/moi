@@ -1,15 +1,17 @@
 # == Schema Information
 #
-# Table name: quizzes
+# Table name: content_learning_quizzes
 #
 #  id         :integer          not null, primary key
-#  level      :string           not null
+#  player_id  :integer          not null
+#  questions  :json             not null
+#  answers    :json
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
 FactoryGirl.define do
-  factory :quiz do
+  factory :content_learning_quiz do
     
   end
 

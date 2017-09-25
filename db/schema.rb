@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170905105937) do
+ActiveRecord::Schema.define(version: 20170924235232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,16 @@ ActiveRecord::Schema.define(version: 20170905105937) do
 
   add_index "content_favorites", ["content_id"], name: "index_content_favorites_on_content_id", using: :btree
   add_index "content_favorites", ["user_id"], name: "index_content_favorites_on_user_id", using: :btree
+
+  create_table "content_learning_quizzes", force: :cascade do |t|
+    t.integer  "player_id",  null: false
+    t.json     "questions",  null: false
+    t.json     "answers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "content_learning_quizzes", ["player_id"], name: "index_content_learning_quizzes_on_player_id", using: :btree
 
   create_table "content_learning_tests", force: :cascade do |t|
     t.integer  "user_id",                    null: false
@@ -303,15 +313,6 @@ ActiveRecord::Schema.define(version: 20170905105937) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
-  create_table "tree_levels", force: :cascade do |t|
-    t.integer  "user_id",                null: false
-    t.integer  "level",      default: 1, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "tree_levels", ["user_id"], name: "index_tree_levels_on_user_id", using: :btree
-
   create_table "user_achievements", force: :cascade do |t|
     t.integer  "user_id",        null: false
     t.integer  "achievement_id", null: false
@@ -409,6 +410,7 @@ ActiveRecord::Schema.define(version: 20170905105937) do
   add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
+  add_foreign_key "content_learning_quizzes", "players"
   add_foreign_key "content_learning_tests", "users"
   add_foreign_key "content_learnings", "contents"
   add_foreign_key "content_learnings", "neurons"
@@ -427,7 +429,6 @@ ActiveRecord::Schema.define(version: 20170905105937) do
   add_foreign_key "players", "quizzes"
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
-  add_foreign_key "tree_levels", "users"
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"
