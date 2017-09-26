@@ -5,7 +5,7 @@ class PlayerDecorator < LittleDecorator
 
   def score
     if record.learning_quiz
-      answers = record.learning_quiz.answers
+      answers = record.learning_quiz.answers || []
       rightAnswers = answers.select{|a| a['correct']  == true}.count
       "#{rightAnswers} / #{answers.count}"
     end

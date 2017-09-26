@@ -16,7 +16,8 @@ module TreeService
         correct_answer = correct_answer?(answer)
         {
           correct: !!correct_answer,
-          content_id: answer["content_id"]
+          content_id: answer["content_id"],
+          question: Content.find(answer["content_id"]).title
         }
       end
       @player_test.answers = answers_result

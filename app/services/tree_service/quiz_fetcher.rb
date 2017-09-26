@@ -1,6 +1,6 @@
 module TreeService
   class QuizFetcher
-    MIN_COUNT_FOR_TEST = 4
+    MIN_COUNT_FOR_TEST = 10
 
     def initialize(player)
       @player = player
@@ -32,7 +32,7 @@ module TreeService
     end
 
     def contents_for_test
-      Content.where(approved: true).limit(10)
+      Content.where(approved: true).limit(13)
       # contents = Content.all.limit(10).pluck(:id)
       # Content.where(id: contents)
     end
