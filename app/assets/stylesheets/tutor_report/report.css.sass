@@ -12,6 +12,7 @@ $white: white
     border-radius: 1rem
     padding: 1rem
     margin: 2rem 0
+    min-height: 15rem
 
   .card-user-info
     flex-direction: column
@@ -125,3 +126,40 @@ $white: white
     .tree-image
       @extend .tree-image-position
       z-index: 2
+
+  .donut-chart-container
+    display: block
+    margin: auto
+    position: relative
+    .moi-logo-graf
+      position: absolute
+      left: 33%
+      top: 50%
+      transform: translate(-50%, -57%)
+    .arc
+      text
+        font: 10px
+        text-anchor: middle
+      path
+        stroke: #fff
+
+    .fill-text
+      fill: #fff
+
+    .fill-color-0
+      color: #359b3d
+
+    .fill-color-1
+      color: #0089b6
+
+    .fill-color-2
+      color: #f7af1f
+
+    .fill-color-3
+      color: #c72628
+
+  .loading
+    position: absolute
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
