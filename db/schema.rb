@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170924235232) do
+ActiveRecord::Schema.define(version: 20170930205353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,16 @@ ActiveRecord::Schema.define(version: 20170924235232) do
   add_index "content_learnings", ["content_id"], name: "index_content_learnings_on_content_id", using: :btree
   add_index "content_learnings", ["neuron_id"], name: "index_content_learnings_on_neuron_id", using: :btree
   add_index "content_learnings", ["user_id"], name: "index_content_learnings_on_user_id", using: :btree
+
+  create_table "content_level_quizzes", force: :cascade do |t|
+    t.integer  "content_id",    null: false
+    t.integer  "level_quiz_id", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "content_level_quizzes", ["content_id"], name: "index_content_level_quizzes_on_content_id", using: :btree
+  add_index "content_level_quizzes", ["level_quiz_id"], name: "index_content_level_quizzes_on_level_quiz_id", using: :btree
 
   create_table "content_links", force: :cascade do |t|
     t.integer  "content_id", null: false
@@ -174,6 +184,13 @@ ActiveRecord::Schema.define(version: 20170924235232) do
   end
 
   add_index "leaderboards", ["user_id"], name: "index_leaderboards_on_user_id", using: :btree
+
+  create_table "level_quizzes", force: :cascade do |t|
+    t.string   "name",        null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "neurons", force: :cascade do |t|
     t.string   "title",                                  null: false
