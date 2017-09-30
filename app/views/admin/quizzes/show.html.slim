@@ -6,9 +6,11 @@ table.table.table-striped
       th =t("activerecord.attributes.player.name")
       th =t("views.players.link")
       th =t("activerecord.attributes.player.score")
+      th =t("views.players.time")
   tbody
   -quiz.players.each do |p|
     tr
       td = p.name
       td = decorate(p).link_to_test
       td = decorate(p).score
+      td = decorate(p).time

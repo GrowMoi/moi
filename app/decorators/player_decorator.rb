@@ -11,4 +11,13 @@ class PlayerDecorator < LittleDecorator
     end
   end
 
+  def time
+    time_elapsed = 0
+    if record.learning_quiz
+      time_diff = record.learning_quiz.updated_at - record.learning_quiz.created_at
+      time_elapsed = (time_diff/60).round(2)
+    end
+    "#{time_elapsed} min"
+  end
+
 end

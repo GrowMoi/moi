@@ -117,6 +117,7 @@
       remove_player: Eliminar Jugador
       add_player: Agregar Jugador
       link: Link del test
+      time: Tiempo
     achievements:
       new: "Nuevo logro"
       show: "Ver"
