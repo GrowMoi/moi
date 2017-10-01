@@ -23,6 +23,7 @@ module Api
                :kind,
                :description,
                :source,
+               :updated_at,
                :title,
                :read,
                :learnt,
