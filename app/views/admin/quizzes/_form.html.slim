@@ -1,34 +1,29 @@
-= nested_form_for [:admin, quiz] do |f|
-  = render "admin/shared/form_errors",
-           resource: quiz
+.quiz-page
+  = nested_form_for [:admin, quiz] do |f|
+    = render "admin/shared/form_errors",
+             resource: quiz
 
-  = f.hidden_field :id
+    = f.hidden_field :id
 
-  .form-group
-    = f.label :level_quiz_id
-    = f.select :level_quiz_id, LevelQuiz.all.collect{|u| [u.name, u.id]},
-                      class: "form-control"
+    .form-group
+      = f.label :level_quiz_id
+      br
+      = f.select :level_quiz_id, LevelQuiz.all.collect{|u| [u.name, u.id]},
+                        class: "form-control select-level"
+      = link_to t("views.level_quizzes.new"),
+                new_admin_level_quiz_path,
+                class: "btn btn-link"
 
-  .pull-right
-    = link_to t("views.level_quizzes.new"),
-              new_admin_level_quiz_path,
-              class: "btn btn-sm btn-default"
+    .players-form.form-group
+      = f.fields_for :players, quiz.players, :wrapper => false do |player|
+        = player.label :name
+        = player.text_field :name,
+                       class: "form-control",
+                       required: true
+      = f.link_to_add :players,
+                     class: "btn btn-sm btn-default add-player-link bs-tooltip",
+                     title: t("views.players.add_player"),
+                     data: { placement: "left" } do
+       span.glyphicon.glyphicon-plus.text-success
 
-  .players-form
-    = f.fields_for :players, quiz.players, :wrapper => false do |player|
-      = player.label :name
-      = player.text_field :name,
-                     class: "form-control",
-                     required: true
-      = player.link_to_remove class: "btn btn-link bs-tooltip",
-                        title: t("views.players.remove_player"),
-                        data: { placement: "right" } do
-       span.glyphicon.glyphicon-remove.text-danger
-
-    = f.link_to_add :players,
-                   class: "btn btn-sm btn-default add-content-link bs-tooltip",
-                   title: t("views.players.add_player"),
-                   data: { placement: "left" } do
-     span.glyphicon.glyphicon-plus.text-success
-
-  = f.submit :Guardar, class: "btn btn-primary", data: {disable_with: "Almacenando"}
+    = f.submit :Guardar, class: "btn btn-primary", data: {disable_with: "Almacenando"}
