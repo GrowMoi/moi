@@ -436,8 +436,6 @@ ActiveRecord::Schema.define(version: 20170930233822) do
   add_foreign_key "notification_videos", "notifications"
   add_foreign_key "players", "quizzes"
   add_foreign_key "possible_answers", "contents"
-  add_foreign_key "possible_answers", "contents"
-  add_foreign_key "profiles", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "quizzes", "level_quizzes"
   add_foreign_key "user_content_preferences", "users"
