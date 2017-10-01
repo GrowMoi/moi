@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170930205353) do
+ActiveRecord::Schema.define(version: 20170930233822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,16 +71,6 @@ ActiveRecord::Schema.define(version: 20170930205353) do
   add_index "content_learnings", ["content_id"], name: "index_content_learnings_on_content_id", using: :btree
   add_index "content_learnings", ["neuron_id"], name: "index_content_learnings_on_neuron_id", using: :btree
   add_index "content_learnings", ["user_id"], name: "index_content_learnings_on_user_id", using: :btree
-
-  create_table "content_level_quizzes", force: :cascade do |t|
-    t.integer  "content_id",    null: false
-    t.integer  "level_quiz_id", null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  add_index "content_level_quizzes", ["content_id"], name: "index_content_level_quizzes_on_content_id", using: :btree
-  add_index "content_level_quizzes", ["level_quiz_id"], name: "index_content_level_quizzes_on_level_quiz_id", using: :btree
 
   create_table "content_links", force: :cascade do |t|
     t.integer  "content_id", null: false
@@ -186,10 +176,11 @@ ActiveRecord::Schema.define(version: 20170930205353) do
   add_index "leaderboards", ["user_id"], name: "index_leaderboards_on_user_id", using: :btree
 
   create_table "level_quizzes", force: :cascade do |t|
-    t.string   "name",        null: false
+    t.string   "name",                     null: false
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.text     "content_ids", default: [],              array: true
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "neurons", force: :cascade do |t|
@@ -281,10 +272,12 @@ ActiveRecord::Schema.define(version: 20170930205353) do
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
   create_table "quizzes", force: :cascade do |t|
-    t.string   "level",      null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "level_quiz_id", null: false
   end
+
+  add_index "quizzes", ["level_quiz_id"], name: "index_quizzes_on_level_quiz_id", using: :btree
 
   create_table "search_engines", force: :cascade do |t|
     t.string   "name",                      null: false
@@ -419,12 +412,10 @@ ActiveRecord::Schema.define(version: 20170930205353) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
-    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "content_learning_quizzes", "players"
@@ -445,9 +436,11 @@ ActiveRecord::Schema.define(version: 20170930205353) do
   add_foreign_key "notification_videos", "notifications"
   add_foreign_key "players", "quizzes"
   add_foreign_key "possible_answers", "contents"
+  add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
+  add_foreign_key "profiles", "users"
+  add_foreign_key "quizzes", "level_quizzes"
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"
-  add_foreign_key "versions", "users", column: "owner_id"
 end

@@ -58,8 +58,6 @@ class Content < ActiveRecord::Base
     has_many :content_medium,
              class_name: "ContentMedia",
              dependent: :destroy
-    has_many :content_level_quizzes
-
   end
 
   begin :nested_attributes

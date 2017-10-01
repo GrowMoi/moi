@@ -113,6 +113,8 @@
       status: Estado
       end: Terminado
       progress: En Progreso
+    level_quizzes:
+      new: Nuevo Nivel
     players:
       remove_player: Eliminar Jugador
       add_player: Agregar Jugador
@@ -477,6 +479,7 @@
       profile: Árbol
       notification: "Notificaciones"
       quiz: Test
+      level_quiz: Niveles Test
       player: Jugador
     attributes:
       user:

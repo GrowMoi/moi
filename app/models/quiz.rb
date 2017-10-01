@@ -2,35 +2,22 @@
 #
 # Table name: quizzes
 #
-#  id         :integer          not null, primary key
-#  level      :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id            :integer          not null, primary key
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  level_quiz_id :integer          not null
 #
 
 class Quiz < ActiveRecord::Base
-  extend Enumerize
 
-  LEVELS = [
-    'easy',
-    'medium',
-    'hard'
-  ].freeze
-
-  begin :enumerables
-    enum levels: LEVELS
+  begin :relationships
+    belongs_to :level_quiz
+    has_many :players,
+            dependent: :destroy
   end
 
   begin :validations
-    validates :level,
-              presence: true
-    validates :level,
-              inclusion: { in: LEVELS }
-  end
-
-  begin :relationships
-    has_many :players,
-            dependent: :destroy
+    validates :level_quiz_id, presence: true
   end
 
   begin :nested_attributes

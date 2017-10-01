@@ -99,6 +99,7 @@ Moi::Application.routes.draw do
     resources :profiles
     resources :notifications
     resources :quizzes
+    resources :level_quizzes
     resources :achievements, except: [:create, :destroy]
 
     # settings

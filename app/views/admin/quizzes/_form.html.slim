@@ -5,9 +5,14 @@
   = f.hidden_field :id
 
   .form-group
-    = f.label :level
-    = f.select :level, :collection => Quiz.levels.keys.to_a,
-                       class: "form-control"
+    = f.label :level_quiz_id
+    = f.select :level_quiz_id, LevelQuiz.all.collect{|u| [u.name, u.id]},
+                      class: "form-control"
+
+  .pull-right
+    = link_to t("views.level_quizzes.new"),
+              new_admin_level_quiz_path,
+              class: "btn btn-sm btn-default"
 
   .players-form
     = f.fields_for :players, quiz.players, :wrapper => false do |player|

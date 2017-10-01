@@ -36,7 +36,8 @@ module Admin
     end
 
     def permitted_attributes
-      allowed = [ :level,
+      allowed = [ :id,
+                  :level_quiz_id,
                   :players_attributes => [
                     :id,
                     :name,

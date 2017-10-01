@@ -5,18 +5,18 @@
 #  id          :integer          not null, primary key
 #  name        :string           not null
 #  description :string
+#  content_ids :text             default([]), is an Array
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
 
 class LevelQuiz < ActiveRecord::Base
+  begin :relationships
+    has_many :quizzes
+  end
 
   begin :validations
     validates :name, presence: true, uniqueness: true
-  end
-
-  begin :relationships
-    has_many :content_level_quizzes,
-             dependent: :destroy
+    validates :content_ids, presence: true
   end
 end

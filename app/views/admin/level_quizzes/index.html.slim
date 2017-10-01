@@ -1,4 +1,4 @@
-.quizzes-page
+.level-quizzes-page
   - content_for :title, t("activerecord.models.quiz").pluralize
 
   table.table.table-striped
@@ -6,17 +6,11 @@
       tr
         th =t("views.quizzes.date")
         th =t("views.quizzes.level")
-        th =t("views.quizzes.players")
-        th =t("views.quizzes.score")
     tbody
-    -quizzes.each do |q|
+    -level_quizzes.each do |q|
       tr
         td = l(q.created_at, :format => :short)
-        td = q.level_quiz.name
-        td
-          -q.players.each do |q|
-            .name = q.name
-        td = link_to t("views.quizzes.show"), admin_quiz_path(q)
+        td = q.name
 
   .notification-create.pull-right
     = link_to t("views.quizzes.create"),
