@@ -19,18 +19,6 @@ module Admin
       Content.where(id: level_quiz.content_ids)
     }
 
-    def new
-      render
-    end
-
-    def show
-      render
-    end
-
-    def edit
-      render
-    end
-
     def create
       if level_quiz.save
         redirect_to admin_level_quiz_path(level_quiz), notice: I18n.t("views.level_quizzes.created")

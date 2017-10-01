@@ -13,14 +13,6 @@ module Admin
       Quiz.order(created_at: :desc)
     }
 
-    def new
-      render
-    end
-
-    def show
-      render
-    end
-
     def create
       if quiz.save
         redirect_to admin_quiz_path(quiz), notice: I18n.t("views.quizzes.created")
