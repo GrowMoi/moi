@@ -1,15 +1,3 @@
-= form_for [:admin, level_quiz] do |f|
-  = render "admin/shared/form_errors",
-           resource: level_quiz
+- content_for :title, t("views.level_quiz.new")
 
-  .form-group
-    = f.label :name
-    = f.text_field :name,
-                   class: "form-control",
-                   required: true
-
-    = f.collection_select :content_ids, contents, :id, :title, {}, {multiple: true, class: "form-control"}
-
-  .actions
-    = f.submit class: "btn btn-primary",
-               data: { disable_with: t("views.submitting") }
+= render "form"

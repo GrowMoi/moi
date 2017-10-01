@@ -110,11 +110,13 @@
       level: Nivel
       score: Resultado
       winner: Ganador(a)
-      status: Estado
-      end: Terminado
-      progress: En Progreso
     level_quizzes:
       new: Nuevo Nivel
+      edit: Editar Nivel
+      show: Ver Nivel
+      created: Nivel Creado
+      updated: Nivel actualizado
+      action: Acciones
     players:
       remove_player: Eliminar Jugador
       add_player: Agregar Jugador
@@ -479,7 +481,7 @@
       profile: Árbol
       notification: "Notificaciones"
       quiz: Test
-      level_quiz: Niveles Test
+      level_quiz: Nivel Test
       player: Jugador
     attributes:
       user:
@@ -531,14 +533,18 @@
       content_video:
         url: URL
       notification:
-        title: "Título"
-        date: "Fecha de creación"
-        description: "Descripción"
-      quiz:
-        level: Nivel
+        title: Título
+        date: Fecha de creación
+        description: Descripción
       player:
         name: Nombre
         score: Puntaje
+      quiz:
+        level_quiz_id: Nivel
+      level_quiz:
+        name: Nombre
+        description: Descripción
+        content_ids: Preguntas
 
     errors:
       messages:

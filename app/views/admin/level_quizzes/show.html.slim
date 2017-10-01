@@ -1,0 +1,19 @@
+- content_for :title, t("activerecord.models.level_quiz")
+
+h3.text-center = level_quiz.name
+
+.form-group
+  = label_tag t("activerecord.attributes.level_quiz.content_ids")
+.questions
+  ul
+    -questions.each do |p|
+      li
+        span = p.title
+
+.form-group
+  = label_tag t("activerecord.attributes.level_quiz.description")
+  p = level_quiz.description
+
+hr
+.pull-right
+  = link_to "Editar", edit_admin_level_quiz_path(level_quiz), class: "btn btn-link"
