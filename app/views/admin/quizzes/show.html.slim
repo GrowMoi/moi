@@ -1,0 +1,16 @@
+- content_for :title, t("activerecord.models.quiz")
+
+table.table.table-striped
+  thead
+    tr
+      th =t("activerecord.attributes.player.name")
+      th =t("views.players.link")
+      th =t("activerecord.attributes.player.score")
+      th =t("views.players.time")
+  tbody
+  -quiz.players.each do |p|
+    tr
+      td = p.name
+      td = decorate(p).link_to_test
+      td = decorate(p).score
+      td = decorate(p).time

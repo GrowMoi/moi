@@ -28,6 +28,7 @@
       profiles: Árboles
       notifications: Notificaciones
       achievements: Logros
+      quiz: Tests
     users:
       new: "Nuevo Usuario"
       edit: "Editar Usuario"
@@ -98,7 +99,29 @@
       remove_media: Eliminar multimedia
       link_placeholder: http://www.growmoi.com
       videos: Vídeos
-
+    quizzes:
+      new: Nuevo Test
+      create: Nuevo Test
+      show: Ver Test
+      created: Test creado
+      updated: Test actualizado
+      date: Fecha de creación
+      players: Jugadores
+      level: Nivel
+      score: Resultado
+      winner: Ganador(a)
+    level_quizzes:
+      new: Nuevo Nivel
+      edit: Editar Nivel
+      show: Ver Nivel
+      created: Nivel Creado
+      updated: Nivel actualizado
+      action: Acciones
+    players:
+      remove_player: Eliminar Jugador
+      add_player: Agregar Jugador
+      link: Link del test
+      time: Tiempo
     achievements:
       new: "Nuevo logro"
       show: "Ver"
@@ -109,7 +132,6 @@
       back: "Regresar"
       created: "Logro creado"
       updated: "Logro actualizado"
-
       form:
         name: "Nombre:"
         description: "Descripcion:"
@@ -131,19 +153,16 @@
         personalized: "Personalizado"
         quantity: "Cantidad:"
         number: "Especifique un numero:"
-
       grid_info:
         date: "Fecha de creación"
         name: "Nombre"
         label: "Etiqueta"
         action: "Acción"
-
       data_show:
         title: "Detalles"
         settings: "Configuraciones"
         image: "Imagen"
         no_image: "-- no se ha añadido una imagen --"
-
     contents:
       new: "Nuevo Contenido"
       edit: "Editar Contenido"
@@ -461,6 +480,9 @@
       search_engine: Motor de búsqueda
       profile: Árbol
       notification: "Notificaciones"
+      quiz: Test
+      level_quiz: Nivel Test
+      player: Jugador
     attributes:
       user:
         username: "Nombre de usuario"
@@ -511,9 +533,18 @@
       content_video:
         url: URL
       notification:
-        title: "Título"
-        date: "Fecha de creación"
-        description: "Descripción"
+        title: Título
+        date: Fecha de creación
+        description: Descripción
+      player:
+        name: Nombre
+        score: Puntaje
+      quiz:
+        level_quiz_id: Nivel
+      level_quiz:
+        name: Nombre
+        description: Descripción
+        content_ids: Preguntas
 
     errors:
       messages:

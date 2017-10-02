@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170905105937) do
+ActiveRecord::Schema.define(version: 20170930233822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,16 @@ ActiveRecord::Schema.define(version: 20170905105937) do
 
   add_index "content_favorites", ["content_id"], name: "index_content_favorites_on_content_id", using: :btree
   add_index "content_favorites", ["user_id"], name: "index_content_favorites_on_user_id", using: :btree
+
+  create_table "content_learning_quizzes", force: :cascade do |t|
+    t.integer  "player_id",  null: false
+    t.json     "questions",  null: false
+    t.json     "answers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "content_learning_quizzes", ["player_id"], name: "index_content_learning_quizzes_on_player_id", using: :btree
 
   create_table "content_learning_tests", force: :cascade do |t|
     t.integer  "user_id",                    null: false
@@ -165,6 +175,14 @@ ActiveRecord::Schema.define(version: 20170905105937) do
 
   add_index "leaderboards", ["user_id"], name: "index_leaderboards_on_user_id", using: :btree
 
+  create_table "level_quizzes", force: :cascade do |t|
+    t.string   "name",                     null: false
+    t.string   "description"
+    t.text     "content_ids", default: [],              array: true
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
   create_table "neurons", force: :cascade do |t|
     t.string   "title",                                  null: false
     t.integer  "parent_id"
@@ -221,6 +239,16 @@ ActiveRecord::Schema.define(version: 20170905105937) do
 
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
+  create_table "players", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.float    "score"
+    t.integer  "quiz_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "players", ["quiz_id"], name: "index_players_on_quiz_id", using: :btree
+
   create_table "possible_answers", force: :cascade do |t|
     t.integer  "content_id",                 null: false
     t.string   "text",                       null: false
@@ -242,6 +270,14 @@ ActiveRecord::Schema.define(version: 20170905105937) do
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
+
+  create_table "quizzes", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "level_quiz_id", null: false
+  end
+
+  add_index "quizzes", ["level_quiz_id"], name: "index_quizzes_on_level_quiz_id", using: :btree
 
   create_table "search_engines", force: :cascade do |t|
     t.string   "name",                      null: false
@@ -376,14 +412,13 @@ ActiveRecord::Schema.define(version: 20170905105937) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
-    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
+  add_foreign_key "content_learning_quizzes", "players"
   add_foreign_key "content_learning_tests", "users"
   add_foreign_key "content_learnings", "contents"
   add_foreign_key "content_learnings", "neurons"
@@ -399,10 +434,11 @@ ActiveRecord::Schema.define(version: 20170905105937) do
   add_foreign_key "notification_links", "notifications"
   add_foreign_key "notification_media", "notifications"
   add_foreign_key "notification_videos", "notifications"
+  add_foreign_key "players", "quizzes"
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
+  add_foreign_key "quizzes", "level_quizzes"
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"
-  add_foreign_key "versions", "users", column: "owner_id"
 end

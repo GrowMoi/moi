@@ -7,6 +7,14 @@ Moi::Application.routes.draw do
     resources :search, only: :index
     resources :content_preferences, only: :update
     resource :order_preferences, controller: :order, only: :update
+    resources :quizzes, only: [] do
+      resources :players,
+                only: [:show] do
+        member do
+          post :answer
+        end
+      end
+    end
     resources :notifications, only: [] do
       collection do
         get :index
@@ -90,6 +98,8 @@ Moi::Application.routes.draw do
     resources :users
     resources :profiles
     resources :notifications
+    resources :quizzes
+    resources :level_quizzes
     resources :achievements, except: [:create, :destroy]
 
     # settings
