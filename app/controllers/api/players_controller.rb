@@ -21,7 +21,6 @@ module Api
         'id': 132,
         'player_id': 23,
         'player_name': 'Moi User',
-        'level': 'easy',
         'questions': [
           {
             'title': 'que es matematica 1',
@@ -101,7 +100,8 @@ module Api
         player_name: player.name,
         player_id: player.id,
         questions: quiz_fetcher.player_test_for_api,
-        answers: player_test.answers
+        answers: player_test.answers,
+        time: timeQuiz * 1000 #miliseconds
       }
     end
 
@@ -125,6 +125,10 @@ module Api
       @quiz_fetcher ||= TreeService::QuizFetcher.new(
         player
       )
+    end
+
+    def timeQuiz
+      player_test.updated_at - player_test.created_at
     end
 
   end
