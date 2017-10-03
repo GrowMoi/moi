@@ -101,7 +101,7 @@ module Api
         player_id: player.id,
         questions: quiz_fetcher.player_test_for_api,
         answers: player_test.answers,
-        time: timeQuiz * 1000 #miliseconds
+        time: timeQuiz
       }
     end
 
@@ -128,7 +128,8 @@ module Api
     end
 
     def timeQuiz
-      player_test.updated_at - player_test.created_at
+      time_diff = player_test.updated_at - player_test.created_at
+      time_quiz = Time.at(time_diff).utc.strftime("%H :%M :%S")
     end
 
   end
