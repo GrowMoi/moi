@@ -27,7 +27,7 @@ module Api
           else
             @errors = current_user.errors
             render  nothing: true,
-                    status: unprocessable_entity
+                    status: :unprocessable_entity
           end
         else
           @errors = current_user.errors
