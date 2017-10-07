@@ -6,6 +6,10 @@ module Tutor
                 .first
     }
 
+    expose(:users_by_tutor) {
+      UserTutor.where(tutor:current_user).includes(:user)
+    }
+
     def index
       if user_tutor.present?
         @client = user_tutor.user
@@ -26,5 +30,22 @@ module Tutor
       }
     end
 
+    def tutor_users_contents_learnt
+      data = map_users_by_tutor(users_by_tutor)
+      render json: {
+        data: data
+      }
+    end
+
+    def map_users_by_tutor(array_data)
+      array_data.map do |data|
+        user = data.user
+        {
+          user_id: user.id,
+          name: user.name,
+          contents_learnt: user.content_learnings.size
+        }
+      end
+    end
   end
 end

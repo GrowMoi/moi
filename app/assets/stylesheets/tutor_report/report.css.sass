@@ -127,10 +127,45 @@ $white: white
       @extend .tree-image-position
       z-index: 2
 
-  .donut-chart-container
-    display: block
+  .chart-container
     margin: auto
     position: relative
+
+    .axis
+      font: 10px sans-serif
+
+    .axis path
+      display: none
+
+    .axis path,
+    .axis line
+      fill: none
+      stroke: #000
+      shape-rendering: crispEdges
+
+    .fill-color-0
+      color: #cf5447
+
+    .fill-color-1
+      color: #4d79b2
+
+    .fill-color-2
+      color: #f1a74d
+
+    .fill-color-3
+      color: #1a985b
+
+    .fill-color-4
+      color: #b24e93
+
+    .fill-color-5
+      color: #e76988
+
+    .fill-color-6
+      color: #1a9bbd
+
+  .donut-chart-container
+    display: block
     .moi-logo-graf
       position: absolute
       left: 33%
@@ -156,10 +191,13 @@ $white: white
       color: #f7af1f
 
     .fill-color-3
-      color: #c72628
+      color: #b83b67
 
   .loading
     position: absolute
     left: 50%
     top: 50%
     transform: translate(-50%, -50%)
+
+  .bar-chart-container
+

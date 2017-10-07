@@ -146,6 +146,7 @@ Moi::Application.routes.draw do
     resources :report, only: :index do
       collection do
         get :root_contents_learnt
+        get :tutor_users_contents_learnt
       end
     end
 
