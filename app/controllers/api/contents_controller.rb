@@ -233,9 +233,9 @@ module Api
       end
     end
 
-    api :POST
-    "/neurons/:neuron_id/contents/:id/reading_time",
-    "add reading time from a user to a specific content"
+    api :POST,
+        "/neurons/:neuron_id/contents/:id/reading_time",
+        "add reading time from a user to a specific content"
     param :id, Integer, required: true, description: "content id"
     param :neuron_id, Integer, required: true
     param :time, Float, required: true, description: "time in ms to add to reading time"
