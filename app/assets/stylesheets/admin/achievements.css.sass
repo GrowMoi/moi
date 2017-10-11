@@ -1,0 +1,89 @@
+.achievements-page
+
+  .achievement-content
+    .achievement-row
+      margin: 2rem 0
+    .button-back
+      display: flex
+      justify-content: space-around
+
+  .disabled
+    pointer-events: none
+    opacity: 0.6
+
+  .nested-achievement-media
+    display: flex
+    justify-content: space-between
+
+  .achievement-fieldset
+    margin-bottom: 2rem
+
+  .actions
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+  .chosen-container
+    width: 100% !important
+
+  .row-settings
+    margin-bottom: 2rem
+
+    .settings-number-field
+      padding-left: 0.5rem
+      width: 6rem
+
+  .input-quantity-container
+    .number-field-quantity
+      margin: 0 1rem
+      padding-left: 0.5rem
+    .check-box-learn-all-contents
+      margin-right: 0.5rem
+
+  .settings-form-group
+    pointer-events: none
+    opacity: 0.7
+
+  .achievement-create
+    margin: 2rem 0
+    display: flex
+    justify-content: flex-end
+
+  .item
+    display: flex
+    align-items: center
+
+    .item-label
+      padding-right: 0.5rem
+      padding-left: 1rem
+      margin-bottom: 0
+
+  .achievement-list-container
+    display: flex
+    flex-direction: column
+
+    .first
+      justify-content: center
+      flex-basis: 20%
+
+    .second
+      flex-basis: 30%
+
+    .third
+      flex-basis: 30%
+
+    .fourth
+      justify-content: center
+      flex-basis: 20%
+
+    .achievement-row-header
+      display: flex
+      font-weight: bold
+      .second, .third
+        justify-content: center
+
+    .achievement-row
+      display: flex
+      padding: 1rem 0
+      &:nth-child(even)
+        background-color: #f8f8f8

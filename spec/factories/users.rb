@@ -24,6 +24,7 @@
 #  city                   :string
 #  country                :string
 #  tree_image             :string
+#  school                 :string
 #
 
 FactoryGirl.define do

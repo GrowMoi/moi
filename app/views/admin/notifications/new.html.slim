@@ -1,0 +1,23 @@
+.notifications-page
+  - content_for :title, t("views.notification.new")
+
+  = nested_form_for [:admin, notification] do |f|
+
+    = render "admin/shared/form_errors", resource: notification
+
+    .form-group
+      legend =t("views.notification.title")
+      = f.text_field :title, class: "form-control"
+    .form-group
+      legend =t("views.notification.description")
+      = f.text_area :description, class: "form-control"
+
+    = render "admin/notifications/form",
+            f: f
+
+    .actions
+      = f.submit t("views.notification.send"),
+                class: "btn btn-primary",
+                data: { disable_with: t("views.submitting")}
+
+      = link_to t("views.notification.back"), admin_notifications_path

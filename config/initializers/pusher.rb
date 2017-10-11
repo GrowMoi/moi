@@ -5,4 +5,5 @@ unless Rails.env.test?
   Pusher.secret = Rails.application.secrets.pusher_app_secret
   Pusher.logger = Rails.logger
   Pusher.encrypted = true
+  Pusher.cluster = "us2"
 end

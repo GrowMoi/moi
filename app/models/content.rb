@@ -46,6 +46,7 @@ class Content < ActiveRecord::Base
     has_many :content_learnings
     has_many :content_notes
     has_many :content_tasks
+    has_many :content_favorites
 
     has_many :possible_answers,
              ->{ order :id },

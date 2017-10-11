@@ -23,6 +23,7 @@ module Api
                :kind,
                :description,
                :source,
+               :updated_at,
                :title,
                :read,
                :learnt,
@@ -30,7 +31,8 @@ module Api
                :videos,
                :user_notes,
                :content_tasks,
-               :neuron_can_read
+               :neuron_can_read,
+               :favorite
 
     def read
       current_user.already_read?(object)
@@ -50,6 +52,13 @@ module Api
 
     def links
       object.content_links.map(&:link)
+    end
+
+    def favorite
+      ContentFavorite.where(
+        user: current_user,
+        content: object
+      ).exists?
     end
 
     def neuron_can_read

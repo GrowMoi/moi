@@ -1,0 +1,48 @@
+.achievements-page
+  - content_for :title, t("views.achievements.data_show.title")
+
+  .achievement-content
+    .achievement-row
+      .button-back
+        = link_to t("views.achievements.back"), admin_achievements_path
+        = link_to t("views.achievements.edit"), edit_admin_achievement_path
+
+    .achievement-row
+      strong=t("views.achievements.name")
+      .item
+        = achievement.name
+
+    .achievement-row
+      strong=t("views.achievements.description")
+      .item
+        = achievement.description
+
+    .achievement-row
+      strong =t("views.achievements.data_show.image")
+      .item
+        = decorated_achievement.image_list_group
+
+    .achievement-row
+      strong =t("views.achievements.data_show.settings")
+
+      .item
+        label.item-label =t("views.achievements.settings.category")
+        - if achievement.category == "test"
+          = t("views.achievements.settings.test")
+        - if achievement.category == "content"
+          = t("views.achievements.settings.content")
+        - if achievement.category == "content_all"
+          = t("views.achievements.settings.content_all")
+        - if achievement.category == "time"
+          = t("views.achievements.settings.time")
+
+      .item
+        -if achievement.category != "time" && achievement.category != "test"
+          label.item-label =t("views.achievements.settings.quantity")
+          - if achievement.settings["learn_all_contents"]
+            = t("views.achievements.settings.all")
+          - else
+            = achievement.settings["quantity"]
+
+
+

@@ -1,0 +1,13 @@
+fieldset.notification-fieldset
+  legend = t("views.notification.media")
+  .row
+    .col-xs-12.notification-medium-forms
+      = f.fields_for :notification_medium do |notification_media_form|
+        = render "admin/notifications/notification_media/form",
+                 f: notification_media_form
+
+      = f.link_to_add :notification_medium,
+                      class: "btn-sm btn btn-default bs-tooltip",
+                      title: t("views.notification.attach_media"),
+                      data: { placement: "left" } do
+        span.glyphicon.glyphicon-plus.text-success

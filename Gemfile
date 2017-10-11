@@ -3,7 +3,7 @@ ruby "2.1.4"
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5.2'
+gem 'rails', '4.2.7.1'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -61,6 +61,7 @@ gem 'airbrake'
 gem 'foreman'
 gem 'pusher'
 gem 'jquery-infinite-pages'
+gem 'enumerize', '~> 2.0'
 
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'

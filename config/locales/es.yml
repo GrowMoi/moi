@@ -12,6 +12,7 @@
     submitting: "Enviando.."
     unauthorized: "No tienes permiso para realizar esta acción"
     search_engines: Motores de búsqueda
+    notifications: Notificaciones
     loading: "Cargando.."
     pagination:
       previous: "&lt;"
@@ -25,6 +26,9 @@
       neurons: Neuronas
       settings: Preferencias
       profiles: Árboles
+      notifications: Notificaciones
+      achievements: Logros
+      quiz: Tests
     users:
       new: "Nuevo Usuario"
       edit: "Editar Usuario"
@@ -74,6 +78,91 @@
       active_status:
         "true": Activo
         "false": Inactivo
+    notifications:
+      new: "Nueva Notificación"
+      create: "Crear Notificación"
+    notification:
+      index: "Notificaciones"
+      new: "Nueva Notificación"
+      show: "Mostrar Notificación"
+      back: "Regresar"
+      title: "Título"
+      date: "Fecha de creación"
+      description: "Contenido:"
+      media: "Media:"
+      video: "Video:"
+      action: "Accion"
+      send: "Crear Notificación"
+      add_link: Agregar enlace
+      attach_media: Adjuntar multimedia
+      video_placeholder: Video destacado
+      remove_media: Eliminar multimedia
+      link_placeholder: http://www.growmoi.com
+      videos: Vídeos
+    quizzes:
+      new: Nuevo Test
+      create: Nuevo Test
+      show: Ver Test
+      created: Test creado
+      updated: Test actualizado
+      date: Fecha de creación
+      players: Jugadores
+      level: Nivel
+      score: Resultado
+      winner: Ganador(a)
+    level_quizzes:
+      new: Nuevo Nivel
+      edit: Editar Nivel
+      show: Ver Nivel
+      created: Nivel Creado
+      updated: Nivel actualizado
+      action: Acciones
+    players:
+      remove_player: Eliminar Jugador
+      add_player: Agregar Jugador
+      link: Link del test
+      time: Tiempo
+    achievements:
+      new: "Nuevo logro"
+      show: "Ver"
+      edit: "Editar"
+      index: "Logros"
+      create: "Crear Logro"
+      send: "Enviar"
+      back: "Regresar"
+      created: "Logro creado"
+      updated: "Logro actualizado"
+      form:
+        name: "Nombre:"
+        description: "Descripcion:"
+        image: "Imagen:"
+        settings: "Configuraciones:"
+        attach_image: "Adjuntar imagen:"
+        remove_image: "Eliminar imagen:"
+        label: "Etiqueta:"
+      settings:
+        category: "Entregar logro por:"
+        aproved_content: "Cantidad de contenidos aprendidos:"
+        test_number: "Número de tests:"
+        content_number: "Número de contenidos aprendidos:"
+        test: "Tests resueltos correctamente"
+        content: "Aprender contenidos"
+        content_all: "Aprender todos los contenidos"
+        time: "Tiempo que toma aprender todos los contenidos"
+        all: "Todos"
+        personalized: "Personalizado"
+        quantity: "Cantidad:"
+        number: "Especifique un numero:"
+      grid_info:
+        date: "Fecha de creación"
+        name: "Nombre"
+        label: "Etiqueta"
+        action: "Acción"
+      data_show:
+        title: "Detalles"
+        settings: "Configuraciones"
+        image: "Imagen"
+        no_image: "-- no se ha añadido una imagen --"
     contents:
       new: "Nuevo Contenido"
       edit: "Editar Contenido"
@@ -392,6 +481,10 @@
       settings: Preferencias
       search_engine: Motor de búsqueda
       profile: Árbol
+      notification: "Notificaciones"
+      quiz: Test
+      level_quiz: Nivel Test
+      player: Jugador
     attributes:
       user:
         username: "Nombre de usuario"
@@ -441,6 +534,19 @@
         link: Enlace
       content_video:
         url: URL
+      notification:
+        title: Título
+        date: Fecha de creación
+        description: Descripción
+      player:
+        name: Nombre
+        score: Puntaje
+      quiz:
+        level_quiz_id: Nivel
+      level_quiz:
+        name: Nombre
+        description: Descripción
+        content_ids: Preguntas
 
     errors:
       messages:

@@ -11,11 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170629045241) do
+ActiveRecord::Schema.define(version: 20170930233822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "unaccent"
+
+  create_table "achievements", force: :cascade do |t|
+    t.string   "name",        null: false
+    t.string   "label",       null: false
+    t.text     "description"
+    t.string   "image"
+    t.string   "category",    null: false
+    t.json     "settings"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "content_favorites", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "content_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "content_favorites", ["content_id"], name: "index_content_favorites_on_content_id", using: :btree
+  add_index "content_favorites", ["user_id"], name: "index_content_favorites_on_user_id", using: :btree
+
+  create_table "content_learning_quizzes", force: :cascade do |t|
+    t.integer  "player_id",  null: false
+    t.json     "questions",  null: false
+    t.json     "answers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "content_learning_quizzes", ["player_id"], name: "index_content_learning_quizzes_on_player_id", using: :btree
 
   create_table "content_learning_tests", force: :cascade do |t|
     t.integer  "user_id",                    null: false
@@ -144,6 +175,24 @@ ActiveRecord::Schema.define(version: 20170629045241) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  create_table "leaderboards", force: :cascade do |t|
+    t.integer  "user_id",                               null: false
+    t.integer  "time_elapsed",    limit: 8, default: 0
+    t.integer  "contents_learnt",           default: 0
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "leaderboards", ["user_id"], name: "index_leaderboards_on_user_id", using: :btree
+
+  create_table "level_quizzes", force: :cascade do |t|
+    t.string   "name",                     null: false
+    t.string   "description"
+    t.text     "content_ids", default: [],              array: true
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
   create_table "neurons", force: :cascade do |t|
     t.string   "title",                                  null: false
     t.integer  "parent_id"
@@ -161,6 +210,54 @@ ActiveRecord::Schema.define(version: 20170629045241) do
   add_index "neurons", ["pending_contents_count"], name: "index_neurons_on_pending_contents_count", using: :btree
   add_index "neurons", ["position"], name: "index_neurons_on_position", using: :btree
   add_index "neurons", ["title"], name: "index_neurons_on_title", using: :btree
+
+  create_table "notification_links", force: :cascade do |t|
+    t.integer  "notification_id", null: false
+    t.string   "link"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "notification_links", ["notification_id"], name: "index_notification_links_on_notification_id", using: :btree
+
+  create_table "notification_media", force: :cascade do |t|
+    t.string   "media"
+    t.integer  "notification_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "notification_media", ["notification_id"], name: "index_notification_media_on_notification_id", using: :btree
+
+  create_table "notification_videos", force: :cascade do |t|
+    t.integer  "notification_id", null: false
+    t.string   "url"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "notification_videos", ["notification_id"], name: "index_notification_videos_on_notification_id", using: :btree
+
+  create_table "notifications", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "media_count", default: 0
+    t.integer  "user_id",                 null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
+
+  create_table "players", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.float    "score"
+    t.integer  "quiz_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "players", ["quiz_id"], name: "index_players_on_quiz_id", using: :btree
 
   create_table "possible_answers", force: :cascade do |t|
     t.integer  "content_id",                 null: false
@@ -183,6 +280,14 @@ ActiveRecord::Schema.define(version: 20170629045241) do
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
+
+  create_table "quizzes", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "level_quiz_id", null: false
+  end
+
+  add_index "quizzes", ["level_quiz_id"], name: "index_quizzes_on_level_quiz_id", using: :btree
 
   create_table "search_engines", force: :cascade do |t|
     t.string   "name",                      null: false
@@ -227,6 +332,17 @@ ActiveRecord::Schema.define(version: 20170629045241) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
+  create_table "user_achievements", force: :cascade do |t|
+    t.integer  "user_id",        null: false
+    t.integer  "achievement_id", null: false
+    t.json     "meta"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "user_achievements", ["achievement_id"], name: "index_user_achievements_on_achievement_id", using: :btree
+  add_index "user_achievements", ["user_id"], name: "index_user_achievements_on_user_id", using: :btree
 
   create_table "user_content_preferences", force: :cascade do |t|
     t.integer  "user_id",                null: false
@@ -312,6 +428,7 @@ ActiveRecord::Schema.define(version: 20170629045241) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
+  add_foreign_key "content_learning_quizzes", "players"
   add_foreign_key "content_learning_tests", "users"
   add_foreign_key "content_learnings", "contents"
   add_foreign_key "content_learnings", "neurons"
@@ -326,8 +443,13 @@ ActiveRecord::Schema.define(version: 20170629045241) do
   add_foreign_key "content_readings", "neurons"
   add_foreign_key "content_readings", "users"
   add_foreign_key "content_videos", "contents"
+  add_foreign_key "notification_links", "notifications"
+  add_foreign_key "notification_media", "notifications"
+  add_foreign_key "notification_videos", "notifications"
+  add_foreign_key "players", "quizzes"
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
+  add_foreign_key "quizzes", "level_quizzes"
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"

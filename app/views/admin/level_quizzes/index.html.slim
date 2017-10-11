@@ -1,0 +1,22 @@
+.level-quizzes-page
+  - content_for :title, t("activerecord.models.level_quiz").pluralize
+
+  table.table.table-striped
+    thead
+      tr
+        th =t("views.quizzes.date")
+        th =t("activerecord.attributes.level_quiz.name")
+        th =t("activerecord.attributes.level_quiz.description")
+        th =t("views.level_quizzes.action")
+    tbody
+    -level_quizzes.each do |q|
+      tr
+        td = l(q.created_at, :format => :short)
+        td = q.name
+        td = q.description
+        td = link_to t("views.level_quizzes.show"), admin_level_quiz_path(q)
+
+  .pull-right
+    = link_to t("views.level_quizzes.new"),
+              new_admin_level_quiz_path,
+              class: "btn btn-sm btn-default"

@@ -7,9 +7,27 @@ Moi::Application.routes.draw do
     resources :search, only: :index
     resources :content_preferences, only: :update
     resource :order_preferences, controller: :order, only: :update
+    resources :quizzes, only: [] do
+      resources :players,
+                only: [:show] do
+        member do
+          post :answer
+        end
+      end
+    end
     resources :notifications, only: [] do
       collection do
-        get :new, path: "new"
+        get :index
+      end
+    end
+    resources :achievements, only: [] do
+      collection do
+        get :index
+      end
+    end
+    resources :leaderboard, only: [] do
+      collection do
+        get :index
       end
     end
     resources :user_tutors, only: [] do
@@ -30,6 +48,7 @@ Moi::Application.routes.draw do
           post :tasks
           post :task_update
           post :reading_time
+          post :favorites
         end
       end
     end
@@ -53,6 +72,8 @@ Moi::Application.routes.draw do
     match "users/search" => 'users#search', via: :get
     match "users/content_tasks" => 'users#content_tasks', via: :get
     match "users/content_notes" => 'users#content_notes', via: :get
+    match "users/content_favorites" => 'users#content_favorites', via: :get
+
     resources :users,
               only: [] do
       member do
@@ -77,6 +98,10 @@ Moi::Application.routes.draw do
     resource :dashboard, only: :index
     resources :users
     resources :profiles
+    resources :notifications
+    resources :quizzes
+    resources :level_quizzes
+    resources :achievements, except: [:create, :destroy]
 
     # settings
     resources :settings, only: :index

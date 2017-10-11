@@ -1,0 +1,18 @@
+.notifications-page
+  - content_for :title, t("views.notification.index")
+
+  .notification-create
+    = link_to t("views.notifications.create"),
+              new_admin_notification_path,
+              class: "btn btn-sm btn-default"
+
+  .notification-list-container
+    .notification-row-header
+      .item.first =t("views.notification.date")
+      .item.second =t("views.notification.title")
+      .item.third =t("views.notification.action")
+    - @notifications.each do |n|
+      .notification-row
+        .item.first= l(n.created_at, :format => :short)
+        .item.second= n.description
+        .item.third= link_to t("views.notification.show"), admin_notification_path(n)

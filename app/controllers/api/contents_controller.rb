@@ -216,8 +216,26 @@ module Api
     end
 
     api :POST,
-        "/neurons/:neuron_id/contents/:id/reading_time",
-        "add reading time from a user to a specific content"
+        "/neurons/:neuron_id/contents/:id/favorites",
+        "To store content favorites a user."
+    param :id, Integer, required: true
+    def favorites
+      init_favorite = current_user.create_content_favorite(params[:id])
+
+      unless init_favorite.nil?
+        response = { favorite: init_favorite }
+        render json: response,
+             status: :ok
+      else
+        response = { status: :unprocessable_entity }
+        render json: response,
+             status: response[:status]
+      end
+    end
+
+    api :POST
+    "/neurons/:neuron_id/contents/:id/reading_time",
+    "add reading time from a user to a specific content"
     param :id, Integer, required: true, description: "content id"
     param :neuron_id, Integer, required: true
     param :time, Float, required: true, description: "time in ms to add to reading time"
