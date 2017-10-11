@@ -235,6 +235,8 @@
         images_opened_in_count: "Imágenes abiertas"
         user_sign_in_count: "Total de sesiones iniciadas"
         used_time: "Tiempo de uso"
+        reading_time_content: "Tiempo de lectura por contenido"
+        content_readings_by_branch: "Número de contenidos leidos según las ramas base"
       client:
         select_user: "Antes se debe seleccionar un usuario"
         activity: "Actividad"

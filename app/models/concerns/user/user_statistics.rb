@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
       statistics["user_tests"] = AnalyticService::TestStatistic.new(self).results
       statistics["user_tests"] = AnalyticService::TestStatistic.new(self).results
       statistics["total_content_readings"] = self.content_readings.size
+      statistics["content_readings_by_branch"] = AnalyticService::ContentReadingsByBranch.new(self).results
       statistics
     end
   end

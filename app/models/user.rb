@@ -61,6 +61,8 @@ class User < ActiveRecord::Base
              class_name: "ContentLearningTest"
     has_many :content_learnings,
              dependent: :destroy
+    has_many :content_reading_times,
+             dependent: :destroy
     has_many :learned_contents,
              source: :content,
              through: :content_learnings

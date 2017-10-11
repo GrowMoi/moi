@@ -233,6 +233,22 @@ module Api
       end
     end
 
+    api :POST,
+        "/neurons/:neuron_id/contents/:id/reading_time",
+        "add reading time from a user to a specific content"
+    param :id, Integer, required: true, description: "content id"
+    param :neuron_id, Integer, required: true
+    param :time, Float, required: true, description: "time in ms to add to reading time"
+    def reading_time
+      if params[:time].present?
+        current_user.content_reading_times.create!(
+          content: content,
+          time: params[:time]
+        )
+      end
+      render json: "OK", status: :created
+    end
+
     private
 
     def test_fetcher

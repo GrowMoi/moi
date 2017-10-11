@@ -58,6 +58,9 @@ class Content < ActiveRecord::Base
     has_many :content_medium,
              class_name: "ContentMedia",
              dependent: :destroy
+    has_many :reading_times,
+             class_name: "ContentReadingTime",
+             dependent: :destroy
   end
 
   begin :nested_attributes
