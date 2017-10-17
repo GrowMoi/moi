@@ -6,4 +6,5 @@
 //= require bootstrap
 //= require d3
 //= require nprogress
+//= require moment
 //= require_tree ./tutor_report

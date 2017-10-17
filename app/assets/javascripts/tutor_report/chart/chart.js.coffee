@@ -1,4 +1,6 @@
 class window.Chart
+
+  #------- Donut Chart -------
   renderDonutChart : (options) ->
     defaults =
       selector: ''
@@ -78,6 +80,7 @@ class window.Chart
 
     return
 
+  #------- Bar Chart -------
   renderBarChart: (options) ->
     defaults =
       selector: ''
@@ -183,23 +186,76 @@ class window.Chart
       .call(yAxis)
       .attr 'x2', width
 
-  this.formatBarChartData = (data) ->
-    data.map (d) ->
-      {
-        id: d.user_id
-        label: d.name
-        value: d.contents_learnt
-      }
+  #------- Single Bar Chart -------
+  renderSingleBarChart: (options) ->
+    defaults =
+      selector: ''
+      data: {}
+      type: 'number'
+      width: 500
+      height: 300
+      showYaxis: true
+      margin:
+        top: 20
+        right: 20
+        bottom: 80
+        left: 80
+    settings = $.extend({}, defaults, options)
+    margin = settings.margin
+    width = settings.width - (margin.left) - (margin.right)
+    height = settings.height - (margin.top) - (margin.bottom)
+    type = settings.type
+    data = settings.data
+    x = d3.scale.ordinal().rangeRoundBands([0, width], .05)
+    y = d3.scale.linear().range([height, 0])
+    xAxis = d3.svg.axis().scale(x).orient('bottom')
+    yAxis = d3.svg.axis().scale(y).orient('left')
+    svg = d3.select(settings.selector)
+            .append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom)
+            .append('g')
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-  this.formatDonutChartData = (data) ->
-    data.map (d) ->
-      {
-        id: d.id
-        parentId: d.parent_id
-        title: d.title
-        value: d.total_contents_learnt
-      }
+    x.domain [ data.value ]
+    y.domain [0, data.maxValue]
 
+    svg.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(xAxis)
+        .selectAll('text')
+        .style('text-anchor', 'end')
+        .attr('dx', '-.55em')
+        .attr('dy', '.45em')
+        .attr('transform', 'rotate(-55)')
+        .text (d) ->
+          formatTextLabel type, d
+
+    if settings.showYaxis
+      svg.append('g')
+        .attr('class', 'y axis')
+        .call(yAxis)
+        .selectAll('text')
+        .text (d) ->
+          formatTextLabel type, d
+
+    svg.selectAll('bar')
+      .data([ data ])
+      .enter()
+      .append('path')
+      .attr('class', settings.className)
+      .attr 'd', (d, i) ->
+        _x = x(d.value)
+        _y = y(d.value)
+        _width = x.rangeBand()
+        _height = height - y(d.value)
+        _radius = 2
+        debugger
+        rectangle _x, _y, _width, _height, _radius
+    return
+
+  #------- Additional Functions -------
   generateColor = ->
     rgbStr = getComputedStyle(this).getPropertyValue('color')
     rgb = d3.rgb(rgbStr)
@@ -224,3 +280,39 @@ class window.Chart
       getClassIndex index
     else
       index
+
+  formatTextLabel = (type, d) ->
+    if type == 'time'
+      return formatTimeLabel(d)
+    d
+
+  rectangle = (x, y, width, height, radius) ->
+    str1 = 'M' + (x + radius) + ',' + y + 'h' + (width - (2 * radius))
+    str2 = 'a' + radius + ',' + radius + ' 0 0 1 ' + radius + ',' + radius
+    str3 = 'v' + (height - (2 * radius)) + 'v' + radius + 'h' + (-radius) + 'h'
+    str4 = (2 * radius - width) + 'h' + (-radius) + 'v' + (-radius) + 'v'
+    str5 = (2 * radius - height) + 'a' + radius + ',' + radius + ' 0 0 1 ' + radius + ',' + (-radius) + 'z'
+    debugger
+    str1 + str2 + str3 + str4 + str5
+
+  formatTimeLabel = (millisecondsString) ->
+    milliseconds = parseInt(millisecondsString)
+    if isNaN(milliseconds)
+      0
+    else
+      duration = moment.duration(milliseconds)._data
+      finalString = ''
+      if duration.years > 0
+        finalString += duration.years + 'a:'
+      if duration.months > 0
+        finalString += duration.months + 'm:'
+      if duration.days > 0
+        finalString += duration.days + 'd:'
+      if duration.hours > 0
+        finalString += duration.hours + 'h:'
+      if duration.minutes > 0
+        finalString += duration.minutes + 'min:'
+      mseconds = duration.milliseconds / 1000
+      secondsAndMilliseconds = duration.seconds + mseconds
+      finalString += Math.round(secondsAndMilliseconds) + 's'
+      finalString

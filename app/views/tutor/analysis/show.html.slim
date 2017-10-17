@@ -47,7 +47,7 @@
         .header
           = t("views.tutor.analysis.used_time")
         .body
-          = @statistics["used_time"]
+          = humanize_ms @statistics["used_time"]
     .row-analysis-info
       .row-title
           = t("views.tutor.analysis.content_readings_by_branch")

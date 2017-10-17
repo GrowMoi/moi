@@ -8,7 +8,12 @@ module AnalyticService
 
     def total_right_questions
       count = 0
-      @statistics["user_tests"].each do |test|
+      if @statistics["user_tests"]
+        tests = @statistics["user_tests"]
+      else
+        tests = AnalyticService::TestStatistic.new(@user).results
+      end
+      tests.each do |test|
         test[:questions].each do |question|
           if question[:correct] === true
             count = count + 1

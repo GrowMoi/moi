@@ -7,7 +7,6 @@ module Tutor
     def show
       @client = client_data.first
       @statistics = @client.generate_statistics
-      @statistics["total_right_questions"] = AnalyticService::UtilsStatistic.new(@client, @statistics).total_right_questions
     end
 
     def index

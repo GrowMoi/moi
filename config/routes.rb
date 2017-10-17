@@ -147,6 +147,7 @@ Moi::Application.routes.draw do
       collection do
         get :root_contents_learnt
         get :tutor_users_contents_learnt
+        get :analytics_details
       end
     end
 
