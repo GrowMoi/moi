@@ -2,12 +2,63 @@ reportPage = ".container-report"
 chart = new Chart()
 loading = new Loading()
 
+loadBubbleChart = () ->
+  backendData = [
+    {
+      'user_id': 15
+      'value': 5
+      'name': 'User5'
+    }
+    {
+      'user_id': 11
+      'value': 26
+      'name': 'User1'
+    }
+    {
+      'user_id': 12
+      'value': 33
+      'name': 'User2'
+    }
+    {
+      'user_id': 13
+      'value': 56
+      'name': 'User3'
+    }
+    {
+      'user_id': 14
+      'value': 10
+      'name': 'User4'
+    }
+    {
+      'user_id': 4
+      'value': 33
+      'name': 'User6'
+    }
+    {
+      'user_id': 2
+      'value': 56
+      'name': 'User7'
+    }
+    {
+      'user_id': 7
+      'value': 10
+      'name': 'User8'
+    }
+  ]
+  container = '.progress-chart-container'
+  data = ChartUtils.formatBubbleChartData(backendData)
+  chart.renderBubbleChart
+    data: data
+    selector: container
+
+
 loadCharts = ->
   if $(reportPage).length > 0
     userId = getParam('user_id')
     loadDonutChart(userId)
     loadBarChart()
-    loadaSingleBarCharts(userId)
+    loadSingleBarCharts(userId)
+    loadBubbleChart()
   return
 
 loadDonutChart = (userId) ->
@@ -38,7 +89,7 @@ loadBarChart = ->
     loading.hide(container)
   return
 
-loadaSingleBarCharts = (userId) ->
+loadSingleBarCharts = (userId) ->
   container = '.analytics-chart-container'
   loading.show(container)
   fields = [
@@ -52,7 +103,7 @@ loadaSingleBarCharts = (userId) ->
   $.get "/tutor/report/analytics_details", user_id: userId, fields: fields, (res) ->
     data = ChartUtils.formatSingleBarChartData(res.data)
     width = 100
-    height = 350
+    height = 450
     commonMargin =
       top: 20
       right: 0
@@ -121,6 +172,7 @@ loadaSingleBarCharts = (userId) ->
 
     loading.hide(container)
     return
+
 getParam = (name) ->
   (location.search.split(name + '=')[1] or '').split('&')[0]
 

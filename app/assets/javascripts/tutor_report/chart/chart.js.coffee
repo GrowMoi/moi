@@ -41,14 +41,15 @@ class window.Chart
 
     g.append('path')
             .attr('d', arc)
-            .attr('class', addClass)
-            .style 'fill', generateColor
+            .attr('class', (d, i) ->
+              addClass('donut-color-', d, i)
+            )
 
     g.append('text')
             .attr('transform', (d) ->
               'translate(' + arc.centroid(d) + ')'
             ).attr('dy', '.35em')
-            .attr('class', 'fill-text')
+            .attr('class', 'donut-text')
             .text (d) ->
               res = d.data.value * 100 / maxValue
               res.toFixed(2) + '%'
@@ -69,8 +70,9 @@ class window.Chart
     legend.append('rect')
           .attr('width', legendRectSize)
           .attr('height', legendRectSize)
-          .attr('class', addClass)
-          .style('fill', generateColor)
+          .attr('class', (d, i) ->
+              addClass('donut-color-', d, i)
+          )
           .style('stroke', generateColor)
 
     legend.append('text')
@@ -178,8 +180,8 @@ class window.Chart
           return
         ).attr('class', (d, v, i) ->
           maxVal = rangeFillClasses[1]
-          addClassInRange i, maxVal
-        ).style 'fill', generateColor
+          addClassInRange 'fill-color-', i, maxVal
+        )
 
     svg.selectAll('.y.axis')
       .selectAll('.tick line')
@@ -251,18 +253,77 @@ class window.Chart
         _width = x.rangeBand()
         _height = height - y(d.value)
         _radius = 2
-        debugger
         rectangle _x, _y, _width, _height, _radius
     return
 
+  #------- Bubble Chart
+  renderBubbleChart: (options) ->
+    defaults =
+      selector: ''
+      data: []
+      width: 400
+      height: 400
+      yAxisLabel: ''
+    settings = $.extend({}, defaults, options)
+    rangeFillClasses = [0, 6]
+    data = settings.data
+    root = {}
+    root.name = 'Interactions'
+    root.children = []
+    i = 0
+
+    while i < data.length
+      item = {}
+      item.name = data[i][0]
+      item.value = Number(data[i][1])
+      root.children.push item
+      i++
+
+    bubble = d3.layout.pack()
+                .sort(null)
+                .size([settings.width, settings.height])
+                .padding(1.5)
+
+    svg = d3.select(settings.selector)
+            .append('svg')
+            .attr('width', settings.width)
+            .attr('height', settings.height)
+            .attr('class', 'bubble')
+
+    node = svg.selectAll('.node')
+              .data(bubble
+              .nodes(root)
+              .filter((d) ->
+                !d.children
+              ))
+              .enter()
+              .append('g')
+              .attr('class', 'node')
+              .attr('transform', (d) ->
+                'translate(' + d.x + ',' + d.y + ')'
+              )
+
+    node.append('circle').attr('r', (d) ->
+      d.r
+    ).attr 'class', (d, i) ->
+      maxVal = rangeFillClasses[1]
+      addClassInRange 'fill-color-', i, maxVal
+
+    node.append('text')
+        .attr('dy', '.3em')
+        .attr('class', 'circle-text')
+        .style('text-anchor', 'middle')
+        .text (d) ->
+          d.name
+
   #------- Additional Functions -------
   generateColor = ->
-    rgbStr = getComputedStyle(this).getPropertyValue('color')
+    rgbStr = getComputedStyle(this).getPropertyValue('fill')
     rgb = d3.rgb(rgbStr)
     rgb
 
-  addClass = (d, i) ->
-    'fill-color-' + i
+  addClass = (prefix, d, i) ->
+    prefix + i
 
   getMaxValue = (data) ->
     data.map((d) ->
@@ -270,16 +331,20 @@ class window.Chart
     ).reduce (prevVal, newVal) ->
       prevVal + newVal
 
-  addClassInRange = (i, max) ->
-    customIndex = getClassIndex(i, max)
-    'fill-color-' + customIndex
+  addClassInRange = (prefix, i, max) ->
+    itemData =
+      index: i
+      max: max
+    recursiveIndexGenerator itemData
+    prefix + itemData.index
 
-  getClassIndex = (index, max) ->
-    if index > max
-      index = index - (max + 1)
-      getClassIndex index
+  recursiveIndexGenerator = (itemData) ->
+    if itemData.index > itemData.max
+      itemData.index = itemData.index - (itemData.max + 1)
+      recursiveIndexGenerator itemData
     else
-      index
+      itemData.index
+    return
 
   formatTextLabel = (type, d) ->
     if type == 'time'
@@ -292,7 +357,6 @@ class window.Chart
     str3 = 'v' + (height - (2 * radius)) + 'v' + radius + 'h' + (-radius) + 'h'
     str4 = (2 * radius - width) + 'h' + (-radius) + 'v' + (-radius) + 'v'
     str5 = (2 * radius - height) + 'a' + radius + ',' + radius + ' 0 0 1 ' + radius + ',' + (-radius) + 'z'
-    debugger
     str1 + str2 + str3 + str4 + str5
 
   formatTimeLabel = (millisecondsString) ->

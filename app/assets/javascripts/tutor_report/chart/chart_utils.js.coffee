@@ -23,3 +23,14 @@ class window.ChartUtils
         maxValue: data[key].value
         value: data[key].value
     res
+
+  this.formatBubbleChartData = (data) ->
+    result = []
+    i = 0
+    while i < data.length
+      row = []
+      row.push data[i].name
+      row.push data[i].value
+      result.push row
+      i++
+    result
