@@ -3,54 +3,16 @@ chart = new Chart()
 loading = new Loading()
 
 loadBubbleChart = () ->
-  backendData = [
-    {
-      'user_id': 15
-      'value': 5
-      'name': 'User5'
-    }
-    {
-      'user_id': 11
-      'value': 26
-      'name': 'User1'
-    }
-    {
-      'user_id': 12
-      'value': 33
-      'name': 'User2'
-    }
-    {
-      'user_id': 13
-      'value': 56
-      'name': 'User3'
-    }
-    {
-      'user_id': 14
-      'value': 10
-      'name': 'User4'
-    }
-    {
-      'user_id': 4
-      'value': 33
-      'name': 'User6'
-    }
-    {
-      'user_id': 2
-      'value': 56
-      'name': 'User7'
-    }
-    {
-      'user_id': 7
-      'value': 10
-      'name': 'User8'
-    }
-  ]
   container = '.progress-chart-container'
-  data = ChartUtils.formatBubbleChartData(backendData)
-  chart.renderBubbleChart
-    data: data
-    selector: container
+  loading.show(container)
+  $.get "/tutor/report/time_reading", (res) ->
+    data = ChartUtils.formatBubbleChartData(res.data)
+    chart.renderBubbleChart
+      data: data
+      width: 500
+      selector: container
 
+    loading.hide(container)
 
 loadCharts = ->
   if $(reportPage).length > 0

@@ -148,6 +148,7 @@ Moi::Application.routes.draw do
         get :root_contents_learnt
         get :tutor_users_contents_learnt
         get :analytics_details
+        get :time_reading
       end
     end
 

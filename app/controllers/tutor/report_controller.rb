@@ -10,20 +10,6 @@ module Tutor
       UserTutor.where(tutor:current_user, status: :accepted).includes(:user)
     }
 
-    expose(:client_data) {
-      User.where(id: params[:id], role: :cliente)
-    }
-
-    expose(:content_reading_times) {
-      client_data.first.content_reading_times
-    }
-
-    expose(:reading_time_content_ids) {
-      content_reading_times.select(:content_id)
-                           .group(:content_id)
-                           .pluck(:content_id)
-    }
-
     def index
       if user_tutor.present?
         @client = user_tutor.user
@@ -60,6 +46,15 @@ module Tutor
         data: data
       }
     end
+
+    def time_reading
+      data = generate_time_reading(users_by_tutor)
+      render json: {
+        data: data
+      }
+    end
+
+    private
 
     def map_users_by_tutor(array_data)
       array_data.map do |data|
@@ -104,6 +99,25 @@ module Tutor
         statistic[param]
       end
       result.max
+    end
+
+    def generate_time_reading(users)
+      result = users.map do |d|
+        contents_time_values = AnalyticService::UsedTimeByContent.new(d.user)
+                                                      .group_contents
+                                                      .values
+        if contents_time_values.empty?
+          value = contents_time_values.size
+        else
+          value = contents_time_values.sum / contents_time_values.size
+        end
+        {
+          user_id: d.user.id,
+          value: value,
+          name: d.user.name
+        }
+      end
+      result
     end
   end
 end

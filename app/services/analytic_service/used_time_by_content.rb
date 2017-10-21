@@ -10,6 +10,13 @@ module AnalyticService
       result
     end
 
+    def group_contents
+      content_reading_times = get_content_reading_times || []
+      content_reading_times.select(:content_id, :time)
+                          .group(:content_id)
+                          .sum(:time)
+    end
+
     private
 
     def get_content_reading_times
@@ -20,11 +27,5 @@ module AnalyticService
       times.values.reduce(:+) / times.size
     end
 
-    def group_contents
-      content_reading_times = get_content_reading_times || []
-      content_reading_times.select(:content_id, :time)
-                          .group(:content_id)
-                          .sum(:time)
-    end
   end
 end

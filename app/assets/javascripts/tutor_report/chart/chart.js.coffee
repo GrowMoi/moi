@@ -256,7 +256,7 @@ class window.Chart
         rectangle _x, _y, _width, _height, _radius
     return
 
-  #------- Bubble Chart
+  #------- Bubble Chart -------
   renderBubbleChart: (options) ->
     defaults =
       selector: ''
