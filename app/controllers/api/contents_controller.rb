@@ -246,7 +246,9 @@ module Api
           time: params[:time]
         )
       end
-      render json: "OK", status: :created
+      response = { status: :created }
+      render json: response,
+           status: response[:status]
     end
 
     private
