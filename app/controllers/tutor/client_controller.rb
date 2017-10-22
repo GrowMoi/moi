@@ -6,7 +6,13 @@ module Tutor
 
     def show
       @client = client_data.first
-      @statistics = @client.generate_statistics
+      @statistics = @client.generate_statistics(
+        [
+          "total_neurons_learnt",
+          "total_content_readings",
+          "total_right_questions"
+        ]
+      )
     end
 
     def index

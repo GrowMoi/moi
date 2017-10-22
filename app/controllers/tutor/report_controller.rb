@@ -13,7 +13,13 @@ module Tutor
     def index
       if user_tutor.present?
         @client = user_tutor.user
-        @statistics = @client.generate_statistics
+        @statistics = @client.generate_statistics(
+          [
+            "total_neurons_learnt",
+            "total_content_readings",
+            "total_right_questions"
+          ]
+        )
       end
       render layout: "tutor_report"
     end
@@ -72,11 +78,12 @@ module Tutor
 
       if !param.empty?
         max_value = get_max_value(users, param)
-        value = client.generate_statistics([param])
+        statistics = client.generate_statistics([param])
         result = {
           max_value: max_value,
-          value: value[param],
-          user_id: client.id
+          value: statistics[param][:value],
+          user_id: client.id,
+          meta: statistics[param][:meta]
         }
       end
       result
@@ -96,7 +103,7 @@ module Tutor
     def get_max_value(users, param)
       result = users.map do |d|
         statistic = d.user.generate_statistics([param])
-        statistic[param]
+        statistic[param][:value]
       end
       result.max
     end

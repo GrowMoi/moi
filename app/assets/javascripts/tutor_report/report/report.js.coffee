@@ -3,7 +3,7 @@ chart = new Chart()
 loading = new Loading()
 
 loadBubbleChart = () ->
-  container = '.progress-chart-container'
+  container = '.bubble-chart-container'
   loading.show(container)
   $.get "/tutor/report/time_reading", (res) ->
     data = ChartUtils.formatBubbleChartData(res.data)
@@ -43,7 +43,7 @@ loadBarChart = ->
   $.get "/tutor/report/tutor_users_contents_learnt", (res) ->
     data = ChartUtils.formatBarChartData(res.data)
     chart.renderBarChart
-      width: 900
+      width: 600
       height: 300
       data: data
       selector: container

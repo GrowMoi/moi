@@ -9,7 +9,7 @@ module AnalyticService
     def total_right_questions
       count = 0
       if @statistics["user_tests"]
-        tests = @statistics["user_tests"]
+        tests = @statistics["user_tests"][:value]
       else
         tests = AnalyticService::TestStatistic.new(@user).results
       end

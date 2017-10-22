@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   module UserStatistics
 
+    include ApplicationHelper
+
     def generate_statistics(fields = [])
       statistics = {}
       default_fields = [
@@ -18,13 +20,20 @@ class User < ActiveRecord::Base
       ]
       if fields.empty?
         default_fields.each do |field|
-          statistics[field] = extract_statistic_by_field(field, statistics)
+          data = extract_statistic_by_field(field, statistics)
+          statistics[field] = {
+            value: data[:value],
+            meta: data[:meta]
+          }
         end
       else
         fields.each do |field|
           statistic = extract_statistic_by_field(field, statistics)
-          if (statistic.present?)
-            statistics[field] = statistic
+          if (!statistic.empty?)
+            statistics[field] = {
+              value: statistic[:value],
+              meta: statistic[:meta]
+            }
           end
         end
       end
@@ -34,20 +43,127 @@ class User < ActiveRecord::Base
     private
 
     def extract_statistic_by_field(field, statistics)
-      result = nil
-      if field.eql?("total_notes") then result = ContentNote.where(user: self).size end
-      if field.eql?("user_sign_in_count") then result = self.sign_in_count end
-      if field.eql?("user_created_at") then result = self.created_at end
-      if field.eql?("user_updated_at") then result = self.updated_at end
-      if field.eql?("images_opened_in_count") then result = UserSeenImage.where(user: self).size end
-      if field.eql?("total_neurons_learnt") then result = TreeService::LearntNeuronsFetcher.new(self).ids.uniq.size end
-      if field.eql?("user_tests") then result = AnalyticService::TestStatistic.new(self).results end
-      if field.eql?("total_content_readings") then result = self.content_readings.size end
-      if field.eql?("content_readings_by_branch") then result = AnalyticService::ContentReadingsByBranch.new(self).results end
-      if field.eql?("total_right_questions") then result = AnalyticService::UtilsStatistic.new(self, statistics).total_right_questions end
-      if field.eql?("used_time") then result = time_diff(self) end
-      if field.eql?("average_used_time_by_content") then result = AnalyticService::UsedTimeByContent.new(self).average end
+      result = {}
+      if field.eql?("total_notes") then result = total_notes(self) end
+      if field.eql?("user_sign_in_count") then result = user_sign_in_count(self) end
+      if field.eql?("user_created_at") then result = user_created_at(self) end
+      if field.eql?("user_updated_at") then result = user_updated_at(self) end
+      if field.eql?("images_opened_in_count") then result = images_opened_in_count(self) end
+      if field.eql?("total_neurons_learnt") then result = total_neurons_learnt(self) end
+      if field.eql?("user_tests") then result = user_tests(self) end
+      if field.eql?("total_content_readings") then result = total_content_readings(self) end
+      if field.eql?("content_readings_by_branch") then result = content_readings_by_branch(self) end
+      if field.eql?("total_right_questions") then result = total_right_questions(self, statistics) end
+      if field.eql?("used_time") then result = used_time(self) end
+      if field.eql?("average_used_time_by_content") then result = average_used_time_by_content(self) end
       return result
+    end
+
+    def total_notes(user)
+      {
+        value: ContentNote.where(user: user).size,
+        meta: {
+          label_analysis: I18n.t("views.tutor.analysis.total_notes")
+        }
+      }
+    end
+
+    def user_sign_in_count(user)
+      {
+        value: user.sign_in_count,
+        meta: {
+          label_analysis: I18n.t("views.tutor.analysis.user_sign_in_count")
+        }
+      }
+    end
+
+    def user_created_at(user)
+      {
+        value: user.created_at,
+        meta: {}
+      }
+    end
+
+    def user_updated_at(user)
+      {
+        value: user.updated_at,
+        meta: {}
+      }
+    end
+
+    def images_opened_in_count(user)
+      {
+        value: UserSeenImage.where(user: user).size,
+        meta: {
+          label_analysis: I18n.t("views.tutor.analysis.images_opened_in_count")
+        }
+      }
+    end
+
+    def total_neurons_learnt(user)
+      {
+        value: TreeService::LearntNeuronsFetcher.new(user).ids.uniq.size,
+        meta: {
+          label: I18n.t("views.tutor.client.total_neurons_learnt"),
+          label_analysis: I18n.t("views.tutor.analysis.total_neurons_learnt")
+        }
+      }
+    end
+
+    def user_tests(user)
+      {
+        value: AnalyticService::TestStatistic.new(user).results,
+        meta: {}
+      }
+    end
+
+    def total_content_readings(user)
+      {
+        value: user.content_readings.size,
+        meta: {
+          label: I18n.t("views.tutor.client.total_content_readings"),
+          label_analysis: I18n.t("views.tutor.analysis.total_content_readings")
+        }
+      }
+    end
+
+    def content_readings_by_branch(user)
+      {
+        value: AnalyticService::ContentReadingsByBranch.new(user).results,
+        meta: {
+          label_analysis: I18n.t("views.tutor.analysis.content_readings_by_branch")
+        }
+      }
+    end
+
+    def total_right_questions(user, statistics)
+      {
+        value: AnalyticService::UtilsStatistic.new(user, statistics).total_right_questions,
+        meta: {
+          label: I18n.t("views.tutor.client.total_right_questions"),
+          label_analysis: I18n.t("views.tutor.analysis.total_right_questions")
+        }
+      }
+    end
+
+    def used_time(user)
+      time_ms = time_diff(user)
+      {
+        value: time_ms,
+        meta: {
+          label_analysis: I18n.t("views.tutor.analysis.used_time"),
+          text_format: humanize_ms(time_ms)
+        }
+      }
+    end
+
+    def average_used_time_by_content(user)
+      {
+        value: AnalyticService::UsedTimeByContent.new(user).average,
+        meta: {
+          label: I18n.t("views.tutor.report.average_used_time_by_content")
+        }
+      }
     end
 
     def time_diff(user)
