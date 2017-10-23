@@ -6,7 +6,7 @@ module Api
       :children,
       :state,
       :total_approved_contents,
-      :read_contents
+      :learnt_contents
     ].freeze
 
     attributes *ATTRIBUTES
@@ -31,10 +31,10 @@ module Api
       object.approved_contents.count
     end
 
-    def read_contents
+    def learnt_contents
       count = 0
       object.contents.map do |content|
-        if current_user.already_read?(content)
+        if current_user.already_learnt?(content)
           count = count + 1
         end
       end
