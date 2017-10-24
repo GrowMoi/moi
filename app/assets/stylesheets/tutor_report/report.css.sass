@@ -1,30 +1,52 @@
 $base-color-green: #77BF5D
 $white: white
+$red: #cf5447
+$blue: #4d79b2
+$yellow: #f1a74d
+$green: #1a985b
+$purple: #b24e93
+$light-red: #e76988
+$light-blue: #1a9bbd
 
 .layout-report-body
   background-color: #d3e9d8
+  position: relative
+
+  .tooltip-bar
+    position: absolute
+    display: none
+    width: auto
+    height: auto
+    background: none repeat scroll 0 0 white
+    border: 0 none
+    border-radius: 8px 8px 8px 8px
+    box-shadow: -3px 3px 15px #888888
+    color: black
+    font: 12px sans-serif
+    padding: 5px
+    text-align: center
 
 .container-report
   .fill-color-0
-    fill: #cf5447
+    fill: $red
 
   .fill-color-1
-    fill: #4d79b2
+    fill: $blue
 
   .fill-color-2
-    fill: #f1a74d
+    fill: $yellow
 
   .fill-color-3
-    fill: #1a985b
+    fill: $green
 
   .fill-color-4
-    fill: #b24e93
+    fill: $purple
 
   .fill-color-5
-    fill: #e76988
+    fill: $light-red
 
   .fill-color-6
-    fill: #1a9bbd
+    fill: $light-blue
 
   .card-report
     display: flex
@@ -220,17 +242,17 @@ $white: white
       fill: #4d79b2
 
     .fill-total-neurons-learnt-chart
-      fill: #cf5447
+      fill: $red
 
     .fill-total-content-readings-chart
-      fill: #f1a74d
+      fill: $yellow
 
     .fill-average-used-time-by-content-chart
-      fill: #1a985b
+      fill: $green
 
     .fill-images-opened-in-count-chart
-      fill: #b24e93
+      fill: $purple
 
     .fill-total-notes-chart
-      fill: #e76988
+      fill: $light-red
 

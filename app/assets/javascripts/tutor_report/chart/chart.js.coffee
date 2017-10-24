@@ -89,16 +89,18 @@ class window.Chart
       data: []
       width: 960
       height: 500
+      margin:
+        top: 20
+        right: 20
+        bottom: 30
+        left: 40
 
     settings = $.extend({}, defaults, options)
     dimensionName = 'label'
     rangeFillClasses = [0, 6]
-    margin =
-      top: 20
-      right: 20
-      bottom: 30
-      left: 40
-
+    legendRectSize = 15
+    legendSpacing = 4
+    margin = settings.margin
     width = settings.width - (margin.left) - (margin.right)
     height = settings.height - (margin.top) - (margin.bottom)
 
@@ -134,6 +136,8 @@ class window.Chart
             .attr('height', height + margin.top + margin.bottom)
             .append('g')
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+
+    div = d3.select('body').append('div').attr('class', 'tooltip-bar')
 
     xAxisEl = svg.append('g')
                 .attr('class', 'x axis')
@@ -182,11 +186,44 @@ class window.Chart
           maxVal = rangeFillClasses[1]
           addClassInRange 'fill-color-', i, maxVal
         )
+        .on('mousemove', (d) ->
+          div.style('left', d3.event.pageX + 10 + 'px')
+          div.style('top', d3.event.pageY - 25 + 'px')
+          div.style('display', 'inline-block')
+          div.html('Aprendidos: '+ (d.value))
+        )
+        .on('mouseout', (d) ->
+          div.style('display', 'none')
+        )
 
     svg.selectAll('.y.axis')
       .selectAll('.tick line')
       .call(yAxis)
       .attr 'x2', width
+
+    legend = svg.selectAll('.legend')
+                .data(settings.data)
+                .enter()
+                .append('g')
+                .attr('class', 'legend')
+                .attr('transform', (d, i) ->
+                  horz = width + 10
+                  vert = i * 20
+                  'translate(' + horz + ',' + vert + ')'
+                )
+
+    legend.append('rect')
+          .attr('width', legendRectSize)
+          .attr('height', legendRectSize)
+          .attr 'class', (d, i) ->
+            maxVal = rangeFillClasses[1]
+            addClassInRange 'fill-color-', i, maxVal
+
+    legend.append('text')
+          .attr('x', legendRectSize + legendSpacing)
+          .attr('y', legendRectSize - legendSpacing)
+          .text (d) ->
+            d.label
 
   #------- Single Bar Chart -------
   renderSingleBarChart: (options) ->

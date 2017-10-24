@@ -43,10 +43,15 @@ loadBarChart = ->
   $.get "/tutor/report/tutor_users_contents_learnt", (res) ->
     data = ChartUtils.formatBarChartData(res.data)
     chart.renderBarChart
-      width: 600
-      height: 300
+      width: 800
+      height: 400
       data: data
       selector: container
+      margin:
+        top: 20
+        right: 200
+        bottom: 30
+        left: 40
 
     loading.hide(container)
   return
