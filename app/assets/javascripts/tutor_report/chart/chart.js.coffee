@@ -7,11 +7,12 @@ class window.Chart
       width: 500
       height: 300
       data: []
-    defaults.radius = Math.min(defaults.width, defaults.height) / 2
+
     settings = $.extend({}, defaults, options)
+    settings.radius = Math.min(settings.width, settings.height) / 2
     legendRectSize = 15
     legendSpacing = 4
-    legendRightPadding = 12
+    legendRightPadding = 15
     legendVerticalPadding = -15
     legendVerticalHeight = -20
     maxValue = getMaxValue(settings.data)
@@ -32,6 +33,8 @@ class window.Chart
             .attr('height', settings.height)
             .append('g')
             .attr('transform', 'translate(' + settings.width / 3 + ',' + settings.height / 2 + ')')
+
+    div = d3.select('body').append('div').attr('class', 'tooltip-donut')
 
     g = svg.selectAll('.arc')
             .data(pie(settings.data))
@@ -54,6 +57,16 @@ class window.Chart
               res = d.data.value * 100 / maxValue
               res.toFixed(2) + '%'
 
+    g.on('mousemove', (d) ->
+      div.style('left', d3.event.pageX + 10 + 'px')
+      div.style('top', d3.event.pageY - 25 + 'px')
+      div.style('display', 'inline-block')
+      div.html('Contenidos aprendidos: '+ (d.value))
+    )
+    .on('mouseout', (d) ->
+      div.style('display', 'none')
+    )
+
     legend = svg.selectAll('.legend')
                 .data(settings.data)
                 .enter()
@@ -73,7 +86,6 @@ class window.Chart
           .attr('class', (d, i) ->
               addClass('donut-color-', d, i)
           )
-          .style('stroke', generateColor)
 
     legend.append('text')
           .attr('x', legendRectSize + legendSpacing)
@@ -144,12 +156,17 @@ class window.Chart
                 .attr('transform', 'translate(0,' + height + ')')
                 .call(xAxis)
 
-    xAxisEl.selectAll('text').text (d) ->
-      item = settings.data.find((ud) ->
-        ud.id == d
-      )
-      label = item.label or ''
-      label
+    xAxisEl.selectAll('text')
+          .style('text-anchor', 'end')
+          .attr('dx', '-1em')
+          .attr('y', '-.5em')
+          .attr('transform', 'rotate(-80)')
+          .text (d) ->
+            item = settings.data.find((ud) ->
+              ud.id == d
+            )
+            label = item.label or ''
+            label
 
     yAxisEl = svg.append('g')
                 .attr('class', 'y axis')
@@ -259,17 +276,19 @@ class window.Chart
     x.domain [ data.value ]
     y.domain [0, data.maxValue]
 
+    div = d3.select('body').append('div').attr('class', 'tooltip-single-bar')
+
     svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis)
         .selectAll('text')
         .style('text-anchor', 'end')
-        .attr('dx', '-.55em')
-        .attr('dy', '.45em')
-        .attr('transform', 'rotate(-55)')
+        .attr('dx', '-1em')
+        .attr('y', '0')
+        .attr('transform', 'rotate(-80)')
         .text (d) ->
-          formatTextLabel type, d
+          formatTextLabel type, data
 
     if settings.showYaxis
       svg.append('g')
@@ -277,7 +296,7 @@ class window.Chart
         .call(yAxis)
         .selectAll('text')
         .text (d) ->
-          formatTextLabel type, d
+          formatTextLabel type, data
 
     svg.selectAll('bar')
       .data([ data ])
@@ -291,6 +310,19 @@ class window.Chart
         _height = height - y(d.value)
         _radius = 2
         rectangle _x, _y, _width, _height, _radius
+      .on('mousemove', (d) ->
+        div.style 'left', d3.event.pageX + 10 + 'px'
+        div.style 'top', d3.event.pageY - 25 + 'px'
+        div.style 'display', 'inline-block'
+        if type == 'time'
+          div.html 'Tiempo: ' + d.valueHumanized
+        else
+          div.html 'Valor: ' + d.value
+        return
+      ).on 'mouseout', (d) ->
+        div.style 'display', 'none'
+        return
+
     return
 
   #------- Bubble Chart -------
@@ -301,18 +333,24 @@ class window.Chart
       width: 400
       height: 400
       yAxisLabel: ''
+      margin:
+        right: 200
+
     settings = $.extend({}, defaults, options)
     rangeFillClasses = [0, 6]
     data = settings.data
     root = {}
     root.name = 'Interactions'
     root.children = []
+    legendRectSize = 15
+    legendSpacing = 4
     i = 0
 
     while i < data.length
       item = {}
       item.name = data[i][0]
       item.value = Number(data[i][1])
+      item.valueHumanized = data[i][2]
       root.children.push item
       i++
 
@@ -323,7 +361,7 @@ class window.Chart
 
     svg = d3.select(settings.selector)
             .append('svg')
-            .attr('width', settings.width)
+            .attr('width', settings.width + settings.margin.right)
             .attr('height', settings.height)
             .attr('class', 'bubble')
 
@@ -340,18 +378,59 @@ class window.Chart
                 'translate(' + d.x + ',' + d.y + ')'
               )
 
-    node.append('circle').attr('r', (d) ->
-      d.r
-    ).attr 'class', (d, i) ->
-      maxVal = rangeFillClasses[1]
-      addClassInRange 'fill-color-', i, maxVal
+    div = d3.select('body').append('div').attr('class', 'tooltip-bubble')
+
+    node.append('circle')
+        .attr('r', (d) ->
+          d.r
+        )
+        .attr('class', (d, i) ->
+          maxVal = rangeFillClasses[1]
+          addClassInRange 'fill-color-', i, maxVal
+        )
 
     node.append('text')
         .attr('dy', '.3em')
         .attr('class', 'circle-text')
         .style('text-anchor', 'middle')
-        .text (d) ->
+        .text((d) ->
           d.name
+        )
+
+    node.on('mousemove', (d) ->
+          div.style('left', d3.event.pageX + 10 + 'px')
+          div.style('top', d3.event.pageY - 25 + 'px')
+          div.style('display', 'inline-block')
+          div.html('Nombre: '+ (d.name) + '<br/>' + 'Tiempo de lectura: ' + (d.valueHumanized))
+        )
+        .on('mouseout', (d) ->
+          div.style('display', 'none')
+        )
+
+    legend = svg.selectAll('.legend')
+                .data(data)
+                .enter()
+                .append('g')
+                .attr('class', 'legend')
+                .attr('transform', (d, i) ->
+                  horz = settings.width + 20
+                  vert = (i * 20) + 50
+                  'translate(' + horz + ',' + vert + ')'
+                )
+
+    legend.append('rect')
+          .attr('width', legendRectSize)
+          .attr('height', legendRectSize)
+          .attr('class', (d, i) ->
+            maxVal = rangeFillClasses[1]
+            addClassInRange 'fill-color-', i, maxVal
+          )
+
+    legend.append('text')
+          .attr('x', legendRectSize + legendSpacing)
+          .attr('y', legendRectSize - legendSpacing)
+          .text (d) ->
+            d[0]
 
   #------- Additional Functions -------
   generateColor = ->
@@ -383,10 +462,10 @@ class window.Chart
       itemData.index
     return
 
-  formatTextLabel = (type, d) ->
+  formatTextLabel = (type, data) ->
     if type == 'time'
-      return formatTimeLabel(d)
-    d
+      return formatTimeLabel(data.value)
+    data.value
 
   rectangle = (x, y, width, height, radius) ->
     str1 = 'M' + (x + radius) + ',' + y + 'h' + (width - (2 * radius))

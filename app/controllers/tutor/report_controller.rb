@@ -1,6 +1,8 @@
 module Tutor
   class ReportController < TutorController::Base
 
+    include ApplicationHelper
+
     expose(:user_tutor) {
       UserTutor.where(tutor:current_user, user: params[:user_id], status: :accepted)
                 .first
@@ -121,7 +123,8 @@ module Tutor
         {
           user_id: d.user.id,
           value: value,
-          name: d.user.name
+          name: d.user.name,
+          value_humanized: humanize_ms(value)
         }
       end
       result

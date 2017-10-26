@@ -22,6 +22,7 @@ class window.ChartUtils
       res[key] =
         maxValue: data[key].value
         value: data[key].value
+        valueHumanized: if data[key].meta and data[key].meta.value_humanized then data[key].meta.value_humanized else null
     res
 
   this.formatBubbleChartData = (data) ->
@@ -31,6 +32,7 @@ class window.ChartUtils
       row = []
       row.push data[i].name
       row.push data[i].value
+      row.push data[i].value_humanized
       result.push row
       i++
     result

@@ -29,11 +29,12 @@ loadDonutChart = (userId) ->
   $.get "/tutor/report/root_contents_learnt", user_id: userId, (res) ->
     data = ChartUtils.formatDonutChartData(res.data)
     chart.renderDonutChart
-      width: 500
-      height: 300
+      width: 550
+      height: 350
       data: data
       selector: container
-
+      margin:
+        right: 200
     loading.hide(container)
   return
 
@@ -44,13 +45,13 @@ loadBarChart = ->
     data = ChartUtils.formatBarChartData(res.data)
     chart.renderBarChart
       width: 800
-      height: 400
+      height: 600
       data: data
       selector: container
       margin:
         top: 20
         right: 200
-        bottom: 30
+        bottom: 200
         left: 40
 
     loading.hide(container)
@@ -70,11 +71,11 @@ loadSingleBarCharts = (userId) ->
   $.get "/tutor/report/analytics_details", user_id: userId, fields: fields, (res) ->
     data = ChartUtils.formatSingleBarChartData(res.data)
     width = 100
-    height = 450
+    height = 600
     commonMargin =
       top: 20
       right: 0
-      bottom: 90
+      bottom: 200
       left: 0
 
     chart.renderSingleBarChart

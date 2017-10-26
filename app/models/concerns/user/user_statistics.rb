@@ -152,16 +152,18 @@ class User < ActiveRecord::Base
         value: time_ms,
         meta: {
           label_analysis: I18n.t("views.tutor.analysis.used_time"),
-          text_format: humanize_ms(time_ms)
+          value_humanized: humanize_ms(time_ms)
         }
       }
     end
 
     def average_used_time_by_content(user)
+      average = AnalyticService::UsedTimeByContent.new(user).average
       {
-        value: AnalyticService::UsedTimeByContent.new(user).average,
+        value: average,
         meta: {
-          label: I18n.t("views.tutor.report.average_used_time_by_content")
+          label: I18n.t("views.tutor.report.average_used_time_by_content"),
+          value_humanized: humanize_ms(average)
         }
       }
     end

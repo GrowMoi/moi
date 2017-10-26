@@ -12,7 +12,7 @@ $light-blue: #1a9bbd
   background-color: #d3e9d8
   position: relative
 
-  .tooltip-bar
+  .tooltip
     position: absolute
     display: none
     width: auto
@@ -25,6 +25,18 @@ $light-blue: #1a9bbd
     font: 12px sans-serif
     padding: 5px
     text-align: center
+
+  .tooltip-bar
+    @extend .tooltip
+
+  .tooltip-bubble
+    @extend .tooltip
+
+  .tooltip-single-bar
+    @extend .tooltip
+
+  .tooltip-donut
+    @extend .tooltip
 
 .container-report
   .fill-color-0
@@ -183,9 +195,6 @@ $light-blue: #1a9bbd
   .chart-container
     margin: auto
     position: relative
-
-    .axis
-      font: 10px sans-serif
 
     .axis path
       display: none
