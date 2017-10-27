@@ -220,6 +220,7 @@
     tutor:
       moi:
         analyze: "Enviar solicitud"
+        report: "Generar reporte"
         title_clients: "Usuarios"
         title_students: "Mis Alumnos"
         user_notification: "%{tutor_name} ha realizado una solicitud para ser tu tutor."

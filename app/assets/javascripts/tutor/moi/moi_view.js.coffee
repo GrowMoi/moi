@@ -26,6 +26,7 @@ loadUserLinks = ->
 loadSelectableList = ->
   listClientsId = '#list-select'
   analisysUserLink = '#analysis-user-link'
+  reportUserLink = '#report-user-link'
 
   $(listClientsId).selectable
     filter: '.row-client'
@@ -39,7 +40,12 @@ loadSelectableList = ->
 
         isStudent = (user.parent().attr('id') == 'list-students')
         if isStudent
-          $(analisysUserLink).addClass('disabled')
+          $(analisysUserLink).hide()
+          $(reportUserLink).show()
+          addUserIdToLink($(reportUserLink), userId)
+        else
+          $(analisysUserLink).show()
+          $(reportUserLink).hide()
       else
         $(analisysUserLink).addClass('disabled')
       return
@@ -58,13 +64,31 @@ loadSelectableList = ->
 
       isStudent = (user.parent().attr('id') == 'list-students')
       if isStudent
-        $(analisysUserLink).addClass('disabled')
+        $(analisysUserLink).hide()
+        addUserIdToLink($(reportUserLink), userId)
+        $(reportUserLink).show()
+      else
+        $(reportUserLink).hide()
+        $(analisysUserLink).show()
+
+
       return
 
     unselected: (event, ui) ->
+      $(analisysUserLink).show()
       $(analisysUserLink).addClass('disabled')
+      $(reportUserLink).hide()
       $(ui.unselected).removeClass('selectedfilter')
       return
+
+addUserIdToLink = (element, userId) ->
+  debugger
+  if userId
+    baseUrl = '/tutor/report'
+    href = element.attr('href')
+    userHref = baseUrl + "/?user_id=#{userId}"
+    element.attr('href', userHref)
+  return
 
 $(document).on "ready page:load", loadSelectableList
 $(document).on "ready page:load", loadUserLinks
