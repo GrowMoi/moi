@@ -63,6 +63,7 @@ class User < ActiveRecord::Base
       {
         value: ContentNote.where(user: user).size,
         meta: {
+          label: I18n.t("views.tutor.analysis.total_notes"),
           label_analysis: I18n.t("views.tutor.analysis.total_notes")
         }
       }
@@ -72,6 +73,7 @@ class User < ActiveRecord::Base
       {
         value: user.sign_in_count,
         meta: {
+          label: I18n.t("views.tutor.analysis.user_sign_in_count"),
           label_analysis: I18n.t("views.tutor.analysis.user_sign_in_count")
         }
       }
@@ -95,6 +97,7 @@ class User < ActiveRecord::Base
       {
         value: UserSeenImage.where(user: user).size,
         meta: {
+          label: I18n.t("views.tutor.analysis.images_opened_in_count"),
           label_analysis: I18n.t("views.tutor.analysis.images_opened_in_count")
         }
       }
@@ -131,6 +134,7 @@ class User < ActiveRecord::Base
       {
         value: AnalyticService::ContentReadingsByBranch.new(user).results,
         meta: {
+          label: I18n.t("views.tutor.analysis.content_readings_by_branch"),
           label_analysis: I18n.t("views.tutor.analysis.content_readings_by_branch")
         }
       }
@@ -151,6 +155,7 @@ class User < ActiveRecord::Base
       {
         value: time_ms,
         meta: {
+          label: I18n.t("views.tutor.analysis.used_time"),
           label_analysis: I18n.t("views.tutor.analysis.used_time"),
           value_humanized: humanize_ms(time_ms)
         }

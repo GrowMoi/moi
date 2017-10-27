@@ -23,6 +23,7 @@ class window.ChartUtils
         maxValue: data[key].value
         value: data[key].value
         valueHumanized: if data[key].meta and data[key].meta.value_humanized then data[key].meta.value_humanized else null
+        meta: data[key].meta
     res
 
   this.formatBubbleChartData = (data) ->
@@ -36,3 +37,9 @@ class window.ChartUtils
       result.push row
       i++
     result
+
+  this.addLegendValue = (arrayLegends, item) ->
+    arrayLegends.push
+      label: if item.meta and item.meta.label then item.meta.label else ''
+      className: item.className
+    return

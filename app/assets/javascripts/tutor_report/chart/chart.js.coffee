@@ -224,7 +224,7 @@ class window.Chart
                 .append('g')
                 .attr('class', 'legend')
                 .attr('transform', (d, i) ->
-                  horz = width + 10
+                  horz = width + 30
                   vert = i * 20
                   'translate(' + horz + ',' + vert + ')'
                 )
@@ -250,7 +250,6 @@ class window.Chart
       type: 'number'
       width: 500
       height: 300
-      showYaxis: true
       margin:
         top: 20
         right: 20
@@ -287,14 +286,6 @@ class window.Chart
         .attr('dx', '-1em')
         .attr('y', '0')
         .attr('transform', 'rotate(-80)')
-        .text (d) ->
-          formatTextLabel type, data
-
-    if settings.showYaxis
-      svg.append('g')
-        .attr('class', 'y axis')
-        .call(yAxis)
-        .selectAll('text')
         .text (d) ->
           formatTextLabel type, data
 
@@ -414,7 +405,7 @@ class window.Chart
                 .attr('class', 'legend')
                 .attr('transform', (d, i) ->
                   horz = settings.width + 20
-                  vert = (i * 20) + 50
+                  vert = (i * 20) + 60
                   'translate(' + horz + ',' + vert + ')'
                 )
 
@@ -431,6 +422,50 @@ class window.Chart
           .attr('y', legendRectSize - legendSpacing)
           .text (d) ->
             d[0]
+
+  #------- Isolated Legend -------
+  renderIsolatedLegend: (options) ->
+    defaults =
+      selector: ''
+      data: []
+      width: 200
+      height: 500
+    settings = $.extend({}, defaults, options)
+    rangeFillClasses = [
+      0
+      6
+    ]
+    legendRectSize = 15
+    legendSpacing = 4
+    width = settings.width
+    height = settings.height
+    svg = d3.select(settings.selector)
+            .append('svg')
+            .attr('class', 'bar-chart')
+            .attr('width', width)
+            .attr('height', height)
+    legend = svg.selectAll('.legend')
+                .data(settings.data)
+                .enter()
+                .append('g')
+                .attr('class', 'legend')
+                .attr('transform', (d, i) ->
+                  horz = 30
+                  vert = (i * 20) + 30
+                  'translate(' + horz + ',' + vert + ')'
+                )
+
+    legend.append('rect')
+          .attr('width', legendRectSize)
+          .attr('height', legendRectSize)
+          .attr 'class', (d, i) ->
+            d.className
+
+    legend.append('text')
+          .attr('x', legendRectSize + legendSpacing)
+          .attr('y', legendRectSize - legendSpacing)
+          .text (d) ->
+            d.label
 
   #------- Additional Functions -------
   generateColor = ->

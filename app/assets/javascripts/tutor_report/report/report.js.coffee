@@ -44,13 +44,13 @@ loadBarChart = ->
   $.get "/tutor/report/tutor_users_contents_learnt", (res) ->
     data = ChartUtils.formatBarChartData(res.data)
     chart.renderBarChart
-      width: 800
+      width: 900
       height: 600
       data: data
       selector: container
       margin:
         top: 20
-        right: 200
+        right: 250
         bottom: 200
         left: 40
 
@@ -70,6 +70,19 @@ loadSingleBarCharts = (userId) ->
   ]
   $.get "/tutor/report/analytics_details", user_id: userId, fields: fields, (res) ->
     data = ChartUtils.formatSingleBarChartData(res.data)
+    legends = []
+    data.used_time.className = 'fill-used-time-chart'
+    ChartUtils.addLegendValue(legends, data.used_time)
+    data.total_neurons_learnt.className = 'fill-total-neurons-learnt-chart'
+    ChartUtils.addLegendValue(legends, data.total_neurons_learnt)
+    data.total_content_readings.className = 'fill-total-content-readings-chart'
+    ChartUtils.addLegendValue(legends, data.total_content_readings)
+    data.average_used_time_by_content.className = 'fill-average-used-time-by-content-chart'
+    ChartUtils.addLegendValue(legends, data.average_used_time_by_content)
+    data.images_opened_in_count.className = 'fill-images-opened-in-count-chart'
+    ChartUtils.addLegendValue(legends, data.images_opened_in_count)
+    data.total_notes.className =  'fill-total-notes-chart'
+    ChartUtils.addLegendValue(legends, data.total_notes)
     width = 100
     height = 600
     commonMargin =
@@ -83,9 +96,8 @@ loadSingleBarCharts = (userId) ->
       type: 'time'
       data: data.used_time
       width: width
-      className: 'fill-used-time-chart'
+      className: data.used_time.className
       height: height
-      showYaxis: false
       margin: commonMargin
 
     chart.renderSingleBarChart
@@ -93,9 +105,8 @@ loadSingleBarCharts = (userId) ->
       type: 'number'
       data: data.total_neurons_learnt
       width: width
-      className: 'fill-total-neurons-learnt-chart'
+      className: data.total_neurons_learnt.className
       height: height
-      showYaxis: false
       margin: commonMargin
 
     chart.renderSingleBarChart
@@ -103,9 +114,8 @@ loadSingleBarCharts = (userId) ->
       type: 'number'
       data: data.total_content_readings
       width: width
-      className: 'fill-total-content-readings-chart'
+      className: data.total_content_readings.className
       height: height
-      showYaxis: false
       margin: commonMargin
 
     chart.renderSingleBarChart
@@ -113,19 +123,8 @@ loadSingleBarCharts = (userId) ->
       type: 'time'
       data: data.average_used_time_by_content
       width: width
-      className: 'fill-average-used-time-by-content-chart'
+      className: data.average_used_time_by_content.className
       height: height
-      showYaxis: false
-      margin: commonMargin
-
-    chart.renderSingleBarChart
-      selector: '.total-notes-chart'
-      type: 'number'
-      data: data.total_notes
-      width: width
-      className: 'fill-total-notes-chart'
-      height: height
-      showYaxis: false
       margin: commonMargin
 
     chart.renderSingleBarChart
@@ -133,10 +132,24 @@ loadSingleBarCharts = (userId) ->
       type: 'number'
       data: data.images_opened_in_count
       width: width
-      className: 'fill-images-opened-in-count-chart'
+      className: data.images_opened_in_count.className
       height: height
-      showYaxis: false
       margin: commonMargin
+
+    chart.renderSingleBarChart
+      selector: '.total-notes-chart'
+      type: 'number'
+      data: data.total_notes
+      width: width
+      className: data.total_notes.className
+      height: height
+      margin: commonMargin
+
+    chart.renderIsolatedLegend
+      selector: ".chart-legends"
+      data: legends
+      width: 250
+      height: 550
 
     loading.hide(container)
     return
