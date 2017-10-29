@@ -17,4 +17,6 @@ Rails.application.config.assets.precompile += %w(
   admin.css
   tutor.js
   tutor.css
+  tutor_report.js
+  tutor_report.css
 )
