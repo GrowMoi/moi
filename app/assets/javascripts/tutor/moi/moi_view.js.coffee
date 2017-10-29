@@ -48,6 +48,7 @@ loadSelectableList = ->
           $(reportUserLink).hide()
       else
         $(analisysUserLink).addClass('disabled')
+        $(reportUserLink).hide()
       return
 
     selected: (event, ui) ->

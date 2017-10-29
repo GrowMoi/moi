@@ -20,7 +20,7 @@ class window.ChartUtils
     res = {}
     for key of data
       res[key] =
-        maxValue: data[key].value
+        maxValue: data[key].max_value
         value: data[key].value
         valueHumanized: if data[key].meta and data[key].meta.value_humanized then data[key].meta.value_humanized else null
         meta: data[key].meta
@@ -33,6 +33,7 @@ class window.ChartUtils
       row = []
       row.push data[i].name
       row.push data[i].value
+      row.push data[i].user_id
       row.push data[i].value_humanized
       result.push row
       i++

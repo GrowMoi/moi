@@ -41,6 +41,33 @@ module AnalyticService
                     .select(:id, :content_id, :neuron_id, :'neurons.title', :'neurons.parent_id')
     end
 
+    def find_root_children
+      root = TreeService::RootFetcher.root_neuron
+      Neuron.where(parent_id: root.id).select(:id, :title, :parent_id)
+    end
+
+    def map_global_root_children(data)
+      data.map{|i| {
+        id: i.id,
+        title: i.title,
+        contents_learnt: 0,
+        parent_id: i.parent_id
+        }
+      }
+    end
+
+    def normalize_root_contents_learnt(global_root_children, user_root_children)
+      root_children_data = map_global_root_children(global_root_children)
+      root_children_data.each{|child|
+        index = user_root_children.find_index {|e| e[:id] == child[:id]}
+        if index
+          child[:contents_learnt] = user_root_children[index][:contents_learnt]
+        end
+        child
+      }
+      root_children_data
+    end
+
     def format_donut_chart_data
       @items_content = group_by_neuron
       format_data
@@ -49,7 +76,9 @@ module AnalyticService
     def format_data
       @contents_count = 0
       root_neuron = @items_content.detect {|i|i[:parent_id] == nil}
-      @root_children = @items_content.find_all {|i|i[:parent_id] == root_neuron[:id]}
+      global_root_children = find_root_children
+      user_root_children = @items_content.find_all {|i|i[:parent_id] == root_neuron[:id]}
+      @root_children = normalize_root_contents_learnt(global_root_children, user_root_children)
       @items_content.delete_if {|i|i[:id] == root_neuron[:id] || i[:parent_id] == root_neuron[:id]}
       extract_contents_by_branch(@root_children)
       @root_children

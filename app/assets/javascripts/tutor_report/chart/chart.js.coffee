@@ -61,7 +61,7 @@ class window.Chart
       div.style('left', d3.event.pageX + 10 + 'px')
       div.style('top', d3.event.pageY - 25 + 'px')
       div.style('display', 'inline-block')
-      div.html('Contenidos aprendidos: '+ (d.value))
+      div.html('Contenidos aprendidos en la rama \'' + (d.data.title ) + '\'' + ': ' + (d.value))
     )
     .on('mouseout', (d) ->
       div.style('display', 'none')
@@ -250,6 +250,7 @@ class window.Chart
       type: 'number'
       width: 500
       height: 300
+      showYaxis: false
       margin:
         top: 20
         right: 20
@@ -288,6 +289,14 @@ class window.Chart
         .attr('transform', 'rotate(-80)')
         .text (d) ->
           formatTextLabel type, data
+    if settings.showYaxis
+      svg.append('g')
+        .attr('class', 'y axis')
+        .call(yAxis)
+        .selectAll('text')
+        .text((d) ->
+          d
+        )
 
     svg.selectAll('bar')
       .data([ data ])
@@ -326,29 +335,28 @@ class window.Chart
       yAxisLabel: ''
       margin:
         right: 200
-
     settings = $.extend({}, defaults, options)
     rangeFillClasses = [0, 6]
     data = settings.data
     root = {}
-    root.name = 'Interactions'
-    root.children = []
     legendRectSize = 15
     legendSpacing = 4
+    root.name = 'Interactions'
+    root.children = []
     i = 0
-
     while i < data.length
       item = {}
       item.name = data[i][0]
       item.value = Number(data[i][1])
-      item.valueHumanized = data[i][2]
+      item.id = data[i][2]
+      item.valueHumanized = data[i][3]
       root.children.push item
       i++
 
     bubble = d3.layout.pack()
                 .sort(null)
                 .size([settings.width, settings.height])
-                .padding(1.5)
+                .padding(5)
 
     svg = d3.select(settings.selector)
             .append('svg')
@@ -357,11 +365,11 @@ class window.Chart
             .attr('class', 'bubble')
 
     node = svg.selectAll('.node')
-              .data(bubble
-              .nodes(root)
-              .filter((d) ->
-                !d.children
-              ))
+              .data(bubble.nodes(root)
+                          .filter((d) ->
+                            !d.children
+                          )
+              )
               .enter()
               .append('g')
               .attr('class', 'node')
@@ -375,28 +383,41 @@ class window.Chart
         .attr('r', (d) ->
           d.r
         )
-        .attr('class', (d, i) ->
+        .attr('id', (d) ->
+          d.id
+        )
+        .attr 'class', (d, i) ->
           maxVal = rangeFillClasses[1]
           addClassInRange 'fill-color-', i, maxVal
+
+    node.append('clipPath')
+        .attr('id', (d) ->
+          'clip-' + d.id
         )
+        .append('use')
+        .attr 'xlink:href', (d) ->
+          '#' + d.id
 
     node.append('text')
+        .attr('clip-path', (d) ->
+          'url(#clip-' + d.id + ')'
+        )
         .attr('dy', '.3em')
         .attr('class', 'circle-text')
         .style('text-anchor', 'middle')
-        .text((d) ->
+        .text (d) ->
           d.name
-        )
 
     node.on('mousemove', (d) ->
-          div.style('left', d3.event.pageX + 10 + 'px')
-          div.style('top', d3.event.pageY - 25 + 'px')
-          div.style('display', 'inline-block')
-          div.html('Nombre: '+ (d.name) + '<br/>' + 'Tiempo de lectura: ' + (d.valueHumanized))
-        )
-        .on('mouseout', (d) ->
-          div.style('display', 'none')
-        )
+      div.style 'left', d3.event.pageX + 10 + 'px'
+      div.style 'top', d3.event.pageY - 25 + 'px'
+      div.style 'display', 'inline-block'
+      div.html 'Nombre: ' + d.name + '<br/>' + 'Tiempo de lectura: ' + d.valueHumanized
+      return
+    )
+    .on 'mouseout', (d) ->
+      div.style 'display', 'none'
+      return
 
     legend = svg.selectAll('.legend')
                 .data(data)
@@ -408,6 +429,19 @@ class window.Chart
                   vert = (i * 20) + 60
                   'translate(' + horz + ',' + vert + ')'
                 )
+
+    legend.on('mousemove', (d) ->
+            div.style 'left', d3.event.pageX + 10 + 'px'
+            div.style 'top', d3.event.pageY - 25 + 'px'
+            div.style 'display', 'inline-block'
+            timeReading = if d[3] == '' then '0' else d[3]
+            div.html 'Tiempo de lectura: ' + timeReading
+            return
+          )
+          .on('mouseout', (d) ->
+            div.style 'display', 'none'
+            return
+          )
 
     legend.append('rect')
           .attr('width', legendRectSize)
@@ -477,10 +511,14 @@ class window.Chart
     prefix + i
 
   getMaxValue = (data) ->
-    data.map((d) ->
+    result = 0
+    values = data.map((d) ->
       d.value
-    ).reduce (prevVal, newVal) ->
-      prevVal + newVal
+    )
+    if values.length > 0
+      result = values.reduce (prevVal, newVal) ->
+        prevVal + newVal
+    result
 
   addClassInRange = (prefix, i, max) ->
     itemData =

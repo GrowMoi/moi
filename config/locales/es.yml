@@ -256,7 +256,7 @@
         title: 'Social Learning'
         sub_title: 'Estimado tutor, a continuación el reporte solicitado.'
         average_used_time_by_content: 'Tiempo de lectura promedio'
-        donut_chart: ''
+        donut_chart: 'Contenidos Aprendidos por categoría'
         analytics_chart: 'Análisis'
         bar_chart: 'Contenidos Aprendidos'
         bubble_chart: 'Tiempo promedio de lectura (desde el 20 de octubre del 2017)'
