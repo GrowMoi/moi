@@ -366,10 +366,9 @@ class window.Chart
 
     node = svg.selectAll('.node')
               .data(bubble.nodes(root)
-                          .filter((d) ->
-                            !d.children
-                          )
-              )
+                .filter((d) ->
+                  !d.children
+                ))
               .enter()
               .append('g')
               .attr('class', 'node')
