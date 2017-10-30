@@ -3,7 +3,7 @@ module RequestLoginMacros
     post_via_redirect(
       user_session_path,
       user: {
-        email: user.email,
+        login: user.email,
         password: user.password
       }
     )

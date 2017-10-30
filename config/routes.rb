@@ -81,6 +81,10 @@ Moi::Application.routes.draw do
       end
     end
 
+    devise_scope :user do
+      post "auth/user/key_authorize", to: "sessions#key_authorize"
+    end
+
     namespace :auth do
       mount_devise_token_auth_for(
         "User",

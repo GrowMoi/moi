@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   add_flash_types :error
 
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   # strong_params in decent exposure
   decent_configuration do
     strategy DecentExposure::StrongParametersStrategy
@@ -20,6 +22,14 @@ class ApplicationController < ActionController::Base
   expose(:decorated_current_user) {
     decorate current_user
   }
+
+  protected
+
+  def configure_permitted_parameters
+    added_attrs = [:username, :email, :password, :password_confirmation, :remember_me]
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(*added_attrs) }
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(*added_attrs) }
+  end
 
   private
 
@@ -38,5 +48,4 @@ class ApplicationController < ActionController::Base
       root_path
     end
   end
-
 end

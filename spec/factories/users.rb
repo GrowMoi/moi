@@ -25,15 +25,21 @@
 #  country                :string
 #  tree_image             :string
 #  school                 :string
+#  username               :string
+#  authorization_key      :string
+#  age                    :integer
 #
 
 FactoryGirl.define do
   factory :user do
     sequence(:name) { |n| "User #{n}" }
+    sequence(:username) { |n| "user#{n}" }
     sequence(:email) { |n| "user-#{n}@moi.org" }
     sequence(:password) { |n| "user-password-#{n}" }
     password_confirmation { password }
-    role "cliente"
+
+    role              "cliente"
+    authorization_key "mock"
 
     # allows to have roles as user traits
     # example: create :user, :admin
@@ -41,6 +47,14 @@ FactoryGirl.define do
       trait rol.to_sym do
         role { rol }
       end
+    end
+
+    trait :with_username do
+      sequence(:username) { |n| "user#{n}" }
+    end
+
+    trait :with_authorization_key do
+      authorization_key :bananas
     end
   end
 end
