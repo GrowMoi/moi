@@ -8,7 +8,16 @@ class window.ChartUtils
       }
 
   this.formatDonutChartData = (data) ->
-    data.map (d) ->
+    dataSort = data.sort (a, b) ->
+      titleA = a.title.toUpperCase()
+      titleB = b.title.toUpperCase()
+      if titleA < titleB
+        return -1
+      if titleA > titleB
+        return 1
+      0
+
+    dataSort.map (d) ->
       {
         id: d.id
         parentId: d.parent_id

@@ -85,11 +85,11 @@ loadSingleBarCharts = (userId) ->
     data.total_notes.className =  'fill-total-notes-chart'
     ChartUtils.addLegendValue(legends, data.total_notes)
     width = 100
-    height = 600
+    height = 450
     commonMargin =
       top: 20
       right: 0
-      bottom: 200
+      bottom: 50
       left: 0
 
     chart.renderSingleBarChart

@@ -317,11 +317,11 @@ class window.Chart
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis)
         .selectAll('text')
-        .style('text-anchor', 'end')
-        .attr('dx', '-1em')
-        .attr('dy', '0')
-        .attr('y', '0')
-        .attr('transform', 'rotate(-90)')
+        .style('text-anchor', 'center')
+        .attr('dx', '0')
+        .attr('dy', '1.5em')
+        .attr('y', 0)
+        .attr('transform', 'rotate(0)')
         .text (d) ->
           formatTextLabel type, data
     if settings.showYaxis

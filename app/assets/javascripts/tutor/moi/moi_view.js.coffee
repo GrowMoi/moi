@@ -86,7 +86,6 @@ loadSelectableList = ->
   return
 
 addUserIdToLink = (element, userId) ->
-  debugger
   if userId
     baseUrl = '/tutor/report'
     href = element.attr('href')
