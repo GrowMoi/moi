@@ -82,6 +82,9 @@ loadSelectableList = ->
       $(ui.unselected).removeClass('selectedfilter')
       return
 
+  loadUserLinks()
+  return
+
 addUserIdToLink = (element, userId) ->
   debugger
   if userId
@@ -92,4 +95,3 @@ addUserIdToLink = (element, userId) ->
   return
 
 $(document).on "ready page:load", loadSelectableList
-$(document).on "ready page:load", loadUserLinks
