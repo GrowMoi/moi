@@ -60,12 +60,21 @@
       .bubble-chart-container.chart-container
     .footer-container
       .footer-text-container
-        .text-info
+        .text-more-details
+          | Para establecer metas, recompensas o enviar un mensaje a este usuario, haz clic&nbsp;
+          a href="#"
+            | aquí
         .text-regards
+          | Saludos,
+        .text-team
+          | El equipo de MOI Aprendizaje Social
+
       .footer-image-container
-        .image-neuron
-        .line
+        .image-neuron = image_tag("blue-neuron.png")
+        .line-container
+          .line
+
 
 - else
   .container-report
-    | no data found
+    | No data found

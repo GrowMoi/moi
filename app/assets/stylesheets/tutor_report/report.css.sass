@@ -11,6 +11,7 @@ $green-2: #359b3d
 $purple: #b24e93
 $light-red: #e76988
 $light-blue: #1a9bbd
+$blue-header: #00a0e6
 
 .layout-report-body
   background-color: #d3e9d8
@@ -107,7 +108,7 @@ $light-blue: #1a9bbd
     font-size: 2rem
     margin-top: 2rem
     margin-bottom: 2rem
-    color: #00a0e6
+    color: $blue-header
 
   .profile-container
     flex-basis: 50%
@@ -273,6 +274,26 @@ $light-blue: #1a9bbd
 
     .fill-images-opened-in-count-chart
       fill: $purple
+
+  .footer-container
+    .footer-text-container
+      padding: 0 5rem
+      font-size: 2rem
+      .text-regards, .text-team
+        color: $blue-header
+    .footer-image-container
+      display: flex
+      padding-top: 2rem
+      .image-neuron
+        flex-basis: 5%
+      .line-container
+        flex-basis: 95%
+        display: flex
+        align-items: center
+        justify-content: center
+        .line
+          border-top: 3px solid $blue-header
+          flex-basis: 100%
 
 
 
