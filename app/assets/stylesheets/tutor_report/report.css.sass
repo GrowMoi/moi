@@ -1,9 +1,13 @@
 $base-color-green: #77BF5D
 $white: white
 $red: #cf5447
+$red-2: #b83b67
 $blue: #4d79b2
+$blue-2: #0089b6
 $yellow: #f1a74d
+$yellow-2: #f7af1f
 $green: #1a985b
+$green-2: #359b3d
 $purple: #b24e93
 $light-red: #e76988
 $light-blue: #1a9bbd
@@ -219,22 +223,25 @@ $light-blue: #1a9bbd
         font: 10px
         text-anchor: middle
       path
-        stroke: #fff
+        stroke: $white
 
     .donut-text
-      fill: #fff
+      fill: $white
+
+    .donut-legend-text
+      text-transform: uppercase
 
     .donut-color-0
-      fill: #359b3d
+      fill: $blue-2
 
     .donut-color-1
-      fill: #0089b6
+      fill: $red-2
 
     .donut-color-2
-      fill: #f7af1f
+      fill: $yellow-2
 
     .donut-color-3
-      fill: #b83b67
+      fill: $green-2
 
   .loading
     position: absolute

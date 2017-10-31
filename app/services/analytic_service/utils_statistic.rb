@@ -78,7 +78,7 @@ module AnalyticService
       root_neuron = @items_content.detect {|i|i[:parent_id] == nil}
       global_root_children = find_root_children
       user_root_children = @items_content.find_all {|i|i[:parent_id] == root_neuron[:id]}
-      @root_children = normalize_root_contents_learnt(global_root_children, user_root_children)
+      @root_children = normalize_root_contents_learnt(global_root_children, user_root_children).sort_by{|g| g[:title]}
       @items_content.delete_if {|i|i[:id] == root_neuron[:id] || i[:parent_id] == root_neuron[:id]}
       extract_contents_by_branch(@root_children)
       @root_children

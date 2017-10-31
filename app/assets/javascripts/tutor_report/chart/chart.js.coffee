@@ -13,8 +13,8 @@ class window.Chart
     legendRectSize = 15
     legendSpacing = 4
     legendRightPadding = 15
-    legendVerticalPadding = -15
-    legendVerticalHeight = -20
+    legendVerticalPadding = 20
+    legendVerticalHeight = 50
     maxValue = getMaxValue(settings.data)
 
     arc = d3.svg.arc()
@@ -51,11 +51,35 @@ class window.Chart
     g.append('text')
             .attr('transform', (d) ->
               'translate(' + arc.centroid(d) + ')'
-            ).attr('dy', '.35em')
+            )
+            .attr('dy', '.35em')
             .attr('class', 'donut-text')
-            .text (d) ->
+            .text((d) ->
               res = d.data.value * 100 / maxValue
               res.toFixed(2) + '%'
+            )
+            .each((d) ->
+              bb = @getBBox()
+              center = arc.centroid(d)
+              topLeft =
+                x: center[0] + bb.x
+                y: center[1] + bb.y
+              topRight =
+                x: topLeft.x + bb.width
+                y: topLeft.y
+              bottomLeft =
+                x: topLeft.x
+                y: topLeft.y + bb.height
+              bottomRight =
+                x: topLeft.x + bb.width
+                y: topLeft.y + bb.height
+              d.visible = pointIsInArc(topLeft, d, arc) and
+                          pointIsInArc(topRight, d, arc) and
+                          pointIsInArc(bottomLeft, d, arc) and
+                          pointIsInArc(bottomRight, d, arc)
+              return
+            ).style 'display', (d) ->
+              if d.visible then null else 'none'
 
     g.on('mousemove', (d) ->
       div.style('left', d3.event.pageX + 10 + 'px')
@@ -66,7 +90,6 @@ class window.Chart
     .on('mouseout', (d) ->
       div.style('display', 'none')
     )
-
     legend = svg.selectAll('.legend')
                 .data(settings.data)
                 .enter()
@@ -76,18 +99,29 @@ class window.Chart
                   dataHeight = legendRectSize + legendSpacing
                   offset = dataHeight + i
                   horz = legendRightPadding * legendRectSize
-                  vert = i * legendVerticalHeight - legendVerticalPadding
+                  vert = (i * legendVerticalPadding) - legendVerticalHeight
                   'translate(' + horz + ',' + vert + ')'
+                )
+                .on('mousemove', (d) ->
+                  div.style('left', d3.event.pageX + 10 + 'px')
+                  div.style('top', d3.event.pageY - 30 + 'px')
+                  div.style('display', 'inline-block')
+                  res = d.value * 100 / maxValue
+                  div.html('Progreso: ' + res.toFixed(2) + '%')
+                )
+                .on('mouseout', (d) ->
+                  div.style('display', 'none')
                 )
 
     legend.append('rect')
           .attr('width', legendRectSize)
           .attr('height', legendRectSize)
           .attr('class', (d, i) ->
-              addClass('donut-color-', d, i)
+            addClass('donut-color-', d, i)
           )
 
     legend.append('text')
+          .attr('class', 'donut-legend-text')
           .attr('x', legendRectSize + legendSpacing)
           .attr('y', legendRectSize - legendSpacing).text (d) ->
             d.title
@@ -568,3 +602,13 @@ class window.Chart
       secondsAndMilliseconds = duration.seconds + mseconds
       finalString += Math.round(secondsAndMilliseconds) + 's'
       finalString
+
+  pointIsInArc = (pt, ptData, d3Arc) ->
+    r1 = d3Arc.innerRadius()(ptData)
+    r2 = d3Arc.outerRadius()(ptData)
+    theta1 = d3Arc.startAngle()(ptData)
+    theta2 = d3Arc.endAngle()(ptData)
+    dist = pt.x * pt.x + pt.y * pt.y
+    angle = Math.atan2(pt.x, -pt.y)
+    angle = if angle < 0 then angle + Math.PI * 2 else angle
+    r1 * r1 <= dist and dist <= r2 * r2 and theta1 <= angle and angle <= theta2
