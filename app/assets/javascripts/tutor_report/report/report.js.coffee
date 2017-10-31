@@ -95,6 +95,7 @@ loadSingleBarCharts = (userId) ->
     chart.renderSingleBarChart
       selector: '.used-time-chart'
       type: 'time'
+      format: 'hours'
       data: data.used_time
       width: width
       className: data.used_time.className
@@ -122,6 +123,7 @@ loadSingleBarCharts = (userId) ->
     chart.renderSingleBarChart
       selector: '.average-used-time-by-content-chart'
       type: 'time'
+      format: 'mins'
       data: data.average_used_time_by_content
       width: width
       className: data.average_used_time_by_content.className

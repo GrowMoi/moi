@@ -282,6 +282,7 @@ class window.Chart
       selector: ''
       data: {}
       type: 'number'
+      format: 'hours'
       width: 500
       height: 300
       showYaxis: false
@@ -323,7 +324,7 @@ class window.Chart
         .attr('y', 0)
         .attr('transform', 'rotate(0)')
         .text (d) ->
-          formatTextLabel type, data
+          formatTextLabel type, data, settings.format
     if settings.showYaxis
       svg.append('g')
         .attr('class', 'y axis')
@@ -569,9 +570,9 @@ class window.Chart
       itemData.index
     return
 
-  formatTextLabel = (type, data) ->
+  formatTextLabel = (type, data, format) ->
     if type == 'time'
-      return formatTimeLabel(data.value)
+      return formatTimeLabel(data.value, format)
     data.value
 
   rectangle = (x, y, width, height, radius) ->
@@ -582,7 +583,7 @@ class window.Chart
     str5 = (2 * radius - height) + 'a' + radius + ',' + radius + ' 0 0 1 ' + radius + ',' + (-radius) + 'z'
     str1 + str2 + str3 + str4 + str5
 
-  formatTimeLabel = (millisecondsString) ->
+  formatTimeLabel = (millisecondsString, format) ->
     milliseconds = parseInt(millisecondsString)
     if isNaN(milliseconds)
       0
@@ -590,7 +591,17 @@ class window.Chart
       duration = moment.duration(milliseconds)
       hours = Math.floor(duration.asHours())
       mins = Math.floor(duration.asMinutes()) - hours * 60
-      finalString = hours + ':' + mins
+      seconds = Math.floor(duration.asSeconds()) - mins * 60
+      hours = if hours < 10 then '0' + hours else hours
+      mins = if mins < 10 then '0' + mins else mins
+      seconds = if seconds < 10 then '0' + seconds else seconds
+      if format == 'hours'
+        finalString = hours + ':' + mins
+      else if format == 'mins'
+        finalString = mins + ':' + seconds
+      else
+        finalString = hours + ':' + mins
+
       finalString
 
   pointIsInArc = (pt, ptData, d3Arc) ->
