@@ -72,7 +72,7 @@ loadSingleBarCharts = (userId) ->
     data = ChartUtils.formatSingleBarChartData(res.data)
     legends = []
     data.used_time.className = 'fill-used-time-chart'
-    data.used_time.maxValue = moment.duration(90, 'days').asMilliseconds()
+    data.used_time.maxValue = adjustMaxTime(data.used_time)
     ChartUtils.addLegendValue(legends, data.used_time)
     data.total_neurons_learnt.className = 'fill-total-neurons-learnt-chart'
     ChartUtils.addLegendValue(legends, data.total_neurons_learnt)
@@ -157,5 +157,9 @@ loadSingleBarCharts = (userId) ->
 
 getParam = (name) ->
   (location.search.split(name + '=')[1] or '').split('&')[0]
+
+adjustMaxTime = (item) ->
+  maxTimeLimit = moment.duration(90, 'days').asMilliseconds()
+  return  if item.value > maxTimeLimit then item.maxValue else maxTimeLimit
 
 $(document).on "ready page:load", loadCharts
