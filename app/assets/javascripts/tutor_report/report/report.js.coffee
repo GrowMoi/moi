@@ -72,6 +72,7 @@ loadSingleBarCharts = (userId) ->
     data = ChartUtils.formatSingleBarChartData(res.data)
     legends = []
     data.used_time.className = 'fill-used-time-chart'
+    data.used_time.maxValue = moment.duration(90, 'days').asMilliseconds()
     ChartUtils.addLegendValue(legends, data.used_time)
     data.total_neurons_learnt.className = 'fill-total-neurons-learnt-chart'
     ChartUtils.addLegendValue(legends, data.total_neurons_learnt)

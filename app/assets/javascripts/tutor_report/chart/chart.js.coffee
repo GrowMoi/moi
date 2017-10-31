@@ -319,8 +319,9 @@ class window.Chart
         .selectAll('text')
         .style('text-anchor', 'end')
         .attr('dx', '-1em')
+        .attr('dy', '0')
         .attr('y', '0')
-        .attr('transform', 'rotate(-80)')
+        .attr('transform', 'rotate(-90)')
         .text (d) ->
           formatTextLabel type, data
     if settings.showYaxis
@@ -586,21 +587,10 @@ class window.Chart
     if isNaN(milliseconds)
       0
     else
-      duration = moment.duration(milliseconds)._data
-      finalString = ''
-      if duration.years > 0
-        finalString += duration.years + 'a:'
-      if duration.months > 0
-        finalString += duration.months + 'm:'
-      if duration.days > 0
-        finalString += duration.days + 'd:'
-      if duration.hours > 0
-        finalString += duration.hours + 'h:'
-      if duration.minutes > 0
-        finalString += duration.minutes + 'min:'
-      mseconds = duration.milliseconds / 1000
-      secondsAndMilliseconds = duration.seconds + mseconds
-      finalString += Math.round(secondsAndMilliseconds) + 's'
+      duration = moment.duration(milliseconds)
+      hours = Math.floor(duration.asHours())
+      mins = Math.floor(duration.asMinutes()) - hours * 60
+      finalString = hours + ':' + mins
       finalString
 
   pointIsInArc = (pt, ptData, d3Arc) ->
