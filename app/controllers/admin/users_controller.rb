@@ -47,7 +47,7 @@ module Admin
     end
 
     def permitted_attributes
-      allowed = [:name, :email, :role]
+      allowed = [:name, :email, :role, :username, :authorization_key]
       if params[:user][:password].present?
         allowed += [:password, :password_confirmation]
       end
