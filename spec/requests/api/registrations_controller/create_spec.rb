@@ -14,8 +14,8 @@ RSpec.describe Api::RegistrationsController,
         authorization_key: 'animals'
       }
       post '/users', params
-      response = JSON.parse(response.body)
-      user = response.fetch("data")
+      parsed_response = JSON.parse(response.body)
+      user = parsed_response.fetch("data")
       expect(user["username"]).to eq(params[:username])
       expect(user["name"]).to eq(params[:username])
       expect(user["age"]).to eq(14)
