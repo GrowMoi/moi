@@ -25,6 +25,9 @@
 #  country                :string
 #  tree_image             :string
 #  school                 :string
+#  username               :string
+#  authorization_key      :string
+#  age                    :integer
 #
 
 require 'rails_helper'

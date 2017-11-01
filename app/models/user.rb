@@ -25,6 +25,9 @@
 #  country                :string
 #  tree_image             :string
 #  school                 :string
+#  username               :string
+#  authorization_key      :string
+#  age                    :integer
 #
 
 class User < ActiveRecord::Base
@@ -44,12 +47,22 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable and :omniauthable
   devise :database_authenticatable, :recoverable,
-  :rememberable, :trackable, :validatable
+  :rememberable, :trackable
+
+  attr_accessor :login
 
   after_update :send_role_changed_email
 
-  validates :name, presence: true
   validates :email, presence: true, uniqueness: true
+  validates :username, presence: true,
+                       uniqueness: { case_sensitive: false,
+                                     allow_blank: true }
+  validates_format_of :username, with: /\A[a-zA-Z0-9_\.\-]*\z/, multiline: true
+  validates :authorization_key, presence: true, on: :create
+
+  begin :callbacks
+    before_save :set_name_if_nil
+  end
 
   begin :relationships
     has_one :profile,
@@ -108,9 +121,24 @@ class User < ActiveRecord::Base
 
   private
 
+  def set_name_if_nil
+    if name.blank?
+      self.name = username
+    end
+  end
+
   def send_role_changed_email
     if role_changed?
     	UserMailer.notify_role_change(self).deliver_later
+    end
+  end
+
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+    elsif conditions.has_key?(:username) || conditions.has_key?(:email)
+      where(conditions.to_hash).first
     end
   end
 end

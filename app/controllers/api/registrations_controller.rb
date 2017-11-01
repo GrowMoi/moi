@@ -2,7 +2,6 @@ module Api
   class RegistrationsController < DeviseTokenAuth::RegistrationsController
     extend BaseDoc
     include BaseController::JsonRequestsForgeryBypass
-    before_filter :configure_permitted_parameters
 
     resource_description do
       short "user registration"
@@ -11,23 +10,32 @@ module Api
 
     doc_for :create do
       api :POST,
-          "/auth/user",
+          "/users",
           "sign up providing email"
       description "create new account for moi. Responds with created user if successful"
-      param :name, String, required: true
-      param :birthday, Date, required: false
-      param :password, String, required: true
+      param :username, String, required: true
+      param :authorization_key, String, required: true
+      param :age, Integer, required: false
       param :city, String, required: false
-      param :confirm_password, String, required: true
       param :country, String, required: false
       param :email, String, required: true
       param :school, String, required: true
     end
 
-    protected
+    private
 
-    def configure_permitted_parameters
-      devise_parameter_sanitizer.for(:sign_up).push(:name,:birthday,:country,:city,:school)
+    def sign_up_params
+      params.permit(
+        :username,
+        :age,
+        :email,
+        :city,
+        :country,
+        :school,
+        :authorization_key
+      ).merge(
+        password: Devise.friendly_token
+      )
     end
   end
 end

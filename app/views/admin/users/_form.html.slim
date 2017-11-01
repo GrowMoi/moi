@@ -6,6 +6,14 @@
     = f.text_field :name, class: "form-control"
 
   .form-group
+    = f.label :username
+    = f.text_field :username, class: "form-control"
+
+  .form-group
+    = f.label :authorization_key
+    = f.text_field :authorization_key, class: "form-control"
+
+  .form-group
     = f.label :email
     = f.email_field :email, class: "form-control", required: true
 
