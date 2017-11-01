@@ -12,45 +12,40 @@ module Api
       api :PUT,
           "/users/account",
           "Update user account"
+      param :age, Integer
+      param :authorization_key, String
+      param :username, String
       param :name, String
-      param :birthday, Date
       param :password, String, "if you want to update your account's password"
       param :city, String
       param :country, String
       param :school, String
       param :email, String
       def update
-        if current_user.valid_password?(user_params[:current_password])
-          if user.update(user_params_update)
-            render  nothing:true,
-                    status: :accepted
-          else
-            @errors = current_user.errors
-            render  nothing: true,
-                    status: :unprocessable_entity
-          end
+        if user.update(user_params)
+          render  nothing:true,
+                  status: :accepted
         else
-          @errors = current_user.errors
-          render  nothing: true,
-                  status: 401
+          render  text: current_user.errors.full_messages,
+                  status: :unprocessable_entity
         end
       end
 
       private
 
       def user_params
-        params.require(:account).permit(:name,
-                                    :birthday,
-                                    :password,
-                                    :city,
-                                    :country,
-                                    :school,
-                                    :email,
-                                    :current_password
-                                  )
-      end
-      def user_params_update
-        user_params.except(:current_password)
+        params.require(:account).permit(
+          :username,
+          :name,
+          :birthday,
+          :password,
+          :city,
+          :country,
+          :school,
+          :email,
+          :age,
+          :authorization_key
+        )
       end
     end
   end

@@ -20,7 +20,7 @@ RSpec.describe Api::SessionsController,
       end
     }
     let(:params) {
-      { email: user.email,
+      { login: user.email,
         password: user.password }
     }
 

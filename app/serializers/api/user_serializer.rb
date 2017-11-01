@@ -39,7 +39,8 @@ module Api
                :school,
                :birthday,
                :city,
-               :tree_image
+               :tree_image,
+               :username
 
     has_many :content_preferences
 

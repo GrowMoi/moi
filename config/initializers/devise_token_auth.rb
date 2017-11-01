@@ -26,4 +26,6 @@ DeviseTokenAuth.setup do |config|
   # password is updated.
   # config.check_current_password_before_update = :attributes
   config.enable_standard_devise_support = true
+
+  config.default_confirm_success_url = Rails.application.secrets.url
 end
