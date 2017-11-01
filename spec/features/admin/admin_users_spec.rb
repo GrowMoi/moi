@@ -33,7 +33,7 @@ describe "user management" do
   context "with forms" do
     include_context "form features"
 
-    let(:user_attrs) { attributes_for :user }
+    let(:user_attrs) { attributes_for :user, :with_username, :with_authorization_key }
     let(:fill_form!) {
       # we need to select role
       select user_attrs.delete(:role),
