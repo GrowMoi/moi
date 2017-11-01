@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   validates :username, presence: true,
                        uniqueness: { case_sensitive: false,
                                      allow_blank: true }
-  validates_format_of :username, with: /^[a-zA-Z0-9_\.\-]*$/, multiline: true
+  validates_format_of :username, with: /\A[a-zA-Z0-9_\.\-]*\z/, multiline: true
   validates :authorization_key, presence: true, on: :create
 
   begin :callbacks
