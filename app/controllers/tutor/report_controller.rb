@@ -48,7 +48,8 @@ module Tutor
       data = {}
       if user_tutor.present?
         client = user_tutor.user
-        data = generate_analytics_details(client, users_by_tutor, params[:fields])
+        params_data = params[:fields] || []
+        data = generate_analytics_details(client, users_by_tutor, params_data)
       end
       render json: {
         data: data
@@ -81,11 +82,13 @@ module Tutor
       if !param.empty?
         max_value = get_max_value(users, param)
         statistics = client.generate_statistics([param])
+        value = statistics[param] && statistics[param][:value] ? statistics[param][:value] : nil
+        meta = statistics[param] && statistics[param][:meta] ? statistics[param][:meta] : {}
         result = {
           max_value: max_value,
-          value: statistics[param][:value],
+          value: value,
           user_id: client.id,
-          meta: statistics[param][:meta]
+          meta: meta
         }
       end
       result
@@ -105,7 +108,7 @@ module Tutor
     def get_max_value(users, param)
       result = users.map do |d|
         statistic = d.user.generate_statistics([param])
-        statistic[param][:value]
+        statistic[param] && statistic[param][:value] ? statistic[param][:value] : nil
       end
       result.max
     end
