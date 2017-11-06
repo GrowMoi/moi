@@ -13,13 +13,12 @@ module Api
       param :image, String
 
       def update
-        if user.update(tree_image: params[:image])
+        if user.update_attribute("tree_image", params[:image])
           response = {
             status: :accepted,
             user: user
           }
         else
-          @errors = current_user.errors
           response = {
             nothing: true,
             status: :unprocessable_entity
