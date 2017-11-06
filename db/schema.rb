@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171027221542) do
+ActiveRecord::Schema.define(version: 20171105023850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -289,6 +289,16 @@ ActiveRecord::Schema.define(version: 20171027221542) do
 
   add_index "quizzes", ["level_quiz_id"], name: "index_quizzes_on_level_quiz_id", using: :btree
 
+  create_table "read_notifications", force: :cascade do |t|
+    t.integer  "user_id",          null: false
+    t.integer  "notifications_id", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "read_notifications", ["notifications_id"], name: "index_read_notifications_on_notifications_id", using: :btree
+  add_index "read_notifications", ["user_id"], name: "index_read_notifications_on_user_id", using: :btree
+
   create_table "search_engines", force: :cascade do |t|
     t.string   "name",                      null: false
     t.string   "slug",                      null: false
@@ -427,12 +437,10 @@ ActiveRecord::Schema.define(version: 20171027221542) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
-    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "content_learning_quizzes", "players"
@@ -460,5 +468,4 @@ ActiveRecord::Schema.define(version: 20171027221542) do
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"
-  add_foreign_key "versions", "users", column: "owner_id"
 end

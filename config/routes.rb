@@ -19,6 +19,9 @@ Moi::Application.routes.draw do
       collection do
         get :index
       end
+      member do
+        post :read_notifications
+      end
     end
     resources :achievements, only: [] do
       collection do
