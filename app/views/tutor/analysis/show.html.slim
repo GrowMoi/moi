@@ -6,53 +6,53 @@
     .row-analysis-info
       .container-analysis-info
         .header
-          = t("views.tutor.analysis.total_neurons_learnt")
+          = @statistics["total_neurons_learnt"][:meta][:label_analysis]
         .body
-          = @statistics["total_neurons_learnt"]
+          = @statistics["total_neurons_learnt"][:value]
 
       .container-analysis-info
         .header
-          = t("views.tutor.analysis.total_content_readings")
+          = @statistics["total_content_readings"][:meta][:label_analysis]
         .body
-          = @statistics["total_content_readings"]
-
-    .row-analysis-info
-      .container-analysis-info
-        .header
-          = t("views.tutor.analysis.total_right_questions")
-        .body
-          = @statistics["total_right_questions"]
-
-      .container-analysis-info
-        .header
-          = t("views.tutor.analysis.total_notes")
-        .body
-          = @statistics["total_notes"]
+          = @statistics["total_content_readings"][:value]
 
     .row-analysis-info
       .container-analysis-info
         .header
-          = t("views.tutor.analysis.images_opened_in_count")
+          = @statistics["total_right_questions"][:meta][:label_analysis]
         .body
-          = @statistics["images_opened_in_count"]
+          = @statistics["total_right_questions"][:value]
 
       .container-analysis-info
         .header
-          = t("views.tutor.analysis.user_sign_in_count")
+          = @statistics["total_notes"][:meta][:label_analysis]
         .body
-          = @statistics["user_sign_in_count"]
+          = @statistics["total_notes"][:value]
 
     .row-analysis-info
       .container-analysis-info
         .header
-          = t("views.tutor.analysis.used_time")
+          = @statistics["images_opened_in_count"][:meta][:label_analysis]
         .body
-          = @statistics["used_time"]
+          = @statistics["images_opened_in_count"][:value]
+
+      .container-analysis-info
+        .header
+          = @statistics["user_sign_in_count"][:meta][:label_analysis]
+        .body
+          = @statistics["user_sign_in_count"][:value]
+
+    .row-analysis-info
+      .container-analysis-info
+        .header
+          = @statistics["used_time"][:meta][:label_analysis]
+        .body
+          = humanize_ms @statistics["used_time"][:value]
     .row-analysis-info
       .row-title
-          = t("views.tutor.analysis.content_readings_by_branch")
+          = @statistics["content_readings_by_branch"][:meta][:label_analysis]
     .row-analysis-info
-      - @statistics["content_readings_by_branch"].each do |neuron, count|
+      - @statistics["content_readings_by_branch"][:value].each do |neuron, count|
         .container-analysis-info
           .header
             = neuron

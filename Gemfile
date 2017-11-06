@@ -35,6 +35,8 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 
+gem 'momentjs-rails'
+
 gem 'slim'
 gem 'devise'
 gem 'devise_token_auth', github: "lynndylanhurley/devise_token_auth"

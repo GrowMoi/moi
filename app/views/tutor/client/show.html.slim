@@ -12,24 +12,23 @@
           = t("views.tutor.client.description")
       .row-info
         .first-cell
-          = @statistics["total_neurons_learnt"]
+          = @statistics["total_neurons_learnt"][:value]
         .second-cell
-          = t("views.tutor.client.total_neurons_learnt")
+          = @statistics["total_neurons_learnt"][:meta][:label]
       .row-info
         .first-cell
-          = @statistics["total_content_readings"]
+          = @statistics["total_content_readings"][:value]
         .second-cell
-          = t("views.tutor.client.total_content_readings")
+          = @statistics["total_content_readings"][:meta][:label]
       .row-info
         .first-cell
-          = @statistics["total_right_questions"]
+          = @statistics["total_right_questions"][:value]
         .second-cell
-          = t("views.tutor.client.total_right_questions")
+          = @statistics["total_right_questions"][:meta][:label]
 
     .link-activity-container
       = link_to t("views.tutor.client.activity"), tutor_analysis_path(params['id']), class:"link-user-client-activity", id:"link-user-client-activity"
   .right-container
     = image_tag("client_tree_landscape.png", class:"tree_landscape")
     = image_tag("client_tree_frame.png", class:"tree_frame")
-    = image_tag("flowerpot.png", class:"flowerpot")
     = image_tag(@client.tree_image.url, class:"tree-image")

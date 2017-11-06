@@ -1,0 +1,299 @@
+$base-color-green: #77BF5D
+$white: white
+$red: #cf5447
+$red-2: #b83b67
+$blue: #4d79b2
+$blue-2: #0089b6
+$yellow: #f1a74d
+$yellow-2: #f7af1f
+$green: #1a985b
+$green-2: #359b3d
+$purple: #b24e93
+$light-red: #e76988
+$light-blue: #1a9bbd
+$blue-header: #00a0e6
+
+.layout-report-body
+  background-color: #d3e9d8
+  position: relative
+
+  .tooltip
+    position: absolute
+    display: none
+    width: auto
+    height: auto
+    background: none repeat scroll 0 0 white
+    border: 0 none
+    border-radius: 8px 8px 8px 8px
+    box-shadow: -3px 3px 15px #888888
+    color: black
+    font: 12px sans-serif
+    padding: 5px
+    text-align: center
+
+  .tooltip-bar
+    @extend .tooltip
+
+  .tooltip-bubble
+    @extend .tooltip
+
+  .tooltip-single-bar
+    @extend .tooltip
+
+  .tooltip-donut
+    @extend .tooltip
+
+.container-report
+  .fill-color-0
+    fill: $red
+
+  .fill-color-1
+    fill: $blue
+
+  .fill-color-2
+    fill: $yellow
+
+  .fill-color-3
+    fill: $green
+
+  .fill-color-4
+    fill: $purple
+
+  .fill-color-5
+    fill: $light-red
+
+  .fill-color-6
+    fill: $light-blue
+
+  .card-report
+    display: flex
+    background-color: #e7eee2
+    box-shadow: 0 0 2rem rgba(0,0,0,0.3)
+    border-radius: 1rem
+    padding: 1rem
+    margin: 2rem 0
+    min-height: 15rem
+    flex-direction: column
+
+    .card-title
+      display: flex
+      align-items: center
+      justify-content: center
+      height: 2rem
+      font-size: 1.7rem
+      text-transform: uppercase
+      margin: 1rem 0
+      font-weight: bold
+
+  .card-user-info
+    flex-direction: column
+
+  .user-details
+    display: flex
+
+  .title-container
+    display: flex
+    justify-content: center
+    align-items: center
+    .title-logo
+      img
+        height: 5rem
+        margin-right: 2rem
+    .title
+      text-transform: uppercase
+      font-weight: bold
+      font-size: 5rem
+  .sub-title
+    text-align: center
+    font-size: 2rem
+    margin-top: 2rem
+    margin-bottom: 2rem
+    color: $blue-header
+
+  .profile-container
+    flex-basis: 50%
+    border-bottom: 0.1rem solid $base-color-green
+    border-right: 0.1rem solid $base-color-green
+    .user-avatar
+      text-align: center
+      img
+        width: 15rem
+    .user-name
+      padding: 0 2rem
+      text-align: center
+      font-size: 2.3rem
+      font-weight: bold
+      color: $base-color-green
+
+  .grid-info-container
+    flex-basis: 50%
+    display: flex
+    flex-direction: column
+    padding: 0 2rem
+    color: $base-color-green
+    border-bottom: 0.1rem solid $base-color-green
+    .row-info
+      display: flex
+      justify-content: flex-start
+      align-items: center
+      margin: 0.5rem 0
+      border-bottom: 0.1rem solid $base-color-green
+      padding: 0.5rem 0
+
+      .first-cell
+        flex-basis: 20%
+        padding-left: 1rem
+        border-left: 0.4rem solid $base-color-green
+
+      .second-cell
+        flex-basis: 80%
+        padding-left: 1rem
+
+      .first-cell-header
+        color: $white
+        background-color: $base-color-green
+        height: 4rem
+        display: flex
+        align-items: center
+        border-bottom-left-radius: 0.5rem
+        border-top-left-radius: 0.5rem
+
+      .second-cell-header
+        color: $white
+        background-color: $base-color-green
+        height: 4rem
+        display: flex
+        align-items: center
+        border-bottom-right-radius: 0.5rem
+        border-top-right-radius: 0.5rem
+        border-left: 0.1rem solid $white
+
+    .row-info-header
+      padding: 0
+      border: none
+      font-weight: bold
+
+  .image-tree-container
+    position: relative
+    height: 420px
+
+    .tree-image-position
+      width: 700px
+      height: 393px
+      position: absolute
+      top: 15px
+      margin-left: auto
+      margin-right: auto
+      left: 0
+      right: 0
+
+    .tree-landscape
+      @extend .tree-image-position
+      z-index: 0
+
+    .tree-frame
+      @extend .tree-image-position
+      z-index: 1
+
+    .tree-image
+      @extend .tree-image-position
+      z-index: 2
+
+  .chart-container
+    margin: auto
+    position: relative
+
+    .axis path
+      display: none
+
+    .axis path,
+    .axis line
+      fill: none
+      stroke: #000
+      shape-rendering: crispEdges
+
+  .donut-chart-container
+    display: block
+    .moi-logo-graf
+      position: absolute
+      left: 33%
+      top: 50%
+      transform: translate(-50%, -57%)
+    .arc
+      text
+        font: 10px
+        text-anchor: middle
+      path
+        stroke: $white
+
+    .donut-text
+      fill: $white
+
+    .donut-legend-text
+      text-transform: uppercase
+
+    .donut-color-0
+      fill: $blue-2
+
+    .donut-color-1
+      fill: $red-2
+
+    .donut-color-2
+      fill: $yellow-2
+
+    .donut-color-3
+      fill: $green-2
+
+  .loading
+    position: absolute
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+
+  .bar-chart-container
+
+  .analytics-chart-container
+    margin: auto
+    position: relative
+    display: flex
+
+    .fill-used-time-chart
+      fill: $blue
+
+    .fill-total-neurons-learnt-chart
+      fill: $red
+
+    .fill-total-content-readings-chart
+      fill: $yellow
+
+    .fill-average-used-time-by-content-chart
+      fill: $green
+
+    .fill-total-notes-chart
+      fill: $light-red
+
+    .fill-images-opened-in-count-chart
+      fill: $purple
+
+  .footer-container
+    .footer-text-container
+      padding: 0 5rem
+      font-size: 2rem
+      .text-regards, .text-team
+        color: $blue-header
+    .footer-image-container
+      display: flex
+      padding-top: 2rem
+      .image-neuron
+        flex-basis: 5%
+      .line-container
+        flex-basis: 95%
+        display: flex
+        align-items: center
+        justify-content: center
+        .line
+          border-top: 3px solid $blue-header
+          flex-basis: 100%
+
+
+

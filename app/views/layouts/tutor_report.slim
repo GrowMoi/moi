@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    title moi
+    = stylesheet_link_tag    "tutor_report", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "tutor_report", "data-turbolinks-track" => true
+    = csrf_meta_tags
+
+  body.layout-report-body
+    .container
+      = render "layouts/flashes"
+      = yield

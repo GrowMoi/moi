@@ -86,7 +86,7 @@ module ApplicationHelper
     [[60, :seconds], [60, :minutes], [24, :hours], [1000, :days]].map{ |count, name|
       if secs > 0
         secs, n = secs.divmod(count)
-        "#{n.to_i} #{t('time.units.' + name.to_s)}"
+        "#{n.to_i} #{I18n.t('time.units.' + name.to_s)}"
       end
     }.compact.reverse.join(' ')
   end

@@ -1,0 +1,80 @@
+- if @client.present?
+  .container-report
+    .title-container
+      .title-logo = image_tag("moi_logo.png")
+      .title
+        = t("views.tutor.report.title")
+    .sub-title
+      = t("views.tutor.report.sub_title")
+    .card-report.card-user-info
+      .user-details
+        .profile-container
+          .user-avatar = image_tag("user_image_status.png")
+          .user-name = @client["name"]
+        .grid-info-container
+          .row-info.row-info-header
+            .first-cell.first-cell-header
+              | N°.
+            .second-cell.second-cell-header
+              = t("views.tutor.client.description")
+          .row-info
+            .first-cell
+              = @statistics["total_neurons_learnt"][:value]
+            .second-cell
+              = @statistics["total_neurons_learnt"][:meta][:label]
+          .row-info
+            .first-cell
+              = @statistics["total_content_readings"][:value]
+            .second-cell
+              = @statistics["total_content_readings"][:meta][:label]
+          .row-info
+            .first-cell
+              = @statistics["total_right_questions"][:value]
+            .second-cell
+              = @statistics["total_right_questions"][:meta][:label]
+
+      .image-tree-container
+        = image_tag("client_tree_landscape.png", class:"tree-landscape")
+        = image_tag("client_tree_frame.png", class:"tree-frame")
+        = image_tag(@client.tree_image.url, class:"tree-image")
+    .card-report
+      .card-title = t("views.tutor.report.donut_chart")
+      .donut-chart-container.chart-container
+        = image_tag("moi_logo_graf.png", class:"moi-logo-graf")
+    .card-report
+      .card-title = t("views.tutor.report.analytics_chart")
+      .analytics-chart-container
+        .used-time-chart
+        .total-neurons-learnt-chart
+        .total-content-readings-chart
+        .average-used-time-by-content-chart
+        .images-opened-in-count-chart
+        .total-notes-chart
+        .chart-legends
+
+    .card-report
+      .card-title = t("views.tutor.report.bar_chart")
+      .bar-chart-container.chart-container
+    .card-report
+      .card-title = t("views.tutor.report.bubble_chart")
+      .bubble-chart-container.chart-container
+    .footer-container
+      .footer-text-container
+        .text-more-details
+          | Para establecer metas, recompensas o enviar un mensaje a este usuario, haz clic&nbsp;
+          a href="#"
+            | aquí
+        .text-regards
+          | Saludos,
+        .text-team
+          | El equipo de Moi Aprendizaje Social
+
+      .footer-image-container
+        .image-neuron = image_tag("blue-neuron.png")
+        .line-container
+          .line
+
+
+- else
+  .container-report
+    | No data found
