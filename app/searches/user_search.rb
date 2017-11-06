@@ -3,7 +3,7 @@ class UserSearch < Searchlight::Search
   searches :q, :id
 
   def search_q
-    search.where("unaccent(users.name) ILIKE :q OR unaccent(users.email) ILIKE :q", q: "%#{q}%")
+    search.where("unaccent(users.username) ILIKE :q OR unaccent(users.name) ILIKE :q OR unaccent(users.email) ILIKE :q", q: "%#{q}%")
           .where.not("users.id = :id", id: id)
   end
 end

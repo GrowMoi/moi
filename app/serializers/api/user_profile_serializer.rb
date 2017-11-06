@@ -32,6 +32,7 @@ module Api
     attributes :id,
                :email,
                :name,
+               :username,
                :country,
                :school,
                :birthday,

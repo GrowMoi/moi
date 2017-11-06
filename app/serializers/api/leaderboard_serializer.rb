@@ -3,12 +3,12 @@ module Api
     attributes :id,
         :contents_learnt,
         :time_elapsed,
-        :name,
+        :username,
         :email,
         :user_id
 
-    def name
-      object.user.name
+    def username
+      object.user.username
     end
 
     def email
