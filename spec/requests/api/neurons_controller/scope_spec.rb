@@ -158,7 +158,9 @@ RSpec.describe Api::NeuronsController,
                  neuron: b
         }
 
-        before { get "/api/neurons" }
+        before {
+          get "/api/neurons", response.headers
+        }
 
         it "includes approved content" do
           expect_to_see_in_collection(approved_content)

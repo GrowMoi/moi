@@ -21,6 +21,7 @@ private
       user = UserDatatableDecorator.new(raw_user, self)
       [
         user.avatar_and_name,
+        user.record.name,
         user.email,
         user.role,
         user.link_for(:show) + user.link_for(:edit)

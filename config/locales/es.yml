@@ -493,7 +493,7 @@
         remember_me: "Recordarme"
         email: "Email"
         role: "Rol"
-        name: "Nombre"
+        name: "Nombre real"
         login: "Nombre de usuario o Email"
         authorization_key: "Imagen de autorización"
       cliente:
