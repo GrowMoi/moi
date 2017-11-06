@@ -29,6 +29,7 @@ class Notification < ActiveRecord::Base
     has_many :notification_medium,
               class_name: "NotificationMedia",
               dependent: :destroy
+    has_many :read_notifications
   end
 
   begin :nested_attributes

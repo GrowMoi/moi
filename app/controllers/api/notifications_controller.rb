@@ -10,7 +10,7 @@ module Api
     }
 
     expose(:admin_notifications) {
-      Notification.all
+      Notification.where.not(id: ReadNotification.where(user_id: current_user.id).pluck(:notifications_id))
     }
 
     expose(:total_user_notifications) {
@@ -24,6 +24,24 @@ module Api
                           ).as_json
       serialized_admin + serialized_tutor
     }
+
+    api :POST,
+        "/notifications/:id/read_notifications",
+        "To deleted a notification of a user."
+    param :id, Integer, required: true
+    def read_notifications
+      init_read_notification = current_user.create_read_notification(params[:id])
+
+      unless init_read_notification.nil?
+        response = { deleted: init_read_notification }
+        render json: response,
+            status: :ok
+      else
+        response = { status: :unprocessable_entity }
+        render json: response,
+            status: response[:status]
+      end
+    end
 
     api :GET,
         "/notifications",
