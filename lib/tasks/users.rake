@@ -10,7 +10,7 @@ namespace :users do
 
   task set_usernames: :environment do
     User.where(username: nil).find_each do |user|
-      username = "moi-" + user.name.parameterize + rand(1000).to_s
+      username = "moi-" + user.email.parameterize + rand(1000).to_s
       user.update! username: username
     end
   end
