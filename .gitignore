@@ -19,4 +19,4 @@ config/database.yml
 .c9/
 doc/
 .env
-/public/uploads/*
+public/
