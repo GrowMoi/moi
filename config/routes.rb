@@ -150,6 +150,7 @@ Moi::Application.routes.draw do
     resources :analysis, only: [:index, :show]
     resources :tree, only: :index
     resources :user_tutors, only: :create
+    resources :recommendations, only: [:new, :create]
     resources :report, only: :index do
       collection do
         get :root_contents_learnt

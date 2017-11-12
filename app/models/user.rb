@@ -108,6 +108,12 @@ class User < ActiveRecord::Base
              through: :content_favorites
     has_many :read_notifications,
              dependent: :destroy
+    has_many :tutor_achievements,
+             dependent: :destroy
+    has_many :tutor_recommendations,
+             dependent: :destroy
+    has_many :client_approved_recommendations,
+             dependent: :destroy
   end
 
   def to_s

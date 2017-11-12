@@ -5,5 +5,6 @@
 //= require jquery_ujs
 //= require jquery-ui/widgets/selectable
 //= require bootstrap
+//= require chosen.jquery.min
 //= require jquery.infinite-pages
 //= require_tree ./tutor
