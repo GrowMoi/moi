@@ -119,4 +119,37 @@ RSpec.describe Tutor::RecommendationsController, type: :controller do
 
   end
 
+  describe "Create achievements" do
+
+    context "Ok" do
+
+      before {
+        request.env["HTTP_REFERER"] = root_url
+        post :new_achievement, :tutor_achievement => {
+          name: "New achievement"
+        }
+      }
+
+      it {
+        expect(response).to redirect_to(:back)
+      }
+
+      it {
+        expect(current_user.tutor_achievements.count).to eq(3)
+      }
+
+      it {
+        expect(current_user.tutor_achievements.last[:name]).to eq("New achievement")
+      }
+    end
+
+    context "Empty" do
+      it {
+        expect {
+          post :new_achievement, :tutor_achievement => {}
+        }.to raise_error(ActionController::ParameterMissing)
+      }
+    end
+  end
+
 end

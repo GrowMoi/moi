@@ -12,8 +12,14 @@
 #
 
 class TutorAchievement < ActiveRecord::Base
+  has_paper_trail ignore: [:created_at, :updated_at, :id]
+
+  mount_uploader :image, ContentMediaUploader
+
   belongs_to :user
   validates :user_id,
+            presence: true
+  validates :name,
             presence: true
   has_many :tutor_recommendations
 end

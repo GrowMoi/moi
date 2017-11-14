@@ -13,6 +13,7 @@
 
 FactoryGirl.define do
   factory :tutor_achievement do
+    sequence(:name) { |n| "Achievement #{n}" }
     user
   end
 end

@@ -18,9 +18,15 @@
                       class: "form-control"
           .input-info
             = t("views.tutor.recommendations.form_new.achievement_input_info")
+          = button_tag t("views.tutor.recommendations.form_new.new_achievement"),
+                          type: "button",
+                          class: "button-dialog-new-achievement",
+                          id: "button-dialog-new-achievement"
+
       .recommendations-form-actions
         = f.submit t("views.tutor.recommendations.form_new.send"),
                   class: "user-link recommendations-user-link",
                   data: { disable_with: t("views.submitting") }
 
+  = render "new_achievement", tutor_achievement: tutor_achievement
 

@@ -1,11 +1,6 @@
 module Tutor
   class RecommendationsController < TutorController::Base
 
-    expose(:content_search) {
-      query = params[:query] || ""
-      ContentSearch.new(q: query)
-    }
-
     expose(:contents) {
       Content.where(approved: true)
     }
@@ -18,6 +13,8 @@ module Tutor
       TutorRecommendation.new
     }
 
+    expose(:tutor_achievement, attributes: :tutor_achievement_params)
+
     def new
       render
     end
@@ -28,6 +25,27 @@ module Tutor
         name: current_user.name
       )
       render :new
+    end
+
+    def new_achievement
+      if tutor_achievement.save
+        flash[:success] = I18n.t(
+          "views.tutor.recommendations.achievement_request.created"
+        )
+        redirect_to :back
+      else
+        render nothing: true,
+          status: :unprocessable_entity
+      end
+    end
+
+    private
+
+    def tutor_achievement_params
+      params.require(:tutor_achievement).permit(
+        :name,
+        :description,
+        :image)
     end
 
   end
