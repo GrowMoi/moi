@@ -109,10 +109,16 @@ class User < ActiveRecord::Base
     has_many :read_notifications,
              dependent: :destroy
     has_many :tutor_achievements,
+             class_name: "TutorAchievement",
+             foreign_key: "tutor_id",
              dependent: :destroy
     has_many :tutor_recommendations,
+             class_name: "TutorRecommendation",
+             foreign_key: "tutor_id",
              dependent: :destroy
-    has_many :client_approved_recommendations,
+    has_many :client_tutor_recommendations,
+             class_name: "ClientTutorRecommendation",
+             foreign_key: "client_id",
              dependent: :destroy
   end
 

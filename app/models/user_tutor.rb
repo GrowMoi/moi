@@ -13,7 +13,6 @@
 class UserTutor < ActiveRecord::Base
   belongs_to :user
   belongs_to :tutor, class_name: "User"
-  has_many :user_tutor_recommendations
 
   STATUSES = %w(accepted rejected).freeze
 

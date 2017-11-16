@@ -10,39 +10,67 @@ RSpec.describe Tutor::RecommendationsController, type: :controller do
     create :user, role: :tutor
   }
 
-  let!(:client) {
-    create :user, role: :cliente
+  let!(:client1) {
+    create :user, name: "cliente1", role: :cliente
   }
 
-  before {
+  let!(:client2) {
+    create :user, name: "cliente2", role: :cliente
+  }
+
+  let!(:content1) {
     create :content,
            title: "content 1",
            description: "description 1",
            approved: true
+  }
+
+  let!(:content2) {
     create :content,
            title: "content 2",
            description: "description 2",
            approved: true
+  }
+
+  let!(:content3) {
     create :content,
            title: "content 3",
            description: "description 3",
            approved: true
+  }
+
+  let!(:content4) {
     create :content,
            title: "content 4",
            description: "description 4",
            approved: false
   }
 
-  before {
+  let!(:achievement1) {
     create :tutor_achievement,
-           user: current_user,
+           tutor: current_user,
            name: 'achievement 1'
+  }
+  let!(:achievement2) {
     create :tutor_achievement,
-           user: current_user,
+           tutor: current_user,
            name: 'achievement 2'
+  }
+  let!(:achievement3) {
     create :tutor_achievement,
-           user: another_user ,
+           tutor: another_user ,
            name: 'achievement 3'
+  }
+
+  before {
+    create :user_tutor,
+      user: client1,
+      tutor: current_user,
+      status: :accepted
+    create :user_tutor,
+      user: client2,
+      tutor: current_user,
+      status: :accepted
   }
 
   let!(:results) {
@@ -50,7 +78,11 @@ RSpec.describe Tutor::RecommendationsController, type: :controller do
   }
 
   let!(:tutor_achievements) {
-    TutorAchievement.where(user: current_user)
+    TutorAchievement.where(tutor: current_user)
+  }
+
+  let!(:tutor_recommendations) {
+    TutorRecommendation.where(tutor: current_user)
   }
 
   before {
@@ -109,14 +141,54 @@ RSpec.describe Tutor::RecommendationsController, type: :controller do
   end
 
   describe "Create recommendation" do
-    subject {
-      post :create
+    before {
+      request.env["HTTP_REFERER"] = root_url
+      post :create, :tutor_recommendation => {
+        :content_tutor_recommendations => [content1.id, content2.id],
+        :tutor_achievement => achievement1.id
+      }
+    }
+
+    let(:my_recommendations) {
+      current_user.tutor_recommendations
+    }
+
+    let(:content_for_recommendations) {
+      ContentTutorRecommendation.all
+    }
+    let(:achievement_for_recommendation) {
+      ContentTutorRecommendation.all
     }
 
     it {
-      expect(subject).to render_template(:new)
+      expect(response).to redirect_to(:back)
     }
 
+    it {
+      expect(controller.clients.size).to eq(2)
+    }
+
+    it {
+      expect(controller.clients.first.user[:name]).to eq("cliente1")
+    }
+
+    it {
+      expect(my_recommendations.count).to eq(1)
+      expect(my_recommendations.first.tutor).to eq(current_user)
+    }
+
+    it {
+      expect(content_for_recommendations.count).to eq(2)
+    }
+
+    it {
+      expect(content_for_recommendations.first.tutor_recommendation).to eq(my_recommendations.first)
+      expect(content_for_recommendations.first.content).to eq(content1)
+    }
+
+    it {
+      expect(my_recommendations.first.tutor_achievement).to eq(achievement1)
+    }
   end
 
   describe "Create achievements" do

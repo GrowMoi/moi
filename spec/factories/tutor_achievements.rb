@@ -3,7 +3,7 @@
 # Table name: tutor_achievements
 #
 #  id          :integer          not null, primary key
-#  user_id     :integer          not null
+#  tutor_id    :integer          not null
 #  name        :string           not null
 #  description :text
 #  image       :string
@@ -14,6 +14,6 @@
 FactoryGirl.define do
   factory :tutor_achievement do
     sequence(:name) { |n| "Achievement #{n}" }
-    user
+    tutor { build :user }
   end
 end

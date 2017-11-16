@@ -3,7 +3,7 @@
 # Table name: tutor_achievements
 #
 #  id          :integer          not null, primary key
-#  user_id     :integer          not null
+#  tutor_id    :integer          not null
 #  name        :string           not null
 #  description :text
 #  image       :string
@@ -16,9 +16,8 @@ class TutorAchievement < ActiveRecord::Base
 
   mount_uploader :image, ContentMediaUploader
 
-  belongs_to :user
-  validates :user_id,
-            presence: true
+  belongs_to :tutor, class_name: "User",
+             foreign_key: "tutor_id"
   validates :name,
             presence: true
   has_many :tutor_recommendations

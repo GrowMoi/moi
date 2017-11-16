@@ -44,7 +44,6 @@ buildDialog = ->
     dialogClass: dialogMainClass
     resizable: false
     open: () ->
-      debugger
       cleanFormData()
       fixCloseButton(this)
 

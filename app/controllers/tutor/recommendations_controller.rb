@@ -9,8 +9,10 @@ module Tutor
       current_user.tutor_achievements
     }
 
-    expose(:tutor_recommendation) {
-      TutorRecommendation.new
+    expose :tutor_recommendation
+
+    expose(:clients) {
+      UserTutor.where(tutor: current_user)
     }
 
     expose(:tutor_achievement, attributes: :tutor_achievement_params)
@@ -20,11 +22,26 @@ module Tutor
     end
 
     def create
-      flash[:success] = I18n.t(
-        "views.tutor.recommendations.recommendation_request.created",
-        name: current_user.name
-      )
-      render :new
+      tutor_recommendation.tutor = current_user
+      achievement_id = tutor_recommendation_params[:tutor_achievement]
+
+      if !achievement_id.empty?
+        achievement = TutorAchievement.find(achievement_id)
+        tutor_recommendation.tutor_achievement = achievement
+      end
+
+      if tutor_recommendation.save
+        content_ids = tutor_recommendation_params[:content_tutor_recommendations]
+        contents_to_recommendation(content_ids)
+        flash[:success] = I18n.t(
+          "views.tutor.recommendations.recommendation_request.created",
+          name: current_user.name
+        )
+      else
+        #flash[:error] = I18n.t()
+      end
+
+      redirect_to :back
     end
 
     def new_achievement
@@ -45,8 +62,30 @@ module Tutor
       params.require(:tutor_achievement).permit(
         :name,
         :description,
-        :image)
+        :image
+      )
     end
 
+    def tutor_recommendation_params
+      params.require(:tutor_recommendation).permit(
+        {content_tutor_recommendations: []},
+        :tutor_achievement
+      )
+    end
+
+
+    def contents_to_recommendation(content_ids)
+      content_ids = content_ids.reject(&:blank?)
+      if content_ids.any?
+        content_ids.each do |id|
+          content = Content.find(id)
+          content_tutor_recommendation = ContentTutorRecommendation.new(
+            tutor_recommendation: tutor_recommendation,
+            content: content
+          )
+          content_tutor_recommendation.save
+        end
+      end
+    end
   end
 end

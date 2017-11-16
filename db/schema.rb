@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171112122317) do
+ActiveRecord::Schema.define(version: 20171110150816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,15 +28,17 @@ ActiveRecord::Schema.define(version: 20171112122317) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "client_approved_recommendations", force: :cascade do |t|
-    t.integer  "user_id",                 null: false
+  create_table "client_tutor_recommendations", force: :cascade do |t|
+    t.integer  "client_id",               null: false
     t.integer  "tutor_recommendation_id", null: false
+    t.string   "status",                  null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
 
-  add_index "client_approved_recommendations", ["tutor_recommendation_id"], name: "tutor_recommendation_id", using: :btree
-  add_index "client_approved_recommendations", ["user_id"], name: "user_id", using: :btree
+  add_index "client_tutor_recommendations", ["client_id"], name: "index_client_tutor_recommendations_on_client_id", using: :btree
+  add_index "client_tutor_recommendations", ["status"], name: "index_client_tutor_recommendations_on_status", using: :btree
+  add_index "client_tutor_recommendations", ["tutor_recommendation_id"], name: "index_client_tutor_recommendations_on_tutor_recommendation_id", using: :btree
 
   create_table "content_favorites", force: :cascade do |t|
     t.integer  "user_id",    null: false
@@ -364,7 +366,7 @@ ActiveRecord::Schema.define(version: 20171112122317) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "tutor_achievements", force: :cascade do |t|
-    t.integer  "user_id",     null: false
+    t.integer  "tutor_id",    null: false
     t.string   "name",        null: false
     t.text     "description"
     t.string   "image"
@@ -372,17 +374,17 @@ ActiveRecord::Schema.define(version: 20171112122317) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "tutor_achievements", ["user_id"], name: "index_tutor_achievements_on_user_id", using: :btree
+  add_index "tutor_achievements", ["tutor_id"], name: "index_tutor_achievements_on_tutor_id", using: :btree
 
   create_table "tutor_recommendations", force: :cascade do |t|
-    t.integer  "user_id",              null: false
+    t.integer  "tutor_id",             null: false
     t.integer  "tutor_achievement_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
 
   add_index "tutor_recommendations", ["tutor_achievement_id"], name: "index_tutor_recommendations_on_tutor_achievement_id", using: :btree
-  add_index "tutor_recommendations", ["user_id"], name: "index_tutor_recommendations_on_user_id", using: :btree
+  add_index "tutor_recommendations", ["tutor_id"], name: "index_tutor_recommendations_on_tutor_id", using: :btree
 
   create_table "user_achievements", force: :cascade do |t|
     t.integer  "user_id",        null: false
@@ -414,16 +416,6 @@ ActiveRecord::Schema.define(version: 20171112122317) do
   end
 
   add_index "user_seen_images", ["user_id"], name: "index_user_seen_images_on_user_id", using: :btree
-
-  create_table "user_tutor_recommendations", force: :cascade do |t|
-    t.integer  "user_tutor_id",           null: false
-    t.integer  "tutor_recommendation_id", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  add_index "user_tutor_recommendations", ["tutor_recommendation_id"], name: "index_user_tutor_recommendations_on_tutor_recommendation_id", using: :btree
-  add_index "user_tutor_recommendations", ["user_tutor_id"], name: "index_user_tutor_recommendations_on_user_tutor_id", using: :btree
 
   create_table "user_tutors", force: :cascade do |t|
     t.integer  "user_id",    null: false
@@ -488,14 +480,13 @@ ActiveRecord::Schema.define(version: 20171112122317) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
-    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
+  add_foreign_key "client_tutor_recommendations", "users", column: "client_id"
   add_foreign_key "content_learning_quizzes", "players"
   add_foreign_key "content_learning_tests", "users"
   add_foreign_key "content_learnings", "contents"
@@ -518,8 +509,9 @@ ActiveRecord::Schema.define(version: 20171112122317) do
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
   add_foreign_key "quizzes", "level_quizzes"
+  add_foreign_key "tutor_achievements", "users", column: "tutor_id"
+  add_foreign_key "tutor_recommendations", "users", column: "tutor_id"
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"
-  add_foreign_key "versions", "users", column: "owner_id"
 end
