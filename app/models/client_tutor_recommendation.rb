@@ -16,6 +16,9 @@ class ClientTutorRecommendation < ActiveRecord::Base
              foreign_key: "client_id"
 
   belongs_to :tutor_recommendation
+  STATUSES = %w(reached in_progress).freeze
+
+  validates :status, inclusion: { in: STATUSES }, allow_blank: false
   validates :status,
             presence: true
 end

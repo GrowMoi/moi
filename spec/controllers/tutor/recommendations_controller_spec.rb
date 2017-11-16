@@ -63,6 +63,21 @@ RSpec.describe Tutor::RecommendationsController, type: :controller do
   }
 
   before {
+    create :content_learning,
+      user: client1,
+      content: content1
+    create :content_learning,
+      user: client1,
+      content: content2
+    create :content_learning,
+      user: client1,
+      content: content3
+    create :content_learning,
+      user: client2,
+      content: content4
+  }
+
+  before {
     create :user_tutor,
       user: client1,
       tutor: current_user,
@@ -140,7 +155,7 @@ RSpec.describe Tutor::RecommendationsController, type: :controller do
 
   end
 
-  describe "Create recommendation" do
+  describe "Create recommendation with reached status" do
     before {
       request.env["HTTP_REFERER"] = root_url
       post :create, :tutor_recommendation => {
@@ -158,6 +173,17 @@ RSpec.describe Tutor::RecommendationsController, type: :controller do
     }
     let(:achievement_for_recommendation) {
       ContentTutorRecommendation.all
+    }
+
+    let(:achievement_for_recommendation) {
+      ContentTutorRecommendation.all
+    }
+
+    let(:recommendations_for_client1) {
+      ClientTutorRecommendation.where(client: client1)
+    }
+    let(:recommendations_for_client2) {
+      ClientTutorRecommendation.where(client: client2)
     }
 
     it {
@@ -188,6 +214,33 @@ RSpec.describe Tutor::RecommendationsController, type: :controller do
 
     it {
       expect(my_recommendations.first.tutor_achievement).to eq(achievement1)
+    }
+
+    it {
+      expect(recommendations_for_client1.first.status).to eq("reached")
+      expect(recommendations_for_client2.first.status).to eq("in_progress")
+    }
+  end
+
+  describe "Create recommendation with in_progress status" do
+    before {
+      request.env["HTTP_REFERER"] = root_url
+      post :create, :tutor_recommendation => {
+        :content_tutor_recommendations => [content4.id],
+        :tutor_achievement => achievement1.id
+      }
+    }
+
+    let(:recommendations_for_client1) {
+      ClientTutorRecommendation.where(client: client1)
+    }
+    let(:recommendations_for_client2) {
+      ClientTutorRecommendation.where(client: client2)
+    }
+
+    it {
+      expect(recommendations_for_client1.first.status).to eq("in_progress")
+      expect(recommendations_for_client2.first.status).to eq("reached")
     }
   end
 
