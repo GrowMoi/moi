@@ -11,7 +11,8 @@
 
 FactoryGirl.define do
   factory :content_tutor_recommendation do
-    
+    content
+    tutor_recommendation
   end
 
 end

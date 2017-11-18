@@ -30,6 +30,7 @@ needs to be a JSON-encoded string having the following format:
       if is_client?(current_user)
         update_user_test_achievement
         update_user_leaderboard
+        update_recommendations
       end
       render json: {
         result: answerer_result
@@ -157,6 +158,14 @@ needs to be a JSON-encoded string having the following format:
 
     def is_client?(user)
       user.present? && user.cliente?
+    end
+
+    def update_recommendations
+      user_tutors = UserTutor.where(user: current_user)
+      user_tutors.find_each do |user_tutor|
+        tutor = user_tutor.tutor
+        TutorService::RecommendationsUpdater.new(current_user, tutor).update
+      end
     end
 
   end
