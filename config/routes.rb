@@ -63,6 +63,12 @@ Moi::Application.routes.draw do
       end
     end
 
+    resources :tutors, only: [] do
+      collection do
+        get :recommendations
+      end
+    end
+
     namespace :users do
       resource :account,
                 only: [:update]
