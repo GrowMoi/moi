@@ -37,7 +37,7 @@ module Api
         end
         user_contents.concat array_contents
       end
-      user_contents.uniq.delete_if{|e|current_user.already_learnt?(e)}
+      user_contents.uniq.delete_if{|e|current_user.already_learnt?(e) || current_user.already_read?(e)}
     end
 
     def paginate_contents(contents)
