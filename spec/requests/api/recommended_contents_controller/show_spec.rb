@@ -94,8 +94,8 @@ RSpec.describe Api::RecommendedContentsController,
       end
     end
 
-    it "should include content of another kind" do
-      expect_to_see_in_collection(other_content)
+    it "shouldn't include content of another kind" do
+      expect_to_not_see_in_collection(other_content)
     end
   end
 
