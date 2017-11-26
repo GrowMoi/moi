@@ -49,7 +49,6 @@ module TreeService
     def contents_scope
       Content.approved
              .where(
-               kind: kind,
                neuron_id: neuron.grandchildren_neurons.pluck(:id)
              )
     end
