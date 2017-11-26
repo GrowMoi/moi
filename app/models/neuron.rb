@@ -118,7 +118,8 @@ class Neuron < ActiveRecord::Base
     @grandchildren_neurons ||= get_children(self.id)
     if @grandchildren_neurons
       ids = @grandchildren_neurons.pluck(:id)
-      @grandchildren_neurons = get_children(ids)
+      children = get_children(ids)
+      @grandchildren_neurons = children.any? ? children : @grandchildren_neurons
     end
   end
 
