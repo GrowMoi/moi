@@ -12,7 +12,7 @@ class UserDatatableDecorator < UserDecorator
   end
 
   def avatar_and_name
-    link_to avatar + name, path_for(:show)
+    link_to avatar + username, path_for(:show)
   end
 
   private

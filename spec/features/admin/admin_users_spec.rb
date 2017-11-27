@@ -33,14 +33,15 @@ describe "user management" do
   context "with forms" do
     include_context "form features"
 
-    let(:user_attrs) { attributes_for :user }
+    let(:user_attrs) { attributes_for :user, :admin }
     let(:fill_form!) {
       # we need to select role
       select user_attrs.delete(:role),
              from: I18n.t("activerecord.attributes.user.role"),
              visible: false
       # we fill in all other attrs
-      user_attrs.each do |key, value|
+      user_attrs.except(:authorization_key)
+                .each do |key, value|
         label = I18n.t("activerecord.attributes.user.#{key}")
         fill_in label, with: value
       end

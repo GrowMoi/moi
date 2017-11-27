@@ -59,10 +59,10 @@ class User < ActiveRecord::Base
                        uniqueness: { case_sensitive: false,
                                      allow_blank: true }
   validates_format_of :username, with: /\A[a-zA-Z0-9_\.\-]*\z/, multiline: true
-  validates :authorization_key, presence: true, on: :create
+  validates :authorization_key, presence: true, on: :create, if: "cliente?"
 
   begin :callbacks
-    before_save :set_name_if_nil
+    before_validation :skip_password_for_clients
   end
 
   begin :relationships
@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
   end
 
   def to_s
-    name
+    username
   end
 
   def confirmed_at
@@ -124,15 +124,16 @@ class User < ActiveRecord::Base
 
   private
 
-  def set_name_if_nil
-    if name.blank?
-      self.name = username
-    end
-  end
-
   def send_role_changed_email
     if role_changed?
     	UserMailer.notify_role_change(self).deliver_later
+    end
+  end
+
+  def skip_password_for_clients
+    if cliente? && password.blank?
+      self.password = Devise.friendly_token
+      self.password_confirmation = password
     end
   end
 

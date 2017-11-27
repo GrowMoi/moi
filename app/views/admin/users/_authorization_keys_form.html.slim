@@ -1,0 +1,5 @@
+.authorization-keys-in-form
+  - UserAuthorizationKeys.interests.each do |key, value|
+    = image_tag value,
+                data: { key: key },
+                class: "#{'active' if f.object.authorization_key == key.to_s}"

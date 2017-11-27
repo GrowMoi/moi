@@ -46,6 +46,10 @@ class UserDecorator < LittleDecorator
                 class: "label label-default"
   end
 
+  def name
+    record.name.presence || username
+  end
+
   private
 
   def email_hexdigest
