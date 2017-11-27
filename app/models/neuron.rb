@@ -111,16 +111,8 @@ class Neuron < ActiveRecord::Base
   end
 
   def children_neurons
-    @children_neurons ||= get_children(self.id)
-  end
-
-  def grandchildren_neurons
-    @grandchildren_neurons ||= get_children(self.id)
-    if @grandchildren_neurons
-      ids = @grandchildren_neurons.pluck(:id)
-      children = get_children(ids)
-      @grandchildren_neurons = children.any? ? children : @grandchildren_neurons
-    end
+    @children_neurons ||= self.class.where(parent_id: id)
+                                    .order(:position)
   end
 
   def eager_contents!
@@ -179,9 +171,5 @@ class Neuron < ActiveRecord::Base
     if parent.present?
       self.position = parent.children_neurons.maximum(:position).to_i + 1
     end
-  end
-
-  def get_children(ids)
-    self.class.where(parent_id: ids).order(:position)
   end
 end
