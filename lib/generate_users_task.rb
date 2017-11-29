@@ -27,6 +27,7 @@ class GenerateUsersTask
       user.username = username
       user.save!
       @csv_out << [user.username, user.authorization_key, user.name, user.email]
+      puts [user.username, user.authorization_key, user.name, user.email]
     end
     puts "done! open at #{out_uri}"
   end
