@@ -1,3 +1,5 @@
+require "generate_users_task"
+
 namespace :users do
   task set_ages: :environment do
     User.where(age: nil).find_each do |user|
@@ -13,5 +15,10 @@ namespace :users do
       username = "moi-" + user.email.parameterize + rand(1000).to_s
       user.update! username: username
     end
+  end
+
+  desc "usage: rake users:generate_users_from_list LIST_URI=https://goo.gl/azd2Ny"
+  task generate_users_from_list: :environment do
+    GenerateUsersTask.new(ENV["LIST_URI"]).run!
   end
 end
