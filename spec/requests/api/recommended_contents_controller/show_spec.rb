@@ -63,32 +63,6 @@ RSpec.describe Api::RecommendedContentsController,
         expect_to_not_see_in_collection(unapproved_content)
       end
     end
-
-    describe ":with_media" do
-      let!(:content_with_media) {
-        create :content,
-               :approved,
-               :with_media,
-               kind: kind,
-               neuron: child
-      }
-      let!(:content_without_media) {
-        create :content,
-               :approved,
-               kind: kind,
-               neuron: child
-      }
-
-      before { get endpoint }
-
-      it "we only recommend contents with media" do
-        expect_to_see_in_collection(content_with_media)
-      end
-
-      it "doesn't include content without media" do
-        expect_to_not_see_in_collection(content_without_media)
-      end
-    end
   end
 
   describe "kind" do
@@ -118,10 +92,6 @@ RSpec.describe Api::RecommendedContentsController,
       same_kind_contents.each do |content|
         expect_to_see_in_collection(content)
       end
-    end
-
-    it "doesn't include content of another kind" do
-      expect_to_not_see_in_collection(other_content)
     end
   end
 
