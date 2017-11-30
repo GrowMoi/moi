@@ -8,44 +8,100 @@ module Api
     PER_PAGE = 4
 
     expose(:my_recommendations) {
-      ClientTutorRecommendation.where(client: current_user, status: "in_progress");
+      ClientTutorRecommendation.where(client: current_user)
+    }
+
+    expose(:my_recommendations_in_progress) {
+      my_recommendations.where(status: "in_progress").includes(:tutor_recommendation)
+    }
+
+    expose(:my_recommendations_reached) {
+      my_recommendations.where(status: "reached").includes(:tutor_recommendation)
     }
 
     def recommendations
+      if data_format == "contents"
+        build_contents
+      else
+        build_recommendations
+      end
+    end
+
+    def details
+
+      render json: {
+        details: {
+          total_recommendations: my_recommendations.size,
+          recommendations_in_progress: my_recommendations_in_progress.size,
+          recommendations_reached: my_recommendations_reached.size,
+          recommendation_contents_pending: recommended_contents.size
+
+        }
+      },
+      status: :accepted
+    end
+
+    private
+
+    def build_contents
       serialized_contents = ActiveModel::ArraySerializer.new(
         recommended_contents,
         scope: current_user,
         each_serializer: Api::ContentSerializer
       )
-      contents = paginate_contents(serialized_contents)
-      render json: {
-        contents: contents,
-        meta: {
-          total_items: contents.total_count,
-          total_pages: contents.total_pages
-        }
-      }, status: :accepted
+      contents = paginate_array(serialized_contents)
+      send_response(contents, :contents)
     end
 
-    private
+    def build_recommendations
+      serialized_recommendations = ActiveModel::ArraySerializer.new(
+        my_recommendations,
+        scope: current_user,
+        each_serializer: Api::TutorRecommendationSerializer
+      )
+      recommendations = paginate_array(serialized_recommendations)
+      send_response(recommendations, :recommendations)
+    end
+
+    def send_response(data, key)
+      resp = {}
+      resp[key] = data
+      resp[:meta] = {
+        total_items: data.total_count,
+        total_pages: data.total_pages,
+        total_in_progress: my_recommendations_in_progress.count,
+        total_reached: my_recommendations_reached.count
+      }
+      render json: resp,
+      status: :accepted
+    end
 
     def recommended_contents
       user_contents = []
-      my_recommendations.find_each do |r|
-        array_contents = r.tutor_recommendation.content_tutor_recommendations.map do |ctr|
-          ctr.content
-        end
+      my_recommendations_in_progress.find_each do |r|
+        array_contents = ContentTutorRecommendation.includes(:content)
+                                                   .where(tutor_recommendation: r.tutor_recommendation)
+                                                   .map(&:content)
         user_contents.concat array_contents
       end
       user_contents.uniq.delete_if{|e|current_user.already_learnt?(e) || current_user.already_read?(e)}
     end
 
-    def paginate_contents(contents)
-      array_contents = JSON.parse(contents.to_json)
-      Kaminari.paginate_array(array_contents)
+    def paginate_array(items)
+      array_items = JSON.parse(items.to_json)
+      Kaminari.paginate_array(array_items)
               .page(params[:page] || PAGE)
               .per(params[:per_page] || PER_PAGE)
 
+    end
+
+    def data_format
+      default_format = "recommendations"
+      if params[:data_format] == "contents"
+        "contents"
+      else
+        default_format
+      end
     end
 
   end

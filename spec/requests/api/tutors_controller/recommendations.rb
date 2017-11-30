@@ -76,30 +76,105 @@ RSpec.describe Api::TutorsController,
     }
 
     before { login_as current_user }
-    before { get endpoint }
-    subject {
-      JSON.parse(response.body)
-    }
 
-    it "accepts get_recommendations request" do
-      expect(response).to be_success
+    describe "when format = 'contents'" do
+      before { get endpoint, data_format: "contents" }
+      subject {
+        JSON.parse(response.body)
+      }
+
+      it "accepts get_recommendations request" do
+        expect(response).to be_success
+      end
+
+      it "response body should have 'contents' attribute" do
+        expect(subject).to include("contents")
+      end
+
+      it "contents should have size = 3, only items learnt" do
+        expect(subject["contents"].size).to eq(3)
+      end
+
+      it {
+        expect(subject["contents"].first).to include("id")
+        expect(subject["contents"].first).to include("title")
+      }
+
+      it "meta should contain paginate options" do
+        expect(subject["meta"]["total_items"]).to eq(3)
+      end
     end
 
-    it "response body should have 'contents' attribute" do
-      expect(subject).to include("contents")
+    describe "when format = 'recommendations'" do
+      before { get endpoint, data_format: "recommendations" }
+      subject {
+        JSON.parse(response.body)
+      }
+
+      it "accepts request" do
+        expect(response).to be_success
+      end
+
+      it "response body should have 'recommendations' attribute" do
+        expect(subject).to include("recommendations")
+      end
+
+      it {
+        expect(subject["recommendations"].size).to eq(2)
+      }
+
+      it {
+        expect(subject["recommendations"].first).to include("id")
+        expect(subject["recommendations"].first).to include("status")
+        expect(subject["recommendations"].first["status"]).to eq("in_progress" || "reached")
+        expect(subject["recommendations"].first).to include("tutor")
+        expect(subject["recommendations"].first["tutor"]).to include("id")
+        expect(subject["recommendations"].first).to include("achievement")
+      }
+
+      it "meta should contain paginate options" do
+        expect(subject["meta"]["total_items"]).to eq(2)
+        expect(subject["meta"]["total_in_progress"]).to eq(2)
+        expect(subject["meta"]["total_reached"]).to eq(0)
+      end
+
     end
 
-    it "contents should have size = 3, only items learnt" do
-      expect(subject["contents"].size).to eq(3)
+    describe "without format" do
+      before { get endpoint}
+      subject {
+        JSON.parse(response.body)
+      }
+
+      it {
+        expect(subject).to include("recommendations")
+      }
+
+      it {
+        expect(subject["recommendations"].size).to eq(2)
+      }
     end
 
-    it {
-      expect(subject["contents"].first).to include("id")
-      expect(subject["contents"].first).to include("title")
-    }
+    describe "details" do
+      let(:details_endpoint) {
+        "/api/tutors/details"
+      }
+      before { get details_endpoint}
+      subject {
+        JSON.parse(response.body)
+      }
 
-    it "meta should contain paginate options" do
-      expect(subject["meta"]["total_items"]).to eq(3)
+      it {
+        expect(subject).to include("details")
+      }
+
+      it {
+        expect(subject["details"]["total_recommendations"]).to eq(2)
+        expect(subject["details"]["recommendations_in_progress"]).to eq(2)
+        expect(subject["details"]["recommendations_reached"]).to eq(0)
+        expect(subject["details"]["recommendation_contents_pending"]).to eq(3)
+      }
     end
+
   end
 end

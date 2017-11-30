@@ -16,17 +16,24 @@ module TutorService
       unless recommendation_for_client.present?
         recommendation_for_client = ClientTutorRecommendation.new(
           client: @client,
-          tutor_recommendation: @recommendation
+          tutor_recommendation: @recommendation,
+          status: "in_progress"
         )
+        recommendation_for_client.save
       end
 
       client_content_learnings = ContentLearning.where(user: @client, content_id: @content_ids)
-      if client_content_learnings.size == @content_ids.size
-        recommendation_for_client.status = :reached
-      else
-        recommendation_for_client.status = :in_progress
+      recomendation_reached = nil
+
+      if client_content_learnings.size == @content_ids.size &&
+        recommendation_for_client.status == "in_progress"
+
+        recommendation_for_client.status = "reached"
+        recommendation_for_client.save
+        recomendation_reached = recommendation_for_client
       end
-      recommendation_for_client.save
+
+      recomendation_reached
     end
 
   end

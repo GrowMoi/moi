@@ -124,6 +124,10 @@ RSpec.describe Api::LearnController,
       post endpoint, params
     }
 
+    subject {
+      JSON.parse(response.body)
+    }
+
     let(:recommendations_current_user) {
       ClientTutorRecommendation.where(client: current_user)
     }
@@ -131,6 +135,14 @@ RSpec.describe Api::LearnController,
     it "status" do
       expect(recommendations_current_user.first.status).to eq("reached")
     end
+
+    it {
+      expect(subject["recommendations"].first).to include("id")
+    }
+
+    it {
+      expect(subject["recommendations"].first["status"]).to eq("reached")
+    }
 
   end
 

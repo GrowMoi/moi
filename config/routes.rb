@@ -66,6 +66,7 @@ Moi::Application.routes.draw do
     resources :tutors, only: [] do
       collection do
         get :recommendations
+        get :details
       end
     end
 

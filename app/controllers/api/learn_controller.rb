@@ -27,13 +27,21 @@ needs to be a JSON-encoded string having the following format:
     }
     def create
       answerer_result = answerer.result
+      serialized_recommendations = []
+
       if is_client?(current_user)
         update_user_test_achievement
         update_user_leaderboard
-        update_recommendations
+        serialized_recommendations = ActiveModel::ArraySerializer.new(
+          update_recommendations,
+          scope: current_user,
+          each_serializer: Api::TutorRecommendationSerializer
+        )
       end
+
       render json: {
-        result: answerer_result
+        result: answerer_result,
+        recommendations: serialized_recommendations
       }
     end
 
@@ -162,10 +170,13 @@ needs to be a JSON-encoded string having the following format:
 
     def update_recommendations
       user_tutors = UserTutor.where(user: current_user)
+      recommendations = []
       user_tutors.find_each do |user_tutor|
         tutor = user_tutor.tutor
-        TutorService::RecommendationsUpdater.new(current_user, tutor).update
+        recommendations_updated = TutorService::RecommendationsUpdater.new(current_user, tutor).update
+        recommendations.concat recommendations_updated
       end
+      recommendations
     end
 
   end
