@@ -115,9 +115,9 @@ class Neuron < ActiveRecord::Base
   end
 
   def children_or_parent_neurons
-    @neurons = get_children(self.id)
+    @neurons = get_public_children(self.id)
     unless @neurons.any?
-      @neurons = get_children(self.parent.parent_id)
+      @neurons = get_public_children(self.parent.parent_id)
     end
     @neurons
   end
@@ -182,5 +182,9 @@ class Neuron < ActiveRecord::Base
 
   def get_children(ids)
     self.class.where(parent_id: ids).order(:position)
+  end
+
+  def get_public_children(ids)
+    self.class.where(parent_id: ids, is_public: true).order(:position)
   end
 end
