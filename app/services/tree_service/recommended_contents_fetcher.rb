@@ -49,7 +49,7 @@ module TreeService
     def contents_scope
       Content.approved
              .where(
-               neuron_id: neuron.children_neurons.pluck(:id)
+               neuron_id: neuron.children_or_parent_neurons.pluck(:id)
              )
     end
 
