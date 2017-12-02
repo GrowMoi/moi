@@ -4,6 +4,7 @@ class CreateAdminAchievements < ActiveRecord::Migration
       t.string :name, null: false
       t.text :description
       t.string :image
+      t.string :category
       t.json :settings
       t.timestamps null: false
     end

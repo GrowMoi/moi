@@ -6,6 +6,7 @@
 #  name        :string           not null
 #  description :text
 #  image       :string
+#  category    :string
 #  settings    :json
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

@@ -119,8 +119,10 @@ class User < ActiveRecord::Base
     has_many :client_tutor_recommendations,
              class_name: "ClientTutorRecommendation",
              foreign_key: "client_id",
+    has_many :user_achievements,
              dependent: :destroy
   end
+
 
   def to_s
     username
@@ -132,6 +134,37 @@ class User < ActiveRecord::Base
 
   def confirmation_sent_at
     Time.utc(1999).to_date
+  end
+
+  ##
+  # return a number successful tests
+  def successful_tests
+    count = 0
+    self.learning_tests.each do |test|
+      if test.is_successful_test?
+        count = count + 1
+      end
+    end
+    count
+  end
+
+  ##
+  # verify if the user has a number continuous
+  # of successful test accordly a number
+  def continuous_successful_tests(number)
+    count = 0
+    successful = false
+    self.learning_tests.each do |test|
+      if test.is_successful_test?
+        count = count + 1
+        if count >= number
+          successful = true
+        end
+      else
+        count = 0
+      end
+    end
+    successful
   end
 
   private
