@@ -50,7 +50,10 @@ module Api
         each_serializer: Api::ContentSerializer
       )
       contents = paginate_array(serialized_contents)
-      send_response(contents, :contents)
+      resp = {
+        contents: contents
+      }
+      send_response(contents, resp)
     end
 
     def build_recommendations
@@ -59,19 +62,24 @@ module Api
         scope: current_user,
         each_serializer: Api::TutorRecommendationSerializer
       )
+      #binding.pry
       recommendations = paginate_array(serialized_recommendations)
-      send_response(recommendations, :recommendations)
+
+      resp = {
+        recommendations: recommendations,
+        meta: {
+          total_in_progress: my_recommendations_in_progress.count,
+          total_reached: my_recommendations_reached.count
+        }
+      }
+
+      send_response(recommendations, resp)
     end
 
-    def send_response(data, key)
-      resp = {}
-      resp[key] = data
-      resp[:meta] = {
-        total_items: data.total_count,
-        total_pages: data.total_pages,
-        total_in_progress: my_recommendations_in_progress.count,
-        total_reached: my_recommendations_reached.count
-      }
+    def send_response(data, resp)
+      resp[:meta] = resp[:meta] || {}
+      resp[:meta][:total_items] = data.total_count
+      resp[:meta][:total_pages] = data.total_pages
       render json: resp,
       status: :accepted
     end
