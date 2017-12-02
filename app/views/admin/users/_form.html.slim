@@ -2,16 +2,13 @@
   = render "admin/shared/form_errors", resource: user
 
   .form-group
-    = f.label :name
-    = f.text_field :name, class: "form-control"
-
-  .form-group
     = f.label :username
     = f.text_field :username, class: "form-control"
 
-  .form-group
-    = f.label :authorization_key
-    = f.text_field :authorization_key, class: "form-control"
+  .content-for-admins class="#{'hidden' if f.object.cliente?}"
+    .form-group
+      = f.label :name
+      = f.text_field :name, class: "form-control"
 
   .form-group
     = f.label :email
@@ -24,13 +21,20 @@
   - if current_user == user
     h6.text-danger = t("warning.messages.change_rol")
 
-  .form-group
-    = f.label :password
-    = f.password_field :password, class: "form-control"
+  .content-for-admins class="#{'hidden' if f.object.cliente?}"
+    .form-group
+      = f.label :password
+      = f.password_field :password, class: "form-control"
 
-  .form-group
-    = f.label :password_confirmation
-    = f.password_field :password_confirmation, class: "form-control"
+    .form-group
+      = f.label :password_confirmation
+      = f.password_field :password_confirmation, class: "form-control"
+
+  .content-for-clients class="#{'hidden' unless f.object.cliente?}"
+    .form-group
+      = f.label :authorization_key
+      = f.hidden_field :authorization_key, class: "form-control"
+      = render "admin/users/authorization_keys_form", f: f
 
   .actions
     = f.submit class: "btn btn-primary", data: {disable_with: t("views.submitting")}

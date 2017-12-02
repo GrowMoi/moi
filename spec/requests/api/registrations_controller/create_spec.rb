@@ -17,7 +17,7 @@ RSpec.describe Api::RegistrationsController,
       parsed_response = JSON.parse(response.body)
       user = parsed_response.fetch("data")
       expect(user["username"]).to eq(params[:username])
-      expect(user["name"]).to eq(params[:username])
+      expect(user["name"]).to be_nil
       expect(user["age"]).to eq(14)
       expect(user["authorization_key"]).to eq(params[:authorization_key])
     end

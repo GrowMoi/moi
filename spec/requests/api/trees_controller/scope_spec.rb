@@ -71,7 +71,7 @@ RSpec.describe Api::TreesController,
                content: root.contents.first
       }
 
-      before { get endpoint }
+      before { get endpoint, response.headers }
 
       it "includes visible neuron" do
         expect_to_see_in_collection(a)
@@ -104,7 +104,7 @@ RSpec.describe Api::TreesController,
 
       before {
         root_neuron root
-        get endpoint
+        get endpoint, response.headers
       }
 
       let(:neurons) {
