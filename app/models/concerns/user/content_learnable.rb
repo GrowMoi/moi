@@ -23,18 +23,32 @@ class User < ActiveRecord::Base
     end
 
     def contents_learnt_by_branches
-      branches = Neuron.neurons_by_branches
-      all_contents = Content.approved.all.map(&:id)
-      user_contents = self.content_learnings.map(&:content_id)
       result = []
+      branches = Neuron.neurons_by_branches
+      all_contents = Content.approved.all
+      user_contents = self
+                      .content_learnings
+                      .map(&:content_id)
       branches.map do |branch|
-        learnt_contents = Hash.new
-        learnt_contents['branch'] = branch['title']
-        contents_by_branch = Content.approved.where(neuron_id: branch['neuron_ids']).map(&:id)
-        learnt_contents['learnt_content_ids'] = contents_by_branch & user_contents
-        result << learnt_contents
+        object = Hash.new
+        object['branch'] = branch['title']
+        contents_by_branch = find_contents(
+                              branch['neurons_ids'],
+                              all_contents
+                            ).map(&:id)
+        object['learnt_contents_ids'] = contents_by_branch & user_contents
+        result << object
       end
       result
+    end
+
+    private
+
+    def find_contents(contents, all_contents)
+      result = all_contents.select do |c|
+        contents.include?(c.neuron_id)
+      end
+      return result
     end
   end
 end

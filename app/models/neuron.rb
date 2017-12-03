@@ -147,7 +147,7 @@ class Neuron < ActiveRecord::Base
             .flatten
             .map(&:id)
       #add origin branch id to branch
-      branch['neuron_ids'] = ids << neuron_branch.id
+      branch['neurons_ids'] = ids << neuron_branch.id
       result << branch
     end
     result
@@ -217,9 +217,9 @@ class Neuron < ActiveRecord::Base
     children_array
   end
 
-  def self.find_children(neuron_branch, all_neurons)
-    children = all_neurons.select do |neuron|
-      neuron.parent_id != nil ? neuron.parent_id == neuron_branch.id : false
+  def self.find_children(neuron, all_neurons)
+    children = all_neurons.select do |n|
+      n.parent_id != nil ? n.parent_id == neuron.id : false
     end
     return children
   end
