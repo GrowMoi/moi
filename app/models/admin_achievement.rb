@@ -28,7 +28,7 @@ class AdminAchievement < ActiveRecord::Base
 
   mount_uploader :image, ContentMediaUploader
 
-  begin validations
+  begin :validations
     validates :name, :category, :settings,
               presence: true
     validates :category,
@@ -57,8 +57,8 @@ class AdminAchievement < ActiveRecord::Base
   ##
   # user learnt all contest public/approved
   def learnt_all_contents(user)
-    total_contents = Content.approved.all
-    user.content_learnings == total_contents
+    total_contents = Content.approved.all.count
+    user.content_learnings.count == total_contents
   end
 
   ##

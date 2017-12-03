@@ -16,7 +16,6 @@
 
 class Neuron < ActiveRecord::Base
   include Relationable
-  include Branches
 
   has_paper_trail ignore: [:created_at, :id, :pending_contents_count]
 
@@ -134,6 +133,26 @@ class Neuron < ActiveRecord::Base
     self.pending_contents_count = contents.approved(false).count
   end
 
+  ##
+  # list of neuron ids by branches
+  def self.neurons_by_branches
+    all_neurons = self.where(is_public: true, active: true)
+    parent = self.where(parent_id: nil).first
+    branches = find_children(parent, all_neurons)
+    result = []
+    branches.each do |neuron_branch|
+      branch = Hash.new
+      branch['title']= neuron_branch.title
+      ids = recursive_children([], neuron_branch, all_neurons)
+            .flatten
+            .map(&:id)
+      #add origin branch id to branch
+      branch['neuron_ids'] = ids << neuron_branch.id
+      result << branch
+    end
+    result
+  end
+
   private
 
   ##
@@ -187,5 +206,21 @@ class Neuron < ActiveRecord::Base
 
   def get_public_children(ids)
     self.class.where(parent_id: ids, is_public: true).order(:position)
+  end
+
+  def self.recursive_children(children_array = [], neuron, all_neurons)
+    children = self.find_children(neuron, all_neurons)
+    children_array << children
+    children.each do |child|
+      self.recursive_children(children_array, child, all_neurons)
+    end
+    children_array
+  end
+
+  def self.find_children(neuron_branch, all_neurons)
+    children = all_neurons.select do |neuron|
+      neuron.parent_id != nil ? neuron.parent_id == neuron_branch.id : false
+    end
+    return children
   end
 end
