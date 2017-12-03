@@ -41,13 +41,15 @@ ActiveRecord::Schema.define(version: 20171128011224) do
   add_index "client_tutor_recommendations", ["tutor_recommendation_id"], name: "index_client_tutor_recommendations_on_tutor_recommendation_id", using: :btree
 
   create_table "admin_achievements", force: :cascade do |t|
-    t.string   "name",        null: false
+    t.string   "name",                       null: false
     t.text     "description"
     t.string   "image"
     t.string   "category"
+    t.integer  "number"
+    t.boolean  "active",      default: true
     t.json     "settings"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "content_favorites", force: :cascade do |t|

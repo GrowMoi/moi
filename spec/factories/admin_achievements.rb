@@ -7,6 +7,8 @@
 #  description :text
 #  image       :string
 #  category    :string
+#  number      :integer
+#  active      :boolean          default(TRUE)
 #  settings    :json
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

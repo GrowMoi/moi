@@ -7,6 +7,8 @@
 #  description :text
 #  image       :string
 #  category    :string
+#  number      :integer
+#  active      :boolean          default(TRUE)
 #  settings    :json
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -31,10 +33,10 @@ class AdminAchievement < ActiveRecord::Base
   begin :validations
     validates :name, :category, :settings,
               presence: true
+    validates :number, uniqueness: true
     validates :category,
               inclusion: { in: CATEGORIES }
   end
-
 
   ##
   # user learnt first 4 contents
@@ -73,6 +75,21 @@ class AdminAchievement < ActiveRecord::Base
       i += 1
     end
     runLoop
+  end
+
+  ##
+  # user learnt all contest public/approved
+  def learnt_contents_in_branch(user, key)
+    branches = user.contents_learnt_by_branches
+    result = find_branch('Lenguaje')
+  end
+
+  private
+
+  def find_branch(key, branches)
+    branches.select do |branch|
+      branch.title.downcase == key.downcase
+    end
   end
 
 end
