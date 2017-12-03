@@ -16,6 +16,7 @@
 
 class Neuron < ActiveRecord::Base
   include Relationable
+  include Branches
 
   has_paper_trail ignore: [:created_at, :id, :pending_contents_count]
 
