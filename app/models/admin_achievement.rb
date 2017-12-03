@@ -54,4 +54,25 @@ class AdminAchievement < ActiveRecord::Base
     user.continuous_successful_tests(4)
   end
 
+  ##
+  # user learnt all contest public/approved
+  def learnt_all_contents(user)
+    total_contents = Content.approved.all
+    user.content_learnings == total_contents
+  end
+
+  ##
+  # user learnt almost a content by public neuron
+  def learnt_a_content_in_each_public_neuron(user)
+    neurons = Neuron.where(is_public: true, active: true).sort_by(&:position)
+    runLoop = true
+    i = 0
+    until runLoop == false
+      neuron = public_neurons[i]
+      runLoop = user.already_learnt_any?(neuron.contents)
+      i += 1
+    end
+    runLoop
+  end
+
 end
