@@ -15,7 +15,7 @@
 #
 
 class AdminAchievement < ActiveRecord::Base
-  include UserAchievement
+  include AssignAdminAchievement
 
   CATEGORIES = [
     'content',

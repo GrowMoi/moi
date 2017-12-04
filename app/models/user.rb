@@ -121,9 +121,8 @@ class User < ActiveRecord::Base
              foreign_key: "client_id",
     has_many :user_achievements,
              dependent: :destroy
-    has_many :admin_achievements,
-              dependent: :destroy,
-              class_name: "UserAdminAchievement"
+    has_many :user_admin_achievements,
+              dependent: :destroy
   end
 
 

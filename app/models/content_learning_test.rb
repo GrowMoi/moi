@@ -24,8 +24,10 @@ class ContentLearningTest < ActiveRecord::Base
   }
 
   def is_successful_test?
-    successful = self.answers.any? { |answer| answer['correct'] == false }
-    !successful
+    successful = false
+    if self.answers
+      successful = !(self.answers.any? { |answer| answer['correct'] == false })
+    end
   end
 
 end

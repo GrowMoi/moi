@@ -25,17 +25,17 @@ achievements_params = [
     category: "content",
     settings: {
       quantity: 20,
-      branch: "Arte"
+      branch: "Artes"
     },
     number: 3
   },
   {
-    name: "Contenidos aprendidos rama Contar",
-    description: "Han sido aprendidos 20 contenidos de la rama Contar",
+    name: "Contenidos aprendidos rama Aprender",
+    description: "Han sido aprendidos 20 contenidos de la rama Aprender",
     category: "content",
     settings: {
       quantity: 20,
-      branch: "Contar"
+      branch: "Aprender"
     },
     number: 4
   },
@@ -110,5 +110,24 @@ namespace :achievements do
         puts "created: #{task_params[:name]}"
       end
     end
+  end
+
+  task set_user_achievements: :environment do
+    clients = User.where(role: :cliente)
+    achievements_db = AdminAchievement.all
+    clients.each do |client|
+      my_achievements = client.user_admin_achievements
+      no_achievements = achievements_db
+                        .reject{ |x| my_achievements.include? x }
+      assign_achievement(no_achievements, client)
+    end
+  end
+end
+
+
+def assign_achievement(achievements, user)
+  achievements.each do |achievement|
+    achievement.assign_to_user(user)
+    puts "user: #{user.name}, #{user.id}"
   end
 end
