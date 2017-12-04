@@ -1,37 +1,28 @@
 class AdminAchievement < ActiveRecord::Base
   module AssignAdminAchievement
 
-    def assign_to_user(user)
-      # unless user.user_admin_achievements.map(&:admin_achievement_id).include?(self.id)
-        if can_recive_achievement?(self, user)
-          UserAdminAchievement.create!(user_id: user.id, admin_achievement_id: self.id)
-          puts "user: #{user.name}, #{user.id}, achievement assign: #{self.name}"
-        end
-      # end
-    end
-
-    private
-
-    def can_recive_achievement?(achievement, user)
-      case achievement.number
+    def user_win_achievement?(user)
+      case self.number
       when 1
-        user_learnt_n_content(achievement, user)
+        user_learnt_n_content(self, user)
       when 2..5
-        learnt_contents_in_branch(achievement, user)
+        learnt_contents_in_branch(self, user)
       when 6
         learnt_all_contents(user)
       when 7
         learnt_a_content_in_each_public_neuron(user)
       when 8
-        successful_continous_tests(achievement, user)
+        successful_continous_tests(self, user)
       when 9
-        tests_given(achievement, user)
+        tests_given(self, user)
       # when 10
       #   learnt_all_contents(user)
       else
         puts "no achievement found"
       end
     end
+
+    private
 
     ##
     # user learnt n contents
