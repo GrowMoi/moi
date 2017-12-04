@@ -112,8 +112,10 @@ namespace :achievements do
     end
   end
 
+  #assign achievements just for active users
   task set_user_achievements: :environment do
-    clients = User.where(role: :cliente)
+    clients_ids = ContentLearning.all.map(&:user_id).uniq.sort
+    clients = User.where(id: clients_ids)
     achievements_db = AdminAchievement.all
     clients.each do |client|
       my_achievements = client.user_admin_achievements
@@ -128,6 +130,5 @@ end
 def assign_achievement(achievements, user)
   achievements.each do |achievement|
     achievement.assign_to_user(user)
-    puts "user: #{user.name}, #{user.id}"
   end
 end

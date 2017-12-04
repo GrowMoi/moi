@@ -5,6 +5,7 @@ class AdminAchievement < ActiveRecord::Base
       # unless user.user_admin_achievements.map(&:admin_achievement_id).include?(self.id)
         if can_recive_achievement?(self, user)
           UserAdminAchievement.create!(user_id: user.id, admin_achievement_id: self.id)
+          puts "user: #{user.name}, #{user.id}, achievement assign: #{self.name}"
         end
       # end
     end
