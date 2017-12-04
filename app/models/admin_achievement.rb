@@ -15,6 +15,7 @@
 #
 
 class AdminAchievement < ActiveRecord::Base
+  include UserAchievement
 
   CATEGORIES = [
     'content',
@@ -30,66 +31,14 @@ class AdminAchievement < ActiveRecord::Base
 
   mount_uploader :image, ContentMediaUploader
 
+  has_many :user_admin_achievements
+
   begin :validations
     validates :name, :category, :settings,
               presence: true
     validates :number, uniqueness: true
     validates :category,
               inclusion: { in: CATEGORIES }
-  end
-
-  ##
-  # user learnt first 4 contents
-  def learnt_four_content(user)
-    user.content_learnings.count >= 4
-  end
-
-  ##
-  # user gave 50 tests
-  def fifty_tests_given(user)
-    user.learning_tests.count >= 50
-  end
-
-  ##
-  # user gave 4 tests without errors
-  def four_successful_tests(user)
-    user.continuous_successful_tests(4)
-  end
-
-  ##
-  # user learnt all contest public/approved
-  def learnt_all_contents(user)
-    total_contents = Content.approved.all.count
-    user.content_learnings.count == total_contents
-  end
-
-  ##
-  # user learnt almost a content by public neuron
-  def learnt_a_content_in_each_public_neuron(user)
-    neurons = Neuron.where(is_public: true, active: true).sort_by(&:position)
-    runLoop = true
-    i = 0
-    until runLoop == false
-      neuron = public_neurons[i]
-      runLoop = user.already_learnt_any?(neuron.contents)
-      i += 1
-    end
-    runLoop
-  end
-
-  ##
-  # user learnt all contest public/approved
-  def learnt_contents_in_branch(user, key)
-    branches = user.contents_learnt_by_branches
-    result = find_branch('Lenguaje')
-  end
-
-  private
-
-  def find_branch(key, branches)
-    branches.select do |branch|
-      branch.title.downcase == key.downcase
-    end
   end
 
 end

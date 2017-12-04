@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171128011224) do
+ActiveRecord::Schema.define(version: 20171203223125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -408,6 +408,17 @@ ActiveRecord::Schema.define(version: 20171128011224) do
 
   add_index "user_achievements", ["achievement_id"], name: "index_user_achievements_on_achievement_id", using: :btree
   add_index "user_achievements", ["user_id"], name: "index_user_achievements_on_user_id", using: :btree
+
+  create_table "user_admin_achievements", force: :cascade do |t|
+    t.integer  "user_id",                              null: false
+    t.integer  "admin_achievement_id",                 null: false
+    t.boolean  "active",               default: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "user_admin_achievements", ["admin_achievement_id"], name: "index_user_admin_achievements_on_admin_achievement_id", using: :btree
+  add_index "user_admin_achievements", ["user_id"], name: "index_user_admin_achievements_on_user_id", using: :btree
 
   create_table "user_content_preferences", force: :cascade do |t|
     t.integer  "user_id",                null: false
