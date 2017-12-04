@@ -61,6 +61,8 @@ class Content < ActiveRecord::Base
     has_many :reading_times,
              class_name: "ContentReadingTime",
              dependent: :destroy
+    has_many :content_tutor_recommendation,
+             dependent: :destroy
   end
 
   begin :nested_attributes

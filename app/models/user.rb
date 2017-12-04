@@ -108,6 +108,18 @@ class User < ActiveRecord::Base
              through: :content_favorites
     has_many :read_notifications,
              dependent: :destroy
+    has_many :tutor_achievements,
+             class_name: "TutorAchievement",
+             foreign_key: "tutor_id",
+             dependent: :destroy
+    has_many :tutor_recommendations,
+             class_name: "TutorRecommendation",
+             foreign_key: "tutor_id",
+             dependent: :destroy
+    has_many :client_tutor_recommendations,
+             class_name: "ClientTutorRecommendation",
+             foreign_key: "client_id",
+             dependent: :destroy
   end
 
   def to_s

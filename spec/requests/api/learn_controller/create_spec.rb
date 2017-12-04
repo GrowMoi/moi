@@ -7,7 +7,7 @@ RSpec.describe Api::LearnController,
            user: current_user
   }
   let(:current_user) {
-    create :user
+    create :user, role: :cliente
   }
 
   let(:endpoint) {
@@ -70,6 +70,80 @@ RSpec.describe Api::LearnController,
         }.count
       ).to eq(3)
     end
+  end
+
+  describe "updates recommendation" do
+    let(:custom_content1) {
+      create :content,
+             title: "content 1",
+             description: "description 1",
+             approved: true
+    }
+
+    let(:custom_content2) {
+      create :content,
+             title: "content 2",
+             description: "description 2",
+             approved: true
+    }
+
+    let(:tutor) {
+      create :user, role: :tutor
+    }
+
+    before {
+      create :user_tutor,
+        user: current_user,
+        tutor: tutor
+    }
+
+    let(:recommendation) {
+      create :tutor_recommendation,
+             tutor: tutor
+    }
+
+    before {
+      create :content_tutor_recommendation,
+        content: custom_content1,
+        tutor_recommendation: recommendation
+      create :content_tutor_recommendation,
+        content: custom_content2,
+        tutor_recommendation: recommendation
+    }
+
+    before {
+      create :content_learning,
+        user: current_user,
+        content: custom_content1
+      create :content_learning,
+        user: current_user,
+        content: custom_content2
+    }
+
+    before {
+      post endpoint, params
+    }
+
+    subject {
+      JSON.parse(response.body)
+    }
+
+    let(:recommendations_current_user) {
+      ClientTutorRecommendation.where(client: current_user)
+    }
+
+    it "status" do
+      expect(recommendations_current_user.first.status).to eq("reached")
+    end
+
+    it {
+      expect(subject["recommendations"].first).to include("id")
+    }
+
+    it {
+      expect(subject["recommendations"].first["status"]).to eq("reached")
+    }
+
   end
 
   describe "already answered test" do

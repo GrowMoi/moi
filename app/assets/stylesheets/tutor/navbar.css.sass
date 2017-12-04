@@ -8,6 +8,7 @@ $base-color-green: #77BF5D
 $base-color-yellow: #D6B34E
 $base-color-red: #F0755C
 $base-color-purple: #DA4694
+$base-color-dark-green: #1B864A
 
 =navbar-border-bottom($custom-color)
   border-bottom: 0.5rem solid $custom-color
@@ -29,7 +30,7 @@ $base-color-purple: #DA4694
 
 .navbar-tutor-item-styles
   li
-    width: $bucket-width
+    min-width: $bucket-width
     display: flex
     position: relative
 
@@ -78,6 +79,8 @@ $base-color-purple: #DA4694
       +navbar-border-bottom($base-color-yellow)
     .navbar-link-analysis
       +navbar-border-bottom($base-color-red)
+    .navbar-link-recommendations
+      +navbar-border-bottom($base-color-dark-green)
 
     .item-moi
       +navbar-item-arrow($base-color-blue)
@@ -87,6 +90,8 @@ $base-color-purple: #DA4694
       +navbar-item-arrow($base-color-yellow)
     .item-analysis
       +navbar-item-arrow($base-color-red)
+    .item-recommendations
+      +navbar-item-arrow($base-color-dark-green)
 
 
   .navbar-tutor-last-item

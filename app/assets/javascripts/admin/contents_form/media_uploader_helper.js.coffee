@@ -14,7 +14,7 @@ $(document).on "click", ".content-media-uploader", (e) ->
                    target: "_blank",
                    html: $("<img />", src: img)
       $preview.append(e.target.files[0].name)
-      $this.nextAll(".content-media-name-on-form").html $preview
+      $this.nextAll(".content-media-name-on-form").html($preview).trigger('content_media_appended', $preview)
 
     reader.readAsDataURL(e.target.files[0])
     $input.off "change"

@@ -1,5 +1,5 @@
 class ContentSearch < Searchlight::Search
-  search_on Content.all
+  search_on Content.where(approved: true)
   searches :q
 
   def search_q

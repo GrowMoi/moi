@@ -252,6 +252,7 @@
         analisys: "Análisis"
         tutor: "Tutor"
         logout: "Cerrar sesión"
+        recommendations: "Recomendaciones"
       report:
         title: 'Social Learning'
         sub_title: 'Estimado tutor, a continuación el reporte solicitado.'
@@ -260,6 +261,21 @@
         analytics_chart: 'Análisis'
         bar_chart: 'Contenidos Aprendidos'
         bubble_chart: 'Tiempo promedio de lectura (desde el 20 de octubre del 2017)'
+      recommendations:
+        achievement_request:
+          created: "Se ha creado una nueva recompensa."
+        recommendation_request:
+          created: "Se ha creado una nueva recomendación de contenidos para los alumnos del tutor %{name}"
+        form_new_achievement:
+          send: "Guardar Logro"
+          attach_image: ""
+        form_new:
+          contents_label: "Contenidos a recomendar"
+          contents_input_info: "Elija los contenidos que quiera recomendar."
+          achievement_label: "Recompensa"
+          achievement_input_info: "Establezca una recompensa que recibirá el o los usuarios al completar los contenidos recomendados."
+          send: "Enviar Recomendaciones"
+          new_achievement:  " Agregar una nueva recompensa"
 
   date:
     formats:
