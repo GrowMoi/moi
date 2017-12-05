@@ -15,8 +15,6 @@ class AdminAchievement < ActiveRecord::Base
         successful_continous_tests(self, user)
       when 9
         tests_given(self, user)
-      # when 10
-      #   learnt_all_contents(user)
       else
         puts "no achievement found"
       end

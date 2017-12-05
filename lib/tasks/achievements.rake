@@ -88,15 +88,6 @@ achievements_params = [
       continuous: false
     },
     number: 9
-  },
-  {
-    name: "Tiempo aprender contenidos",
-    description: "Tiempo hasta el último contenido aprendido",
-    category: "time",
-    settings: {
-      time: "any"
-    },
-    number: 10
   }
 ]
 
@@ -131,7 +122,7 @@ def assign_achievement(achievements, user)
   achievements.each do |achievement|
     if achievement.user_win_achievement?(user)
       UserAdminAchievement.create!(user_id: user.id, admin_achievement_id: achievement.id)
-      puts "user: #{user.name}, #{user.id}, achievement assign: #{achievement.name}"
+      puts "user: #{user.name}, id: #{user.id}, achievement assign: #{achievement.name}"
     end
   end
 end
