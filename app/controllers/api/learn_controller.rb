@@ -30,7 +30,7 @@ needs to be a JSON-encoded string having the following format:
       serialized_recommendations = []
 
       if is_client?(current_user)
-        update_user_test_achievement
+        # update_user_test_achievement
         update_user_leaderboard
         serialized_recommendations = ActiveModel::ArraySerializer.new(
           update_recommendations,
@@ -41,7 +41,8 @@ needs to be a JSON-encoded string having the following format:
 
       render json: {
         result: answerer_result,
-        recommendations: serialized_recommendations
+        recommendations: serialized_recommendations,
+        achievements: current_user.assign_achievements
       }
     end
 

@@ -42,6 +42,7 @@ class User < ActiveRecord::Base
   include UserContentTasks
   include UserContentFavorites
   include UserReadNotifications
+  include UserAchievements
 
   mount_base64_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
 
@@ -118,11 +119,14 @@ class User < ActiveRecord::Base
              dependent: :destroy
     has_many :client_tutor_recommendations,
              class_name: "ClientTutorRecommendation",
-             foreign_key: "client_id",
+             foreign_key: "client_id"
     has_many :user_achievements,
              dependent: :destroy
     has_many :user_admin_achievements,
-              dependent: :destroy
+             dependent: :destroy
+    has_many :my_achievements,
+             source: :admin_achievement,
+             through: :user_admin_achievements
   end
 
 

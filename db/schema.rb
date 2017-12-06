@@ -28,18 +28,6 @@ ActiveRecord::Schema.define(version: 20171203223125) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "client_tutor_recommendations", force: :cascade do |t|
-    t.integer  "client_id",               null: false
-    t.integer  "tutor_recommendation_id", null: false
-    t.string   "status",                  null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  add_index "client_tutor_recommendations", ["client_id"], name: "index_client_tutor_recommendations_on_client_id", using: :btree
-  add_index "client_tutor_recommendations", ["status"], name: "index_client_tutor_recommendations_on_status", using: :btree
-  add_index "client_tutor_recommendations", ["tutor_recommendation_id"], name: "index_client_tutor_recommendations_on_tutor_recommendation_id", using: :btree
-
   create_table "admin_achievements", force: :cascade do |t|
     t.string   "name",                       null: false
     t.text     "description"
@@ -51,6 +39,18 @@ ActiveRecord::Schema.define(version: 20171203223125) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end
+
+  create_table "client_tutor_recommendations", force: :cascade do |t|
+    t.integer  "client_id",               null: false
+    t.integer  "tutor_recommendation_id", null: false
+    t.string   "status",                  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "client_tutor_recommendations", ["client_id"], name: "index_client_tutor_recommendations_on_client_id", using: :btree
+  add_index "client_tutor_recommendations", ["status"], name: "index_client_tutor_recommendations_on_status", using: :btree
+  add_index "client_tutor_recommendations", ["tutor_recommendation_id"], name: "index_client_tutor_recommendations_on_tutor_recommendation_id", using: :btree
 
   create_table "content_favorites", force: :cascade do |t|
     t.integer  "user_id",    null: false

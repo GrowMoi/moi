@@ -6,7 +6,7 @@ module Api
       respond_to :json
 
       expose(:user_achievements) {
-        current_user.user_admin_achievements
+        current_user.my_achievements
       }
 
       api :GET,
