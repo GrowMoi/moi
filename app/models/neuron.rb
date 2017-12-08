@@ -16,6 +16,7 @@
 
 class Neuron < ActiveRecord::Base
   include Relationable
+  include TreeService
 
   has_paper_trail ignore: [:created_at, :id, :pending_contents_count]
 
@@ -138,15 +139,14 @@ class Neuron < ActiveRecord::Base
   def self.neurons_by_branches
     all_neurons = self.where(is_public: true, active: true)
     parent = self.where(parent_id: nil).first
-    branches = find_children(parent, all_neurons)
+    branches = self.where(parent_id: parent.id)
     result = []
     branches.each do |neuron_branch|
       branch = Hash.new
       branch['title']= neuron_branch.title
-      ids = recursive_children([], neuron_branch, all_neurons)
-            .flatten
-            .map(&:id)
-      #add origin branch id to branch
+      ids = TreeService::RecursiveChildrenIdsFetcher.new(
+        neuron_branch
+      ).children_ids
       branch['neurons_ids'] = ids << neuron_branch.id
       result << branch
     end
@@ -206,21 +206,5 @@ class Neuron < ActiveRecord::Base
 
   def get_public_children(ids)
     self.class.where(parent_id: ids, is_public: true).order(:position)
-  end
-
-  def self.recursive_children(children_array = [], neuron, all_neurons)
-    children = self.find_children(neuron, all_neurons)
-    children_array << children
-    children.each do |child|
-      self.recursive_children(children_array, child, all_neurons)
-    end
-    children_array
-  end
-
-  def self.find_children(neuron, all_neurons)
-    children = all_neurons.select do |n|
-      n.parent_id != nil ? n.parent_id == neuron.id : false
-    end
-    return children
   end
 end
