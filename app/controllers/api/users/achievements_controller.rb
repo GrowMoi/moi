@@ -52,6 +52,8 @@ module Api
         achievement = UserAdminAchievement.find(params[:id])
         achievement.active = !achievement.active
         achievement.save
+        render nothing: true,
+               status: :ok
       end
     end
   end
