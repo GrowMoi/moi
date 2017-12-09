@@ -77,8 +77,11 @@ Moi::Application.routes.draw do
                 only: [:update]
       resource :recommended_neurons,
                 only: [:show]
-      resource :admin_achievements,
-                only: [:show]
+      resources :achievements, only: [:index] do
+        member do
+          put :active
+        end
+      end
     end
 
     match "users/search" => 'users#search', via: :get

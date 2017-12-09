@@ -38,7 +38,7 @@ needs to be a JSON-encoded string having the following format:
         )
 
         serialized_achievements = ActiveModel::ArraySerializer.new(
-          current_user.user_admin_achievements,
+          current_user.assign_achievements,
           scope: current_user,
           each_serializer: Api::UserAchievementSerializer
         )

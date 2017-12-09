@@ -1,6 +1,6 @@
 module Api
   module Users
-    class AdminAchievementsController < BaseController
+    class AchievementsController < BaseController
       before_action :authenticate_user!
 
       respond_to :json
@@ -10,7 +10,7 @@ module Api
       }
 
       api :GET,
-          "/users/admin_achievements",
+          "/users/achievements",
           "Get user achievements"
       example %q{
         "achievements": [
@@ -35,11 +35,23 @@ module Api
         ]
       }
 
-      def show
+      def index
         respond_with(
           user_achievements,
           each_serializer: Api::UserAchievementSerializer
         )
+      end
+
+      api :PUT,
+          "/users/achievements/:id/active",
+          "Active or disable an achievements"
+
+      param :id, Integer, required: true
+
+      def active
+        achievement = UserAdminAchievement.find(params[:id])
+        achievement.active = !achievement.active
+        achievement.save
       end
     end
   end
