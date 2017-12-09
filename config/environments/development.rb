@@ -21,8 +21,7 @@ Rails.application.configure do
     port: 5000
   }
 
-  # deliver to mailcatcher
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.smtp_settings = {
     address: Rails.application.secrets.host,
     port: 1025
@@ -33,6 +32,8 @@ Rails.application.configure do
 
   # Raise an error on page load if there are pending migrations
   config.active_record.migration_error = :page_load
+
+  config.action_mailer.perform_deliveries = true
 
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large

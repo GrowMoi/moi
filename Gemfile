@@ -97,6 +97,7 @@ group :development do
   gem 'rack-mini-profiler'
   gem 'annotate'
   gem 'bullet'
+  gem 'letter_opener'
   # gem 'neography', github: "maxdemarzi/neography", require: false
 end
 
