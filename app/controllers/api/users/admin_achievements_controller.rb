@@ -6,7 +6,7 @@ module Api
       respond_to :json
 
       expose(:user_achievements) {
-        current_user.my_achievements
+        current_user.user_admin_achievements
       }
 
       api :GET,
@@ -18,25 +18,19 @@ module Api
             "id": 3,
             "number": 4,
             "name": "Tests sin errores",
-            "label": "Tests sin errores",
-            "description": "",
-            "category": "test"
+            "active": "false"
           },
           {
             "id": 2,
             "number": 5,
             "name": "Contenidos aprendidos",
-            "label": "Contenidos aprendidos",
-            "description": "",
-            "category": "content"
+            "active": "true"
           },
           {
             "id": 1,
             "number": 6,
             "name": "Contenidos aprendidos en total",
-            "label": "Contenidos aprendidos en total",
-            "description": "",
-            "category": "content_all"
+            "active": "false"
           }
         ]
       }
@@ -44,7 +38,7 @@ module Api
       def show
         respond_with(
           user_achievements,
-          each_serializer: Api::AdminAchievementSerializer
+          each_serializer: Api::UserAchievementSerializer
         )
       end
     end

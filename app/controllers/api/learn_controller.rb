@@ -30,19 +30,24 @@ needs to be a JSON-encoded string having the following format:
       serialized_recommendations = []
 
       if is_client?(current_user)
-        # update_user_test_achievement
         update_user_leaderboard
         serialized_recommendations = ActiveModel::ArraySerializer.new(
           update_recommendations,
           scope: current_user,
           each_serializer: Api::TutorRecommendationSerializer
         )
-      end
 
+        serialized_achievements = ActiveModel::ArraySerializer.new(
+          current_user.user_admin_achievements,
+          scope: current_user,
+          each_serializer: Api::UserAchievementSerializer
+        )
+
+      end
       render json: {
         result: answerer_result,
         recommendations: serialized_recommendations,
-        achievements: current_user.assign_achievements
+        achievements: serialized_achievements
       }
     end
 

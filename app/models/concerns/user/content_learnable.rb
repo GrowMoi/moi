@@ -22,6 +22,10 @@ class User < ActiveRecord::Base
       ).exists?
     end
 
+    ##
+    # @param any [self]
+    # @return [Array] wether if the user
+    #   user contents learnt by branches
     def contents_learnt_by_branches
       result = []
       branches = Neuron.neurons_by_branches
