@@ -19,8 +19,8 @@ class AdminAchievement < ActiveRecord::Base
 
   CATEGORIES = [
     'content',
-    'test',
-    'time'
+    'branch',
+    'test'
   ].freeze
 
   begin :enumerables

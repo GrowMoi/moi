@@ -53,7 +53,8 @@ class AdminAchievement < ActiveRecord::Base
     ##
     # user learnt almost a content by public neuron
     def learnt_a_content_in_each_public_neuron(user)
-      public_neurons = Neuron.where(is_public: true, active: true).sort_by(&:position)
+      public_neurons = Neuron.where(is_public: true, active: true)
+                             .sort_by(&:position)
       runLoop = true
       i = 0
       until runLoop == false
@@ -70,22 +71,13 @@ class AdminAchievement < ActiveRecord::Base
     ##
     # user learnt content specific branch
     def learnt_contents_in_branch(achievement, user)
-      branches = user.contents_learnt_by_branches
       name = achievement.settings['branch']
-      result = find_branch(name, branches)
-      unless result.blank?
-        result['learnt_contents_ids'].size >= achievement.settings['quantity']
+      contents = user.contents_learnt_by_branch(name)
+      unless contents.blank?
+        contents.size >= achievement.settings['quantity']
       else
         false
       end
     end
-
-    def find_branch(key, branches)
-      result = branches.select do |branch|
-        branch['branch'].downcase == key.downcase
-      end
-      result.blank? ? {} : result[0]
-    end
-
   end
 end

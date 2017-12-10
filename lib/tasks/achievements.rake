@@ -12,7 +12,7 @@ achievements_params = [
   {
     name: "Contenidos aprendidos rama Lenguaje",
     description: "Han sido aprendidos 20 contenidos de la rama Lenguaje",
-    category: "content",
+    category: "branch",
     settings: {
       quantity: 20,
       branch: "Lenguaje"
@@ -22,7 +22,7 @@ achievements_params = [
   {
     name: "Contenidos aprendidos rama Arte",
     description: "Han sido aprendidos 20 contenidos de la rama Arte",
-    category: "content",
+    category: "branch",
     settings: {
       quantity: 20,
       branch: "Artes"
@@ -32,7 +32,7 @@ achievements_params = [
   {
     name: "Contenidos aprendidos rama Aprender",
     description: "Han sido aprendidos 20 contenidos de la rama Aprender",
-    category: "content",
+    category: "branch",
     settings: {
       quantity: 20,
       branch: "Aprender"
@@ -42,7 +42,7 @@ achievements_params = [
   {
     name: "Contenidos aprendidos rama Naturaleza",
     description: "Han sido aprendidos 20 contenidos de la rama Naturaleza",
-    category: "content",
+    category: "branch",
     settings: {
       quantity: 20,
       branch: "Naturaleza"

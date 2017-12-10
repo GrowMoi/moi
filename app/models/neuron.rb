@@ -16,7 +16,6 @@
 
 class Neuron < ActiveRecord::Base
   include Relationable
-  include TreeService
 
   has_paper_trail ignore: [:created_at, :id, :pending_contents_count]
 
@@ -132,25 +131,6 @@ class Neuron < ActiveRecord::Base
   # counter cache pending contents
   def counter_cache_pending_contents!
     self.pending_contents_count = contents.approved(false).count
-  end
-
-  ##
-  # list of neuron ids by branches
-  def self.neurons_by_branches
-    all_neurons = self.where(is_public: true, active: true)
-    parent = self.where(parent_id: nil).first
-    branches = self.where(parent_id: parent.id)
-    result = []
-    branches.each do |neuron_branch|
-      branch = Hash.new
-      branch['title']= neuron_branch.title
-      ids = TreeService::RecursiveChildrenIdsFetcher.new(
-        neuron_branch
-      ).children_ids
-      branch['neurons_ids'] = ids << neuron_branch.id
-      result << branch
-    end
-    result
   end
 
   private

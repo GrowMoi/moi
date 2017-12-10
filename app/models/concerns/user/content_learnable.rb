@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   module ContentLearnable
+    include TreeService
+
     ##
     # @param contents [Array] array of contents
     # @return [Boolean] wether if the user
@@ -23,26 +25,22 @@ class User < ActiveRecord::Base
     end
 
     ##
-    # @param any [self]
+    # @param name_branch [String]
     # @return [Array] wether if the user
-    #   user contents learnt by branches
-    def contents_learnt_by_branches
-      result = []
-      branches = Neuron.neurons_by_branches
+    #   user contents learnt by branch
+    def contents_learnt_by_branch(name)
+      neuron_branch = Neuron.find_by_title(name)
+      ids = TreeService::RecursiveChildrenIdsFetcher.new(
+        neuron_branch
+      ).children_ids
+      ids = ids << neuron_branch.id
       all_contents = Content.approved.all
-      user_contents = self
-                      .content_learnings
-                      .map(&:content_id)
-      branches.map do |branch|
-        object = Hash.new
-        object['branch'] = branch['title']
-        contents_by_branch = find_contents(
-                              branch['neurons_ids'],
-                              all_contents
-                            ).map(&:id)
-        object['learnt_contents_ids'] = contents_by_branch & user_contents
-        result << object
-      end
+      user_contents = self.content_learnings.map(&:content_id)
+      contents_by_branch = find_contents(
+                            ids,
+                            all_contents
+                          ).map(&:id)
+      result = contents_by_branch & user_contents
       result
     end
 
@@ -52,7 +50,7 @@ class User < ActiveRecord::Base
       result = all_contents.select do |c|
         contents.include?(c.neuron_id)
       end
-      return result
+      result
     end
   end
 end
