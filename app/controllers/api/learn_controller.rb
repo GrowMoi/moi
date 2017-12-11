@@ -176,7 +176,16 @@ needs to be a JSON-encoded string having the following format:
         recommendations_updated = TutorService::RecommendationsUpdater.new(current_user, tutor).update
         recommendations.concat recommendations_updated
       end
+      notify_tutor(recommendations)
       recommendations
+    end
+
+    def notify_tutor(recommendations)
+      recommendations.each do |recommendation|
+        tutor = recommendation.tutor_recommendation.tutor
+        achievement = recommendation.tutor_recommendation.tutor_achievement
+        TutorMailer.achievement_notification(tutor, current_user, achievement).deliver_now
+      end
     end
 
   end

@@ -1,6 +1,7 @@
 formId = '#form-new-achievement'
 imageContentId = '#content-media-name-on-form'
 inputFileId = '#achievement-file-select'
+buttonSendForm = '#button_submit_recommendation'
 
 fixCloseButton = (elem) ->
   $(elem).closest('.ui-dialog')
@@ -55,5 +56,22 @@ buildDialog = ->
     configRemoveItems(imageLinkElem)
     return
 
+configButtonSend = ->
+  $(buttonSendForm).addClass 'disabled'
+  $('#content_recommendations').change ->
+    updateButtonStatus(buttonSendForm)
+  $('#achievement_recommendations').change ->
+    updateButtonStatus(buttonSendForm)
+
+updateButtonStatus = (buttonId) ->
+  value1 = $('#content_recommendations').val()
+  value2 = $('#achievement_recommendations').val()
+  if (value1 && value1.length > 0) && value2.length > 0
+    $(buttonId).removeClass 'disabled'
+  else
+    $(buttonId).addClass 'disabled'
+  return
+
 $(document).on "ready page:load", applyChosen
 $(document).on "ready page:load", buildDialog
+$(document).on "ready page:load", configButtonSend

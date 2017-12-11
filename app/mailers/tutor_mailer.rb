@@ -5,6 +5,6 @@ class TutorMailer < ApplicationMailer
     @tutor = tutor
     @client = client
     @achievement = achievement
-    mail(to: @tutor.email, subject: 'Contenidos completados')
+    mail(to: @tutor.email, subject: I18n.t("tutor_mailer.achievement_notification.subject"))
   end
 end

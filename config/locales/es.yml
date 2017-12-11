@@ -603,7 +603,9 @@
   user_mailer:
     change_permission:
       subject: "Cambio de permisos"
-
+  tutor_mailer:
+    achievement_notification:
+      subject: "Contenidos completados"
   devise:
     sessions:
       user:
