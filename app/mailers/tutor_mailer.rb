@@ -1,5 +1,5 @@
 class TutorMailer < ApplicationMailer
-  default from: 'moi@example.com'
+  default from: 'Moi Aprendizaje Social <noreply@growmoi.com>'
 
   def achievement_notification(tutor, client, achievement)
     @tutor = tutor

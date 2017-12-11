@@ -94,7 +94,8 @@ RSpec.describe Api::LearnController,
     before {
       create :user_tutor,
         user: current_user,
-        tutor: tutor
+        tutor: tutor,
+        status: :accepted
     }
 
     let!(:tutor_achievement) {

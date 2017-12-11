@@ -15,7 +15,7 @@ RSpec.describe TutorMailer, :type => :mailer do
   end
 
 	it 'renders the sender email' do
-    expect(mail.from).to eql(['moi@example.com'])
+    expect(mail.from).to eql(['noreply@growmoi.com'])
   end
 
 	it 'have client info' do

@@ -169,7 +169,7 @@ needs to be a JSON-encoded string having the following format:
     end
 
     def update_recommendations
-      user_tutors = UserTutor.where(user: current_user)
+      user_tutors = UserTutor.where(user: current_user, status: :accepted)
       recommendations = []
       user_tutors.find_each do |user_tutor|
         tutor = user_tutor.tutor
