@@ -1,0 +1,15 @@
+.achievements-page
+  - content_for :title, t("activerecord.models.achievement").pluralize
+
+  table.table.table-striped
+    thead
+      tr
+        th =t("activerecord.attributes.admin_achievement.name")
+        th =t("activerecord.attributes.admin_achievement.description")
+        th =t("actions.actions")
+    tbody
+    -admin_achievements.each do |a|
+      tr
+        td = a.name
+        td = a.description
+        td = link_to t("actions.show"), admin_admin_achievement_path(a)

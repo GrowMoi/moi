@@ -1,0 +1,20 @@
+.achievements-page
+  - content_for :title, t("views.achievements.data_show.title")
+
+  h3.text-center = admin_achievement.name
+
+  .form-group
+    = label_tag t("activerecord.attributes.admin_achievement.description")
+    p = admin_achievement.description
+
+  .form-group
+    = label_tag t("activerecord.attributes.admin_achievement.settings")
+    p = admin_achievement.settings
+
+  .form-group
+    = label_tag t("activerecord.attributes.admin_achievement.active")
+    p = admin_achievement.active
+
+  hr
+  .pull-right
+    = link_to "Editar", edit_admin_admin_achievement_path(admin_achievement), class: "btn btn-link"
