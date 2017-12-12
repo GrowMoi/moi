@@ -29,18 +29,21 @@ class User < ActiveRecord::Base
     # @return [Array] wether if the user
     #   user contents learnt by branch
     def contents_learnt_by_branch(name)
+      result = []
       neuron_branch = Neuron.find_by_title(name)
-      ids = TreeService::RecursiveChildrenIdsFetcher.new(
-        neuron_branch
-      ).children_ids
-      ids = ids << neuron_branch.id
-      all_contents = Content.approved.all
-      user_contents = self.content_learnings.map(&:content_id)
-      contents_by_branch = find_contents(
-                            ids,
-                            all_contents
-                          ).map(&:id)
-      result = contents_by_branch & user_contents
+      if neuron_branch
+        ids = TreeService::RecursiveChildrenIdsFetcher.new(
+          neuron_branch
+        ).children_ids
+        ids = ids << neuron_branch.id
+        all_contents = Content.approved.all
+        user_contents = self.content_learnings.map(&:content_id)
+        contents_by_branch = find_contents(
+                              ids,
+                              all_contents
+                            ).map(&:id)
+        result = contents_by_branch & user_contents
+      end
       result
     end
 
