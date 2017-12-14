@@ -44,14 +44,20 @@ module Api
 
       api :PUT,
           "/users/achievements/:id/active",
-          "Active or disable an achievements"
+          "Just active or disable an achievement"
 
       param :id, Integer, required: true
 
       def active
-        achievement = UserAdminAchievement.find(params[:id])
-        achievement.active = !achievement.active
-        achievement.save
+        achievements = UserAdminAchievement.where(user_id: current_user.id)
+        achievements.each do |achievement|
+          if achievement.id == params[:id]
+            achievement.active = true
+          else
+            achievement.active = false
+          end
+          achievement.save
+        end
         render nothing: true,
                status: :ok
       end
