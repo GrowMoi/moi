@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
     #   user contents learnt by branch
     def contents_learnt_by_branch(name)
       result = []
-      neuron_branch = Neuron.find_by_title(name)
+      neuron_branch = Neuron.where('lower(title) = ?', name.downcase).first
       if neuron_branch
         ids = TreeService::RecursiveChildrenIdsFetcher.new(
           neuron_branch

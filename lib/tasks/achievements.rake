@@ -25,7 +25,7 @@ achievements_params = [
     category: "branch",
     settings: {
       quantity: 20,
-      branch: "Artes"
+      branch: "Arte"
     },
     number: 3
   },
@@ -81,10 +81,10 @@ achievements_params = [
   },
   {
     name: "Tests desplegados",
-    description: "Han sido desplegados 50 test sin errores",
+    description: "Han sido desplegados 25 test sin errores",
     category: "test",
     settings: {
-      quantity: 50,
+      quantity: 25,
       continuous: false
     },
     number: 9
