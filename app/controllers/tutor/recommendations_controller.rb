@@ -12,7 +12,7 @@ module Tutor
     expose :tutor_recommendation
 
     expose(:clients) {
-      UserTutor.where(tutor: current_user)
+      UserTutor.where(tutor: current_user, status: :accepted)
     }
 
     expose(:tutor_achievement, attributes: :tutor_achievement_params)

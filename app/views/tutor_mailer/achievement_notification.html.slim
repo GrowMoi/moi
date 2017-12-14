@@ -1,0 +1,16 @@
+html
+  head
+    meta[content="text/html; charset = UTF-8" http-equiv="Content-Type"]
+  body
+    p
+      | Estimado #{@tutor_name},
+    p
+      | tu alumno #{@client_name} acaba de completar los contenidos que le recomendaste.&nbsp;
+      | Como estableciste un #{@achievement_name} como recompensa, ahora eres responsable de entregarsela a #{@client_name}.
+      br
+    p
+      |  Para conocer más acerca del progreso de  #{@client_name} o establecer una nueva recompensa, haz clic&nbsp;
+      = link_to "aquí", @url, target: "_blank"
+      |.
+    p
+      | Gracias por enseñar con Moi Aprendizaje Social.

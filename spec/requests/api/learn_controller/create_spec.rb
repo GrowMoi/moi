@@ -94,12 +94,20 @@ RSpec.describe Api::LearnController,
     before {
       create :user_tutor,
         user: current_user,
-        tutor: tutor
+        tutor: tutor,
+        status: :accepted
+    }
+
+    let!(:tutor_achievement) {
+      create :tutor_achievement,
+             tutor: tutor,
+             name: 'achievement 1'
     }
 
     let(:recommendation) {
       create :tutor_recommendation,
-             tutor: tutor
+             tutor: tutor,
+             tutor_achievement: tutor_achievement
     }
 
     before {
@@ -121,7 +129,9 @@ RSpec.describe Api::LearnController,
     }
 
     before {
-      post endpoint, params
+      expect {
+        post endpoint, params
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
     }
 
     subject {

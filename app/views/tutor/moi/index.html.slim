@@ -17,9 +17,9 @@
             = render "client", client: client
         = paginate clients
 
-    .list-container.list-users
+    .list-container
       .title = t("views.tutor.moi.title_students")
-      .list-students-wrapper
+      .list-students-wrapper.list-users
         #list-students
           - for client in my_clients
             = render "client", client: client

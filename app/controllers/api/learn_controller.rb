@@ -169,14 +169,23 @@ needs to be a JSON-encoded string having the following format:
     end
 
     def update_recommendations
-      user_tutors = UserTutor.where(user: current_user)
+      user_tutors = UserTutor.where(user: current_user, status: :accepted)
       recommendations = []
       user_tutors.find_each do |user_tutor|
         tutor = user_tutor.tutor
         recommendations_updated = TutorService::RecommendationsUpdater.new(current_user, tutor).update
         recommendations.concat recommendations_updated
       end
+      notify_tutor(recommendations)
       recommendations
+    end
+
+    def notify_tutor(recommendations)
+      recommendations.each do |recommendation|
+        tutor = recommendation.tutor_recommendation.tutor
+        achievement = recommendation.tutor_recommendation.tutor_achievement
+        TutorMailer.achievement_notification(tutor, current_user, achievement).deliver_now
+      end
     end
 
   end
