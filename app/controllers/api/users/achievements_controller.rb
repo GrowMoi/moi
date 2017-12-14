@@ -52,7 +52,7 @@ module Api
         achievements = UserAdminAchievement.where(user_id: current_user.id)
         achievements.each do |achievement|
           if achievement.id == params[:id]
-            achievement.active = true
+            achievement.active = !achievement.active
           else
             achievement.active = false
           end
