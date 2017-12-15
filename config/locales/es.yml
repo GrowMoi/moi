@@ -163,6 +163,8 @@
         settings: "Configuraciones"
         image: "Imagen"
         no_image: "-- no se ha añadido una imagen --"
+    admin_achievements:
+      edit: Editar Logro
     contents:
       new: "Nuevo Contenido"
       edit: "Editar Contenido"
@@ -510,6 +512,8 @@
       quiz: Test
       level_quiz: Nivel Test
       player: Jugador
+      achievement: Logro
+      admin_achievement: Logro
     attributes:
       user:
         username: "Nombre de usuario"
@@ -574,7 +578,12 @@
         name: Nombre
         description: Descripción
         content_ids: Preguntas
-
+      admin_achievement:
+        date: Fecha de creación
+        name: Nombre
+        description: Descripción
+        settings: Configuraciones
+        active: Activo?
     errors:
       messages:
         <<: *errors_messages
@@ -599,6 +608,7 @@
     my_profile: Mi perfil
     preview: Vista previa
     search: Buscar
+    actions: Acciones
 
   user_mailer:
     change_permission:

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171110150816) do
+ActiveRecord::Schema.define(version: 20171203223125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,18 @@ ActiveRecord::Schema.define(version: 20171110150816) do
     t.json     "settings"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "admin_achievements", force: :cascade do |t|
+    t.string   "name",                       null: false
+    t.text     "description"
+    t.string   "image"
+    t.string   "category"
+    t.integer  "number"
+    t.boolean  "active",      default: true
+    t.json     "settings"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "client_tutor_recommendations", force: :cascade do |t|
@@ -397,6 +409,17 @@ ActiveRecord::Schema.define(version: 20171110150816) do
   add_index "user_achievements", ["achievement_id"], name: "index_user_achievements_on_achievement_id", using: :btree
   add_index "user_achievements", ["user_id"], name: "index_user_achievements_on_user_id", using: :btree
 
+  create_table "user_admin_achievements", force: :cascade do |t|
+    t.integer  "user_id",                              null: false
+    t.integer  "admin_achievement_id",                 null: false
+    t.boolean  "active",               default: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "user_admin_achievements", ["admin_achievement_id"], name: "index_user_admin_achievements_on_admin_achievement_id", using: :btree
+  add_index "user_admin_achievements", ["user_id"], name: "index_user_admin_achievements_on_user_id", using: :btree
+
   create_table "user_content_preferences", force: :cascade do |t|
     t.integer  "user_id",                null: false
     t.string   "kind",                   null: false
@@ -480,10 +503,12 @@ ActiveRecord::Schema.define(version: 20171110150816) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
+    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "client_tutor_recommendations", "users", column: "client_id"
@@ -514,4 +539,5 @@ ActiveRecord::Schema.define(version: 20171110150816) do
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"
+  add_foreign_key "versions", "users", column: "owner_id"
 end

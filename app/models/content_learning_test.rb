@@ -22,4 +22,12 @@ class ContentLearningTest < ActiveRecord::Base
   scope :completed, -> {
     where(completed: true)
   }
+
+  def is_successful_test?
+    successful = false
+    if self.answers
+      successful = !(self.answers.any? { |answer| answer['correct'] == false })
+    end
+  end
+
 end

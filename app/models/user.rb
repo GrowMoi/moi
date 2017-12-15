@@ -42,6 +42,7 @@ class User < ActiveRecord::Base
   include UserContentTasks
   include UserContentFavorites
   include UserReadNotifications
+  include UserAchievements
 
   mount_base64_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
 
@@ -118,9 +119,16 @@ class User < ActiveRecord::Base
              dependent: :destroy
     has_many :client_tutor_recommendations,
              class_name: "ClientTutorRecommendation",
-             foreign_key: "client_id",
+             foreign_key: "client_id"
+    has_many :user_achievements,
              dependent: :destroy
+    has_many :user_admin_achievements,
+             dependent: :destroy
+    has_many :my_achievements,
+             source: :admin_achievement,
+             through: :user_admin_achievements
   end
+
 
   def to_s
     username
@@ -132,6 +140,37 @@ class User < ActiveRecord::Base
 
   def confirmation_sent_at
     Time.utc(1999).to_date
+  end
+
+  ##
+  # return a number successful tests
+  def successful_tests
+    count = 0
+    self.learning_tests.each do |test|
+      if test.is_successful_test?
+        count = count + 1
+      end
+    end
+    count
+  end
+
+  ##
+  # verify if the user has a number continuous
+  # of successful test accordly a number
+  def continuous_successful_tests(number)
+    count = 0
+    successful = false
+    self.learning_tests.each do |test|
+      if test.is_successful_test?
+        count = count + 1
+        if count >= number
+          successful = true
+        end
+      else
+        count = 0
+      end
+    end
+    successful
   end
 
   private

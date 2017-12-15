@@ -40,7 +40,8 @@ module Api
                :birthday,
                :city,
                :tree_image,
-               :username
+               :username,
+               :achievements
 
     has_many :content_preferences
 
@@ -52,6 +53,14 @@ module Api
           order: preference.order
         }
       end
+    end
+
+    def achievements
+      ActiveModel::ArraySerializer.new(
+        object.user_admin_achievements,
+        scope: object,
+        each_serializer: Api::UserAchievementSerializer
+      )
     end
 
     def tree_image

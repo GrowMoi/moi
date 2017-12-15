@@ -19,4 +19,5 @@ config/database.yml
 .c9/
 doc/
 .env
+.DS_Store
 public/
