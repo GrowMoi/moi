@@ -12,11 +12,10 @@
 #  is_public  :boolean          default(FALSE)
 #
 module Api
-  class NeuronSerializer < ActiveModel::Serializer
+  class NeuronPublicSerializer < ActiveModel::Serializer
     root false
     attributes :id,
-               :title,
-               :neuron_can_read
+               :title
 
     has_many :contents
 
@@ -28,26 +27,11 @@ module Api
           media: content.content_medium.map(&:media_url),
           kind: content.kind,
           level: content.level,
-          read: current_user.already_read?(content),
-          learnt: current_user.already_learnt?(content),
           title: content.title,
-          favorite: is_favorite?(content)
+          read: false,
+          learnt: false
         }
       end
-    end
-
-    def neuron_can_read
-      visible_neurons = TreeService::PublicScopeFetcher.new(@scope).neurons
-      visible_neurons.map(&:id).include?(object.id)
-    end
-
-    alias_method :current_user, :scope
-
-    def is_favorite?(content)
-      ContentFavorite.where(
-        user: current_user,
-        content: content
-      ).exists?
     end
   end
 end
