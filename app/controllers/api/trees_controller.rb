@@ -1,8 +1,13 @@
 module Api
   class TreesController < BaseController
-    before_action :authenticate_user!
-
     respond_to :json
+
+    expose(:user_tree) {
+      user = User.find_by_username(params[:username])
+      if user
+        TreeService::UserTreeFetcher.new user
+      end
+    }
 
     api :GET,
         "/tree",
@@ -31,13 +36,16 @@ module Api
         "meta": { "depth": 2 }
       }
     }
-    def show
-      respond_with tree: { root: user_tree.root },
-                   meta: { depth: user_tree.depth }
-    end
+    param :username, String, required: true
 
-    expose(:user_tree) {
-      TreeService::UserTreeFetcher.new current_user
-    }
+    def show
+      if user_tree
+        respond_with tree: { root: user_tree.root },
+                     meta: { depth: user_tree.depth }
+      else
+        render nothing: true,
+                status: 404
+      end
+    end
   end
 end
