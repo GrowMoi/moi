@@ -1,4 +1,4 @@
-recommendationsPage = ".container-recommendations"
+dashboardPage = ".container-dashboard"
 formId = '#form-new-achievement'
 imageContentId = '#content-media-name-on-form'
 inputFileId = '#achievement-file-select'
@@ -9,9 +9,6 @@ fixCloseButton = (elem) ->
          .find('.ui-dialog-titlebar-close')
          .removeClass('ui-dialog-titlebar-close')
          .html '<span class=\'ui-button-icon-primary ui-icon ui-icon-closethick\'></span>'
-
-applyChosen = ->
-  $("#content_recommendations").chosen allow_single_deselect: true, disable_search_threshold: 10
 
 configRemoveItems = (elem) ->
   $(elem).wrap("<div></div>");
@@ -34,9 +31,9 @@ cleanFileInputData = () ->
   return
 
 buildDialog = ->
-  dialogContentId = '#dialog-new-achievement'
-  dialogMainClass = 'moi-dialog  dialog-new-achievement'
-  dialogOpenerId = '#button-dialog-new-achievement'
+  dialogContentId = '#dialog-dashboard-new-achievement'
+  dialogMainClass = 'moi-dialog dialog-red dialog-dashboard-new-achievement'
+  dialogOpenerId = '#button-dialog-dashboard-new-achievement'
   cleanFormData()
   $(dialogContentId).dialog
     title: $(dialogOpenerId).text()
@@ -58,30 +55,12 @@ buildDialog = ->
     configRemoveItems(imageLinkElem)
     return
 
-configButtonSend = ->
-  $(buttonSendForm).addClass 'disabled'
-  $('#content_recommendations').change ->
-    updateButtonStatus(buttonSendForm)
-  $('#achievement_recommendations').change ->
-    updateButtonStatus(buttonSendForm)
-
-updateButtonStatus = (buttonId) ->
-  value1 = $('#content_recommendations').val()
-  value2 = $('#achievement_recommendations').val()
-  if (value1 && value1.length > 0) && value2.length > 0
-    $(buttonId).removeClass 'disabled'
-  else
-    $(buttonId).addClass 'disabled'
-  return
-
-isRecommendationsPage = ->
-    $(recommendationsPage).length > 0
+isDashboardPage = ->
+    $(dashboardPage).length > 0
 
 loadPage = ->
-  if isRecommendationsPage()
-    applyChosen()
+  if isDashboardPage()
     buildDialog()
-    configButtonSend()
   return
 
 $(document).on "ready page:load", loadPage

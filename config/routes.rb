@@ -176,6 +176,12 @@ Moi::Application.routes.draw do
         get :time_reading
       end
     end
+    resources :dashboard, only: [:index] do
+      collection do
+        get :achievements
+        post :new_achievement
+      end
+    end
 
     root "moi#index"
   end

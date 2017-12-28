@@ -255,6 +255,7 @@
         tutor: "Tutor"
         logout: "Cerrar sesión"
         recommendations: "Recomendaciones"
+        dashboard: "Dashboard"
       report:
         title: 'Social Learning'
         sub_title: 'Estimado tutor, a continuación el reporte solicitado.'
@@ -277,7 +278,11 @@
           achievement_label: "Recompensa"
           achievement_input_info: "Establezca una recompensa que recibirá el o los usuarios al completar los contenidos recomendados."
           send: "Enviar Recomendaciones"
-          new_achievement:  " Agregar una nueva recompensa"
+          new_achievement:  "Agregar una nueva recompensa"
+      dashboard:
+        card_achievements:
+          title: "Recompensas"
+          new_achievement:  "Agregar una nueva recompensa"
 
   date:
     formats:

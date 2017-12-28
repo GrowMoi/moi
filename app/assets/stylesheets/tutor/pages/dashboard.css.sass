@@ -1,0 +1,58 @@
+$base-color-brown: #805A41
+$base-color-light-gray: #EEEEEE
+$white: white
+
+.container-dashboard
+  border: 0.1rem solid $base-color-brown
+  display: flex
+  flex-direction: column
+  height: 100% !important
+  &:after
+    background-color: $base-color-brown
+
+  &:before
+    background-color: $base-color-brown
+    height: 100.7% !important
+
+  .dashboard-grid-container
+    //overflow-y: scroll
+
+  .dashboard-row
+    padding: 0 1rem
+    flex-basis: 100%
+    display: flex
+    .moi-card
+      flex-basis: 50%
+
+  .dashboard-achievements-card
+    .list-group
+      box-shadow: 2px 2px 5px 2px rgba(0,0,0,0.2)
+      max-height: 18rem
+      margin-top: 0.5rem
+      overflow-y: scroll
+      .list-group-item
+        padding-right: 5rem
+        .options
+          position: absolute
+          right: 1rem
+          top: 0.5rem
+          visibility: hidden
+          button
+            border: none
+            background-color: transparent
+            cursor: pointer
+            font-size: 2.5rem
+        &:hover
+          background-color: $base-color-light-gray
+          .options
+            visibility: visible
+
+.dialog-dashboard-new-achievement
+
+  .form-group-select-image
+    display: flex
+
+  .content-media-name-on-form
+    .image-remove-field
+      padding: 0
+      margin: 0.5rem

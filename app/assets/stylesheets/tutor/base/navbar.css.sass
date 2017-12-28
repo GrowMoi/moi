@@ -9,6 +9,7 @@ $base-color-yellow: #D6B34E
 $base-color-red: #F0755C
 $base-color-purple: #DA4694
 $base-color-dark-green: #1B864A
+$base-color-brown: #805A41
 
 =navbar-border-bottom($custom-color)
   border-bottom: 0.5rem solid $custom-color
@@ -81,6 +82,8 @@ $base-color-dark-green: #1B864A
       +navbar-border-bottom($base-color-red)
     .navbar-link-recommendations
       +navbar-border-bottom($base-color-dark-green)
+    .navbar-link-dashboard
+      +navbar-border-bottom($base-color-brown)
 
     .item-moi
       +navbar-item-arrow($base-color-blue)
@@ -92,6 +95,8 @@ $base-color-dark-green: #1B864A
       +navbar-item-arrow($base-color-red)
     .item-recommendations
       +navbar-item-arrow($base-color-dark-green)
+    .item-dashboard
+      +navbar-item-arrow($base-color-brown)
 
 
   .navbar-tutor-last-item
