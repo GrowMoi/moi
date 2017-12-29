@@ -15,7 +15,8 @@ module Api
   class NeuronPublicSerializer < ActiveModel::Serializer
     root false
     attributes :id,
-               :title
+               :title,
+               :read_only
 
     has_many :contents
 
@@ -27,11 +28,13 @@ module Api
           media: content.content_medium.map(&:media_url),
           kind: content.kind,
           level: content.level,
-          title: content.title,
-          read: false,
-          learnt: false
+          title: content.title
         }
       end
+    end
+
+    def read_only
+      true
     end
   end
 end
