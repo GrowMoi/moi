@@ -180,6 +180,8 @@ Moi::Application.routes.draw do
       collection do
         get :achievements
         post :new_achievement
+        put :update_achievement
+        get :edit_achievement
       end
     end
 

@@ -269,9 +269,6 @@
           created: "Se ha creado una nueva recompensa."
         recommendation_request:
           created: "Se ha creado una nueva recomendación de contenidos para los alumnos del tutor %{name}"
-        form_new_achievement:
-          send: "Guardar Logro"
-          attach_image: ""
         form_new:
           contents_label: "Contenidos a recomendar"
           contents_input_info: "Elija los contenidos que quiera recomendar."
@@ -280,9 +277,21 @@
           send: "Enviar Recomendaciones"
           new_achievement:  "Agregar una nueva recompensa"
       dashboard:
+        achievement_request:
+          created: "Se ha creado una nueva recompensa."
+          updated: "La recompensa ha sido actualizada."
         card_achievements:
           title: "Recompensas"
           new_achievement:  "Agregar una nueva recompensa"
+          title_update: "Actualizar recompensa"
+      common:
+        form_achievements:
+          name: "Nombre"
+          description: "Descripción"
+          current_image: "Imagen actual"
+          image: "Nueva imagen"
+          send: "Guardar Logro"
+          attach_image: ""
 
   date:
     formats:

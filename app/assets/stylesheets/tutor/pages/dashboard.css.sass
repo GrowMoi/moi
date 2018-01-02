@@ -35,17 +35,17 @@ $white: white
         .options
           position: absolute
           right: 1rem
-          top: 0.5rem
-          visibility: hidden
+          top: 0.7rem
+          opacity: 0.6
           button
-            border: none
-            background-color: transparent
             cursor: pointer
-            font-size: 2.5rem
+            font-size: 2rem
+            border-radius: 0.3rem
+            padding-top: 0.3rem
         &:hover
           background-color: $base-color-light-gray
           .options
-            visibility: visible
+            opacity: 1
 
 .dialog-dashboard-new-achievement
 
@@ -56,3 +56,11 @@ $white: white
     .image-remove-field
       padding: 0
       margin: 0.5rem
+
+  .current-image-selected
+    img
+      max-height: 250px
+      max-width: 250px
+      margin-right: 0.3em
+      margin-left: 0.5rem
+

@@ -32,9 +32,22 @@ cleanFileInputData = () ->
 
 buildDialog = ->
   dialogContentId = '#dialog-dashboard-new-achievement'
+  dialogUpdateAchievementId = '#dialog-dashboard-update-achievement'
   dialogMainClass = 'moi-dialog dialog-red dialog-dashboard-new-achievement'
   dialogOpenerId = '#button-dialog-dashboard-new-achievement'
+  dialogUpdateOpenerSelector = '.button-dashboard-edit-achievement'
   cleanFormData()
+  $(dialogUpdateAchievementId).dialog
+    title: $(dialogUpdateOpenerSelector).children()[0].textContent
+    autoOpen: false
+    closeOnEscape: true
+    modal: true
+    width: 500
+    dialogClass: dialogMainClass
+    resizable: false
+    open: () ->
+      fixCloseButton(this)
+
   $(dialogContentId).dialog
     title: $(dialogOpenerId).text()
     autoOpen: false
@@ -50,6 +63,18 @@ buildDialog = ->
   $(dialogOpenerId).click ->
     $(dialogContentId).dialog 'open'
     return
+
+  $(dialogUpdateOpenerSelector).click((event) ->
+    elemId = event.target.id
+    regex = /tutor_achievement_(\d+)/g;
+    values = regex.exec(elemId)
+    achievementId = if $.isArray(values) && values[1] then values[1] else null
+    $.get "/tutor/dashboard/edit_achievement?id=#{achievementId}", (res) ->
+      $(dialogUpdateAchievementId).html(res)
+      $(dialogUpdateAchievementId).dialog 'open'
+
+    return
+  )
 
   $(formId).find(imageContentId).on "content_media_appended", (e, imageLinkElem) ->
     configRemoveItems(imageLinkElem)

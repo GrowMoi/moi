@@ -84,4 +84,26 @@ RSpec.describe Tutor::DashboardController, type: :controller do
       }
     end
   end
+
+  describe "Update achievements" do
+
+    context "Ok" do
+
+      before {
+        request.env["HTTP_REFERER"] = root_url
+        put :update_achievement, id: achievement1.id, :tutor_achievement => {
+          name: "Achievement Updated"
+        }
+      }
+
+      it {
+        expect(response).to redirect_to(:back)
+      }
+
+      it {
+        expect(current_user.tutor_achievements.find(achievement1.id).name).to eq("Achievement Updated")
+      }
+    end
+
+  end
 end
