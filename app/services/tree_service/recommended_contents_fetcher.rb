@@ -21,20 +21,25 @@ module TreeService
 
     def fetch_pool!
       return if contents_pool.any?
-      preferred_level = @remaining_levels.delete(preference.level)
-      pool_contents!(
-        level: preferred_level,
-        count: COUNT
-      )
-      # keep adding contents to pool if there's
-      # not enough
-      missing = COUNT - contents_pool.count
-      while missing > 0 && @remaining_levels.any?
-        level = @remaining_levels.slice!(0)
+
+      unless user
+        @contents_pool = contents_scope.limit(COUNT)
+      else
+        preferred_level = @remaining_levels.delete(preference.level)
         pool_contents!(
-          level: level,
-          count: missing
+          level: preferred_level,
+          count: COUNT
         )
+        # keep adding contents to pool if there's
+        # not enough
+        missing = COUNT - contents_pool.count
+        while missing > 0 && @remaining_levels.any?
+          level = @remaining_levels.slice!(0)
+          pool_contents!(
+            level: level,
+            count: missing
+          )
+        end
       end
     end
 
