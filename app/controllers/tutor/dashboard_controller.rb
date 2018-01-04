@@ -2,7 +2,11 @@ module Tutor
   class DashboardController < TutorController::Base
 
     expose(:tutor_achievements) {
-      current_user.tutor_achievements
+      if (params[:search])
+        TutorAchievementsSearch.new(q: params[:search], current_user: current_user).results
+      else
+        current_user.tutor_achievements
+      end
     }
 
     expose(:tutor_achievement_selected) {
@@ -14,13 +18,18 @@ module Tutor
     }
 
     expose(:tutor_students) {
-      current_user.tutor_requests_sent.accepted.map(&:user)
+      if (params[:search])
+        ids = current_user.tutor_requests_sent.accepted.select(:user_id).map(&:user_id)
+        StudentsSearch.new(q: params[:search], ids: ids).results
+      else
+        current_user.tutor_requests_sent.accepted.map(&:user)
+      end
     }
 
     expose(:tutor_achievement, attributes: :tutor_achievement_params)
 
     def achievements
-      render nothing: true
+      render partial: "achievements_list"
     end
 
     def index
@@ -28,7 +37,7 @@ module Tutor
     end
 
     def students
-      render nothing: true
+      render partial: "students_list"
     end
 
     def new_achievement

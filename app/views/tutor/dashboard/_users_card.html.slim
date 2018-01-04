@@ -2,19 +2,15 @@
   .moi-card-header
     .moi-card-title = t("views.tutor.dashboard.card_users.title")
   .moi-card-content
-    ul.list-group.list-group-flush
-      - tutor_students.each do |student|
-        li.list-group-item
-          .name
-            = student.name
-          .username
-            small = student.username
-          .options
-            = button_tag "",
-                type: "button",
-                class: "glyphicon glyphicon-stats button-dashboard-open-report",
-                title: t("views.tutor.dashboard.card_users.show_report"),
-                id: "tutor_student_#{student.id}"
+    .search-section
+      = form_tag "", method: "get", remote: true, class:"search-form", id: "student-search-form" do
+        .search-form-container.search-form-container-moi
+          .input-serction
+            = image_tag "icon_search.png", class: "search-form-icon-search"
+            = text_field_tag :search, "", class:"search-form-input", autocomplete: "off"
+
+    ul.list-group.list-group-flush#students-list
+      = render "students_list"
 
     .moi-card-actions
       = button_tag t("views.tutor.dashboard.card_users.send_request"),

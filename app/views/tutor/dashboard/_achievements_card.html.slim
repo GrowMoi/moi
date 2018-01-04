@@ -2,17 +2,15 @@
   .moi-card-header
     .moi-card-title = t("views.tutor.dashboard.card_achievements.title")
   .moi-card-content
-    ul.list-group.list-group-flush
-      - tutor_achievements.each do |achievement|
-        li.list-group-item
-          = achievement.name
-          .options
-            = button_tag "",
-                type: "button",
-                class: "glyphicon glyphicon-pencil button-dashboard-edit-achievement",
-                title: t("views.tutor.dashboard.card_achievements.edit"),
-                id: "tutor_achievement_#{achievement.id}"
-               span(class="hidden") = t("views.tutor.dashboard.card_achievements.title_update")
+    .search-section
+      = form_tag "#", method: "get", remote: true, class:"search-form", id: "achievemet-search-form" do
+        .search-form-container.search-form-container-moi
+          .input-serction
+            = image_tag "icon_search.png", class: "search-form-icon-search"
+            = text_field_tag :search, "", class:"search-form-input", autocomplete: "off"
+
+    ul.list-group.list-group-flush#achievements-list
+      = render "achievements_list"
 
     .moi-card-actions
       = button_tag t("views.tutor.dashboard.card_achievements.new_achievement"),

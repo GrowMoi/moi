@@ -1,0 +1,10 @@
+- tutor_achievements.each do |achievement|
+  li.list-group-item
+    = achievement.name
+    .options
+      = button_tag "",
+          type: "button",
+          class: "glyphicon glyphicon-pencil button-dashboard-edit-achievement",
+          title: t("views.tutor.dashboard.card_achievements.edit"),
+          id: "tutor_achievement_#{achievement.id}"
+          span(class="hidden") = t("views.tutor.dashboard.card_achievements.title_update")
