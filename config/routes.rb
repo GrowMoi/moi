@@ -182,6 +182,7 @@ Moi::Application.routes.draw do
         post :new_achievement
         put :update_achievement
         get :edit_achievement
+        get :students
       end
     end
 

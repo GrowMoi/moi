@@ -5,6 +5,15 @@ RSpec.describe Tutor::DashboardController, type: :controller do
   let!(:current_user) {
     create :user, role: :tutor
   }
+  let!(:client1) {
+    create :user, role: :cliente
+  }
+  let!(:client2) {
+    create :user, role: :cliente
+  }
+  let!(:client3) {
+    create :user, role: :cliente
+  }
   let!(:achievement1) {
     create :tutor_achievement,
            tutor: current_user,
@@ -17,6 +26,25 @@ RSpec.describe Tutor::DashboardController, type: :controller do
   }
   let!(:tutor_achievements) {
     TutorAchievement.where(tutor: current_user)
+  }
+
+  before {
+    create :user_tutor,
+            user: client1,
+            tutor: current_user,
+            status: :accepted
+    create :user_tutor,
+            user: client2,
+            tutor: current_user,
+            status: :accepted
+    create :user_tutor,
+            user: client3,
+            tutor: current_user,
+            status: :rejected
+  }
+
+  let!(:tutor_students) {
+    current_user.tutor_requests_sent.accepted.map(&:user)
   }
 
   before {
@@ -33,77 +61,96 @@ RSpec.describe Tutor::DashboardController, type: :controller do
     }
   end
 
-  describe "Get achievements" do
-
-    before {
-      get :achievements
-    }
-
-    it {
-      expect(response).to have_http_status(:ok)
-    }
-    it {
-      expect(controller.tutor_achievements).to eq(tutor_achievements)
-    }
-    it {
-      expect(controller.tutor_achievements.size).to eq(2)
-    }
-
-  end
-
-
-  describe "Create achievements" do
-
-    context "Ok" do
-
+  context "achievements" do
+    describe "Get achievements" do
       before {
-        request.env["HTTP_REFERER"] = root_url
-        post :new_achievement, :tutor_achievement => {
-          name: "New achievement"
-        }
+        get :achievements
       }
-
       it {
-        expect(response).to redirect_to(:back)
+        expect(response).to have_http_status(:ok)
       }
-
       it {
-        expect(current_user.tutor_achievements.count).to eq(3)
+        expect(controller.tutor_achievements).to eq(tutor_achievements)
       }
-
       it {
-        expect(current_user.tutor_achievements.last[:name]).to eq("New achievement")
+        expect(controller.tutor_achievements.size).to eq(2)
       }
     end
 
-    context "Empty" do
-      it {
-        expect {
-          post :new_achievement, :tutor_achievement => {}
-        }.to raise_error(ActionController::ParameterMissing)
-      }
+    describe "Create achievements" do
+
+      context "Ok" do
+
+        before {
+          request.env["HTTP_REFERER"] = root_url
+          post :new_achievement, :tutor_achievement => {
+            name: "New achievement"
+          }
+        }
+
+        it {
+          expect(response).to redirect_to(:back)
+        }
+
+        it {
+          expect(current_user.tutor_achievements.count).to eq(3)
+        }
+
+        it {
+          expect(current_user.tutor_achievements.last[:name]).to eq("New achievement")
+        }
+      end
+
+      context "Empty" do
+        it {
+          expect {
+            post :new_achievement, :tutor_achievement => {}
+          }.to raise_error(ActionController::ParameterMissing)
+        }
+      end
+    end
+
+    describe "Update achievements" do
+
+      context "Ok" do
+
+        before {
+          request.env["HTTP_REFERER"] = root_url
+          put :update_achievement, id: achievement1.id, :tutor_achievement => {
+            name: "Achievement Updated"
+          }
+        }
+
+        it {
+          expect(response).to redirect_to(:back)
+        }
+
+        it {
+          expect(current_user.tutor_achievements.find(achievement1.id).name).to eq("Achievement Updated")
+        }
+      end
+
     end
   end
 
-  describe "Update achievements" do
+  context "students" do
 
-    context "Ok" do
-
+    describe "Get students" do
       before {
-        request.env["HTTP_REFERER"] = root_url
-        put :update_achievement, id: achievement1.id, :tutor_achievement => {
-          name: "Achievement Updated"
-        }
+        get :students
       }
 
       it {
-        expect(response).to redirect_to(:back)
+        expect(response).to have_http_status(:ok)
+      }
+      it {
+        expect(controller.tutor_students).to eq(tutor_students)
+      }
+      it {
+        expect(controller.tutor_students.size).to eq(2)
       }
 
-      it {
-        expect(current_user.tutor_achievements.find(achievement1.id).name).to eq("Achievement Updated")
-      }
     end
-
   end
+
 end

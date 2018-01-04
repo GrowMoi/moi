@@ -284,6 +284,11 @@
           title: "Recompensas"
           new_achievement:  "Agregar una nueva recompensa"
           title_update: "Actualizar recompensa"
+          edit: "Editar Recompensa"
+        card_users:
+          title: "Mis Alumnos"
+          show_report: "Generar Reporte"
+          send_request: "Enviar solicitud para nuevo alumno"
       common:
         form_achievements:
           name: "Nombre"

@@ -1,0 +1,23 @@
+.dashboard-card.dashboard-users-card.moi-card.card-dark-green
+  .moi-card-header
+    .moi-card-title = t("views.tutor.dashboard.card_users.title")
+  .moi-card-content
+    ul.list-group.list-group-flush
+      - tutor_students.each do |student|
+        li.list-group-item
+          .name
+            = student.name
+          .username
+            small = student.username
+          .options
+            = button_tag "",
+                type: "button",
+                class: "glyphicon glyphicon-stats button-dashboard-open-report",
+                title: t("views.tutor.dashboard.card_users.show_report"),
+                id: "tutor_student_#{student.id}"
+
+    .moi-card-actions
+      = button_tag t("views.tutor.dashboard.card_users.send_request"),
+                type: "button",
+                class: "moi-card-button button-dialog-dashboard-new-achievement",
+                id: "button-dialog-dashboard-new-achievement"

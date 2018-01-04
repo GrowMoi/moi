@@ -30,12 +30,19 @@ cleanFileInputData = () ->
   $(formId).find(imageContentId).children().remove()
   return
 
+evaluateExp = (str, regex) ->
+  values = regex.exec(str)
+  res = if $.isArray(values) && values[1] then values[1] else null
+  return res
+
 buildDialog = ->
   dialogContentId = '#dialog-dashboard-new-achievement'
   dialogUpdateAchievementId = '#dialog-dashboard-update-achievement'
   dialogMainClass = 'moi-dialog dialog-red dialog-dashboard-new-achievement'
   dialogOpenerId = '#button-dialog-dashboard-new-achievement'
   dialogUpdateOpenerSelector = '.button-dashboard-edit-achievement'
+  openReportButtonSelector = '.button-dashboard-open-report'
+
   cleanFormData()
   $(dialogUpdateAchievementId).dialog
     title: $(dialogUpdateOpenerSelector).children()[0].textContent
@@ -65,15 +72,19 @@ buildDialog = ->
     return
 
   $(dialogUpdateOpenerSelector).click((event) ->
-    elemId = event.target.id
     regex = /tutor_achievement_(\d+)/g;
-    values = regex.exec(elemId)
-    achievementId = if $.isArray(values) && values[1] then values[1] else null
+    achievementId = evaluateExp(event.target.id, regex)
     $.get "/tutor/dashboard/edit_achievement?id=#{achievementId}", (res) ->
       $(dialogUpdateAchievementId).html(res)
       $(dialogUpdateAchievementId).dialog 'open'
-
     return
+  )
+
+  $(openReportButtonSelector).click((event) ->
+    regex = /tutor_student_(\d+)/g;
+    userId = evaluateExp(event.target.id, regex)
+    origin = window.location.origin
+    window.open(origin + "/tutor/report?user_id=#{userId}", '_blank');
   )
 
   $(formId).find(imageContentId).on "content_media_appended", (e, imageLinkElem) ->

@@ -13,14 +13,22 @@ module Tutor
       end
     }
 
+    expose(:tutor_students) {
+      current_user.tutor_requests_sent.accepted.map(&:user)
+    }
+
     expose(:tutor_achievement, attributes: :tutor_achievement_params)
 
     def achievements
-      render json: {}
+      render nothing: true
     end
 
     def index
       render
+    end
+
+    def students
+      render nothing: true
     end
 
     def new_achievement

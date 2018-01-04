@@ -10,7 +10,12 @@
       .user-details
         .profile-container
           .user-avatar = image_tag("user_image_status.png")
-          .user-name = @client["name"]
+          .user-name
+            = @client["name"]
+            .user-username
+              small = @client["username"]
+            .user-email
+              small =  @client["email"]
         .grid-info-container
           .row-info.row-info-header
             .first-cell.first-cell-header
