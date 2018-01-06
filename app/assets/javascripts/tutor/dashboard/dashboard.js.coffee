@@ -1,17 +1,31 @@
 dashboardPage = ".container-dashboard"
-formId = '#form-new-achievement'
 imageContentId = '#content-media-name-on-form'
 inputFileId = '#achievement-file-select'
-buttonSendForm = '#button_submit_recommendation'
-dialogContentId = '#dialog-dashboard-new-achievement'
-dialogUpdateAchievementId = '#dialog-dashboard-update-achievement'
 dialogMainClass = 'moi-dialog dialog-red dialog-dashboard-new-achievement'
-dialogOpenerId = '#button-dialog-dashboard-new-achievement'
+listDashboardClientsWrapperSelector = '.list-dashboard-clients-wrapper'
+clientsSearchFormInputSelector = '#clients-search-form-input'
+
+#button selectors
+buttonDialogDashboardNewAchievementSelector = '#button-dialog-dashboard-new-achievement'
+buttonDialogDashboardSendRequestSelector = '#button-dialog-dashboard-send-request'
 dialogUpdateOpenerSelector = '.button-dashboard-edit-achievement'
 openReportButtonSelector = '.button-dashboard-open-report'
+buttonDashboardSendRequestSelector = '.button-dashboard-send-request'
+
+#dialog selectors
+dialogDashboardNewAchievementSelector = '#dialog-dashboard-new-achievement'
+dialogUpdateAchievementId = '#dialog-dashboard-update-achievement'
+dialogSendStudentRequestSelector = '#dialog-send-student-request'
+
+#form selectors
 studentSearchFormId = '#student-search-form'
-studentsListId = '#students-list'
 achievemetSearchFormId = '#achievemet-search-form'
+clientsSearchFormId = '#clients-search-form'
+
+formId = '#form-new-achievement'
+
+#list selectors
+studentsListId = '#students-list'
 achievementsListId = '#achievements-list'
 
 fixCloseButton = (elem) ->
@@ -66,33 +80,50 @@ addEventHadlerForTutorEditAchievement = (buttonSelector, dialogSelector) ->
   )
   return
 
-buildDialog = ->
+addEventHadlerForTutorSendRequest = (buttonSelector) ->
+  $(buttonSelector).click((event) ->
+    $(this).addClass('disabled')
+    regex = /client_(\d+)/g;
+    clientId = evaluateExp(event.currentTarget.id, regex)
+    $.post "/tutor/dashboard/send_request/?user_id=#{clientId}"
+    return
+  )
+  return
+
+buildDialog = (selector, title, cbOpen) ->
+  $(selector).dialog
+    title: title
+    autoOpen: false
+    closeOnEscape: true
+    modal: true
+    width: 500
+    dialogClass: dialogMainClass
+    resizable: false
+    open: () ->
+      fixCloseButton(this)
+      if cbOpen
+        cbOpen()
+  return
+
+buildDasboardView = ->
   cleanFormData()
-  $(dialogUpdateAchievementId).dialog
-    title: $(dialogUpdateOpenerSelector).children()[0].textContent
-    autoOpen: false
-    closeOnEscape: true
-    modal: true
-    width: 500
-    dialogClass: dialogMainClass
-    resizable: false
-    open: () ->
-      fixCloseButton(this)
+  titleDialogUpdateAchievement = $(dialogUpdateOpenerSelector).children()[0].textContent
+  buildDialog(dialogUpdateAchievementId, titleDialogUpdateAchievement)
 
-  $(dialogContentId).dialog
-    title: $(dialogOpenerId).text()
-    autoOpen: false
-    closeOnEscape: true
-    modal: true
-    width: 500
-    dialogClass: dialogMainClass
-    resizable: false
-    open: () ->
-      cleanFormData()
-      fixCloseButton(this)
+  titleDialoNewAchievement = $(buttonDialogDashboardNewAchievementSelector).text()
+  buildDialog(dialogDashboardNewAchievementSelector, titleDialoNewAchievement, () -> (
+    cleanFormData()
+  ))
 
-  $(dialogOpenerId).click ->
-    $(dialogContentId).dialog 'open'
+  titleDialogSendStudentRequest = $(buttonDialogDashboardSendRequestSelector).text()
+  buildDialog(dialogSendStudentRequestSelector, titleDialogSendStudentRequest)
+
+  $(buttonDialogDashboardNewAchievementSelector).click ->
+    $(dialogDashboardNewAchievementSelector).dialog 'open'
+    return
+
+  $(buttonDialogDashboardSendRequestSelector).click ->
+    $(dialogSendStudentRequestSelector).dialog 'open'
     return
 
   $(studentSearchFormId).on "submit", (e)->
@@ -111,9 +142,27 @@ buildDialog = ->
       addEventHadlerForTutorEditAchievement(dialogUpdateOpenerSelector, dialogUpdateAchievementId)
     return
 
+  $(clientsSearchFormInputSelector).keyup((e)->
+    if e.keyCode == 13
+      value = e.target.value
+      $(listDashboardClientsWrapperSelector).html('loading...')
+      $.get "/tutor/dashboard/get_clients?search=#{value}", (res) ->
+        $(listDashboardClientsWrapperSelector).html(res)
+        $wrapper = $(listDashboardClientsWrapperSelector)
+        $wrapper.infinitePages
+          debug: true
+          buffer: 300
+          context: listDashboardClientsWrapperSelector
+        $(listDashboardClientsWrapperSelector).find(".pagination").hide()
+        addEventHadlerForTutorSendRequest(buttonDashboardSendRequestSelector)
+        return
+    return
+  )
+
   #Load initial events
   addEventHadlerForUserReport(openReportButtonSelector)
   addEventHadlerForTutorEditAchievement(dialogUpdateOpenerSelector, dialogUpdateAchievementId)
+  addEventHadlerForTutorSendRequest(buttonDashboardSendRequestSelector)
 
   $(formId).find(imageContentId).on "content_media_appended", (e, imageLinkElem) ->
     configRemoveItems(imageLinkElem)
@@ -124,7 +173,7 @@ isDashboardPage = ->
 
 loadPage = ->
   if isDashboardPage()
-    buildDialog()
+    buildDasboardView()
   return
 
 $(document).on "ready page:load", loadPage

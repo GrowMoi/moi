@@ -28,8 +28,22 @@ module Tutor
 
     expose(:tutor_achievement, attributes: :tutor_achievement_params)
 
+    expose(:all_clients) {
+      if params[:search]
+        UserClientSearch.new(q:params[:search]).results
+      else
+        User.where(:role => :cliente)
+      end
+    }
+
+    expose(:clients) {
+      all_clients.where.not(
+        id: tutor_students.map(&:id)
+      ).page(params[:page])
+    }
+
     def achievements
-      render partial: "achievements_list"
+      render partial: "tutor/dashboard/lists/achievements_list"
     end
 
     def index
@@ -37,7 +51,11 @@ module Tutor
     end
 
     def students
-      render partial: "students_list"
+      render partial: "tutor/dashboard/lists/students_list"
+    end
+
+    def get_clients
+      render partial: "tutor/dashboard/lists/clients_list"
     end
 
     def new_achievement
@@ -53,7 +71,7 @@ module Tutor
     end
 
     def edit_achievement
-      render partial: "edit_achievement"
+      render partial: "tutor/dashboard/dialogs/edit_achievement"
     end
 
     def update_achievement
@@ -67,6 +85,24 @@ module Tutor
         render nothing: true,
           status: :unprocessable_entity
       end
+    end
+
+    def send_request
+      tutor_request = current_user.tutor_requests_sent.new(
+        user_id: params[:user_id]
+      )
+      if tutor_request.save
+        flash[:success] = I18n.t(
+          "views.tutor.moi.tutor_request.created",
+          name: tutor_request.user.name
+        )
+      else
+        flash[:error] = I18n.t(
+          "views.tutor.moi.tutor_request.not_created",
+          name: tutor_request.user.name
+        )
+      end
+      render :js => "window.location = '/tutor/dashboard'"
     end
 
     private

@@ -1,10 +1,11 @@
 .container-tutor-internal.container-dashboard
   .dashboard-grid-container
     .dashboard-row
-      = render "achievements_card"
-      = render "users_card"
+      = render "tutor/dashboard/cards/achievements_card"
+      = render "tutor/dashboard/cards/users_card"
 
   //dialogs
-  = render "new_achievement"
-  = render "edit_achievement"
+  = render "tutor/dashboard/dialogs/new_achievement"
+  = render "tutor/dashboard/dialogs/edit_achievement"
+  = render "tutor/dashboard/dialogs/send_student_request"
 

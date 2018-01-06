@@ -10,7 +10,7 @@
             = text_field_tag :search, "", class:"search-form-input", autocomplete: "off"
 
     ul.list-group.list-group-flush#achievements-list
-      = render "achievements_list"
+      = render "tutor/dashboard/lists/achievements_list"
 
     .moi-card-actions
       = button_tag t("views.tutor.dashboard.card_achievements.new_achievement"),
