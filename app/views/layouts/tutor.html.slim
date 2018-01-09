@@ -5,6 +5,7 @@ html
     title moi
     = stylesheet_link_tag    "tutor", media: "all", "data-turbolinks-track" => true
     = javascript_include_tag "tutor", "data-turbolinks-track" => true
+    = html_import_tag "tutor_components", "data-turbolinks-track" => true
     = csrf_meta_tags
 
   body

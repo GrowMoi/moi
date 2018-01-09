@@ -267,6 +267,8 @@ GEM
     newrelic_rpm (3.14.0.305)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
+    nokogumbo (1.4.13)
+      nokogiri
     orm_adapter (0.5.0)
     paper_trail (4.0.0.beta2)
       activerecord (>= 3.0, < 6.0)
@@ -279,6 +281,11 @@ GEM
       cliver (~> 0.3.1)
       multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
+    polymer-rails (1.0.8)
+      nokogiri (~> 1.6)
+      nokogumbo (~> 1.1)
+      rails (>= 3.1.0)
+      sprockets (< 3.0.0)
     powerpack (0.1.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -494,6 +501,7 @@ DEPENDENCIES
   paper_trail (~> 4.0.0.beta)
   pg
   poltergeist (~> 1.6)
+  polymer-rails (~> 1.0.0)
   pry-rails
   puma
   pusher

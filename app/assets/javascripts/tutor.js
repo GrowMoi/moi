@@ -8,5 +8,6 @@
 //= require bootstrap
 //= require chosen.jquery.min
 //= require jquery.infinite-pages
+//= require webcomponentsjs/webcomponents-lite
 //= require_tree ./tutor
 //= require ./admin/contents_form/media_uploader_helper.js
