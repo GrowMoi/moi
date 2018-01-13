@@ -185,6 +185,7 @@ Moi::Application.routes.draw do
         get :students
         get :get_clients
         post :send_request
+        get :download_tutor_analytics
       end
     end
 

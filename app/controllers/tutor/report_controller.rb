@@ -30,7 +30,7 @@ module Tutor
       data = []
       if user_tutor.present?
         user = user_tutor.user
-        data = AnalyticService::UtilsStatistic.new(user, nil).format_donut_chart_data
+        data = AnalyticService::UtilsStatistic.new(user, nil).contents_learnt_by_branch
       end
       render json: {
         data: data

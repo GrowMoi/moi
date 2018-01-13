@@ -105,6 +105,30 @@ module Tutor
       render :js => "window.location = '/tutor/dashboard'"
     end
 
+    def download_tutor_analytics
+      @statistics_by_user = []
+      tutor_students.each do |student|
+          statistics = student.generate_statistics(
+            [
+              "total_neurons_learnt",
+              "total_contents_learnt",
+              "contents_learnt_by_branch",
+              "user_test_answers"
+            ]
+          )
+
+          @statistics_by_user.push({
+            student: student,
+            statistics: statistics
+          })
+      end
+
+      respond_to do |format|
+        format.html
+        format.xls
+      end
+    end
+
     private
 
     def tutor_achievement_params

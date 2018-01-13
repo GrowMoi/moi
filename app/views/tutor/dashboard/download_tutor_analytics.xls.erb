@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Username</Data></Cell>
+        <Cell><Data ss:Type="String">Nombre</Data></Cell>
+        <Cell><Data ss:Type="String">Email</Data></Cell>
+        <Cell><Data ss:Type="String">Contenidos aprendidos en total</Data></Cell>
+        <Cell><Data ss:Type="String"><%= @statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title] %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title] %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title] %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title] %></Data></Cell>
+        <Cell><Data ss:Type="String">Neuronas aprendidas</Data></Cell>
+        <Cell><Data ss:Type="String">Preguntas respondidas</Data></Cell>
+        <Cell><Data ss:Type="String">Resultado</Data></Cell>
+      </Row>
+    <% @statistics_by_user.each do |statistics| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= statistics[:student].username %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= statistics[:student].name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= statistics[:student].email %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["total_contents_learnt"][:value]%></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["contents_learnt_by_branch"][:value][0][:total_contents_learnt]%></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["contents_learnt_by_branch"][:value][1][:total_contents_learnt]%></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["contents_learnt_by_branch"][:value][2][:total_contents_learnt]%></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["contents_learnt_by_branch"][:value][3][:total_contents_learnt]%></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["total_neurons_learnt"][:value]%></Data></Cell>
+        <% if statistics[:statistics]["user_test_answers"][:value][0].present? %>
+          <Cell><Data ss:Type="String"><%= statistics[:statistics]["user_test_answers"][:value][0][:question][:question] %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= if statistics[:statistics]["user_test_answers"][:value][0][:question][:correct_answer] == true then "correcto" else "incorrecto" end  %></Data></Cell>
+        <% end %>
+        <% !if statistics[:statistics]["user_test_answers"][:value][0].present? %>
+          <Cell><Data ss:Type="String"></Data></Cell>
+          <Cell><Data ss:Type="String"></Data></Cell>
+        <% end %>
+      </Row>
+
+      <% if statistics[:statistics]["user_test_answers"][:value].kind_of?(Array) && statistics[:statistics]["user_test_answers"][:value].size >= 2 %>
+        <% statistics[:statistics]["user_test_answers"][:value].each_with_index do |test, index| %>
+          <% next if index == 0 %>
+          <Row>
+            <Cell><Data ss:Type="String"></Data></Cell>
+            <Cell><Data ss:Type="String"></Data></Cell>
+            <Cell><Data ss:Type="String"></Data></Cell>
+            <Cell><Data ss:Type="String"></Data></Cell>
+            <Cell><Data ss:Type="String"></Data></Cell>
+            <Cell><Data ss:Type="String"></Data></Cell>
+            <Cell><Data ss:Type="String"></Data></Cell>
+            <Cell><Data ss:Type="String"></Data></Cell>
+            <Cell><Data ss:Type="String"></Data></Cell>
+            <Cell><Data ss:Type="String"><%= test[:question][:question] %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= if test[:question][:correct_answer] == true then "correcto" else "incorrecto" end %></Data></Cell>
+          </Row>
+        <% end %>
+      <% end %>
+
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
