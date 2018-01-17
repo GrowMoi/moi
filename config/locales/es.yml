@@ -275,7 +275,7 @@
           achievement_label: "Recompensa"
           achievement_input_info: "Establezca una recompensa que recibirá el o los usuarios al completar los contenidos recomendados."
           send: "Enviar Recomendaciones"
-          new_achievement:  "Agregar una nueva recompensa"
+          new_achievement:  "Nueva recompensa"
       dashboard:
         achievement_request:
           created: "Se ha creado una nueva recompensa."
@@ -288,7 +288,9 @@
         card_users:
           title: "Mis Alumnos"
           show_report: "Generar Reporte"
-          send_request: "Enviar solicitud para nuevo alumno"
+          send_request: "Solicitud nuevo alumno"
+          loading_report: "Generando reporte..."
+          export_xls: "Exportar a Excel"
       common:
         form_achievements:
           name: "Nombre"

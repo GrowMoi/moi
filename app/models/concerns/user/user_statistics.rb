@@ -19,7 +19,8 @@ class User < ActiveRecord::Base
         "used_time",
         "user_test_answers",
         "total_contents_learnt",
-        "contents_learnt_by_branch"
+        "contents_learnt_by_branch",
+        "content_learnings_with_reading_times"
       ]
       if fields.empty?
         default_fields.each do |field|
@@ -61,7 +62,8 @@ class User < ActiveRecord::Base
       if field.eql?("average_used_time_by_content") then result = average_used_time_by_content(self) end
       if field.eql?("user_test_answers") then result = user_test_answers(self) end
       if field.eql?("total_contents_learnt") then result = total_contents_learnt(self) end
-      if field.eql?("contents_learnt_by_branch") then result = contents_learnt_by_branch(self) end
+      if field.eql?("contents_learnt_by_branch") then result = get_contents_learnt_by_branch(self) end
+      if field.eql?("content_learnings_with_reading_times") then result =  content_learnings_with_reading_times(self) end
       return result
     end
 
@@ -219,9 +221,25 @@ class User < ActiveRecord::Base
       }
     end
 
-    def contents_learnt_by_branch(user)
+    def get_contents_learnt_by_branch(user)
       {
         value: AnalyticService::UtilsStatistic.new(user, nil).contents_learnt_by_branch,
+        meta: {}
+      }
+    end
+
+    def content_learnings_with_reading_times(user)
+      res = []
+      content_reading_times = user.content_reading_times.select(:content_id, :time).group(:content_id).sum(:time)
+      user.content_learnings.find_each do |content_learning|
+        value = content_reading_times.detect{|k,v| k == content_learning[:content_id]}
+        res.push ({
+          content: content_learning.content,
+          time_reading: value.present? ? value[1] : 0
+        })
+      end
+      {
+        value: res,
         meta: {}
       }
     end

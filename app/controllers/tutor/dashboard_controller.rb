@@ -113,7 +113,8 @@ module Tutor
               "total_neurons_learnt",
               "total_contents_learnt",
               "contents_learnt_by_branch",
-              "user_test_answers"
+              "user_test_answers",
+              "content_learnings_with_reading_times"
             ]
           )
 

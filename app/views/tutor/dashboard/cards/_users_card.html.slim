@@ -18,5 +18,11 @@
                 class: "moi-card-button button-dialog-dashboard-new-achievement",
                 id: "button-dialog-dashboard-send-request"
 
-      = link_to "Excel", download_tutor_analytics_tutor_dashboard_index_path(format: "xls")
-
+      moi-download-button(
+        href="#{download_tutor_analytics_tutor_dashboard_index_path(format: 'xls')}"
+        text="#{t("views.tutor.dashboard.card_users.export_xls")}"
+        filename="reporte_#{Time.now.to_formatted_s(:number)}.xls"
+        loading-text="#{t("views.tutor.dashboard.card_users.loading_report")}"
+        mime-type="application/xls"
+        class="moi-card-download-button"
+      )
