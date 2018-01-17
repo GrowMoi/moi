@@ -281,7 +281,7 @@ GEM
       cliver (~> 0.3.1)
       multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
-    polymer-elements-rails (1.0.1)
+    polymer-paper-rails (1.0.0.pre.rc.3)
       polymer-rails (~> 1.0, >= 1.0.3)
     polymer-rails (1.0.8)
       nokogiri (~> 1.6)
@@ -503,7 +503,7 @@ DEPENDENCIES
   paper_trail (~> 4.0.0.beta)
   pg
   poltergeist (~> 1.6)
-  polymer-elements-rails (~> 1.0.0)
+  polymer-paper-rails (~> 1.0.0.pre.rc.3)
   polymer-rails (~> 1.0.0)
   pry-rails
   puma
