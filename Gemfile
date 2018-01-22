@@ -64,6 +64,7 @@ gem 'foreman'
 gem 'pusher'
 gem 'jquery-infinite-pages'
 gem 'enumerize', '~> 2.0'
+gem 'paypal-sdk-rest'
 
 gem 'polymer-rails', '~> 1.0.0'
 
