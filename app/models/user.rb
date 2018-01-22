@@ -127,6 +127,7 @@ class User < ActiveRecord::Base
     has_many :my_achievements,
              source: :admin_achievement,
              through: :user_admin_achievements
+   has_many :payments
   end
 
 

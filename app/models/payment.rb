@@ -12,4 +12,11 @@
 #
 
 class Payment < ActiveRecord::Base
+  belongs_to :user
+
+  begin :validations
+    validates :payment_id, :source, :total,
+              presence: true
+  end
+
 end
