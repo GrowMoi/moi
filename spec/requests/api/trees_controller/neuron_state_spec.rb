@@ -12,6 +12,12 @@ RSpec.describe Api::TreesController,
     )
   }
 
+  let(:params) {
+    {
+      username: current_user.username
+    }
+  }
+
   let!(:root_learning) {
     # learn something on root so that
     # we can see root's children
@@ -65,7 +71,7 @@ RSpec.describe Api::TreesController,
              content: b.contents.first
     }
 
-    before { get "/api/tree" }
+    before { get "/api/tree", params }
 
     it {
       a = child_by_title(response_root, "a")
