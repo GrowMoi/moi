@@ -65,36 +65,6 @@ RSpec.describe Api::RecommendedContentsController,
     end
   end
 
-  describe "kind" do
-    let!(:same_kind_contents) {
-      count = TreeService::RecommendedContentsFetcher::COUNT
-      1.upto(count).map do
-        create :content,
-               :approved,
-               :with_media,
-               kind: kind,
-               neuron: child
-      end
-    }
-
-    let!(:other_content) {
-      other_kind = (Content::KINDS - Array(kind)).sample
-      create :content,
-             :approved,
-             :with_media,
-             kind: other_kind,
-             neuron: child
-    }
-
-    before { get endpoint }
-
-    it "includes contents of same kind" do
-      same_kind_contents.each do |content|
-        expect_to_see_in_collection(content)
-      end
-    end
-  end
-
   describe "when not enough of same kind" do
     # ATM we only serve of same kind
   end
