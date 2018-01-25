@@ -290,7 +290,10 @@
           show_report: "Generar Reporte"
           send_request: "Solicitud nuevo alumno"
           loading_report: "Generando reporte..."
-          export_xls: "Exportar a Excel"
+          export_xls: "Exportar todo"
+          export_xls_title: "Exportar a excel los datos de todos los alumnos"
+          export_selected_xls: "Expor. seleccionados"
+          export_selected_xls_title: "Exportar a excel los datos de los alumnos seleccionados"
       common:
         form_achievements:
           name: "Nombre"

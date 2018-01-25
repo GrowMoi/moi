@@ -1,11 +1,32 @@
 .container-tutor-internal.container-dashboard
-  .dashboard-grid-container
-    .dashboard-row
-      = render "tutor/dashboard/cards/achievements_card"
-      = render "tutor/dashboard/cards/users_card"
+  .row
+    .col-xs-6.col-md-4
+      .panel.panel-height-large
+
+
+    .col-xs-6.col-md-4
+      .panel.panel-height-medium
+        = render "tutor/dashboard/cards/students_card"
+
+    .col-xs-6.col-md-4
+      .panel.panel-height-medium
+        = render "tutor/dashboard/cards/achievements_card"
+
+
+    .col-xs-6.col-md-4
+      .panel.panel-height-medium
+        .panel-body
+          | 4 - This is my panel with some content!
+    .col-xs-6.col-md-4
+      .panel.panel-height-medium
+        .panel-body
+          | 5 - This is another panel with even more content!
+
+      //= render "tutor/dashboard/cards/achievements_card"
+      //= render "tutor/dashboard/cards/students_card"
 
   //dialogs
-  = render "tutor/dashboard/dialogs/new_achievement"
-  = render "tutor/dashboard/dialogs/edit_achievement"
-  = render "tutor/dashboard/dialogs/send_student_request"
+  //= render "tutor/dashboard/dialogs/new_achievement"
+  //= render "tutor/dashboard/dialogs/edit_achievement"
+  //= render "tutor/dashboard/dialogs/send_student_request"
 

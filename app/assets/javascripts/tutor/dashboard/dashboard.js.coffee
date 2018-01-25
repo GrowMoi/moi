@@ -9,7 +9,6 @@ clientsSearchFormInputSelector = '#clients-search-form-input'
 buttonDialogDashboardNewAchievementSelector = '#button-dialog-dashboard-new-achievement'
 buttonDialogDashboardSendRequestSelector = '#button-dialog-dashboard-send-request'
 dialogUpdateOpenerSelector = '.button-dashboard-edit-achievement'
-openReportButtonSelector = '.button-dashboard-open-report'
 buttonDashboardSendRequestSelector = '.button-dashboard-send-request'
 
 #dialog selectors
@@ -58,16 +57,6 @@ evaluateExp = (str, regex) ->
   values = regex.exec(str)
   res = if $.isArray(values) && values[1] then values[1] else null
   return res
-
-addEventHadlerForUserReport = (selector) ->
-  $(selector).click((event) ->
-    regex = /tutor_student_(\d+)/g;
-    userId = evaluateExp(event.target.id, regex)
-    origin = window.location.origin
-    window.open(origin + "/tutor/report?user_id=#{userId}", '_blank');
-    return
-  )
-  return
 
 addEventHadlerForTutorEditAchievement = (buttonSelector, dialogSelector) ->
   $(buttonSelector).click((event) ->
@@ -131,7 +120,6 @@ buildDasboardView = ->
     value = e.target.elements[1].value
     $.get "/tutor/dashboard/students?search=#{value}", (res) ->
       $(studentsListId).html(res)
-      addEventHadlerForUserReport(openReportButtonSelector)
     return
 
   $(achievemetSearchFormId).on "submit", (e)->
@@ -159,8 +147,6 @@ buildDasboardView = ->
     return
   )
 
-  #Load initial events
-  addEventHadlerForUserReport(openReportButtonSelector)
   addEventHadlerForTutorEditAchievement(dialogUpdateOpenerSelector, dialogUpdateAchievementId)
   addEventHadlerForTutorSendRequest(buttonDashboardSendRequestSelector)
 

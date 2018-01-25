@@ -1,0 +1,20 @@
+.dashboard-card.dashboard-users-card.moi-card.card-green
+  .moi-card-header
+    .moi-card-title = t("views.tutor.dashboard.card_users.title")
+  .moi-card-content
+    moi-user-card-content(
+        download-btn-href="#{download_tutor_analytics_tutor_dashboard_index_path(format: 'xls')}"
+        download-btn-text="#{t('views.tutor.dashboard.card_users.export_xls')}"
+        download-btn-title="#{t('views.tutor.dashboard.card_users.export_xls_title')}"
+        download-selective-btn-text="#{t('views.tutor.dashboard.card_users.export_selected_xls')}"
+        download-selective-btn-title="#{t('views.tutor.dashboard.card_users.export_selected_xls_title')}"
+        download-btn-filename="reporte_#{Time.now.to_formatted_s(:number)}.xls"
+        download-btn-loading-text="#{t('views.tutor.dashboard.card_users.loading_report')}"
+        download-btn-mime-type="application/xls"
+        download-btn-class="moi-card-download-button"
+        students-api="#{students_tutor_dashboard_index_path}"
+        report-btn-title="#{t('views.tutor.dashboard.card_users.show_report')}"
+      )
+
+
+

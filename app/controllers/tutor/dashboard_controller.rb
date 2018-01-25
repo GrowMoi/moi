@@ -18,9 +18,8 @@ module Tutor
     }
 
     expose(:tutor_students) {
-      if (params[:search])
-        ids = current_user.tutor_requests_sent.accepted.select(:user_id).map(&:user_id)
-        StudentsSearch.new(q: params[:search], ids: ids).results
+      if (params[:ids].present?)
+        User.where(id:params[:ids], role: :cliente)
       else
         current_user.tutor_requests_sent.accepted.map(&:user)
       end
@@ -51,7 +50,9 @@ module Tutor
     end
 
     def students
-      render partial: "tutor/dashboard/lists/students_list"
+      render json: {
+        data: tutor_students
+      }
     end
 
     def get_clients
@@ -113,6 +114,10 @@ module Tutor
               "total_neurons_learnt",
               "total_contents_learnt",
               "contents_learnt_by_branch",
+              "used_time",
+              "average_used_time_by_content",
+              "images_opened_in_count",
+              "total_notes",
               "user_test_answers",
               "content_learnings_with_reading_times"
             ]

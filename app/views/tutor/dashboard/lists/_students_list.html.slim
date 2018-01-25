@@ -1,12 +1,10 @@
 - tutor_students.each do |student|
-  li.list-group-item
-    .name
-      = student.name
-    .username
-      small = student.username
+  moi-selectable-row(name="#{student.name}" username="#{student.username}")
     .options
-      = button_tag "",
-          type: "button",
-          class: "glyphicon glyphicon-stats button-dashboard-open-report",
-          title: t("views.tutor.dashboard.card_users.show_report"),
-          id: "tutor_student_#{student.id}"
+      moi-student-report-button(
+        student-id="#{student.id}"
+        title="#{t('views.tutor.dashboard.card_users.show_report')}"
+        glyphicon="glyphicon-stats"
+        text=""
+        class="moi-student-report-button"
+      )
