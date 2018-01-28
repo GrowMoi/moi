@@ -15,13 +15,14 @@ module Api
       if isValid
         user = User.new(name: params[:name],
                         email: params[:email],
-                        username: params[:name],
-                        password: params[:email],
+                        username: generate_username,
+                        password: generate_password,
                         role: "tutor")
         if user.save
           payment = Payment.new(payment_params)
           payment.user = user
           payment.save
+          TutorMailer.payment_account(user.name, user.password).deliver_now
           render nothing: true,
                  status: :accepted
         else
@@ -43,6 +44,14 @@ module Api
         :payment_id,
         :user_id
       )
+    end
+
+    def generate_username
+      username = "moi-" + user.email.parameterize + rand(1000).to_s
+    end
+
+    def generate_password
+      password = Devise.friendly_token.first(10)
     end
   end
 end
