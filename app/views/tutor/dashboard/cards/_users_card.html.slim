@@ -1,0 +1,11 @@
+.dashboard-card.dashboard-users-card.moi-card.card-blue
+  .moi-card-header
+    .moi-card-title = t("views.tutor.dashboard.card_users.title")
+  .moi-card-content
+    moi-user-card-content(
+        users-api="#{get_clients_tutor_dashboard_index_path}"
+        send-request-btn-text="#{t('views.tutor.dashboard.card_users.send_request')}"
+        send-request-btn-title="#{t('views.tutor.dashboard.card_users.send_request_title')}"
+        send-request-btn-loading-text="#{t('views.tutor.dashboard.card_users.send_request_loading')}"
+        send-request-btn-class="moi-card-custom-button"
+      )

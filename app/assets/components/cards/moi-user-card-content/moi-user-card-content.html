@@ -1,0 +1,31 @@
+<dom-module id="moi-user-card-content">
+    <link rel="stylesheet" href="moi-user-card-content.css" />
+    <template>
+      <div class="list-group list-group-flush" id="listcontainer">
+        <template is="dom-repeat" items="{{clients}}">
+          <moi-selectable-row name="{{item.name}}"
+            username="{{item.username}}"
+            student-id$="{{item.id}}"
+            img-selector="/assets/check_blue.png"
+            img-avatar-active="/assets/client_avatar.png"
+            on-row-selected="onRowSelectedHandler">
+          </moi-selectable-row>
+        </template>
+        <template is="dom-if" if="{{loading}}" restamp>
+          <div>Cargando usuarios...</div>
+        </template>
+      </div>
+
+      <div class="moi-card-actions">
+        <moi-send-client-request-button
+          id="btnsend"
+          text="{{sendRequestBtnText}}"
+          title$="{{sendRequestBtnTitle}}"
+          loading-text="{{sendRequestBtnLoadingText}}"
+          class$="{{sendRequestBtnClass}}"
+          ids="{{clientsSelected}}">
+        </moi-send-client-request-button>
+      </div>
+    </template>
+    <script src="moi-user-card-content.js"></script>
+  </dom-module>

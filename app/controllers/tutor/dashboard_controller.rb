@@ -56,7 +56,9 @@ module Tutor
     end
 
     def get_clients
-      render partial: "tutor/dashboard/lists/clients_list"
+      render json: {
+        data: clients
+      }
     end
 
     def new_achievement

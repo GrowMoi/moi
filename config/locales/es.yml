@@ -285,15 +285,19 @@
           new_achievement:  "Agregar una nueva recompensa"
           title_update: "Actualizar recompensa"
           edit: "Editar Recompensa"
-        card_users:
+        card_students:
           title: "Mis Alumnos"
           show_report: "Generar Reporte"
-          send_request: "Solicitud nuevo alumno"
           loading_report: "Generando reporte..."
           export_xls: "Exportar todo"
           export_xls_title: "Exportar a excel los datos de todos los alumnos"
           export_selected_xls: "Expor. seleccionados"
           export_selected_xls_title: "Exportar a excel los datos de los alumnos seleccionados"
+        card_users:
+          title: "Usuarios"
+          send_request: "Enviar Solicitud"
+          send_request_title: "Enviar solicitud a nuevos alumnos"
+          send_request_loading: "Enviando solicitudes..."
       common:
         form_achievements:
           name: "Nombre"
