@@ -6,6 +6,12 @@ Polymer
     sendRequestBtnTitle: String
     sendRequestBtnLoadingText: String
     sendRequestBtnClass: String
+    searchValue:
+      type: String,
+      value: ''
+    count:
+      type: Number
+      value: 1
     loading:
       type: Boolean
       value: false
@@ -19,17 +25,44 @@ Polymer
         return []
 
   ready: ->
-    manager = this
-    manager.loading = true
-    manager = this
+    mainContext = this
+    mainContext.loading = true
+    usersApi = @usersApi
     $(@$.btnsend).addClass('disabled')
+    $(@$.listcontainer).scrollTop(0)
+    $(@$.listcontainer).scroll(@debounce((e)->
+      mainContext.onListScroll(e, mainContext)
+    , 200))
     $.ajax
-      url: @usersApi
+      url: usersApi
       type: 'GET'
+      data:
+        page: mainContext.count
       success: (res) ->
-        manager.loading = false
-        manager.clients = res.data
+        mainContext.loading = false
+        mainContext.clients = res.data
         return
+
+  onListScroll: (e, mainContext) ->
+    usersApi = mainContext.usersApi
+    elem = $(e.currentTarget)
+    diff = elem[0].scrollHeight - elem.scrollTop()
+    scrollBottom = diff is elem.outerHeight()
+    if scrollBottom
+      mainContext.loading = true
+      mainContext.count++
+      $.ajax
+        url: usersApi
+        type: 'GET'
+        data:
+          page: mainContext.count
+          search: mainContext.searchValue
+        success: (res) ->
+          mainContext.loading = false
+          mainContext.clients = mainContext.clients.concat(res.data)
+          return
+    return
+
   onRowSelectedHandler: (e, data) ->
     index = @clientsSelected.indexOf(data)
     if index isnt -1
@@ -41,4 +74,35 @@ Polymer
     else
       $(@$.btnsend).addClass('disabled')
 
+    return
+
+  debounce: (func, delay) ->
+    inDebounce = undefined
+    ->
+      context = this
+      args = arguments
+      clearTimeout inDebounce
+      inDebounce = setTimeout((->
+        func.apply context, args
+        return
+      ), delay)
+      return
+
+  onInputEnter: (e, value) ->
+    mainContext = this
+    @searchValue = value
+    usersApi = @usersApi
+    mainContext.count = 1
+    mainContext.clients = []
+    mainContext.loading = true
+    $.ajax
+      url: usersApi
+      type: 'GET'
+      data:
+        page: mainContext.count
+        search: value
+      success: (res) ->
+        mainContext.loading = false
+        mainContext.clients = res.data
+        return
     return
