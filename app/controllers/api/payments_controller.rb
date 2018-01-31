@@ -22,7 +22,7 @@ module Api
           payment = Payment.new(payment_params)
           payment.user = user
           payment.save
-          TutorMailer.payment_account(user.name, user.password).deliver_now
+          TutorMailer.payment_account(user.name, user.password, user.email).deliver_now
           render nothing: true,
                  status: :accepted
         else
@@ -47,7 +47,7 @@ module Api
     end
 
     def generate_username
-      username = "moi-" + user.email.parameterize + rand(1000).to_s
+      username = "moi-" + params[:email].parameterize + rand(1000).to_s
     end
 
     def generate_password
