@@ -1,11 +1,9 @@
 <dom-module id="moi-input">
   <link rel="stylesheet" href="moi-input.css" />
   <template>
-    <div class="search-form-container search-form-container-moi">
-      <div class="input-serction">
-        <img class="search-form-icon-search" src="/assets/icon_search.png" alt="Icon search">
-        <input type="text" id="inputtxt" on-keydown="checkForEnter" value="{{textValue::input}}">
-      </div>
+    <div class="input-section">
+      <img class="input-icon" src$="{{iconImage}}">
+      <input type="text" id="inputtxt" on-keydown="checkForEnter" value="{{textValue::input}}">
     </div>
   </template>
   <script src="moi-input.js"></script>

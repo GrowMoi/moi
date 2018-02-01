@@ -2,12 +2,6 @@
   .moi-card-header
     .moi-card-title = t("views.tutor.dashboard.card_achievements.title")
   .moi-card-content
-    .search-section
-      = form_tag "#", method: "get", remote: true, class:"search-form", id: "achievemet-search-form" do
-        .search-form-container.search-form-container-moi
-          .input-serction
-            = image_tag "icon_search.png", class: "search-form-icon-search"
-            = text_field_tag :search, "", class:"search-form-input", autocomplete: "off"
 
     ul.list-group.list-group-flush#achievements-list
       = render "tutor/dashboard/lists/achievements_list"

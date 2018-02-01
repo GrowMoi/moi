@@ -91,21 +91,10 @@ module Tutor
     end
 
     def send_request
-      tutor_request = current_user.tutor_requests_sent.new(
-        user_id: params[:user_id]
+      flash[:success] = I18n.t(
+        "views.tutor.dashboard.achievement_request.updated"
       )
-      if tutor_request.save
-        flash[:success] = I18n.t(
-          "views.tutor.moi.tutor_request.created",
-          name: tutor_request.user.name
-        )
-      else
-        flash[:error] = I18n.t(
-          "views.tutor.moi.tutor_request.not_created",
-          name: tutor_request.user.name
-        )
-      end
-      render :js => "window.location = '/tutor/dashboard'"
+      redirect_to :back
     end
 
     def download_tutor_analytics

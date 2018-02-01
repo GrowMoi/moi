@@ -4,19 +4,21 @@ Polymer
     name: String
     username: String
     imgSelector: String
+    imgAvatar: String
     imgAvatarActive: String
-    imgAvatar:
-      type: String
-      value: '/assets/client_avatar_inactive.png'
+    imgAvatarInactive: String
     selected:
       type: Boolean
       value: false
     studentId: String
+  ready: ->
+    @imgAvatar = @imgAvatarInactive
+    return
   selectRow: ->
     @selected = !@selected
     if @selected
       @imgAvatar = @imgAvatarActive
     else
-      @imgAvatar = '/assets/client_avatar_inactive.png'
+      @imgAvatar = @imgAvatarInactive
     @fire 'row-selected', @studentId
     return

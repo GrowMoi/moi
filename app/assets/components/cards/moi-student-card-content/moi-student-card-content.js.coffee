@@ -10,6 +10,9 @@ Polymer
     downloadBtnLoadingText: String
     downloadBtnMimeType: String
     downloadBtnClass: String
+    rowImgActive: String
+    rowImgInactive: String
+    rowImgCheck: String
     studentsApi: String
     reportBtnTitle: String
     loading:

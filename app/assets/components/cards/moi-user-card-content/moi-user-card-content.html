@@ -2,15 +2,16 @@
     <link rel="stylesheet" href="moi-user-card-content.css" />
     <template>
       <div>
-        <moi-input on-press-enter="onInputEnter"></moi-input>
+        <moi-input on-press-enter="onInputEnter" id="inputcontainer" icon-image="[[inputIconImage]]"></moi-input>
       </div>
       <div class="list-group list-group-flush" id="listcontainer">
         <template is="dom-repeat" items="{{clients}}">
-          <moi-selectable-row name="{{item.name}}"
-            username="{{item.username}}"
-            student-id$="{{item.id}}"
-            img-selector="/assets/check_blue.png"
-            img-avatar-active="/assets/client_avatar.png"
+          <moi-selectable-row name="[[item.name]]"
+            username="[[item.username]]"
+            student-id$="[[item.id]]"
+            img-selector="[[rowImgCheck]]"
+            img-avatar-active="[[rowImgActive]]"
+            img-avatar-inactive="[[rowImgInactive]]"
             on-row-selected="onRowSelectedHandler">
           </moi-selectable-row>
         </template>
@@ -22,11 +23,13 @@
       <div class="moi-card-actions">
         <moi-send-client-request-button
           id="btnsend"
-          text="{{sendRequestBtnText}}"
-          title$="{{sendRequestBtnTitle}}"
-          loading-text="{{sendRequestBtnLoadingText}}"
-          class$="{{sendRequestBtnClass}}"
-          ids="{{clientsSelected}}">
+          send-request-api="[[sendRequestBtnApi]]"
+          text="[[sendRequestBtnText]]"
+          title$="[[sendRequestBtnTitle]]"
+          loading-text="[[sendRequestBtnLoadingText]]"
+          class$="[[sendRequestBtnClass]]"
+          ids="[[clientsSelected]]"
+          on-user-request-sent="onUserRequestSent">
         </moi-send-client-request-button>
       </div>
     </template>

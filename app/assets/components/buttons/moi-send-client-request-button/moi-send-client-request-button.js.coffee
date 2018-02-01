@@ -3,19 +3,24 @@ Polymer
   properties:
     text: String
     loadingText: String
+    sendRequestApi: String
     ids:
       type: Array
         value: ->
           return []
   onClick: ->
-    @prevText = @text
-    @text = @loadingText
-    $(@$.btnsend).addClass 'disabled'
+    mainContext = this
+    mainContext.prevText = mainContext.text
+    mainContext.text = mainContext.loadingText
+    $(mainContext.$.btnsend).addClass 'disabled'
     $.ajax
-      url: @href
-      type: 'GET'
+      url: mainContext.sendRequestApi
+      type: 'POST'
       data:
-        ids: @ids
+        ids: mainContext.ids
       success: (res) ->
+        $(mainContext.$.btnsend).removeClass 'disabled'
+        mainContext.text = mainContext.prevText
+        mainContext.fire 'user-request-sent'
         return
     return

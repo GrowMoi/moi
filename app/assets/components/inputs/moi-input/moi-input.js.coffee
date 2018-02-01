@@ -1,6 +1,7 @@
 Polymer
   is: 'moi-input'
   properties:
+    iconImage: String
     textValue:
       type: String
       value: ''

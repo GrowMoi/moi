@@ -6,6 +6,11 @@ Polymer
     sendRequestBtnTitle: String
     sendRequestBtnLoadingText: String
     sendRequestBtnClass: String
+    sendRequestBtnApi: String
+    rowImgActive: String
+    rowImgInactive: String
+    rowImgCheck: String
+    inputIconImage: String
     searchValue:
       type: String,
       value: ''
@@ -23,8 +28,15 @@ Polymer
       type: Array
       value: ->
         return []
+    test:
+      type: String,
+      value: 'aaaaaa'
 
   ready: ->
+    @init()
+    return
+
+  init: ->
     mainContext = this
     mainContext.loading = true
     usersApi = @usersApi
@@ -47,7 +59,7 @@ Polymer
     usersApi = mainContext.usersApi
     elem = $(e.currentTarget)
     diff = elem[0].scrollHeight - elem.scrollTop()
-    scrollBottom = diff is elem.outerHeight()
+    scrollBottom = Math.round(diff) <= elem.outerHeight()
     if scrollBottom
       mainContext.loading = true
       mainContext.count++
@@ -92,9 +104,8 @@ Polymer
     mainContext = this
     @searchValue = value
     usersApi = @usersApi
-    mainContext.count = 1
-    mainContext.clients = []
-    mainContext.loading = true
+    mainContext.resetParams()
+    $(mainContext.$.btnsend).addClass('disabled')
     $.ajax
       url: usersApi
       type: 'GET'
@@ -105,4 +116,16 @@ Polymer
         mainContext.loading = false
         mainContext.clients = res.data
         return
+    return
+
+  onUserRequestSent: (e) ->
+    @resetParams()
+    @init()
+    return
+
+  resetParams: ->
+    @count = 1
+    @clients = []
+    @loading = true
+    @clientsSelected = []
     return
