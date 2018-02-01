@@ -88,7 +88,8 @@ Rails.application.configure do
 
   config.middleware.insert_before 0, "Rack::Cors" do
     allow do
-      origins "http://moi.growmoi.com"
+      origins "http://moi.growmoi.com",
+              "http://moi-backend.growmoi.com"
 
       resource "/api/*",
                headers: :any,
