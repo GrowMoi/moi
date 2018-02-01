@@ -1,28 +1,44 @@
 html
   head
     meta[content="text/html; charset = UTF-8" http-equiv="Content-Type"]
+    style[type="text/css" media="screen"]
+      | .text-highlight { color: #00bff4; }
+      | .margin-sides { margin: 25px; }
+      | .img-section { margin: 10px 0; }
+      | .img-section img { width: 100%; height: auto; }
+      | .password-section { display: flex; flex-direction: column; align-items: center;}
+      | .text { margin-bottom: 10px; }
+      | .password { padding: 20px; background-color: #00bff4; max-width: 100px; color: white; }
   body
-    p
-      | Estimadx #{@tutor_name},
-    p
-      | Desde este momento, tienes el poder para impulsar dinámicamente el desarrollo intelectual de tu (s) niñx (s).
+    .img-section
+      = image_tag attachments['moi_title.png'].url
+    .header-section.margin-sides
+      p.text-highlight
+        | Estimadx #{@tutor_name},
+      p
+        | Desde este momento, tienes el poder para impulsar dinámicamente el desarrollo intelectual de tu(s) niñx(s).
+    .img-section
+      = image_tag attachments['moicartaimg.png'].url
+    .password-section
+      .text
+        | Tu clave de tutor
+      .password
+        | #{@tutor_password}
       br
-    p
-      | Tu clave de tutor es: #{@tutor_password}
-      br
-    p
-      | La plataforma de&nbsp;
-      = link_to "Análisis, Recomendaciones y Recompensas Moi", @url_dashboard, target: "_blank"
-      | , te permitirá seguir todos los pasos que da tu pequeñx genix en su proceso independiente de aprendizaje.
-      | Estos datos te permitirán conocer exactamente que conceptos y contenidos está leyendo, cuanto tiempo le toma, cuáles son sus intereses principales y sus áreas de menor interés.
-    p
-      | Podrás motivar sus aprendizajes enviándole (s) mensajes, recomendaciones de contenidos, estableciendo recompensas y pruebas especiales.
-      | Además, podrás recibir notificaciones de progreso periodicas o instantaneas segun tus preferencias.
-      | En cualquier momento, podrás generar un reporte individual o grupal para evidenciar los aprendizajes de tu niñx.
-    p
-      | Para empezar, haz clic&nbsp;
-      = link_to "aquí", @url_sign_in, target: "_blank"
-      | , ingresa tu email y contraseña y envía una solicitud al estudiante al que quieres motivar.
-      br
-    p
-      | Si tienes preguntas, escribenos a learning@growmoi.com
+    .message-section.margin-sides
+      p
+        | La plataforma de&nbsp;
+        = link_to "Análisis, Recomendaciones y Recompensas Moi", @url_dashboard, target: "_blank"
+        | , te permitirá seguir todos los pasos que da tu pequeñx genix en su proceso independiente de aprendizaje.
+        | Estos datos te permitirán conocer exactamente que conceptos y contenidos está leyendo, cuanto tiempo le toma, cuáles son sus intereses principales y sus áreas de menor interés.
+      p
+        | Podrás motivar sus aprendizajes enviándole (s) mensajes, recomendaciones de contenidos, estableciendo recompensas y pruebas especiales.
+        | Además, podrás recibir notificaciones de progreso periodicas o instantaneas segun tus preferencias.
+        | En cualquier momento, podrás generar un reporte individual o grupal para evidenciar los aprendizajes de tu niñx.
+      p
+        | Para empezar, haz clic&nbsp;
+        = link_to "aquí", @url_sign_in, target: "_blank"
+        | , ingresa tu email y contraseña y envía una solicitud al estudiante al que quieres motivar.
+        br
+      p
+        | Si tienes preguntas, escribenos a learning@growmoi.com
