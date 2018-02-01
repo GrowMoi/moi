@@ -57,7 +57,11 @@ module Tutor
 
     def get_clients
       render json: {
-        data: clients
+        data: clients,
+        meta: {
+          total_items: clients.total_count,
+          total_pages: clients.total_pages
+        }
       }
     end
 

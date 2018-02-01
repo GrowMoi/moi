@@ -5,6 +5,9 @@
         <moi-input on-press-enter="onInputEnter" id="inputcontainer" icon-image="[[inputIconImage]]"></moi-input>
       </div>
       <div class="list-group list-group-flush" id="listcontainer">
+        <template is="dom-if" if="{{loading}}" restamp>
+          <div class="loading-users">Cargando usuarios...</div>
+        </template>
         <template is="dom-repeat" items="{{clients}}">
           <moi-selectable-row name="[[item.name]]"
             username="[[item.username]]"
@@ -14,9 +17,6 @@
             img-avatar-inactive="[[rowImgInactive]]"
             on-row-selected="onRowSelectedHandler">
           </moi-selectable-row>
-        </template>
-        <template is="dom-if" if="{{loading}}" restamp>
-          <div>Cargando usuarios...</div>
         </template>
       </div>
 

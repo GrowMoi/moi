@@ -298,6 +298,8 @@
           send_request: "Enviar Solicitud"
           send_request_title: "Enviar solicitud a nuevos alumnos"
           send_request_loading: "Enviando solicitudes..."
+        card_recommendations:
+          title: "Recomendaciones"
       common:
         form_achievements:
           name: "Nombre"

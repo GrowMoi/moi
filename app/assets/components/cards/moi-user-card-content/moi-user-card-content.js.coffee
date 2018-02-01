@@ -28,9 +28,6 @@ Polymer
       type: Array
       value: ->
         return []
-    test:
-      type: String,
-      value: 'aaaaaa'
 
   ready: ->
     @init()
@@ -53,6 +50,7 @@ Polymer
       success: (res) ->
         mainContext.loading = false
         mainContext.clients = res.data
+        mainContext.totalItems = res.meta.total_items
         return
 
   onListScroll: (e, mainContext) ->
@@ -60,9 +58,12 @@ Polymer
     elem = $(e.currentTarget)
     diff = elem[0].scrollHeight - elem.scrollTop()
     scrollBottom = Math.round(diff) <= elem.outerHeight()
-    if scrollBottom
+    existsData = mainContext.clients.length < mainContext.totalItems
+
+    if scrollBottom and existsData
       mainContext.loading = true
       mainContext.count++
+      $(mainContext.$.listcontainer).addClass('stop-scrolling')
       $.ajax
         url: usersApi
         type: 'GET'
@@ -72,6 +73,8 @@ Polymer
         success: (res) ->
           mainContext.loading = false
           mainContext.clients = mainContext.clients.concat(res.data)
+          mainContext.totalItems = res.meta.total_items
+          $(mainContext.$.listcontainer).removeClass('stop-scrolling')
           return
     return
 
@@ -115,6 +118,7 @@ Polymer
       success: (res) ->
         mainContext.loading = false
         mainContext.clients = res.data
+        mainContext.totalItems = res.meta.total_items
         return
     return
 
