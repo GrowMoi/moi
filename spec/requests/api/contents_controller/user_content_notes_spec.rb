@@ -8,7 +8,7 @@ RSpec.describe Api::ContentsController,
   let(:current_user) { create :user }
 
   subject {
-    JSON.parse(response.body).fetch("content")
+    JSON.parse(response.body)
   }
 
   describe "includes user notes in content" do

@@ -8,7 +8,7 @@ RSpec.describe Api::ContentsController,
   let(:current_user) { create :user }
 
   subject {
-    JSON.parse(response.body).fetch("content")
+    JSON.parse(response.body)
   }
 
   describe "includes links in content" do
@@ -18,7 +18,6 @@ RSpec.describe Api::ContentsController,
       create :content_link,
              content: content
     }
-
     before {
       get "/api/neurons/#{neuron.id}/contents/#{content.id}"
     }

@@ -6,18 +6,6 @@ RSpec.describe Api::NeuronsController,
 
   pending "/api/neurons deprecated in favour of /api/tree"
 
-  describe "unauthenticated #index" do
-    let!(:neuron) {
-      # we rely on root being present
-      create :neuron
-    }
-    before { get "/api/neurons" }
-    subject { response }
-    it {
-      is_expected.to have_http_status(:unauthorized)
-    }
-  end
-
   describe "neuron scope" do
     include_examples "requests:current_user"
 

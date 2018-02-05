@@ -9,6 +9,12 @@ RSpec.describe Api::TreesController,
 
   include_examples "requests:current_user"
 
+  let(:params) {
+    {
+      username: current_user.username
+    }
+  }
+
   let(:endpoint) {
     "/api/tree"
   }
@@ -24,7 +30,7 @@ RSpec.describe Api::TreesController,
           .fetch("root")
     }
 
-    before { get endpoint }
+    before { get endpoint, params }
 
     %w(
       id
@@ -56,7 +62,7 @@ RSpec.describe Api::TreesController,
 
     before {
       root_neuron root
-      get endpoint
+      get endpoint, params
     }
 
     it "doesn't include neurons if I haven't learnt anything" do
@@ -71,7 +77,7 @@ RSpec.describe Api::TreesController,
                content: root.contents.first
       }
 
-      before { get endpoint, response.headers }
+      before { get endpoint, params }
 
       it "includes visible neuron" do
         expect_to_see_in_collection(a)
@@ -104,7 +110,7 @@ RSpec.describe Api::TreesController,
 
       before {
         root_neuron root
-        get endpoint, response.headers
+        get endpoint, params
       }
 
       let(:neurons) {

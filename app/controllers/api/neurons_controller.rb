@@ -1,6 +1,5 @@
 module Api
   class NeuronsController < BaseController
-    before_action :authenticate_user!
 
     expose(:root_neuron) {
       TreeService::RootFetcher.root_neuron
@@ -28,9 +27,10 @@ module Api
         "shows neuron"
     param :id, Integer, required: true
     def show
+      serializer = current_user ? Api::NeuronSerializer : Api::NeuronPublicSerializer
       respond_with(
         neuron,
-        serializer: Api::NeuronSerializer
+        serializer: serializer
       )
     end
   end

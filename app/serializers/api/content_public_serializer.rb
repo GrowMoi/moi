@@ -15,7 +15,7 @@
 #
 
 module Api
-  class ContentSerializer < ActiveModel::Serializer
+  class ContentPublicSerializer < ActiveModel::Serializer
     root false
     attributes :id,
                :neuron_id,
@@ -33,18 +33,19 @@ module Api
                :user_notes,
                :content_tasks,
                :neuron_can_read,
-               :favorite
+               :favorite,
+               :read_only
 
     def read
-      current_user.already_read?(object)
+      false
     end
 
     def learnt
-      current_user.already_learnt?(object)
+      false
     end
 
     def user_notes
-      object.user_note(current_user).try :note
+      nil
     end
 
     def media
@@ -56,15 +57,15 @@ module Api
     end
 
     def favorite
-      ContentFavorite.where(
-        user: current_user,
-        content: object
-      ).exists?
+      false
     end
 
     def neuron_can_read
-      visible_neurons = TreeService::PublicScopeFetcher.new(@scope).neurons
-      visible_neurons.map(&:id).include?(object.neuron.id)
+      false
+    end
+
+    def read_only
+      true
     end
 
     def videos
@@ -74,6 +75,5 @@ module Api
       )
     end
 
-    alias_method :current_user, :scope
   end
 end
