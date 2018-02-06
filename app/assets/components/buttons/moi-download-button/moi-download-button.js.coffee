@@ -11,28 +11,28 @@ Polymer
         value: ->
           return []
   onClick: ->
-    manager = this
-    manager.prevText = manager.text
-    manager.text = manager.loadingText
-    manager.button = manager.$['download-button']
-    $(manager.button).addClass 'disabled'
+    this.prevText = this.text
+    this.text = this.loadingText
+    this.button = this.$['download-button']
+    $(this.button).addClass 'disabled'
+    that = this
     $.ajax
-      url: manager.href
+      url: that.href
       type: 'GET'
       data:
-        ids: manager.ids
+        ids: that.ids
       success: (res) ->
-        manager.download.call manager, res
+        that.download.call that, res
         return
     return
   download: (res) ->
-    manager = this
-    file = new Blob([ res ], type: manager.mimeType)
+    that = this
+    file = new Blob([ res ], type: that.mimeType)
     downloadLink = document.createElement('a')
-    downloadLink.download = manager.filename
+    downloadLink.download = that.filename
     downloadLink.href = window.URL.createObjectURL(file)
     downloadLink.style.display = 'none'
     downloadLink.click()
-    manager.text = manager.prevText
-    $(manager.button).removeClass 'disabled'
+    that.text = that.prevText
+    $(that.button).removeClass 'disabled'
     return

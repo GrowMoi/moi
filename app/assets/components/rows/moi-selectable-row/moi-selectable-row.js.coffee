@@ -12,13 +12,13 @@ Polymer
       value: false
     studentId: String
   ready: ->
-    @imgAvatar = @imgAvatarInactive
+    this.imgAvatar = this.imgAvatarInactive
     return
   selectRow: ->
-    @selected = !@selected
-    if @selected
-      @imgAvatar = @imgAvatarActive
+    this.selected = !this.selected
+    if this.selected
+      this.imgAvatar = this.imgAvatarActive
     else
-      @imgAvatar = @imgAvatarInactive
-    @fire 'row-selected', @studentId
+      this.imgAvatar = this.imgAvatarInactive
+    this.fire 'row-selected', this.studentId
     return

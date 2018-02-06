@@ -8,5 +8,5 @@ Polymer
 
   checkForEnter: (e) ->
     if e.keyCode is 13
-      @fire 'press-enter', @textValue
+      this.fire 'press-enter', this.textValue
 

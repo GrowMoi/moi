@@ -3,18 +3,18 @@
     <template>
 
       <div class="list-group list-group-flush">
-        <template is="dom-repeat" items="{{students}}">
-          <moi-selectable-row name="[[item.name]]"
-            username="[[item.username]]"
-            student-id$="[[item.id]]"
-            img-selector="[[rowImgCheck]]"
-            img-avatar-active="[[rowImgActive]]"
-            img-avatar-inactive="[[rowImgInactive]]"
+        <template is="dom-repeat" items="{{ students }}">
+          <moi-selectable-row name="[[ item.name ]]"
+            username="[[ item.username ]]"
+            student-id$="[[ item.id ]]"
+            img-selector="[[ rowImgCheck ]]"
+            img-avatar-active="[[ rowImgActive ]]"
+            img-avatar-inactive="[[ rowImgInactive ]]"
             on-row-selected="onRowSelectedHandler">
             <div class="options">
               <moi-student-report-button
-                student-id$="[[item.id]]"
-                title$="[[reportBtnTitle]]"
+                student-id$="[[ item.id ]]"
+                title$="[[ reportBtnTitle ]]"
                 glyphicon="glyphicon-stats"
                 text=""
                 class="moi-student-report-button">
@@ -22,7 +22,7 @@
             </div>
           </moi-selectable-row>
         </template>
-        <template is="dom-if" if="{{loading}}" restamp>
+        <template is="dom-if" if="{{ loading }}" restamp>
           <div>Cargando alumnos...</div>
         </template>
       </div>
@@ -30,23 +30,23 @@
       <div class="moi-card-actions">
         <moi-download-button
           id="btnSelectiveDownload"
-          href$="[[downloadBtnHref]]"
-          text="[[downloadSelectiveBtnText]]"
-          title$="[[downloadSelectiveBtnTitle]]"
-          filename="[[downloadBtnFilename]]"
-          loading-text="[[downloadBtnLoadingText]]"
-          mime-type="[[downloadBtnMimeType]]"
-          class$="[[downloadBtnClass]]"
-          ids="{{studentsSelected}}">
+          href$="[[ downloadBtnHref ]]"
+          text="[[ downloadSelectiveBtnText ]]"
+          title$="[[ downloadSelectiveBtnTitle ]]"
+          filename="[[ downloadBtnFilename ]]"
+          loading-text="[[ downloadBtnLoadingText ]]"
+          mime-type="[[ downloadBtnMimeType ]]"
+          class$="[[ downloadBtnClass ]]"
+          ids="{{ studentsSelected }}">
         </moi-download-button>
         <moi-download-button
-          href$="[[downloadBtnHref]]"
-          text="[[downloadBtnText]]"
-          title$="[[downloadBtnTitle]]"
-          filename="[[downloadBtnFilename]]"
-          loading-text="[[downloadBtnLoadingText]]"
-          mime-type="[[downloadBtnMimeType]]"
-          class$="[[downloadBtnClass}}">
+          href$="[[ downloadBtnHref ]]"
+          text="[[ downloadBtnText ]]"
+          title$="[[ downloadBtnTitle ]]"
+          filename="[[ downloadBtnFilename ]]"
+          loading-text="[[ downloadBtnLoadingText ]]"
+          mime-type="[[ downloadBtnMimeType ]]"
+          class$="[[ downloadBtnClass ]]">
         </moi-download-button>
       </div>
     </template>

@@ -11,83 +11,66 @@ Polymer
     rowImgInactive: String
     rowImgCheck: String
     inputIconImage: String
-    searchValue:
-      type: String,
-      value: ''
-    count:
-      type: Number
-      value: 1
-    loading:
-      type: Boolean
-      value: false
-    clients:
-      type: Array
-      value: ->
-        return []
-    clientsSelected:
-      type: Array
-      value: ->
-        return []
 
   ready: ->
-    @init()
+    this.searchValue = ''
+    this.initValues()
+    this.init()
     return
 
   init: ->
-    mainContext = this
-    mainContext.loading = true
-    usersApi = @usersApi
-    $(@$.btnsend).addClass('disabled')
-    $(@$.listcontainer).scrollTop(0)
-    $(@$.listcontainer).scroll(@debounce((e)->
-      mainContext.onListScroll(e, mainContext)
+    this.loading = true
+    $(this.$.btnsend).addClass('disabled')
+    $(this.$.listcontainer).scrollTop(0)
+    that = this
+    $(this.$.listcontainer).scroll(this.debounce((e)->
+      that.onListScroll(e, that)
     , 200))
     $.ajax
-      url: usersApi
+      url: that.usersApi
       type: 'GET'
       data:
-        page: mainContext.count
+        page: that.count
       success: (res) ->
-        mainContext.loading = false
-        mainContext.clients = res.data
-        mainContext.totalItems = res.meta.total_items
+        that.loading = false
+        that.clients = res.data
+        that.totalItems = res.meta.total_items
         return
 
-  onListScroll: (e, mainContext) ->
-    usersApi = mainContext.usersApi
+  onListScroll: (e, that) ->
     elem = $(e.currentTarget)
     diff = elem[0].scrollHeight - elem.scrollTop()
     scrollBottom = Math.round(diff) <= elem.outerHeight()
-    existsData = mainContext.clients.length < mainContext.totalItems
+    existsData = that.clients.length < that.totalItems
 
     if scrollBottom and existsData
-      mainContext.loading = true
-      mainContext.count++
-      $(mainContext.$.listcontainer).addClass('stop-scrolling')
+      that.loading = true
+      that.count++
+      $(that.$.listcontainer).addClass('stop-scrolling')
       $.ajax
-        url: usersApi
+        url: that.usersApi
         type: 'GET'
         data:
-          page: mainContext.count
-          search: mainContext.searchValue
+          page: that.count
+          search: that.searchValue
         success: (res) ->
-          mainContext.loading = false
-          mainContext.clients = mainContext.clients.concat(res.data)
-          mainContext.totalItems = res.meta.total_items
-          $(mainContext.$.listcontainer).removeClass('stop-scrolling')
+          that.loading = false
+          that.clients = that.clients.concat(res.data)
+          that.totalItems = res.meta.total_items
+          $(that.$.listcontainer).removeClass('stop-scrolling')
           return
     return
 
   onRowSelectedHandler: (e, data) ->
-    index = @clientsSelected.indexOf(data)
+    index = this.clientsSelected.indexOf(data)
     if index isnt -1
-      @splice('clientsSelected', index, 1)
+      this.splice('clientsSelected', index, 1)
     else
-      @push('clientsSelected', data)
-    if @clientsSelected.length > 0
-      $(@$.btnsend).removeClass('disabled')
+      this.push('clientsSelected', data)
+    if this.clientsSelected.length > 0
+      $(this.$.btnsend).removeClass('disabled')
     else
-      $(@$.btnsend).addClass('disabled')
+      $(this.$.btnsend).addClass('disabled')
 
     return
 
@@ -104,32 +87,31 @@ Polymer
       return
 
   onInputEnter: (e, value) ->
-    mainContext = this
-    @searchValue = value
-    usersApi = @usersApi
-    mainContext.resetParams()
-    $(mainContext.$.btnsend).addClass('disabled')
+    this.searchValue = value
+    this.initValues()
+    $(this.$.btnsend).addClass('disabled')
+    that = this
     $.ajax
-      url: usersApi
+      url: that.usersApi
       type: 'GET'
       data:
-        page: mainContext.count
+        page: that.count
         search: value
       success: (res) ->
-        mainContext.loading = false
-        mainContext.clients = res.data
-        mainContext.totalItems = res.meta.total_items
+        that.loading = false
+        that.clients = res.data
+        that.totalItems = res.meta.total_items
         return
     return
 
   onUserRequestSent: (e) ->
-    @resetParams()
-    @init()
+    this.initValues()
+    this.init()
     return
 
-  resetParams: ->
-    @count = 1
-    @clients = []
-    @loading = true
-    @clientsSelected = []
+  initValues: ->
+    this.count = 1
+    this.clients = []
+    this.loading = true
+    this.clientsSelected = []
     return

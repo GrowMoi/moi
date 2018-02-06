@@ -41,8 +41,14 @@ module Tutor
       ).page(params[:page])
     }
 
+    expose(:contents) {
+      Content.where(approved: true)
+    }
+
     def achievements
-      render partial: "tutor/dashboard/lists/achievements_list"
+      render json: {
+        data: tutor_achievements
+      }
     end
 
     def index
@@ -99,6 +105,12 @@ module Tutor
         "views.tutor.dashboard.achievement_request.updated"
       )
       redirect_to :back
+    end
+
+    def get_contents
+      render json: {
+        data: contents
+      }
     end
 
     def download_tutor_analytics

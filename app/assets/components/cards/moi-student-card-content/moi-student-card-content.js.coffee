@@ -15,38 +15,30 @@ Polymer
     rowImgCheck: String
     studentsApi: String
     reportBtnTitle: String
-    loading:
-      type: Boolean
-      value: false
-    students:
-      type: Array
-      value: ->
-        return []
-    studentsSelected:
-      type: Array
-      value: ->
-        return []
 
   ready: ->
-    manager = this
-    $(@$.btnSelectiveDownload).addClass('disabled')
-    manager.loading = true
+    this.students = []
+    this.studentsSelected = []
+    $(this.$.btnSelectiveDownload).addClass('disabled')
+    this.loading = true
+    that = this
     $.ajax
-      url: @studentsApi
+      url: this.studentsApi
       type: 'GET'
       success: (res) ->
-        manager.loading = false
-        manager.students = res.data
+        that.loading = false
+        that.students = res.data
         return
-  onRowSelectedHandler: (e, data) ->
-    index = @studentsSelected.indexOf(data)
-    if index isnt -1
-      @splice('studentsSelected', index, 1)
-    else
-      @push('studentsSelected', data)
 
-    if @studentsSelected.length > 0
-      $(@$.btnSelectiveDownload).removeClass('disabled')
+  onRowSelectedHandler: (e, data) ->
+    index = this.studentsSelected.indexOf(data)
+    if index isnt -1
+      this.splice('studentsSelected', index, 1)
     else
-      $(@$.btnSelectiveDownload).addClass('disabled')
+      this.push('studentsSelected', data)
+
+    if this.studentsSelected.length > 0
+      $(this.$.btnSelectiveDownload).removeClass('disabled')
+    else
+      $(this.$.btnSelectiveDownload).addClass('disabled')
     return

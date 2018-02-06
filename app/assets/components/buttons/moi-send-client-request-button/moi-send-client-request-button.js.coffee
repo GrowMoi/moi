@@ -9,18 +9,18 @@ Polymer
         value: ->
           return []
   onClick: ->
-    mainContext = this
-    mainContext.prevText = mainContext.text
-    mainContext.text = mainContext.loadingText
-    $(mainContext.$.btnsend).addClass 'disabled'
+    that = this
+    that.prevText = that.text
+    that.text = that.loadingText
+    $(that.$.btnsend).addClass 'disabled'
     $.ajax
-      url: mainContext.sendRequestApi
+      url: that.sendRequestApi
       type: 'POST'
       data:
-        ids: mainContext.ids
+        ids: that.ids
       success: (res) ->
-        $(mainContext.$.btnsend).removeClass 'disabled'
-        mainContext.text = mainContext.prevText
-        mainContext.fire 'user-request-sent'
+        $(that.$.btnsend).removeClass 'disabled'
+        that.text = that.prevText
+        that.fire 'user-request-sent'
         return
     return
