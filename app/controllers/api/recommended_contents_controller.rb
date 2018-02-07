@@ -1,6 +1,5 @@
 module Api
   class RecommendedContentsController < BaseController
-    before_action :authenticate_user!
 
     respond_to :json
 
@@ -10,8 +9,14 @@ module Api
     param :neuron_id, Integer, required: true
     param :kind, String, required: true
     def show
-      respond_with recommended_contents,
-                   root: :contents
+     respond_with(
+      ActiveModel::ArraySerializer.new(
+        recommended_contents,
+        root: :contents,
+        each_serializer: current_user ? Api::ContentSerializer : Api::ContentPublicSerializer,
+        scope: current_user
+      )
+    )
     end
 
     private

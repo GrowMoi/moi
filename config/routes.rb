@@ -75,6 +75,8 @@ Moi::Application.routes.draw do
                 only: [:update]
       resource :tree_image,
                 only: [:update]
+      resource :profile,
+                only: [:show]
       resource :recommended_neurons,
                 only: [:show]
       resources :achievements, only: [:index] do

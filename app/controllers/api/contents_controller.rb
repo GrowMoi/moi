@@ -1,6 +1,6 @@
 module Api
   class ContentsController < BaseController
-    before_action :authenticate_user!
+    before_action :authenticate_user!, except: [:show]
 
     expose(:content) {
       neuron.contents.find(params[:id])
@@ -211,7 +211,7 @@ module Api
     def show
       respond_with(
         content,
-        serializer: Api::ContentSerializer
+        serializer: current_user ? Api::ContentSerializer : Api::ContentPublicSerializer
       )
     end
 

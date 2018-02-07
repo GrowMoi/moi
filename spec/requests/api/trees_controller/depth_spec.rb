@@ -8,6 +8,12 @@ RSpec.describe Api::TreesController,
 
   let!(:root) { create :neuron_visible_for_api }
 
+  let(:params) {
+    {
+      username: current_user.username
+    }
+  }
+
   let(:response_depth) {
     JSON.parse(response.body)
         .fetch("meta")
@@ -19,7 +25,7 @@ RSpec.describe Api::TreesController,
   before { root_neuron root }
 
   describe "1 level depth" do
-    before { get "/api/tree" }
+    before { get "/api/tree", params }
     it { is_expected.to eq(1) }
   end
 
@@ -51,7 +57,7 @@ RSpec.describe Api::TreesController,
              content: b.contents.first
     }
 
-    before { get "/api/tree" }
+    before { get "/api/tree", params }
     it { is_expected.to eq(3) }
   end
 
@@ -108,7 +114,7 @@ RSpec.describe Api::TreesController,
       end
     }
 
-    before { get "/api/tree" }
+    before { get "/api/tree", params }
     it { is_expected.to eq(5) }
   end
 end
