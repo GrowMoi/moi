@@ -16,13 +16,14 @@ module TreeService
                 :depth_calculator,
                 :user
 
-    def initialize(user)
+    def initialize(user, neuron_id)
       @user = user
       @scope = PublicScopeFetcher.new(user).neurons
       @children_fetcher = ChildrenIdsFetcher.new(scope)
       @depth = 0
       @depth_calculator = NeuronDepthCalculator.new
       @root = serialize(RootFetcher.root_neuron)
+      @neuron_id = neuron_id;
     end
 
     private
