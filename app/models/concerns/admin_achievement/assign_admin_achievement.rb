@@ -55,17 +55,16 @@ class AdminAchievement < ActiveRecord::Base
     def learnt_a_content_in_each_public_neuron(user)
       public_neurons = Neuron.where(is_public: true, active: true)
                              .sort_by(&:position)
+      give_achievement = false
       runLoop = true
       i = 0
-      until runLoop == false
+      until runLoop == false || i == public_neurons.count
         neuron = public_neurons[i]
         runLoop = user.already_learnt_any?(neuron.contents)
+        give_achievement = runLoop
         i += 1
-        if i == public_neurons.count
-          runLoop = false
-        end
       end
-      runLoop
+      give_achievement
     end
 
     ##
