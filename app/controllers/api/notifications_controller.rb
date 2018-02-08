@@ -6,7 +6,7 @@ module Api
     before_action :authenticate_user!
 
     expose(:tutor_notifications) {
-      current_user.tutor_requests_received
+      current_user.tutor_requests_received.pending
     }
 
     expose(:admin_notifications) {
