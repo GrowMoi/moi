@@ -289,7 +289,7 @@
           title: "Mis Alumnos"
           show_report: "Generar Reporte"
           loading_report: "Generando reporte..."
-          export_xls: "Exportar todo"
+          export_xls: "Expor. todo"
           export_xls_title: "Exportar a excel los datos de todos los alumnos"
           export_selected_xls: "Expor. seleccionados"
           export_selected_xls_title: "Exportar a excel los datos de los alumnos seleccionados"
@@ -300,6 +300,9 @@
           send_request_loading: "Enviando solicitudes..."
         card_recommendations:
           title: "Enviar Recomendaciones"
+        card_send_notifications:
+          title: "Enviar mensaje"
+          sent: "Se ha enviado una notificacion a tus alumnos."
       common:
         form_achievements:
           name: "Nombre"

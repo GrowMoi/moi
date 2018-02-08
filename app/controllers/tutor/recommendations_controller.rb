@@ -40,8 +40,11 @@ module Tutor
       else
         #flash[:error] = I18n.t()
       end
-
-      redirect_to :back
+      if request.xhr?
+        render :js => "window.location = '#{request.referrer}'"
+      else
+        redirect_to :back
+      end
     end
 
     def new_achievement

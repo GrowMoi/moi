@@ -45,6 +45,8 @@ module Tutor
       Content.where(approved: true)
     }
 
+    expose(:notification, attributes: :notification_params)
+
     def achievements
       render json: {
         data: tutor_achievements
@@ -104,13 +106,25 @@ module Tutor
       flash[:success] = I18n.t(
         "views.tutor.dashboard.achievement_request.updated"
       )
-      redirect_to :back
+      render js: "window.location = '#{request.referrer}'"
     end
 
     def get_contents
       render json: {
         data: contents
       }
+    end
+
+    def send_notification
+      notification.user = current_user
+      if notification.save
+        flash[:success] = I18n.t(
+          "views.tutor.dashboard.card_send_notifications.sent"
+        )
+      else
+        #flash[:error] = I18n.t()
+      end
+      redirect_to :back
     end
 
     def download_tutor_analytics
@@ -149,6 +163,20 @@ module Tutor
         :name,
         :description,
         :image
+      )
+    end
+
+    def notification_params
+      params.require(:notification).permit(
+        :title,
+        :description,
+        :notification_videos_attributes => [
+          :url
+        ],
+        :notification_medium_attributes => [
+          :media,
+          :media_cache
+        ]
       )
     end
 

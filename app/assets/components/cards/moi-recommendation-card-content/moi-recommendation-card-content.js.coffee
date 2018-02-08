@@ -9,7 +9,8 @@ Polymer
   ready: ->
     this.achievements = []
     this.contents = []
-
+    this.sending = false
+    $(this.$.btnsend).addClass 'disabled'
     this.apiParams =
       tutor_achievement: '',
       content_tutor_recommendations: []
@@ -28,6 +29,7 @@ Polymer
       if res2[0].data
         that.contents = that.formatData(res2[0].data, 'title')
       that.loading = false
+      $(that.$.btnsend).removeClass 'disabled'
     )
 
     return
@@ -47,16 +49,13 @@ Polymer
     return
 
   sendRecommendation: ->
-    this.loading = true
     that = this
+    $(that.$.btnsend).addClass 'disabled'
     $.ajax
       url: that.createRecomendationsApi
       type: 'POST'
       data:
         tutor_recommendation: this.apiParams
-      success: (res) ->
-        that.loading = false
-        return
     return
 
   formatData: (items, textParamName) ->

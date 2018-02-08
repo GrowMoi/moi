@@ -5,6 +5,7 @@ Polymer
     textValue:
       type: String
       value: ''
+      notify: true
 
   checkForEnter: (e) ->
     if e.keyCode is 13
