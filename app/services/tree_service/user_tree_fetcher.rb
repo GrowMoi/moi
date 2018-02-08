@@ -16,14 +16,14 @@ module TreeService
                 :depth_calculator,
                 :user
 
-    def initialize(user, neuron_id)
+    def initialize(user, desired_neuron_path)
       @user = user
       @scope = PublicScopeFetcher.new(user).neurons
       @children_fetcher = ChildrenIdsFetcher.new(scope)
       @depth = 0
       @depth_calculator = NeuronDepthCalculator.new
+      @desired_neuron_path = desired_neuron_path
       @root = serialize(RootFetcher.root_neuron)
-      @neuron_id = neuron_id;
     end
 
     private
@@ -46,7 +46,8 @@ module TreeService
     def serialize(neuron)
       serializer_klass.new(
         neuron,
-        scope: user
+        scope: user,
+        context: { desired_neuron_path: @desired_neuron_path }
       ).tap do |serializer|
         update_tree_depth(serializer.object)
         serializer.children = children_for(
