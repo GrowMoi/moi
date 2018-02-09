@@ -28,6 +28,7 @@ module Admin
     end
 
     def update
+      level_quiz.created_by = current_user
       if level_quiz.save
         redirect_to admin_level_quiz_path(level_quiz), notice: I18n.t("views.level_quizzes.updated")
       else

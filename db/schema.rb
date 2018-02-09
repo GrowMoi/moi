@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171203223125) do
+ActiveRecord::Schema.define(version: 20180209034755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(version: 20171203223125) do
     t.text     "content_ids", default: [],              array: true
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "created_by"
   end
 
   create_table "neurons", force: :cascade do |t|
@@ -279,6 +280,7 @@ ActiveRecord::Schema.define(version: 20171203223125) do
     t.integer  "user_id",                 null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "client_id"
   end
 
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
@@ -289,6 +291,7 @@ ActiveRecord::Schema.define(version: 20171203223125) do
     t.integer  "quiz_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "client_id"
   end
 
   add_index "players", ["quiz_id"], name: "index_players_on_quiz_id", using: :btree
@@ -319,6 +322,7 @@ ActiveRecord::Schema.define(version: 20171203223125) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "level_quiz_id", null: false
+    t.integer  "created_by"
   end
 
   add_index "quizzes", ["level_quiz_id"], name: "index_quizzes_on_level_quiz_id", using: :btree
@@ -525,13 +529,17 @@ ActiveRecord::Schema.define(version: 20171203223125) do
   add_foreign_key "content_readings", "neurons"
   add_foreign_key "content_readings", "users"
   add_foreign_key "content_videos", "contents"
+  add_foreign_key "level_quizzes", "users", column: "created_by"
   add_foreign_key "notification_links", "notifications"
   add_foreign_key "notification_media", "notifications"
   add_foreign_key "notification_videos", "notifications"
+  add_foreign_key "notifications", "users", column: "client_id"
   add_foreign_key "players", "quizzes"
+  add_foreign_key "players", "users", column: "client_id"
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
   add_foreign_key "quizzes", "level_quizzes"
+  add_foreign_key "quizzes", "users", column: "created_by"
   add_foreign_key "tutor_achievements", "users", column: "tutor_id"
   add_foreign_key "tutor_recommendations", "users", column: "tutor_id"
   add_foreign_key "user_content_preferences", "users"

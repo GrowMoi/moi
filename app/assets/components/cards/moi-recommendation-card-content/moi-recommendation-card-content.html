@@ -11,10 +11,10 @@
       <div class="row-select">
         <moi-chosen class="moi-chosen" items="{{ contents }}" on-item-selected="onChoosenItemSelected" on-item-deselected="onChoosenItemDeselected" placeholder="[[ contentsPlaceholder ]]"></moi-chosen>
       </div>
+      <div class="moi-card-custom-button send-button-container">
+        <button id="btnsend" on-tap="sendRecommendation">Enviar</button>
+      </div>
     </template>
-    <div class="moi-card-custom-button send-button-container">
-      <button id="btnsend" on-tap="sendRecommendation">Enviar</button>
-    </div>
   </template>
   <script src="moi-recommendation-card-content.js"></script>
 </dom-module>

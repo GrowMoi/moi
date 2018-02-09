@@ -9,7 +9,6 @@ Polymer
   ready: ->
     this.achievements = []
     this.contents = []
-    this.sending = false
     $(this.$.btnsend).addClass 'disabled'
     this.apiParams =
       tutor_achievement: '',

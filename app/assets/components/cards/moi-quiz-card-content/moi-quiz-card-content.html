@@ -1,0 +1,31 @@
+<dom-module id="moi-quiz-card-content">
+  <link rel="stylesheet" href="moi-quiz-card-content.css" />
+  <template>
+    <template is="dom-if" if="{{ loading }}" restamp>
+      <div>Cargando datos...</div>
+    </template>
+    <template is="dom-if" if="{{ !loading }}" restamp>
+      <div class="form-group">
+        <moi-select items="{{ levels }}" on-item-selected="onLevelSelected" placeholder="[[ levelsPlaceholder ]]"></moi-select>
+      </div>
+      <div class="form-group">
+        <moi-select items="{{ students }}" on-item-selected="onStudentSelected" placeholder="[[ studentsPlaceholder ]]"></moi-select>
+      </div>
+      <div class="form-group questions-list">
+        <label>Preguntas</label>
+        <div class="list">
+          <template is="dom-repeat" items="{{ questions }}">
+            <div>
+              <span>*</span>
+              <span>{{ item.title }}</span>
+            </div>
+          </template>
+        </div>
+      </div>
+      <div class="moi-card-custom-button">
+        <button class="btn action-send" on-tap="sendQuiz">Enviar</button>
+      </div>
+    </template>
+  </template>
+  <script src="moi-quiz-card-content.js"></script>
+</dom-module>

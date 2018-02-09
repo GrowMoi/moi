@@ -280,6 +280,8 @@
         achievement_request:
           created: "Se ha creado una nueva recompensa."
           updated: "La recompensa ha sido actualizada."
+        quizzes:
+          created: "Se ha creado un nuevo test para el usuario %{client_name}."
         card_achievements:
           title: "Recompensas"
           new_achievement:  "Agregar una nueva recompensa"
@@ -303,6 +305,8 @@
         card_send_notifications:
           title: "Enviar mensaje"
           sent: "Se ha enviado una notificacion a tus alumnos."
+        card_quizzes:
+          title: "Crear un Test"
       common:
         form_achievements:
           name: "Nombre"

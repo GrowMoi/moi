@@ -45,6 +45,18 @@ module Tutor
       Content.where(approved: true)
     }
 
+    expose(:questions) {
+      if params[:content_ids]
+        Content.where(id: params[:content_ids])
+      else
+        []
+      end
+    }
+
+    expose(:level_quizzes) {
+      LevelQuiz.order(created_at: :desc)
+    }
+
     expose(:notification, attributes: :notification_params)
 
     def achievements
@@ -73,16 +85,28 @@ module Tutor
       }
     end
 
+    def get_level_quizzes
+      render json: {
+        data: level_quizzes
+      }
+    end
+
+    def get_questions
+      render json: {
+        data: questions
+      }
+    end
+
     def new_achievement
       if tutor_achievement.save!
         flash[:success] = I18n.t(
           "views.tutor.dashboard.achievement_request.created"
         )
-        redirect_to :back
       else
-        render nothing: true,
-          status: :unprocessable_entity
+        #flash[:error] = I18n.t()
       end
+
+      redirect_to :back
     end
 
     def edit_achievement
@@ -95,11 +119,10 @@ module Tutor
         flash[:success] = I18n.t(
           "views.tutor.dashboard.achievement_request.updated"
         )
-        redirect_to :back
       else
-        render nothing: true,
-          status: :unprocessable_entity
+        #flash[:error] = I18n.t()
       end
+      redirect_to :back
     end
 
     def send_request
@@ -113,6 +136,29 @@ module Tutor
       render json: {
         data: contents
       }
+    end
+
+    def create_quiz
+      quiz = Quiz.new
+      player = Player.new
+      user = User.find(quiz_params[:client_id])
+      level = LevelQuiz.find(quiz_params[:level_quiz_id])
+      player.client_id = user.id
+      player.name = user.name
+      quiz.level_quiz = level
+      quiz.created_by = current_user
+      quiz.players.push(player)
+
+      if quiz.save
+        flash[:success] = I18n.t(
+          "views.tutor.dashboard.quizzes.created",
+          client_name: user.name
+        )
+      else
+        #flash[:error] = I18n.t()
+      end
+
+      render js: "window.location = '#{request.referrer}'"
     end
 
     def send_notification
@@ -178,6 +224,17 @@ module Tutor
           :media_cache
         ]
       )
+    end
+
+    def quiz_params
+      params.require(:quiz).permit(*permitted_attributes)
+    end
+
+    def permitted_attributes
+      [
+        :level_quiz_id,
+        :client_id
+      ]
     end
 
   end

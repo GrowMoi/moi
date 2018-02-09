@@ -1,6 +1,6 @@
 Polymer
   is: 'moi-send-notifications-card-content'
-  params:
+  properties:
     authToken: String
     sendNotificationApi: String
     currentTime:

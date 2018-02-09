@@ -190,6 +190,9 @@ Moi::Application.routes.draw do
         get :download_tutor_analytics
         get :get_contents
         post :send_notification
+        get :get_level_quizzes
+        get :get_questions
+        post :create_quiz
       end
     end
 
