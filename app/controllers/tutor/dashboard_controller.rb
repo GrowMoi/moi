@@ -141,18 +141,25 @@ module Tutor
     def create_quiz
       quiz = Quiz.new
       player = Player.new
-      user = User.find(quiz_params[:client_id])
+      client = User.find(quiz_params[:client_id])
       level = LevelQuiz.find(quiz_params[:level_quiz_id])
-      player.client_id = user.id
-      player.name = user.name
+      player.client_id = client.id
+      player.name = client.name
       quiz.level_quiz = level
       quiz.created_by = current_user
       quiz.players.push(player)
 
       if quiz.save
+        quiz_url = decorate(player).link_to_test
+        Notification.create!(user: current_user,
+                            title: "Nuevo test #{Date.today.to_s}",
+                            description: "Disponible en: #{quiz_url}",
+                            client_id: client.id)
+
         flash[:success] = I18n.t(
           "views.tutor.dashboard.quizzes.created",
-          client_name: user.name
+          client_name: client.name,
+          quiz_url: quiz_url
         )
       else
         #flash[:error] = I18n.t()

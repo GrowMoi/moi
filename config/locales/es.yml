@@ -281,7 +281,7 @@
           created: "Se ha creado una nueva recompensa."
           updated: "La recompensa ha sido actualizada."
         quizzes:
-          created: "Se ha creado un nuevo test para el usuario %{client_name}."
+          created: "Se ha creado un nuevo test para el usuario %{client_name} disponible en %{quiz_url}."
         card_achievements:
           title: "Recompensas"
           new_achievement:  "Agregar una nueva recompensa"
