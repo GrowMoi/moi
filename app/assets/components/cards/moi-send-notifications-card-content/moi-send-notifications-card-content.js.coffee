@@ -6,12 +6,16 @@ Polymer
     currentTime:
       type: Number
       default: Date.now()
+    notificationTitle:
+      type: String
+      default: ''
+      observer: 'enableSendButton'
   ready: ->
-    this.sending = false
     currentTime = Date.now()
     this.buildInputFileName(currentTime)
+    $(this.$.btnsend).addClass 'disabled'
 
-  testOnChange: (e, val) ->
+  onSelectFile: (e, val) ->
     currentTime = Date.now()
     this.updateInputFileName(currentTime)
 
@@ -24,3 +28,9 @@ Polymer
   updateInputFileName: (currentTime) ->
     this.buildInputFileName(currentTime)
     return
+
+  enableSendButton: (newVal) ->
+    if newVal.length > 0
+      $(this.$.btnsend).removeClass 'disabled'
+    else
+      $(this.$.btnsend).addClass 'disabled'

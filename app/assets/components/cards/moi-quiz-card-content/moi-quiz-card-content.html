@@ -22,10 +22,10 @@
           </template>
         </div>
       </div>
-      <div class="moi-card-custom-button">
-        <button class="btn action-send" on-tap="sendQuiz">Enviar</button>
-      </div>
     </template>
+    <div class="moi-card-custom-button">
+      <button id="btnsend" class="btn action-send" on-tap="sendQuiz">{{ btnSendText }}</button>
+    </div>
   </template>
   <script src="moi-quiz-card-content.js"></script>
 </dom-module>

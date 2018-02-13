@@ -13,6 +13,10 @@ Polymer
     this.students = []
     this.questions = []
     this.loading = true
+    this.btnText = 'Enviar'
+    this.btnSendText = this.btnText
+    this.btnSendingText = 'Enviando..'
+    $(this.$.btnsend).addClass 'disabled'
     this.apiParams =
       level_quiz_id: '',
       client_id: ''
@@ -43,6 +47,7 @@ Polymer
     )
     this.apiParams.level_quiz_id = val
     content_ids = item.content_ids
+    this.enableSendButton()
     that = this
     $.ajax
       url: that.questionsApi
@@ -52,9 +57,12 @@ Polymer
       success: (res) ->
         that.questions = res.data
         return
+    return
 
   onStudentSelected: (e, val) ->
     this.apiParams.client_id = val
+    this.enableSendButton()
+    return
 
   formatData: (items) ->
     return $.map(items, (item) ->
@@ -75,8 +83,18 @@ Polymer
 
   sendQuiz: ->
     that = this
+    $(that.$.btnsend).addClass 'disabled'
+    that.btnSendText = that.btnSendingText
     $.ajax
       url: that.quizzesApi
       type: 'POST'
       data:
         quiz: that.apiParams
+    return
+
+  enableSendButton: ->
+    if (this.apiParams.level_quiz_id is '') or (this.apiParams.client_id is '')
+      $(this.$.btnsend).addClass 'disabled'
+    else
+      $(this.$.btnsend).removeClass 'disabled'
+

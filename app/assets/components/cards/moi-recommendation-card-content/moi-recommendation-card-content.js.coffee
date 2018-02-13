@@ -9,10 +9,15 @@ Polymer
   ready: ->
     this.achievements = []
     this.contents = []
+    this.btnText = 'Enviar'
+    this.btnSendText = this.btnText
+    this.btnSendingText = 'Enviando..'
     $(this.$.btnsend).addClass 'disabled'
     this.apiParams =
       tutor_achievement: '',
       content_tutor_recommendations: []
+
+    this.enableSendButton()
 
     this.loading = true
     that = this
@@ -28,28 +33,31 @@ Polymer
       if res2[0].data
         that.contents = that.formatData(res2[0].data, 'title')
       that.loading = false
-      $(that.$.btnsend).removeClass 'disabled'
     )
 
     return
 
   onItemSelected: (e, val) ->
     this.apiParams.tutor_achievement = val
+    this.enableSendButton()
     return
 
   onChoosenItemSelected: (e, val) ->
     this.apiParams.content_tutor_recommendations.push(val)
+    this.enableSendButton()
     return
 
   onChoosenItemDeselected: (e, val) ->
     index = this.apiParams.content_tutor_recommendations.indexOf(val)
     if index isnt -1
       this.apiParams.content_tutor_recommendations.splice(index, 1)
+    this.enableSendButton()
     return
 
   sendRecommendation: ->
     that = this
     $(that.$.btnsend).addClass 'disabled'
+    that.btnSendText = that.btnSendingText
     $.ajax
       url: that.createRecomendationsApi
       type: 'POST'
@@ -64,3 +72,11 @@ Polymer
         text:item[textParamName]
       }
     )
+
+  enableSendButton: ->
+    if  (this.apiParams.tutor_achievement is '') or
+        (this.apiParams.content_tutor_recommendations.length is 0)
+
+      $(this.$.btnsend).addClass 'disabled'
+    else
+      $(this.$.btnsend).removeClass 'disabled'
