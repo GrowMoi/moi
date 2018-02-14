@@ -17,10 +17,5 @@ Polymer
       url: that.sendRequestApi
       type: 'POST'
       data:
-        ids: that.ids
-      success: (res) ->
-        $(that.$.btnsend).removeClass 'disabled'
-        that.text = that.prevText
-        that.fire 'user-request-sent'
-        return
+        user_ids: that.ids
     return

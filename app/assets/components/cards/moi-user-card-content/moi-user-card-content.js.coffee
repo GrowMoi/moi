@@ -104,11 +104,6 @@ Polymer
         return
     return
 
-  onUserRequestSent: (e) ->
-    this.initValues()
-    this.init()
-    return
-
   initValues: ->
     this.count = 1
     this.clients = []

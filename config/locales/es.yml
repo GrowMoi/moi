@@ -227,8 +227,10 @@
         title_students: "Mis Alumnos"
         user_notification: "%{tutor_name} ha realizado una solicitud para ser tu tutor."
         tutor_request:
-          created: "se ha enviado una solicitud a %{name} para ser su tutor"
-          not_created: "ups, ya existe una solicitud de tutoría a %{name}"
+          created: "Se ha enviado una solicitud a %{name} para ser su tutor"
+          not_created: "Ups, ya existe una solicitud de tutoría a %{name}"
+          created_list: "Se ha enviado una solicitud de tutoría a: %{clients}"
+          not_created_list: "Ups, al parecer algo salio mal, posiblemente ya existan solicitudes de tutoría activas para los usuarios seleccionados."
       analysis:
         analyze: "Seleccione análisis"
         total_neurons_learnt: "Neuronas aprendidas"
