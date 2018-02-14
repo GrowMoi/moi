@@ -2,11 +2,18 @@ module Api
   class TreesController < BaseController
     respond_to :json
 
-    expose(:user_tree) {
+    expose(:user) {
       user = User.find_by_username(params[:username])
+    }
+
+    expose(:user_tree) {
       if user
         TreeService::UserTreeFetcher.new user
       end
+    }
+
+    expose(:total_approved_contents) {
+      Content.where(approved: true).count
     }
 
     api :GET,
@@ -41,7 +48,9 @@ module Api
     def show
       if user_tree
         respond_with tree: { root: user_tree.root },
-                     meta: { depth: user_tree.depth }
+                     meta: { depth: user_tree.depth,
+                            current_learnt_contents: user.content_learnings.count,
+                            total_approved_contents: total_approved_contents}
       else
         render nothing: true,
                 status: 404
