@@ -125,13 +125,6 @@ module Tutor
       redirect_to :back
     end
 
-    def send_request
-      flash[:success] = I18n.t(
-        "views.tutor.dashboard.achievement_request.updated"
-      )
-      render js: "window.location = '#{request.referrer}'"
-    end
-
     def get_contents
       render json: {
         data: contents
