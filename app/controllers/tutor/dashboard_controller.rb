@@ -137,7 +137,7 @@ module Tutor
       client = User.find(quiz_params[:client_id])
       level = LevelQuiz.find(quiz_params[:level_quiz_id])
       player.client_id = client.id
-      player.name = client.name
+      player.name = client.name || client.username
       quiz.level_quiz = level
       quiz.created_by = current_user
       quiz.players.push(player)
