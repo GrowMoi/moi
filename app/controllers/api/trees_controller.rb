@@ -13,7 +13,8 @@ module Api
     }
 
     expose(:total_approved_contents) {
-      Content.where(approved: true).count
+      neuron_ids = Neuron.where(is_public:true).map(&:id)
+      total = Content.where(neuron_id: neuron_ids, approved: true).count
     }
 
     api :GET,
