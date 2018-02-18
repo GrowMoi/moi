@@ -1,4 +1,5 @@
 <dom-module id="moi-student-card-content">
+    <link rel="import" href="../../behaviors/translation/translation.html">
     <link rel="stylesheet" href="moi-student-card-content.css" />
     <template>
 
@@ -14,7 +15,7 @@
             <div class="options">
               <moi-student-report-button
                 student-id$="[[ item.id ]]"
-                title$="[[ reportBtnTitle ]]"
+                title$="[[ t('views.tutor.dashboard.card_students.show_report') ]]"
                 glyphicon="glyphicon-stats"
                 text=""
                 class="moi-student-report-button">
@@ -23,7 +24,7 @@
           </moi-selectable-row>
         </template>
         <template is="dom-if" if="{{ loading }}" restamp>
-          <div>Cargando alumnos...</div>
+          <div>{{ t('views.tutor.dashboard.card_students.loading_students') }}</div>
         </template>
       </div>
 
@@ -31,18 +32,18 @@
         <moi-download-button
           id="btnSelectiveDownload"
           href$="[[ downloadBtnHref ]]"
-          text="[[ downloadSelectiveBtnText ]]"
-          title$="[[ downloadSelectiveBtnTitle ]]"
+          text="[[ t('views.tutor.dashboard.card_students.export_selected_xls') ]]"
+          title$="[[ t('views.tutor.dashboard.card_students.export_selected_xls_title') ]]"
           filename="[[ downloadBtnFilename ]]"
-          loading-text="[[ downloadBtnLoadingText ]]"
+          loading-text="[[ t('views.tutor.dashboard.card_students.loading_report') ]]"
           mime-type="[[ downloadBtnMimeType ]]"
           class$="[[ downloadBtnClass ]]"
           ids="{{ studentsSelected }}">
         </moi-download-button>
         <moi-download-button
           href$="[[ downloadBtnHref ]]"
-          text="[[ downloadBtnText ]]"
-          title$="[[ downloadBtnTitle ]]"
+          text="[[ t('views.tutor.dashboard.card_students.export_xls') ]]"
+          title$="[[ t('views.tutor.dashboard.card_students.export_xls_title') ]]"
           filename="[[ downloadBtnFilename ]]"
           loading-text="[[ downloadBtnLoadingText ]]"
           mime-type="[[ downloadBtnMimeType ]]"

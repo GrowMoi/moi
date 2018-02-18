@@ -1,4 +1,5 @@
 <dom-module id="moi-user-card-content">
+    <link rel="import" href="../../behaviors/translation/translation.html">
     <link rel="stylesheet" href="moi-user-card-content.css" />
     <template>
       <div>
@@ -6,7 +7,7 @@
       </div>
       <div class="list-group list-group-flush" id="listcontainer">
         <template is="dom-if" if="{{ loading }}" restamp>
-          <div class="loading-users">Cargando usuarios...</div>
+          <div class="loading-users">{{ t('views.tutor.dashboard.card_users.loading_users') }}</div>
         </template>
         <template is="dom-repeat" items="{{ clients }}">
           <moi-selectable-row name="[[ item.name ]]"
@@ -24,9 +25,9 @@
         <moi-send-client-request-button
           id="btnsend"
           send-request-api="[[ sendRequestBtnApi ]]"
-          text="[[ sendRequestBtnText ]]"
-          title$="[[ sendRequestBtnTitle ]]"
-          loading-text="[[ sendRequestBtnLoadingText ]]"
+          text="[[ t('views.tutor.dashboard.card_users.send_request') ]]"
+          title$="[[ t('views.tutor.dashboard.card_users.send_request_title') ]]"
+          loading-text="[[ t('views.tutor.dashboard.card_users.send_request_loading') ]]"
           class$="[[ sendRequestBtnClass ]]"
           ids="[[ clientsSelected ]]">
         </moi-send-client-request-button>

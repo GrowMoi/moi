@@ -1,5 +1,6 @@
 Polymer
   is: 'moi-send-notifications-card-content'
+  behaviors: [TranslateBehavior]
   properties:
     authToken: String
     sendNotificationApi: String

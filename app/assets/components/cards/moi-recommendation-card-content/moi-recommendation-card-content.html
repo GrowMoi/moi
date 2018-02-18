@@ -1,8 +1,9 @@
 <dom-module id="moi-recommendation-card-content">
+  <link rel="import" href="../../behaviors/translation/translation.html">
   <link rel="stylesheet" href="moi-recommendation-card-content.css" />
   <template>
     <template is="dom-if" if="{{ loading }}" restamp>
-      <div class="loading-users">Cargando datos...</div>
+      <div class="loading-users">[[ t('views.tutor.dashboard.card_recommendations.loading') ]]</div>
     </template>
     <template is="dom-if" if="{{ !loading }}" restamp>
       <div class="row-select">
@@ -12,9 +13,14 @@
         <moi-chosen class="moi-chosen" items="{{ contents }}" on-item-selected="onChoosenItemSelected" on-item-deselected="onChoosenItemDeselected" placeholder="[[ contentsPlaceholder ]]"></moi-chosen>
       </div>
     </template>
+
     <div class="moi-card-custom-button send-button-container">
+      <button id="btnachievement" on-tap="openDialog">{{ t('views.tutor.dashboard.card_recommendations.btn_achievement_dialog') }}</button>
       <button id="btnsend" on-tap="sendRecommendation">{{ btnSendText }}</button>
     </div>
+    <moi-dialog title="[[ t('views.tutor.dashboard.card_achievements.new_achievement') ]]" width="400" id="dialog">
+      <span>dialogo 1</span>
+    </moi-dialog>
   </template>
   <script src="moi-recommendation-card-content.js"></script>
 </dom-module>

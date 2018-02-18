@@ -103,7 +103,7 @@ module Tutor
           "views.tutor.dashboard.achievement_request.created"
         )
       else
-        #flash[:error] = I18n.t()
+        flash[:error] = I18n.t("views.tutor.common.error")
       end
 
       redirect_to :back
@@ -120,7 +120,7 @@ module Tutor
           "views.tutor.dashboard.achievement_request.updated"
         )
       else
-        #flash[:error] = I18n.t()
+        flash[:error] = I18n.t("views.tutor.common.error")
       end
       redirect_to :back
     end
@@ -155,7 +155,7 @@ module Tutor
           quiz_url: quiz_url
         )
       else
-        #flash[:error] = I18n.t()
+        flash[:error] = I18n.t("views.tutor.common.error")
       end
 
       render js: "window.location = '#{request.referrer}'"
@@ -168,7 +168,7 @@ module Tutor
           "views.tutor.dashboard.card_send_notifications.sent"
         )
       else
-        #flash[:error] = I18n.t()
+        flash[:error] = I18n.t("views.tutor.common.error")
       end
       redirect_to :back
     end

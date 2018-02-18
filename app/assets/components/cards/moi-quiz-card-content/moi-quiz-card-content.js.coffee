@@ -1,5 +1,6 @@
 Polymer
   is: 'moi-quiz-card-content'
+  behaviors: [TranslateBehavior]
   properties:
     authToken: String
     levelsPlaceholder: String
@@ -13,9 +14,9 @@ Polymer
     this.students = []
     this.questions = []
     this.loading = true
-    this.btnText = 'Enviar'
+    this.btnText = I18n.t('views.tutor.common.send')
     this.btnSendText = this.btnText
-    this.btnSendingText = 'Enviando..'
+    this.btnSendingText = I18n.t('views.submitting')
     $(this.$.btnsend).addClass 'disabled'
     this.apiParams =
       level_quiz_id: '',

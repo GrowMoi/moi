@@ -38,7 +38,7 @@ module Tutor
           name: current_user.name
         )
       else
-        #flash[:error] = I18n.t()
+        flash[:error] = I18n.t("views.tutor.common.error")
       end
       if request.xhr?
         render :js => "window.location = '#{request.referrer}'"

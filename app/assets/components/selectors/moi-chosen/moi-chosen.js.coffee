@@ -13,7 +13,7 @@ Polymer
     if items.value.length > 0
       this.async(->
         $(that.$.chosenselector).chosen({
-          no_results_text: 'Oops, nothing found!',
+          no_results_text: I18n.t('views.tutor.common.nothing_found'),
           width: '100%'
         }).change( (e, val) ->
 

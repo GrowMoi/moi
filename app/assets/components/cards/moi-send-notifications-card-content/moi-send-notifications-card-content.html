@@ -1,27 +1,28 @@
 <dom-module id="moi-send-notifications-card-content">
+  <link rel="import" href="../../behaviors/translation/translation.html">
   <link rel="stylesheet" href="moi-send-notifications-card-content.css" />
   <template>
     <form enctype="multipart/form-data" action="/tutor/dashboard/send_notification" accept-charset="UTF-8" method="post">
       <input name="utf8" value="✓" type="hidden">
       <input name="authenticity_token" value="{{authToken}}" type="hidden">
       <div class="form-group">
-        <input class="form-control" value="{{notificationTitle::input}}" name="notification[title]" type="text" placeholder="Título">
+        <input class="form-control" value="{{notificationTitle::input}}" name="notification[title]" type="text" placeholder$="[[ t('views.tutor.dashboard.card_send_notifications.form_image_label') ]]">
       </div>
       <div class="form-group">
-        <textarea class="form-control" name="notification[description]" placeholder="Contenido" rows="1"></textarea>
+        <textarea class="form-control" name="notification[description]" placeholder$="[[ t('views.tutor.dashboard.card_send_notifications.form_placeholder_description') ]]" rows="1"></textarea>
       </div>
       <div class="form-group">
-        <input class="form-control" placeholder="Video destacado" name="notification[notification_videos_attributes][0][url]" type="text">
+        <input class="form-control" placeholder$="[[ t('views.tutor.dashboard.card_send_notifications.form_placeholder_video') ]]" name="notification[notification_videos_attributes][0][url]" type="text">
       </div>
       <div class="form-group">
-        <label>Imagen</label>
+        <label>[[ t('views.tutor.dashboard.card_send_notifications.form_image_label') ]]</label>
         <div class="form-group">
           <input type="file" on-change="onSelectFile" name$="{{ mediaInputName }}"  accept=".jpg, .jpeg, .png" multiple/>
           <input type="hidden" name="{{ cacheName }}"/>
         </div>
       </div>
       <div class="moi-card-custom-button">
-        <button class="btn action-send" type="submit" id="btnsend" data-disable-with="Enviando.." >Enviar</button>
+        <button class="btn action-send" type="submit" id="btnsend" data-disable-with$="{{ t('views.submitting') }}" >[[ t('views.tutor.common.send') ]]</button>
       </div>
     </form>
   </template>

@@ -1,5 +1,6 @@
 Polymer
   is: 'moi-recommendation-card-content'
+  behaviors: [TranslateBehavior]
   properties:
     achievementsApi: String
     achievementsPlaceholder: String
@@ -9,9 +10,9 @@ Polymer
   ready: ->
     this.achievements = []
     this.contents = []
-    this.btnText = 'Enviar'
+    this.btnText = I18n.t('views.tutor.common.send')
     this.btnSendText = this.btnText
-    this.btnSendingText = 'Enviando..'
+    this.btnSendingText = I18n.t('views.submitting')
     $(this.$.btnsend).addClass 'disabled'
     this.apiParams =
       tutor_achievement: '',
@@ -80,3 +81,8 @@ Polymer
       $(this.$.btnsend).addClass 'disabled'
     else
       $(this.$.btnsend).removeClass 'disabled'
+
+  openDialog: ->
+    dialog = this.$.dialog
+    if $(dialog).is(':hidden')
+      $(dialog).show()

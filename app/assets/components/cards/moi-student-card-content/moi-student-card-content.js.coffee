@@ -1,20 +1,15 @@
 Polymer
   is: 'moi-student-card-content'
+  behaviors: [TranslateBehavior]
   properties:
     downloadBtnHref: String
-    downloadBtnText: String
-    downloadBtnTitle: String
-    downloadSelectiveBtnText: String
-    downloadSelectiveBtnTitle: String
     downloadBtnFilename: String
-    downloadBtnLoadingText: String
     downloadBtnMimeType: String
     downloadBtnClass: String
     rowImgActive: String
     rowImgInactive: String
     rowImgCheck: String
     studentsApi: String
-    reportBtnTitle: String
 
   ready: ->
     this.students = []

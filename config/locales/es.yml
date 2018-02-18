@@ -297,19 +297,36 @@
           export_xls_title: "Exportar a excel los datos de todos los alumnos"
           export_selected_xls: "Expor. seleccionados"
           export_selected_xls_title: "Exportar a excel los datos de los alumnos seleccionados"
+          loading_students: "Cargando alumnos..."
         card_users:
           title: "Usuarios"
           send_request: "Enviar Solicitud"
           send_request_title: "Enviar solicitud a nuevos alumnos"
           send_request_loading: "Enviando solicitudes..."
+          loading_users: "Cargando usuarios..."
         card_recommendations:
           title: "Enviar Recomendaciones"
+          loading: "Cargando datos..."
+          btn_achievement_dialog: "Crear Recompensa"
         card_send_notifications:
           title: "Enviar mensaje"
           sent: "Se ha enviado una notificacion a tus alumnos."
+          form_image_label: "Imagen"
+          form_placeholder_title: "Título"
+          form_placeholder_description: "Contenido"
+          form_placeholder_video: "Video destacado"
         card_quizzes:
           title: "Crear un Test"
+          levels_placeholder: "Selecciona un nivel"
+          students_placeholder: "Seleccione un estudiante"
+          levels_placeholder: "Selecciona un nivel"
+          students_placeholder: "Seleccione un estudiante"
+          loading: "Cargando datos..."
+          questions_label: "Preguntas"
       common:
+        error: "Ups, al parecer algo salio mal. Por favor, intenta de nuevo."
+        nothing_found: "No se encontró ningun elemento!"
+        send: "Enviar"
         form_achievements:
           name: "Nombre"
           description: "Descripción"

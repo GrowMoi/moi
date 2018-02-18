@@ -1,0 +1,32 @@
+$white: white
+
+\:host
+  #moi-dialog-content
+    z-index: 1033
+    background-color: $white
+    position: fixed
+    padding: 0.5rem
+
+    .close-dialog
+      display: flex
+      height: 2rem
+      align-items: center
+      justify-content: space-between
+      border-bottom: 1px solid
+      margin-bottom: 0.5rem
+
+      button
+        background-color: transparent
+        padding: 0.2rem 0
+        border: none
+
+  #moi-dialog-overlay
+    position: fixed
+    width: 100%
+    height: 100%
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: rgba(0,0,0,0.5)
+    z-index: 1032

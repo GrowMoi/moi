@@ -1,10 +1,8 @@
 Polymer
   is: 'moi-user-card-content'
+  behaviors: [TranslateBehavior]
   properties:
     usersApi: String
-    sendRequestBtnText: String
-    sendRequestBtnTitle: String
-    sendRequestBtnLoadingText: String
     sendRequestBtnClass: String
     sendRequestBtnApi: String
     rowImgActive: String
