@@ -52,7 +52,7 @@ module TreeService
     end
 
     def contents_scope
-      Content.approved
+      Neuron.approved_public_contents
              .where(
                neuron_id: neuron.children_or_parent_neurons.pluck(:id)
              )
