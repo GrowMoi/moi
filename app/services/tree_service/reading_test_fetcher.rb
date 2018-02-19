@@ -7,7 +7,11 @@ module TreeService
     end
 
     def perform_test?
-      contents_for_test.count >= MIN_COUNT_FOR_TEST
+      if contents_for_test.count >= MIN_COUNT_FOR_TEST
+        true
+      else
+        total_contents_to_be_learned < MIN_COUNT_FOR_TEST
+      end
     end
 
     def user_test_for_api
@@ -16,6 +20,12 @@ module TreeService
         test_creator.user_test,
         root: false
       )
+    end
+
+    def total_contents_to_be_learned
+      total_contents = Neuron.approved_public_contents.count
+      user_contents = @user.content_learnings.count
+      total_contents - user_contents
     end
 
     private
