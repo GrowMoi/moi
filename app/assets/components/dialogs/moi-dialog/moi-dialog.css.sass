@@ -1,24 +1,52 @@
+$base-color-blue: #47BAE8
+$base-color-green: #77BF5D
+$base-color-yellow: #D6B34E
+$base-color-red: #F0755C
+$base-color-purple: #DA4694
+$base-color-dark-green: #1B864A
+$base-color-brown: #805A41
+$base-color-pink: #D84A93
+$base-color-orange: #EC765D
 $white: white
+
+
+=apply-theme($custom-color1, $custom-color2)
+  .header
+    .title
+      background-color: $custom-color1
+      color: $custom-color2
 
 \:host
   #moi-dialog-content
     z-index: 1033
     background-color: $white
     position: fixed
-    padding: 0.5rem
+    padding: 1rem
 
-    .close-dialog
+    .header
       display: flex
-      height: 2rem
+      height: 3rem
       align-items: center
-      justify-content: space-between
-      border-bottom: 1px solid
-      margin-bottom: 0.5rem
+      justify-content: flex-end
+      margin-bottom: 1.5rem
+      position: relative
 
-      button
+      .title
+        padding: 0.5rem
+        position: absolute
+        left: -3rem
+        background-color: black
+        border-radius: 0.3rem
+        color: white
+        font-size: 1.8rem
+
+      .btn-close
         background-color: transparent
         padding: 0.2rem 0
         border: none
+
+    &.yellow
+      +apply-theme($base-color-yellow, $white)
 
   #moi-dialog-overlay
     position: fixed

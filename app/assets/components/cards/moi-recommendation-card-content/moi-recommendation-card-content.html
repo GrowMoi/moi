@@ -10,7 +10,8 @@
         <moi-select items="{{ achievements }}" on-item-selected="onItemSelected" placeholder="[[ achievementsPlaceholder ]]"></moi-select>
       </div>
       <div class="row-select">
-        <moi-chosen class="moi-chosen" items="{{ contents }}" on-item-selected="onChoosenItemSelected" on-item-deselected="onChoosenItemDeselected" placeholder="[[ contentsPlaceholder ]]"></moi-chosen>
+        <moi-chosen class="moi-chosen" items="{{ contents }}" on-item-selected="onChoosenItemSelected" on-item-deselected="onChoosenItemDeselected"
+          placeholder="[[ contentsPlaceholder ]]"></moi-chosen>
       </div>
     </template>
 
@@ -18,8 +19,36 @@
       <button id="btnachievement" on-tap="openDialog">{{ t('views.tutor.dashboard.card_recommendations.btn_achievement_dialog') }}</button>
       <button id="btnsend" on-tap="sendRecommendation">{{ btnSendText }}</button>
     </div>
-    <moi-dialog title="[[ t('views.tutor.dashboard.card_achievements.new_achievement') ]]" width="400" id="dialog">
-      <span>dialogo 1</span>
+    <moi-dialog title="[[ t('views.tutor.dashboard.card_achievements.new_achievement') ]]" width="400" id="dialog" theme="yellow"
+      class="achievement-dialog">
+      <form id="form" enctype="multipart/form-data" action="/tutor/recommendations/new_achievement"
+        accept-charset="UTF-8" method="post">
+        <input name="utf8" type="hidden" value="✓">
+        <input name="authenticity_token" value="{{ authToken }}" type="hidden">
+        <div class="form-group">
+          <label>[[ t('views.tutor.common.form_achievements.name') ]]</label>
+          <input class="form-control" type="text" name="tutor_achievement[name]" id="tutor_achievement_name">
+        </div>
+        <div class="form-group">
+          <label>[[ t('views.tutor.common.form_achievements.description') ]]</label>
+          <textarea class="form-control" name="tutor_achievement[description]" id="tutor_achievement_description"></textarea>
+        </div>
+        <div class="form-group">
+          <label>[[ t("views.tutor.common.form_achievements.image") ]]</label>
+          <div class="form-group form-group-select-image">
+            <div class="bs-tooltip btn btn-xs btn-default content-media-uploader" title="" data-toggle="tooltip" data-placement="left">
+              <div class="glyphicon glyphicon-cloud-upload"></div>
+            </div>
+            <div class="hidden">
+              <input id="fileselect" type="file" name="tutor_achievement[image]">
+            </div>
+            <span class="moi-dialog-image-selector-container content-media-name-on-form" id="imagecontent"></span>
+          </div>
+        </div>
+        <div class="moi-card-custom-button">
+          <button type="submit" name="commit" class="btn action-send" data-disable-with="Enviando..">[[ t('views.tutor.common.form_achievements.send') ]]</button>
+        </div>
+      </form>
     </moi-dialog>
   </template>
   <script src="moi-recommendation-card-content.js"></script>

@@ -7,6 +7,7 @@ Polymer
     contentsApi: String
     contentsPlaceholder: String
     createRecomendationsApi: String
+    authToken: String
   ready: ->
     this.achievements = []
     this.contents = []
@@ -85,4 +86,7 @@ Polymer
   openDialog: ->
     dialog = this.$.dialog
     if $(dialog).is(':hidden')
+      this.$.form.reset()
+      $(this.$.fileselect).val('')
+      $(this.$.imagecontent).children().remove()
       $(dialog).show()

@@ -3,6 +3,7 @@
     .moi-card-title = t("views.tutor.dashboard.card_recommendations.title")
   .moi-card-content
     moi-recommendation-card-content(
+      auth-token="#{form_authenticity_token}"
       achievements-api="#{achievements_tutor_dashboard_index_path}"
       achievements-placeholder="Selecciona una recompensa"
       contents-api="#{get_contents_tutor_dashboard_index_path}"

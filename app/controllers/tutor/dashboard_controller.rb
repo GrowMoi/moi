@@ -2,11 +2,7 @@ module Tutor
   class DashboardController < TutorController::Base
 
     expose(:tutor_achievements) {
-      if (params[:search])
-        TutorAchievementsSearch.new(q: params[:search], current_user: current_user).results
-      else
-        current_user.tutor_achievements
-      end
+      current_user.tutor_achievements.order(created_at: :desc)
     }
 
     expose(:tutor_achievement_selected) {

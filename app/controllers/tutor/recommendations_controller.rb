@@ -6,7 +6,7 @@ module Tutor
     }
 
     expose(:tutor_achievements) {
-      current_user.tutor_achievements
+      current_user.tutor_achievements.order(created_at: :desc)
     }
 
     expose :tutor_recommendation

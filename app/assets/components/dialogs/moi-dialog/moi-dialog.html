@@ -2,9 +2,9 @@
   <link rel="stylesheet" href="moi-dialog.css" />
   <template>
     <div id="moi-dialog-content" style$="{{ dialogWidth }}">
-      <div class="close-dialog" id="close">
-        <span>{{ title }}</span>
-        <button on-tap="closeDialog" class="glyphicon glyphicon-remove"></button>
+      <div class="header" id="header">
+        <span class="title">{{ title }}</span>
+        <button on-tap="closeDialog" class="btn-close glyphicon glyphicon-remove"></button>
       </div>
       <content></content>
     </div>
