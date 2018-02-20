@@ -27,7 +27,8 @@ module Api
                  status: :accepted
         else
           render text: user.errors.full_messages,
-                 status: :unprocessable_entity
+                 status: :unprocessable_entity,
+                 errors: user.errors.full_messages
         end
       else
         render text: "invalid payment",
