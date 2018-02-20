@@ -98,7 +98,10 @@ Rails.application.configure do
     end
 
     allow do
-      origins "http://moi-staging.herokuapp.com"
+      origins "http://moi-frontend.herokuapp.com",
+              "https://moi-frontend.herokuapp.com",
+              "http://moi-staging.herokuapp.com",
+              "https://moi-staging.herokuapp.com"
 
       resource '/assets/*'
     end
