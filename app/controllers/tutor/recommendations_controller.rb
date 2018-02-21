@@ -15,6 +15,10 @@ module Tutor
       UserTutor.where(tutor: current_user, status: :accepted)
     }
 
+    expose(:students_selected) {
+      User.where(id: student_ids_params)
+    }
+
     expose(:tutor_achievement, attributes: :tutor_achievement_params)
 
     def new
@@ -35,7 +39,7 @@ module Tutor
         contents_to_recommendation(content_ids)
         flash[:success] = I18n.t(
           "views.tutor.recommendations.recommendation_request.created",
-          name: current_user.name
+          clients: students_selected.pluck(:name).join(', ')
         )
       else
         flash[:error] = I18n.t("views.tutor.common.error")
@@ -71,15 +75,21 @@ module Tutor
 
     def tutor_recommendation_params
       params.require(:tutor_recommendation).permit(
-        {content_tutor_recommendations: []},
-        :tutor_achievement
+        { content_tutor_recommendations: [] },
+        :tutor_achievement,
+        { students: [] }
       )
     end
 
+    def student_ids_params
+      tutor_recommendation_params[:students]
+    end
 
     def contents_to_recommendation(content_ids)
       content_ids = content_ids.reject(&:blank?)
-      if content_ids.any?
+      students_ids = tutor_recommendation_params[:students]
+      students_ids = students_ids.reject(&:blank?)
+      if content_ids.any? && students_ids.any?
         content_ids.each do |id|
           content = Content.find(id)
           content_tutor_recommendation = ContentTutorRecommendation.new(
@@ -87,17 +97,18 @@ module Tutor
             content: content
           )
           if content_tutor_recommendation.save
-            recommendation_to_client(clients, tutor_recommendation, content_ids)
+
+            recommendation_to_client(students_ids, tutor_recommendation, content_ids)
           end
         end
       end
     end
 
-    def recommendation_to_client (clients, recommendation, content_ids)
-      clients.find_each do |user_tutor|
-        client = user_tutor.user
+    def recommendation_to_client (students_ids, recommendation, content_ids)
+      students_ids.each do |user_id|
+        student = User.find(user_id)
         TutorService::RecommendationsStatusUpdater.new(
-          client,
+          student,
           recommendation,
           content_ids
         ).perform

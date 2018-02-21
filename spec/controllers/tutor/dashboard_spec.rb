@@ -25,7 +25,27 @@ RSpec.describe Tutor::DashboardController, type: :controller do
            name: 'achievement 2'
   }
   let!(:tutor_achievements) {
-    TutorAchievement.where(tutor: current_user)
+    TutorAchievement.where(tutor: current_user).order(created_at: :desc)
+  }
+  let!(:content1) {
+    create :content,
+           title: "content 1",
+           description: "description 1",
+           approved: true
+  }
+
+  let!(:content1) {
+    create :content,
+           title: "content 1",
+           description: "description 1",
+           approved: true
+  }
+
+  let!(:level_quiz1) {
+    create :level_quiz,
+           name: 'level quiz 1',
+           content_ids: [content1.id]
+
   }
 
   before {
@@ -148,6 +168,34 @@ RSpec.describe Tutor::DashboardController, type: :controller do
       }
       it {
         expect(controller.tutor_students.size).to eq(2)
+      }
+
+    end
+  end
+
+  context "quizzes" do
+    describe "Create student quiz" do
+      before {
+        post :create_quiz, :quiz => {
+          :level_quiz_id => level_quiz1.id,
+          :client_id => client1.id
+        }
+      }
+
+      it {
+        expect(response).to have_http_status(:ok)
+      }
+
+      it {
+        expect(Quiz.all.count).to eq(1)
+      }
+
+      it {
+        expect(Quiz.all.last.level_quiz).to eq(level_quiz1)
+      }
+
+      it {
+        expect(Quiz.all.last.players[0].client_id).to eq(client1.id)
       }
 
     end

@@ -7,6 +7,7 @@ Polymer
     contentsApi: String
     contentsPlaceholder: String
     createRecomendationsApi: String
+    studentsApi: String
     authToken: String
   ready: ->
     this.achievements = []
@@ -17,7 +18,8 @@ Polymer
     $(this.$.btnsend).addClass 'disabled'
     this.apiParams =
       tutor_achievement: '',
-      content_tutor_recommendations: []
+      content_tutor_recommendations: [],
+      students: []
 
     this.enableSendButton()
 
@@ -29,12 +31,20 @@ Polymer
     contentsAjax = $.ajax
       url: that.contentsApi
       type: 'GET'
-    $.when(achievementsAjax, contentsAjax).then((res1, res2) ->
-      if res1[0].data
-        that.achievements = that.formatData(res1[0].data, 'name')
-      if res2[0].data
-        that.contents = that.formatData(res2[0].data, 'title')
-      that.loading = false
+    studentsAjax = $.ajax
+      url: that.studentsApi
+      type: 'GET'
+
+    $.when(achievementsAjax, contentsAjax, studentsAjax)
+      .then((res1, res2, res3) ->
+        if res1[0].data
+          that.achievements = that.formatData(res1[0].data, 'name')
+        if res2[0].data
+          that.contents = that.formatData(res2[0].data, 'title')
+        if res3[0].data
+          that.students = that.formatStudentData(res3[0].data)
+
+        that.loading = false
     )
 
     return
@@ -77,7 +87,8 @@ Polymer
 
   enableSendButton: ->
     if  (this.apiParams.tutor_achievement is '') or
-        (this.apiParams.content_tutor_recommendations.length is 0)
+        (this.apiParams.content_tutor_recommendations.length is 0) or
+        (this.apiParams.students.length is 0)
 
       $(this.$.btnsend).addClass 'disabled'
     else
@@ -90,3 +101,14 @@ Polymer
       $(this.$.fileselect).val('')
       $(this.$.imagecontent).children().remove()
       $(dialog).show()
+  onStudentSelected: (e, val) ->
+    this.apiParams.students = [val]
+    this.enableSendButton()
+
+  formatStudentData: (items) ->
+    return $.map(items, (item) ->
+      return {
+        id: item.id
+        text: "#{item.name} (#{item.username})"
+      }
+    )

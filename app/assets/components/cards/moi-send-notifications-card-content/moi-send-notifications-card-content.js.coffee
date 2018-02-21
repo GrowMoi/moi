@@ -10,11 +10,33 @@ Polymer
     notificationTitle:
       type: String
       default: ''
-      observer: 'enableSendButton'
+      observer: 'enterTitle'
+    studentsApi: String
   ready: ->
-    currentTime = Date.now()
-    this.buildInputFileName(currentTime)
-    $(this.$.btnsend).addClass 'disabled'
+
+    this.loading = true
+    this.btnsendId = '#btnsend'
+    this.formId = '#form'
+    this.userIdSelect = ''
+    this.title = ''
+    that = this
+    studentsAjax = $.ajax
+      url: that.studentsApi
+      type: 'GET'
+
+    $.when(studentsAjax)
+      .then((res1) ->
+        that.loading = false
+
+        currentTime = Date.now()
+        if res1.data
+          that.students = that.formatStudentData(res1.data)
+
+        that.async(->
+          that.disableBtn(this.btnsendId)
+          that.buildInputFileName(currentTime)
+        )
+    )
 
   onSelectFile: (e, val) ->
     currentTime = Date.now()
@@ -30,8 +52,31 @@ Polymer
     this.buildInputFileName(currentTime)
     return
 
-  enableSendButton: (newVal) ->
-    if newVal.length > 0
-      $(this.$.btnsend).removeClass 'disabled'
+  enableSendButton: () ->
+    if this.title.length > 0 and this.userIdSelect.length > 0
+      this.enableBtn(this.btnsendId)
     else
-      $(this.$.btnsend).addClass 'disabled'
+      this.disableBtn(this.btnsendId)
+
+  onStudentSelected: (e, val) ->
+    this.userIdSelect = val
+    this.enableSendButton()
+
+  formatStudentData: (items) ->
+    return $.map(items, (item) ->
+      return {
+        id: item.id
+        text: "#{item.name} (#{item.username})"
+      }
+    )
+  enableBtn: (id) ->
+    btnSend = Polymer.dom(this.root).querySelector(id)
+    $(btnSend).removeClass 'disabled'
+
+  disableBtn: (id) ->
+    btnSend = Polymer.dom(this.root).querySelector(id)
+    $(btnSend).addClass 'disabled'
+
+  enterTitle: (newVal) ->
+    this.title = newVal
+    this.enableSendButton()

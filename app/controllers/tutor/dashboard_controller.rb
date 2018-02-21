@@ -143,6 +143,7 @@ module Tutor
         Notification.create!(user: current_user,
                             title: "Nuevo test #{Date.today.to_s}",
                             description: "Disponible en: #{quiz_url}",
+                            data_type: "quiz",
                             client_id: client.id)
 
         flash[:success] = I18n.t(
@@ -159,10 +160,16 @@ module Tutor
 
     def send_notification
       notification.user = current_user
-      if notification.save
-        flash[:success] = I18n.t(
-          "views.tutor.dashboard.card_send_notifications.sent"
-        )
+      if student_ids_params.any?
+        student_id = student_ids_params[0]
+        notification.client_id = student_id
+        if notification.save
+          flash[:success] = I18n.t(
+            "views.tutor.dashboard.card_send_notifications.sent"
+          )
+        else
+          flash[:error] = I18n.t("views.tutor.common.error")
+        end
       else
         flash[:error] = I18n.t("views.tutor.common.error")
       end
@@ -220,6 +227,10 @@ module Tutor
           :media_cache
         ]
       )
+    end
+
+    def student_ids_params
+      params[:notification][:students] || []
     end
 
     def quiz_params

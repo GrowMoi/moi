@@ -7,6 +7,9 @@
     </template>
     <template is="dom-if" if="{{ !loading }}" restamp>
       <div class="row-select">
+        <moi-select items="{{ students }}" on-item-selected="onStudentSelected" placeholder$="[[ t('views.tutor.dashboard.card_quizzes.students_placeholder') ]]"></moi-select>
+      </div>
+      <div class="row-select">
         <moi-select items="{{ achievements }}" on-item-selected="onItemSelected" placeholder="[[ achievementsPlaceholder ]]"></moi-select>
       </div>
       <div class="row-select">

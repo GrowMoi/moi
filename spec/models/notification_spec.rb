@@ -10,6 +10,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  client_id   :integer
+#  data_type   :string
 #
 
 require 'rails_helper'

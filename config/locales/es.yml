@@ -270,7 +270,7 @@
         achievement_request:
           created: "Se ha creado una nueva recompensa."
         recommendation_request:
-          created: "Se ha creado una nueva recomendación de contenidos para los alumnos del tutor %{name}"
+          created: "Se ha enviado una nueva recomendación de contenidos a %{clients}"
         form_new:
           contents_label: "Contenidos a recomendar"
           contents_input_info: "Elija los contenidos que quiera recomendar."

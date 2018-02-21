@@ -6,6 +6,9 @@ Polymer
       value: ->
         return []
     placeholder: String
+    name:
+      type: String
+      default: ''
   ready: ->
     that = this
     $(that.$.selector).on 'change', (e) ->
