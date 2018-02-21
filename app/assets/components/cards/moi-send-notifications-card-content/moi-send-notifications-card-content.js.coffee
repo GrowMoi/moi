@@ -1,6 +1,6 @@
 Polymer
   is: 'moi-send-notifications-card-content'
-  behaviors: [TranslateBehavior]
+  behaviors: [TranslateBehavior, StudentBehavior]
   properties:
     authToken: String
     sendNotificationApi: String
@@ -62,13 +62,6 @@ Polymer
     this.userIdSelect = val
     this.enableSendButton()
 
-  formatStudentData: (items) ->
-    return $.map(items, (item) ->
-      return {
-        id: item.id
-        text: "#{item.name} (#{item.username})"
-      }
-    )
   enableBtn: (id) ->
     btnSend = Polymer.dom(this.root).querySelector(id)
     $(btnSend).removeClass 'disabled'

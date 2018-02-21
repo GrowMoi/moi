@@ -1,6 +1,6 @@
 Polymer
   is: 'moi-quiz-card-content'
-  behaviors: [TranslateBehavior]
+  behaviors: [TranslateBehavior, StudentBehavior]
   properties:
     authToken: String
     levelsPlaceholder: String
@@ -71,14 +71,6 @@ Polymer
         id: item.id
         text: item.name
         content_ids: item.content_ids
-      }
-    )
-
-  formatStudentData: (items) ->
-    return $.map(items, (item) ->
-      return {
-        id: item.id
-        text: "#{item.name} (#{item.username})"
       }
     )
 

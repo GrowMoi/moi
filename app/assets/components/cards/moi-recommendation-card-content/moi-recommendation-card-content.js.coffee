@@ -1,6 +1,6 @@
 Polymer
   is: 'moi-recommendation-card-content'
-  behaviors: [TranslateBehavior]
+  behaviors: [TranslateBehavior, StudentBehavior]
   properties:
     achievementsApi: String
     achievementsPlaceholder: String
@@ -104,11 +104,3 @@ Polymer
   onStudentSelected: (e, val) ->
     this.apiParams.students = [val]
     this.enableSendButton()
-
-  formatStudentData: (items) ->
-    return $.map(items, (item) ->
-      return {
-        id: item.id
-        text: "#{item.name} (#{item.username})"
-      }
-    )
