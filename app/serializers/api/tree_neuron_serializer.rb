@@ -6,7 +6,8 @@ module Api
       :children,
       :state,
       :total_approved_contents,
-      :learnt_contents
+      :learnt_contents,
+      :in_desired_neuron_path
     ].freeze
 
     attributes *ATTRIBUTES
@@ -39,6 +40,12 @@ module Api
         end
       end
       count
+    end
+
+    def in_desired_neuron_path
+      desired_neuron_id = context[:desired_neuron_path]
+      return false if desired_neuron_id.blank?
+      ::TreeService::RecursiveParentsIdsFetcher.new(desired_neuron_id).parents_ids.include?(object.id)
     end
 
     alias_method :current_user, :scope

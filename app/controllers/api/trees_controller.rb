@@ -8,7 +8,8 @@ module Api
 
     expose(:user_tree) {
       if user
-        TreeService::UserTreeFetcher.new user
+        neuronId = params[:neuronId]
+        TreeService::UserTreeFetcher.new(user, neuronId)
       end
     }
 
@@ -44,6 +45,7 @@ module Api
       }
     }
     param :username, String, required: true
+    param :neuronId, Integer
 
     def show
       if user_tree
