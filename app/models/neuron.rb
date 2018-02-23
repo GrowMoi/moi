@@ -32,6 +32,10 @@ class Neuron < ActiveRecord::Base
   scope :pending_contents_count_sorted, -> {
     order(pending_contents_count: :desc)
   }
+  scope :approved_public_contents, -> {
+    ids = where(is_public: true)
+    Content.where(neuron_id: ids, approved: true)
+  }
 
   begin :relationships
     has_many :contents,
