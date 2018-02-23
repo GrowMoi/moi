@@ -7,10 +7,10 @@ module TreeService
     end
 
     def perform_test?
-      if contents_for_test.count >= MIN_COUNT_FOR_TEST
-        true
+      if total_contents_to_be_learned >= MIN_COUNT_FOR_TEST
+        contents_for_test.count >= MIN_COUNT_FOR_TEST
       else
-        total_contents_to_be_learned < MIN_COUNT_FOR_TEST
+        contents_for_test.count == total_contents_to_be_learned
       end
     end
 
