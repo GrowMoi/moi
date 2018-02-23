@@ -65,7 +65,7 @@ module Api
     def content_summary
       {
         current_learnt_contents: object.content_learnings.count,
-        total_approved_contents: Content.approved.count
+        total_approved_contents: Neuron.approved_public_contents.count
       }
     end
   end
