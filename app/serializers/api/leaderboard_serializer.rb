@@ -8,15 +8,15 @@ module Api
         :user_id
 
     def username
-      object.user.username
+      object.user ? object.user.username : 'unknow'
     end
 
     def email
-      object.user.email
+      object.user ? object.user.email : 'unknow'
     end
 
     def user_id
-      object.user.id
+      object.user ? object.user.username : nil
     end
   end
 end
