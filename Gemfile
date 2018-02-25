@@ -67,6 +67,7 @@ gem 'enumerize', '~> 2.0'
 
 gem 'polymer-rails', '~> 1.0.0'
 gem "i18n-js"
+gem 'js_assets'
 
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'

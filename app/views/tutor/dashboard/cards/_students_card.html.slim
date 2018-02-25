@@ -2,16 +2,7 @@
   .moi-card-header
     .moi-card-title = t("views.tutor.dashboard.card_students.title")
   .moi-card-content
-    moi-student-card-content(
-        download-btn-href="#{download_tutor_analytics_tutor_dashboard_index_path(format: 'xls')}"
-        download-btn-filename="reporte_#{Time.now.to_formatted_s(:number)}.xls"
-        download-btn-mime-type="application/xls"
-        download-btn-class="moi-card-custom-button"
-        row-img-active="#{image_path('client_avatar_green.png')}"
-        row-img-inactive="#{image_path('client_avatar_inactive.png')}"
-        row-img-check="#{image_path('check_green.png')}"
-        students-api="#{students_tutor_dashboard_index_path}"
-      )
+    moi-student-card-content
 
 
 

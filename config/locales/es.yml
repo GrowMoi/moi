@@ -243,7 +243,7 @@
         reading_time_content: "Tiempo de lectura por contenido"
         content_readings_by_branch: "Número de contenidos leidos según las ramas base"
       client:
-        select_user: "Antes se debe seleccionar un usuario"
+        select_user: "Seleccione un estudiante para mostrar detalles."
         activity: "Actividad"
         description: "Descripción"
         total_neurons_learnt: "Neuronas aprendidas"

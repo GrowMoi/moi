@@ -161,7 +161,11 @@ Moi::Application.routes.draw do
 
   namespace :tutor do
     resources :moi, only: :index
-    resources :client, only: [:index, :show]
+    resources :client, only: :index do
+      collection do
+        get :get_client_statistics
+      end
+    end
     resources :analysis, only: [:index, :show]
     resources :tree, only: :index
     resources :user_tutors, only: :create
@@ -195,7 +199,7 @@ Moi::Application.routes.draw do
       end
     end
 
-    root "moi#index"
+    root "dashboard#index"
   end
 
   match "/delayed_job" => DelayedJobWeb,

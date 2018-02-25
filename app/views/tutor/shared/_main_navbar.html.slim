@@ -8,9 +8,9 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-tutor
         span.icon-bar
     #navbar.navbar-collapse.collapse
       ul.nav.navbar-nav.navbar-tutor-first-section
-        li.item-moi(class=(params[:controller] == 'tutor/moi' ? 'active' : ''))
+        li.item-dashboard(class=(params[:controller] == 'tutor/dashboard' ? 'active' : ''))
           = image_tag("moi_navbar_brain.png")
-          = link_to t("views.tutor.navbar.moi"), tutor_moi_index_path, class:"navbar-link-moi", id:"navbar-link-moi"
+          = link_to t("views.tutor.navbar.moi"), tutor_dashboard_index_path, class:"navbar-link-dashboard", id:"navbar-link-dashboard"
         li.item-client(class=(params[:controller] == 'tutor/client' ? 'active' : ''))
           = image_tag("moi_navbar_client.png")
           = link_to t("views.tutor.navbar.client"), tutor_client_index_path, class:"link-client", id:"navbar-link-client"
@@ -23,9 +23,6 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-tutor
         li.item-recommendations(class=(params[:controller] == 'tutor/recommendations' ? 'active' : ''))
           = image_tag("moi_navbar_recommendations.svg")
           = link_to t("views.tutor.navbar.recommendations"), new_tutor_recommendation_path, class:"navbar-link-recommendations", id:"navbar-link-recommendations"
-        li.item-dashboard(class=(params[:controller] == 'tutor/dashboard' ? 'active' : ''))
-          = image_tag("moi_navbar_dashboard.svg")
-          = link_to t("views.tutor.navbar.dashboard"), tutor_dashboard_index_path, class:"navbar-link-dashboard", id:"navbar-link-dashboard"
       ul.nav.navbar-nav.navbar-right.navbar-tutor-last-item
         li.item-tutor.dropdown
           = image_tag("moi_navbar_tutor.png")
