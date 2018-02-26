@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   include UserContentFavorites
   include UserReadNotifications
   include UserAchievements
+  include UserStorage
 
   mount_base64_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
 
@@ -127,7 +128,9 @@ class User < ActiveRecord::Base
     has_many :my_achievements,
              source: :admin_achievement,
              through: :user_admin_achievements
-   has_many :payments
+    has_many :payments
+    has_one :storage,
+            dependent: :destroy
   end
 
 

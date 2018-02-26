@@ -86,6 +86,11 @@ Moi::Application.routes.draw do
                 only: [:show]
       resource :recommended_neurons,
                 only: [:show]
+      resource :storage, only: [:show] do
+        member do
+          put :update
+        end
+      end
       resources :achievements, only: [:index] do
         member do
           put :active
