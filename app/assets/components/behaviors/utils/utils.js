@@ -15,12 +15,28 @@ this.UtilsBehavior = {
     }
     return queryString;
   },
-  getQueryUrlParams: function() {
+  getQueryUrlParams: function () {
     return window.location.search.substring(1) || '';
   },
-  getCurrentUrlParams: function() {
+  getCurrentUrlParams: function () {
     var query = this.getQueryUrlParams();
     return this.parseQueryString(query);
+  },
+  convertObjectToArrayItems: function (objectData) {
+    var res = [];
+    $.each(objectData, function (key, value) {
+      res.push({
+        label: key,
+        value: value
+      });
+    });
+    return res;
+  },
+  addParamToUrl: function (stateName, paramName, value) {
+    var url = window.location.href.split('?')[0];
+    if (url) {
+      window.history.pushState(stateName, '', url + '?' + paramName + '=' + value);
+    }
   }
 
 };

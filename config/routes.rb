@@ -166,7 +166,11 @@ Moi::Application.routes.draw do
         get :get_client_statistics
       end
     end
-    resources :analysis, only: [:index, :show]
+    resources :analysis, only: :index do
+      collection do
+        get :get_user_analysis
+      end
+    end
     resources :tree, only: :index
     resources :user_tutors, only: :create
     resources :recommendations, only: [:new, :create] do

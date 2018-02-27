@@ -1,28 +1,24 @@
 Polymer({
   is: 'moi-user-card-content',
-  behaviors: [TranslateBehavior],
-  properties: {
-    usersApi: String,
-    sendRequestBtnClass: String,
-    sendRequestBtnApi: String,
-    rowImgActive: String,
-    rowImgInactive: String,
-    rowImgCheck: String,
-    inputIconImage: String
-  },
-  ready: function() {
+  behaviors: [TranslateBehavior, AssetBehavior],
+  ready: function () {
     this.searchValue = '';
+    this.usersApi = '/tutor/dashboard/get_clients';
+    this.sendRequestBtnApi = '/tutor/user_tutors';
+    this.rowImgActive = this.assetPath('client_avatar.png');
+    this.rowImgInactive = this.assetPath('client_avatar_inactive.png');
+    this.rowImgCheck = this.assetPath('check_blue.png');
+    this.inputIconImage = this.assetPath('icon_search.png');
     this.initValues();
     this.init();
   },
-  init: function() {
-    var that;
-    this.loading = true;
-    $(this.$.btnsend).addClass('disabled');
-    $(this.$.listcontainer).scrollTop(0);
-    that = this;
-    $(this.$.listcontainer).scroll(this.debounce(function(e) {
-      return that.onListScroll(e, that);
+  init: function () {
+    var that = this;
+    that.loading = true;
+    $(that.$.btnsend).addClass('disabled');
+    $(that.$.listcontainer).scrollTop(0);
+    $(that.$.listcontainer).scroll(that.debounce(function (e) {
+      return that.onListScroll(e);
     }, 200));
     return $.ajax({
       url: that.usersApi,
@@ -30,15 +26,16 @@ Polymer({
       data: {
         page: that.count
       },
-      success: function(res) {
+      success: function (res) {
         that.loading = false;
         that.clients = res.data;
         that.totalItems = res.meta.total_items;
       }
     });
   },
-  onListScroll: function(e, that) {
+  onListScroll: function (e) {
     var diff, elem, existsData, scrollBottom;
+    var that = this;
     elem = $(e.currentTarget);
     diff = elem[0].scrollHeight - elem.scrollTop();
     scrollBottom = Math.round(diff) <= elem.outerHeight();
@@ -54,7 +51,7 @@ Polymer({
           page: that.count,
           search: that.searchValue
         },
-        success: function(res) {
+        success: function (res) {
           that.loading = false;
           that.clients = that.clients.concat(res.data);
           that.totalItems = res.meta.total_items;
@@ -63,7 +60,7 @@ Polymer({
       });
     }
   },
-  onRowSelectedHandler: function(e, data) {
+  onRowSelectedHandler: function (e, data) {
     var index;
     index = this.clientsSelected.indexOf(data);
     if (index !== -1) {
@@ -77,25 +74,24 @@ Polymer({
       $(this.$.btnsend).addClass('disabled');
     }
   },
-  debounce: function(func, delay) {
+  debounce: function (func, delay) {
     var inDebounce;
     inDebounce = void 0;
-    return function() {
+    return function () {
       var args, context;
       context = this;
       args = arguments;
       clearTimeout(inDebounce);
-      inDebounce = setTimeout((function() {
+      inDebounce = setTimeout((function () {
         func.apply(context, args);
       }), delay);
     };
   },
-  onInputEnter: function(e, value) {
-    var that;
-    this.searchValue = value;
-    this.initValues();
-    $(this.$.btnsend).addClass('disabled');
-    that = this;
+  onInputEnter: function (e, value) {
+    var that = this;
+    that.searchValue = value;
+    that.initValues();
+    $(that.$.btnsend).addClass('disabled');
     $.ajax({
       url: that.usersApi,
       type: 'GET',
@@ -103,14 +99,14 @@ Polymer({
         page: that.count,
         search: value
       },
-      success: function(res) {
+      success: function (res) {
         that.loading = false;
         that.clients = res.data;
         that.totalItems = res.meta.total_items;
       }
     });
   },
-  initValues: function() {
+  initValues: function () {
     this.count = 1;
     this.clients = [];
     this.loading = true;

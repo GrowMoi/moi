@@ -306,6 +306,9 @@
           loading_users: "Cargando usuarios..."
         card_recommendations:
           title: "Enviar Recomendaciones"
+          btn_send: "Enviar Recom."
+          achievements_placeholder: "Selecciona una recompensa"
+          contents_placeholder: "Selecciona contenidos"
           loading: "Cargando datos..."
           btn_achievement_dialog: "Crear Recompensa"
         card_send_notifications:

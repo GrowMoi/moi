@@ -1,7 +1,7 @@
 Polymer({
   is: 'moi-student-card-content',
   behaviors: [TranslateBehavior, AssetBehavior],
-  ready: function() {
+  ready: function () {
     var that;
     var studentsApi = '/tutor/dashboard/students';
     this.students = [];
@@ -16,13 +16,13 @@ Polymer({
     $.ajax({
       url: studentsApi,
       type: 'GET',
-      success: function(res) {
+      success: function (res) {
         that.loading = false;
         that.students = res.data;
       }
     });
   },
-  onRowSelectedHandler: function(e, data) {
+  onRowSelectedHandler: function (e, data) {
     var index;
     index = this.studentsSelected.indexOf(data);
     if (index !== -1) {

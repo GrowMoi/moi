@@ -2,15 +2,9 @@ Polymer({
   is: 'moi-quiz-card-content',
   behaviors: [TranslateBehavior, StudentBehavior],
   properties: {
-    authToken: String,
-    levelsPlaceholder: String,
-    studentsPlaceholder: String,
-    levelsApi: String,
-    studentsApi: String,
-    questionsApi: String,
-    quizzesApi: String
+    authToken: String
   },
-  ready: function() {
+  ready: function () {
     var levelsAjax, studentsAjax, that;
     this.levels = [];
     this.students = [];
@@ -19,6 +13,10 @@ Polymer({
     this.btnText = I18n.t('views.tutor.common.send');
     this.btnSendText = this.btnText;
     this.btnSendingText = I18n.t('views.submitting');
+    this.levelsApi = '/tutor/dashboard/get_level_quizzes';
+    this.studentsApi = '/tutor/dashboard/students';
+    this.questionsApi = '/tutor/dashboard/get_questions';
+    this.quizzesApi = '/tutor/dashboard/create_quiz';
     $(this.$.btnsend).addClass('disabled');
     this.apiParams = {
       level_quiz_id: '',
@@ -33,7 +31,7 @@ Polymer({
       url: that.studentsApi,
       type: 'GET'
     });
-    $.when(levelsAjax, studentsAjax).then(function(res1, res2) {
+    $.when(levelsAjax, studentsAjax).then(function (res1, res2) {
       if (res1[0].data) {
         that.levels = that.formatData(res1[0].data);
       }
@@ -43,9 +41,9 @@ Polymer({
       that.loading = false;
     });
   },
-  onLevelSelected: function(e, val) {
+  onLevelSelected: function (e, val) {
     var content_ids, item, that;
-    item = this.levels.find(function(item) {
+    item = this.levels.find(function (item) {
       return item.id === parseInt(val);
     });
     this.apiParams.level_quiz_id = val;
@@ -58,17 +56,17 @@ Polymer({
       data: {
         content_ids: content_ids
       },
-      success: function(res) {
+      success: function (res) {
         that.questions = res.data;
       }
     });
   },
-  onStudentSelected: function(e, val) {
+  onStudentSelected: function (e, val) {
     this.apiParams.client_id = val;
     this.enableSendButton();
   },
-  formatData: function(items) {
-    return $.map(items, function(item) {
+  formatData: function (items) {
+    return $.map(items, function (item) {
       return {
         id: item.id,
         text: item.name,
@@ -76,7 +74,7 @@ Polymer({
       };
     });
   },
-  sendQuiz: function() {
+  sendQuiz: function () {
     var that;
     that = this;
     $(that.$.btnsend).addClass('disabled');
@@ -89,7 +87,7 @@ Polymer({
       }
     });
   },
-  enableSendButton: function() {
+  enableSendButton: function () {
     if ((this.apiParams.level_quiz_id === '') || (this.apiParams.client_id === '')) {
       return $(this.$.btnsend).addClass('disabled');
     } else {

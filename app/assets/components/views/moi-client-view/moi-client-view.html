@@ -5,25 +5,19 @@
   <link rel="import" href="../../behaviors/utils/utils.html">
   <link rel="stylesheet" href="moi-client-view.css" />
   <template>
-
     <div>
       <moi-select items="{{ students }}" on-item-selected="onStudentSelected" placeholder$="[[ t('views.tutor.dashboard.card_quizzes.students_placeholder') ]]" on-items-loaded="onSelectItemsLoaded"></moi-select>
     </div>
-
     <template is="dom-if" if="{{ loading }}" restamp>
       <div class="loading-data">{{ t('views.loading') }}</div>
     </template>
-
     <template is="dom-if" if="{{ !loading }}" restamp>
-
-      <template is="dom-if" if="{{ !userId }}" restamp>
+      <template is="dom-if" if="{{ !userIdSelected }}" restamp>
         <div class="container-tutor-internal container-client container-client-empty">
           <span class="info">[[ t('views.tutor.client.select_user') ]]</span>
         </div>
-
       </template>
-
-      <template is="dom-if" if="{{ userId }}" restamp>
+      <template is="dom-if" if="{{ userIdSelected }}" restamp>
         <div class="container-tutor-internal container-client">
           <div class="left-container">
             <div class="user-image-status">
@@ -59,7 +53,6 @@
           </div>
         </div>
       </template>
-
     </template>
   </template>
   <script src="moi-client-view.js"></script>
