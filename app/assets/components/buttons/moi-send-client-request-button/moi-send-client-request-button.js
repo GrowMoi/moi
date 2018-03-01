@@ -5,24 +5,23 @@ Polymer({
     loadingText: String,
     sendRequestApi: String,
     ids: {
-      type: Array({
-        value: function() {
-          return [];
-        }
-      })
+      type: Array,
+      value: function() {
+        return [];
+      }
     }
   },
   onClick: function() {
-    var that;
-    that = this;
-    that.prevText = that.text;
-    that.text = that.loadingText;
-    $(that.$.btnsend).addClass('disabled');
+    var _this;
+    _this = this;
+    _this.prevText = _this.text;
+    _this.text = _this.loadingText;
+    $(_this.$.btnsend).addClass('disabled');
     $.ajax({
-      url: that.sendRequestApi,
+      url: _this.sendRequestApi,
       type: 'POST',
       data: {
-        user_ids: that.ids
+        user_ids: _this.ids
       }
     });
   }

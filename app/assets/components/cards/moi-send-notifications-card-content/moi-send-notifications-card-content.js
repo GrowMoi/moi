@@ -5,49 +5,47 @@ Polymer({
     authToken: String,
     currentTime: {
       type: Number,
-      default: Date.now()
+      value: Date.now()
     },
     notificationTitle: {
       type: String,
-      default: '',
+      value: '',
       observer: 'enterTitle'
     }
   },
   ready: function () {
-    var that = this;
-    that.loading = true;
-    that.btnsendId = '#btnsend';
-    that.formId = '#form';
-    that.studentsApi = '/tutor/dashboard/students';
-    that.sendNotificationApi = '/tutor/dashboard/send_notification';
-    that.userIdSelect = '';
-    that.title = '';
+    var _this = this;
+    _this.loading = true;
+    _this.btnsendId = '#btnsend';
+    _this.formId = '#form';
+    _this.studentsApi = '/tutor/dashboard/students';
+    _this.sendNotificationApi = '/tutor/dashboard/send_notification';
+    _this.userIdSelect = '';
+    _this.title = '';
 
     var studentsAjax = $.ajax({
-      url: that.studentsApi,
+      url: _this.studentsApi,
       type: 'GET'
     });
     return $.when(studentsAjax).then(function (res1) {
       var currentTime;
-      that.loading = false;
+      _this.loading = false;
       currentTime = Date.now();
       if (res1.data) {
-        that.students = that.formatStudentData(res1.data);
+        _this.students = _this.formatStudentData(res1.data);
       }
-      return that.async(function () {
-        that.disableBtn(that.btnsendId);
-        return that.buildInputFileName(currentTime);
+      return _this.async(function () {
+        _this.disableBtn(_this.btnsendId);
+        return _this.buildInputFileName(currentTime);
       });
     });
   },
   onSelectFile: function (e, val) {
-    var currentTime;
-    currentTime = Date.now();
+    var currentTime = Date.now();
     return this.updateInputFileName(currentTime);
   },
   buildInputFileName: function (currentTime) {
-    var paramName;
-    paramName = 'notification_medium_attributes';
+    var paramName = 'notification_medium_attributes';
     this.mediaInputName = "notification[" + paramName + "][" + currentTime + "][media]";
     this.cacheName = "notification[" + paramName + "][" + currentTime + "][media_cache]";
   },
@@ -66,13 +64,11 @@ Polymer({
     return this.enableSendButton();
   },
   enableBtn: function (id) {
-    var btnSend;
-    btnSend = Polymer.dom(this.root).querySelector(id);
+    var btnSend = this.$$(id);
     return $(btnSend).removeClass('disabled');
   },
   disableBtn: function (id) {
-    var btnSend;
-    btnSend = Polymer.dom(this.root).querySelector(id);
+    var btnSend = this.$$(id);
     return $(btnSend).addClass('disabled');
   },
   enterTitle: function (newVal) {

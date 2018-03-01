@@ -5,7 +5,7 @@ Polymer({
     authToken: String
   },
   ready: function () {
-    var achievementsAjax, contentsAjax, studentsAjax, that;
+    var achievementsAjax, contentsAjax, studentsAjax, _this;
     var achievementsApi = '/tutor/dashboard/achievements';
     var studentsApi = '/tutor/dashboard/students';
     var contentsApi = '/tutor/dashboard/get_contents';
@@ -25,7 +25,7 @@ Polymer({
     };
     this.enableSendButton();
     this.loading = true;
-    that = this;
+    _this = this;
     achievementsAjax = $.ajax({
       url: achievementsApi,
       type: 'GET'
@@ -40,15 +40,15 @@ Polymer({
     });
     $.when(achievementsAjax, contentsAjax, studentsAjax).then(function (res1, res2, res3) {
       if (res1[0].data) {
-        that.achievements = that.formatData(res1[0].data, 'name');
+        _this.achievements = _this.formatData(res1[0].data, 'name');
       }
       if (res2[0].data) {
-        that.contents = that.formatData(res2[0].data, 'title');
+        _this.contents = _this.formatData(res2[0].data, 'title');
       }
       if (res3[0].data) {
-        that.students = that.formatStudentData(res3[0].data);
+        _this.students = _this.formatStudentData(res3[0].data);
       }
-      that.loading = false;
+      _this.loading = false;
     });
   },
   onItemSelected: function (e, val) {
@@ -67,14 +67,14 @@ Polymer({
     this.enableSendButton();
   },
   sendRecommendation: function () {
-    var that = this;
-    $(that.$.btnsend).addClass('disabled');
-    that.btnSendText = that.btnSendingText;
+    var _this = this;
+    $(_this.$.btnsend).addClass('disabled');
+    _this.btnSendText = _this.btnSendingText;
     $.ajax({
-      url: that.createRecomendationsApi,
+      url: _this.createRecomendationsApi,
       type: 'POST',
       data: {
-        tutor_recommendation: that.apiParams
+        tutor_recommendation: _this.apiParams
       }
     });
   },

@@ -1,5 +1,13 @@
-\:host
+@import ../../styles/mixins
+@import ../../styles/variables
 
-.disabled
-  opacity: 0.5
-  pointer-events: none
+\:host
+  height: 100%
+  position: relative
+
+  .disabled
+    opacity: 0.5
+    pointer-events: none
+
+  +var(moi-download-button-color, $base-color-green)
+  +var(moi-download-button-border-color, $base-color-green)

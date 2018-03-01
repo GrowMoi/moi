@@ -29,8 +29,7 @@
         </template>
       </div>
 
-      <div class="moi-card-custom-button">
-
+      <moi-actions-row>
         <moi-download-button href="/tutor/dashboard/download_tutor_analytics.xls"
           id="btnSelectiveDownload"
           text="[[ t('views.tutor.dashboard.card_students.export_selected_xls') ]]"
@@ -38,7 +37,6 @@
           filename="[[ downloadBtnFilename ]]"
           loading-text="[[ t('views.tutor.dashboard.card_students.loading_report') ]]"
           mime-type="application/xls"
-          class="moi-card-custom-button"
           ids="{{ studentsSelected }}">
         </moi-download-button>
 
@@ -47,11 +45,9 @@
           title$="[[ t('views.tutor.dashboard.card_students.export_xls_title') ]]"
           filename="[[ downloadBtnFilename ]]"
           loading-text="[[ t('views.tutor.dashboard.card_students.loading_report') ]]"
-          mime-type="application/xls"
-          class="moi-card-custom-button">
+          mime-type="application/xls">
         </moi-download-button>
-
-      </div>
+      </moi-actions-row>
     </template>
     <script src="moi-student-card-content.js"></script>
   </dom-module>

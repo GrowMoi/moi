@@ -5,7 +5,7 @@ Polymer({
     authToken: String
   },
   ready: function () {
-    var levelsAjax, studentsAjax, that;
+    var levelsAjax, studentsAjax, _this;
     this.levels = [];
     this.students = [];
     this.questions = [];
@@ -22,42 +22,42 @@ Polymer({
       level_quiz_id: '',
       client_id: ''
     };
-    that = this;
+    _this = this;
     levelsAjax = $.ajax({
-      url: that.levelsApi,
+      url: _this.levelsApi,
       type: 'GET'
     });
     studentsAjax = $.ajax({
-      url: that.studentsApi,
+      url: _this.studentsApi,
       type: 'GET'
     });
     $.when(levelsAjax, studentsAjax).then(function (res1, res2) {
       if (res1[0].data) {
-        that.levels = that.formatData(res1[0].data);
+        _this.levels = _this.formatData(res1[0].data);
       }
       if (res2[0].data) {
-        that.students = that.formatStudentData(res2[0].data);
+        _this.students = _this.formatStudentData(res2[0].data);
       }
-      that.loading = false;
+      _this.loading = false;
     });
   },
   onLevelSelected: function (e, val) {
-    var content_ids, item, that;
+    var content_ids, item, _this;
     item = this.levels.find(function (item) {
       return item.id === parseInt(val);
     });
     this.apiParams.level_quiz_id = val;
     content_ids = item.content_ids;
     this.enableSendButton();
-    that = this;
+    _this = this;
     $.ajax({
-      url: that.questionsApi,
+      url: _this.questionsApi,
       type: 'GET',
       data: {
         content_ids: content_ids
       },
       success: function (res) {
-        that.questions = res.data;
+        _this.questions = res.data;
       }
     });
   },
@@ -75,15 +75,15 @@ Polymer({
     });
   },
   sendQuiz: function () {
-    var that;
-    that = this;
-    $(that.$.btnsend).addClass('disabled');
-    that.btnSendText = that.btnSendingText;
+    var _this;
+    _this = this;
+    $(_this.$.btnsend).addClass('disabled');
+    _this.btnSendText = _this.btnSendingText;
     $.ajax({
-      url: that.quizzesApi,
+      url: _this.quizzesApi,
       type: 'POST',
       data: {
-        quiz: that.apiParams
+        quiz: _this.apiParams
       }
     });
   },

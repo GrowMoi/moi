@@ -1,32 +1,39 @@
+@import ../../styles/mixins
+@import ../../styles/variables
+
 $border-color-1: #D1D5C8
 
 \:host
+  height: 100%
+  position: relative
+  .disabled
+    opacity: 0.5
+    pointer-events: none
+  #listcontainer
+    max-height: 44rem
 
-.disabled
-  opacity: 0.5
-  pointer-events: none
-#listcontainer
-  max-height: 38rem
+    &.stop-scrolling
+      height: 100%
+      overflow: hidden
 
-  &.stop-scrolling
-    height: 100%
-    overflow: hidden
+    .loading-users
+      width: 100%
+      top: 0
+      height: 3.5rem
+      display: flex
+      align-items: center
+      justify-content: left
 
-  .loading-users
-    width: 100%
-    top: 0
-    height: 3.5rem
+  #inputcontainer
+    border: 0.1rem solid $border-color-1
+    padding: 0
+    border-radius: 1.5rem
     display: flex
+    height: 3rem
     align-items: center
-    justify-content: left
+    justify-content: center
+    box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.2)
+    padding-left: 2.5rem
 
-#inputcontainer
-  border: 0.1rem solid $border-color-1
-  padding: 0
-  border-radius: 1.5rem
-  display: flex
-  height: 3rem
-  align-items: center
-  justify-content: center
-  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.2)
-  padding-left: 2.5rem
+  +var(moi-send-client-request-button-color, $base-color-blue)
+  +var(moi-send-client-request-button-border-color, $base-color-blue)

@@ -11,23 +11,23 @@ Polymer({
     placeholder: String,
     name: {
       type: String,
-      default: ''
+      value: ''
     }
   },
   ready: function() {
-    var that;
-    that = this;
-    $(that.$.selector).on('change', function(e) {
+    var _this;
+    _this = this;
+    $(_this.$.selector).on('change', function(e) {
       var val;
       val = $(e.target).val();
-      that.fire('item-selected', val);
+      _this.fire('item-selected', val);
     });
   },
   itemsLoaded: function(newVal, oldVal) {
-    var that = this;
+    var _this = this;
     if ((oldVal !== undefined) && (newVal !== oldVal) ) {
-      that.async(function() {
-        that.fire('items-loaded', that);
+      _this.async(function() {
+        _this.fire('items-loaded', _this);
       });
 
     }

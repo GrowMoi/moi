@@ -13,49 +13,49 @@ Polymer({
     this.init();
   },
   init: function () {
-    var that = this;
-    that.loading = true;
-    $(that.$.btnsend).addClass('disabled');
-    $(that.$.listcontainer).scrollTop(0);
-    $(that.$.listcontainer).scroll(that.debounce(function (e) {
-      return that.onListScroll(e);
+    var _this = this;
+    _this.loading = true;
+    $(_this.$.btnsend).addClass('disabled');
+    $(_this.$.listcontainer).scrollTop(0);
+    $(_this.$.listcontainer).scroll(_this.debounce(function (e) {
+      return _this.onListScroll(e);
     }, 200));
     return $.ajax({
-      url: that.usersApi,
+      url: _this.usersApi,
       type: 'GET',
       data: {
-        page: that.count
+        page: _this.count
       },
       success: function (res) {
-        that.loading = false;
-        that.clients = res.data;
-        that.totalItems = res.meta.total_items;
+        _this.loading = false;
+        _this.clients = res.data;
+        _this.totalItems = res.meta.total_items;
       }
     });
   },
   onListScroll: function (e) {
     var diff, elem, existsData, scrollBottom;
-    var that = this;
+    var _this = this;
     elem = $(e.currentTarget);
     diff = elem[0].scrollHeight - elem.scrollTop();
     scrollBottom = Math.round(diff) <= elem.outerHeight();
-    existsData = that.clients.length < that.totalItems;
+    existsData = _this.clients.length < _this.totalItems;
     if (scrollBottom && existsData) {
-      that.loading = true;
-      that.count++;
-      $(that.$.listcontainer).addClass('stop-scrolling');
+      _this.loading = true;
+      _this.count++;
+      $(_this.$.listcontainer).addClass('stop-scrolling');
       $.ajax({
-        url: that.usersApi,
+        url: _this.usersApi,
         type: 'GET',
         data: {
-          page: that.count,
-          search: that.searchValue
+          page: _this.count,
+          search: _this.searchValue
         },
         success: function (res) {
-          that.loading = false;
-          that.clients = that.clients.concat(res.data);
-          that.totalItems = res.meta.total_items;
-          $(that.$.listcontainer).removeClass('stop-scrolling');
+          _this.loading = false;
+          _this.clients = _this.clients.concat(res.data);
+          _this.totalItems = res.meta.total_items;
+          $(_this.$.listcontainer).removeClass('stop-scrolling');
         }
       });
     }
@@ -88,21 +88,21 @@ Polymer({
     };
   },
   onInputEnter: function (e, value) {
-    var that = this;
-    that.searchValue = value;
-    that.initValues();
-    $(that.$.btnsend).addClass('disabled');
+    var _this = this;
+    _this.searchValue = value;
+    _this.initValues();
+    $(_this.$.btnsend).addClass('disabled');
     $.ajax({
-      url: that.usersApi,
+      url: _this.usersApi,
       type: 'GET',
       data: {
-        page: that.count,
+        page: _this.count,
         search: value
       },
       success: function (res) {
-        that.loading = false;
-        that.clients = res.data;
-        that.totalItems = res.meta.total_items;
+        _this.loading = false;
+        _this.clients = res.data;
+        _this.totalItems = res.meta.total_items;
       }
     });
   },

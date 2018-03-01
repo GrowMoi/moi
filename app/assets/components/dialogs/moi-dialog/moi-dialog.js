@@ -3,31 +3,31 @@ Polymer({
   properties: {
     title: {
       type: String,
-      default: ''
+      value: ''
     },
     width: {
       type: Number,
-      default: 300
+      value: 300
     },
     theme: {
       type: String,
-      default: ''
+      value: ''
     }
   },
   ready: function() {
-    var that;
-    that = this;
-    that.dialogWidth = "width: " + that.width + "px";
-    $(that).css({
+    var _this;
+    _this = this;
+    _this.dialogWidth = "width: " + _this.width + "px";
+    $(_this).css({
       position: 'fixed',
       zIndex: '1031',
-      left: (($(window).width() - $(that).outerWidth()) / 2) - (that.width / 2),
-      top: (($(window).height() - $(that).outerHeight()) / 2) - 200
+      left: (($(window).width() - $(_this).outerWidth()) / 2) - (_this.width / 2),
+      top: (($(window).height() - $(_this).outerHeight()) / 2) - 200
     });
-    if (that.theme && that.theme.length > 0) {
-      $(that.$['moi-dialog-content']).addClass(that.theme);
+    if (_this.theme && _this.theme.length > 0) {
+      $(_this.$['moi-dialog-content']).addClass(_this.theme);
     }
-    return $(that).hide();
+    return $(_this).hide();
   },
   closeDialog: function() {
     return $(this).hide();
