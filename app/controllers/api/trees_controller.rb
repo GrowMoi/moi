@@ -14,7 +14,7 @@ module Api
     }
 
     expose(:total_approved_contents) {
-      Content.where(approved: true).count
+      Neuron.approved_public_contents.count
     }
 
     api :GET,

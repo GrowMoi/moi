@@ -173,6 +173,17 @@ class User < ActiveRecord::Base
     successful
   end
 
+  ##
+  # check the total user's test without errors
+  # the count reset if the user has a errror
+  def total_successful_tests
+    count = 0
+    self.learning_tests.each do |test|
+      count = test.is_successful_test? ? count + 1 : 0
+    end
+    count
+  end
+
   private
 
   def send_role_changed_email

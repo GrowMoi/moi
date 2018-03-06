@@ -13,9 +13,7 @@ module Api
     }
 
     expose(:total_content_available) {
-      Content.joins(:neuron)
-            .where(approved: :true, neurons: {is_public: true})
-            .size
+      Neuron.approved_public_contents.count
     }
 
     expose(:all_leaders) {

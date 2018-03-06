@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
           neuron_branch
         ).children_ids
         ids = ids << neuron_branch.id
-        all_contents = Content.approved.all
+        all_contents = Neuron.approved_public_contents
         user_contents = self.content_learnings.map(&:content_id)
         contents_by_branch = find_contents(
                               ids,

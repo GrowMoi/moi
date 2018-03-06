@@ -46,7 +46,7 @@ class AdminAchievement < ActiveRecord::Base
     ##
     # user learnt all contest public/approved
     def learnt_all_contents(user)
-      total_contents = Content.approved.all.size
+      total_contents = Neuron.approved_public_contents.count
       user.content_learnings.size == total_contents
     end
 
