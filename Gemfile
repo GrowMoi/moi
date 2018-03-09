@@ -8,6 +8,7 @@ gem 'rails', '4.2.7.1'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+gem 'sass', github: 'JhymerMartinez/sass', branch: '3.2.19-var-fix'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
