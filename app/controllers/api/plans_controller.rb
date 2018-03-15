@@ -1,7 +1,7 @@
 module Api
   class PlansController < BaseController
 
-    expose(:root_neuron) {
+    expose(:plans) {
       Plan.all
     }
 
