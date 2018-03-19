@@ -12,10 +12,17 @@
 #
 
 class Product < ActiveRecord::Base
+
+  CATEGORIES = [
+    'plan'
+  ].freeze
+
   begin :validations
     validates :code, uniqueness: true
     validates :name, presence: true,
                      uniqueness: true
+    validates :category, presence: true,
+                    inclusion: {in: CATEGORIES}
   end
 
   begin :callbacks

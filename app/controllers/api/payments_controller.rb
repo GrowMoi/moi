@@ -13,7 +13,8 @@ module Api
     def tutor_account
       tutor_isValid = !params[:name].blank? && !params[:email].blank?
       payment_isValid = !params[:payment_id].blank? && !params[:code_item].blank?
-      if (tutor_isValid && payment_isValid)
+      isValidCode = validate_code(params[:code_item])
+      if (tutor_isValid && payment_isValid && isValidCode)
         user = User.new(name: params[:name],
                         email: params[:email],
                         username: generate_username,
@@ -55,6 +56,11 @@ module Api
 
     def generate_password
       password = Devise.friendly_token.first(10)
+    end
+
+    def validate_code(code)
+      plan = Products.where(code: code, category:'plan').first
+      plan.nil?
     end
   end
 end
