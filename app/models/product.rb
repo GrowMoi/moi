@@ -1,15 +1,17 @@
 # == Schema Information
 #
-# Table name: plans
+# Table name: products
 #
-#  id         :integer          not null, primary key
-#  name       :string
-#  code       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :integer          not null, primary key
+#  name        :string
+#  code        :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  category    :string
+#  description :string
 #
 
-class Plan < ActiveRecord::Base
+class Product < ActiveRecord::Base
   begin :validations
     validates :code, uniqueness: true
     validates :name, presence: true,

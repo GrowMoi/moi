@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: plans
+# Table name: Products
 #
 #  id         :integer          not null, primary key
 #  name       :string
@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 module Api
-  class PlanSerializer < ActiveModel::Serializer
+  class ProductSerializer < ActiveModel::Serializer
     attributes :name,
                :code
   end
