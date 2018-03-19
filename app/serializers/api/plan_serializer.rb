@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 module Api
-  class ProductSerializer < ActiveModel::Serializer
+  class PlanSerializer < ActiveModel::Serializer
     attributes :name,
                :code
   end
