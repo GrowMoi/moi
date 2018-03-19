@@ -9,6 +9,7 @@
 #  total      :float
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  code_item  :integer
 #
 
 FactoryGirl.define do

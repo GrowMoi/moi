@@ -11,8 +11,9 @@ module Api
     param :email, String
 
     def tutor_account
-      isValid = true
-      if isValid
+      tutor_isValid = !params[:name].blank? && !params[:email].blank?
+      payment_isValid = !params[:payment_id].blank? && !params[:code_item].blank?
+      if (tutor_isValid && payment_isValid)
         user = User.new(name: params[:name],
                         email: params[:email],
                         username: generate_username,
@@ -43,6 +44,7 @@ module Api
         :total,
         :source,
         :payment_id,
+        :code_item,
         :user_id
       )
     end

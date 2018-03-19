@@ -9,6 +9,7 @@
 #  total      :float
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  code_item  :integer
 #
 
 require 'rails_helper'
