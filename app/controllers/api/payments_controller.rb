@@ -61,7 +61,7 @@ module Api
 
     def validate_code(code)
       plan = Product.where(code: code, category:'plan').first
-      plan.nil?
+      !plan.nil?
     end
   end
 end
