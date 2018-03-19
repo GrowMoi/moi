@@ -7,6 +7,7 @@ module Api
     param :total, Integer
     param :source, String
     param :payment_id, String
+    param :code_item, String
     param :name, String
     param :email, String
 
@@ -59,7 +60,7 @@ module Api
     end
 
     def validate_code(code)
-      plan = Products.where(code: code, category:'plan').first
+      plan = Product.where(code: code, category:'plan').first
       plan.nil?
     end
   end
