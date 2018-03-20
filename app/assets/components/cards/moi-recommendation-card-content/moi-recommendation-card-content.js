@@ -5,10 +5,10 @@ Polymer({
     authToken: String
   },
   ready: function () {
-    var achievementsAjax, contentsAjax, studentsAjax, _this;
+    var achievementsAjax, studentsAjax, _this;
     var achievementsApi = '/tutor/dashboard/achievements';
     var studentsApi = '/tutor/dashboard/students';
-    var contentsApi = '/tutor/dashboard/get_contents';
+    this.contentsApi = '/tutor/dashboard/get_contents';
     this.achievements = [];
     this.contents = [];
     this.btnText = this.t('views.tutor.dashboard.card_recommendations.btn_send');
@@ -17,64 +17,61 @@ Polymer({
     this.achievementsPlaceholder = this.t('views.tutor.dashboard.card_recommendations.achievements_placeholder');
     this.contentsPlaceholder = this.t('views.tutor.dashboard.card_recommendations.contents_placeholder');;
     this.createRecomendationsApi = '/tutor/recommendations';
-    $(this.$.btnsend).addClass('disabled');
+    this.loadingContents = false;
     this.apiParams = {
       tutor_achievement: '',
       content_tutor_recommendations: [],
       students: []
     };
-    this.enableSendButton();
     this.loading = true;
+    this.disableSendButton();
     _this = this;
     achievementsAjax = $.ajax({
       url: achievementsApi,
       type: 'GET'
     });
-    contentsAjax = $.ajax({
-      url: contentsApi,
-      type: 'GET'
-    });
+
     studentsAjax = $.ajax({
       url: studentsApi,
       type: 'GET'
     });
-    $.when(achievementsAjax, contentsAjax, studentsAjax).then(function (res1, res2, res3) {
+    $.when(achievementsAjax, studentsAjax).then(function (res1, res2) {
       if (res1[0].data) {
         _this.achievements = _this.formatData(res1[0].data, 'name');
       }
       if (res2[0].data) {
-        _this.contents = _this.formatData(res2[0].data, 'title');
-      }
-      if (res3[0].data) {
-        _this.students = _this.formatStudentData(res3[0].data);
+        _this.students = _this.formatStudentData(res2[0].data);
       }
       _this.loading = false;
+      _this.async(function() {
+        _this.disableContentSelector();
+      });
+
     });
   },
-  onItemSelected: function (e, val) {
+  onAchievementSelected: function (e, val) {
     this.apiParams.tutor_achievement = val;
-    this.enableSendButton();
+    this.updateSendButtonState();
   },
-  onChoosenItemSelected: function (e, val) {
+  onChoosenContentSelected: function (e, val) {
     this.apiParams.content_tutor_recommendations.push(val);
-    this.enableSendButton();
+    this.updateSendButtonState();
   },
-  onChoosenItemDeselected: function (e, val) {
+  onChoosenContentDeselected: function (e, val) {
     var index = this.apiParams.content_tutor_recommendations.indexOf(val);
     if (index !== -1) {
       this.apiParams.content_tutor_recommendations.splice(index, 1);
     }
-    this.enableSendButton();
+    this.updateSendButtonState();
   },
   sendRecommendation: function () {
-    var _this = this;
-    $(_this.$.btnsend).addClass('disabled');
-    _this.btnSendText = _this.btnSendingText;
+    this.disableSendButton();
+    this.btnSendText = _this.btnSendingText;
     $.ajax({
-      url: _this.createRecomendationsApi,
+      url: this.createRecomendationsApi,
       type: 'POST',
       data: {
-        tutor_recommendation: _this.apiParams
+        tutor_recommendation: this.apiParams
       }
     });
   },
@@ -86,11 +83,14 @@ Polymer({
       };
     });
   },
-  enableSendButton: function () {
-    if ((this.apiParams.tutor_achievement === '') || (this.apiParams.content_tutor_recommendations.length === 0) || (this.apiParams.students.length === 0)) {
-      return $(this.$.btnsend).addClass('disabled');
+  updateSendButtonState: function () {
+    if ((this.apiParams.tutor_achievement === '') ||
+       (this.apiParams.content_tutor_recommendations.length === 0) ||
+       (this.apiParams.students.length === 0)) {
+
+      return this.disableSendButton();
     } else {
-      return $(this.$.btnsend).removeClass('disabled');
+      return this.enableSendButton();
     }
   },
   openDialog: function () {
@@ -104,6 +104,35 @@ Polymer({
   },
   onStudentSelected: function (e, val) {
     this.apiParams.students = [val];
-    return this.enableSendButton();
+    _this = this;
+    _this.disableContentSelector();
+    _this.loadingContents = true;
+    $.ajax({
+      url: _this.contentsApi,
+      type: 'GET',
+      data: {
+        user_id: val
+      },
+      success: function (res) {
+        if (res.data) {
+          _this.loadingContents = false;
+          _this.contents = _this.formatData(res.data, 'title');
+          _this.enableContentSelector();
+          _this.updateSendButtonState();
+        }
+      }
+    });
+  },
+  disableContentSelector: function() {
+    $(this.$$('#moi-choosen-container')).addClass('disabled');
+  },
+  enableContentSelector: function() {
+    $(this.$$('#moi-choosen-container')).removeClass('disabled');
+  },
+  disableSendButton: function() {
+    $(this.$['btn-send']).addClass('disabled');
+  },
+  enableSendButton: function() {
+    $(this.$['btn-send']).removeClass('disabled');
   }
 });

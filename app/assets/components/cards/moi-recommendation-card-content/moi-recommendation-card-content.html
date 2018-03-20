@@ -11,17 +11,20 @@
         <moi-select items="{{ students }}" on-item-selected="onStudentSelected" placeholder$="[[ t('views.tutor.dashboard.card_quizzes.students_placeholder') ]]"></moi-select>
       </div>
       <div class="row-select">
-        <moi-select items="{{ achievements }}" on-item-selected="onItemSelected" placeholder="[[ achievementsPlaceholder ]]"></moi-select>
+        <moi-select items="{{ achievements }}" on-item-selected="onAchievementSelected" placeholder="[[ achievementsPlaceholder ]]"></moi-select>
       </div>
-      <div class="row-select">
-        <moi-chosen class="moi-chosen" items="{{ contents }}" on-item-selected="onChoosenItemSelected" on-item-deselected="onChoosenItemDeselected"
-          placeholder="[[ contentsPlaceholder ]]"></moi-chosen>
+      <div class="row-select" id="moi-choosen-container">
+        <template is="dom-if" if="{{ !loadingContents }}" restamp>
+          <moi-chosen id="content-choosen" class="moi-chosen" items="{{ contents }}" on-item-selected="onChoosenContentSelected" on-item-deselected="onChoosenContentDeselected"
+            placeholder="[[ contentsPlaceholder ]]">
+          </moi-chosen>
+        </template>
       </div>
     </template>
 
     <moi-actions-row>
-      <button class="btn-action" id="btnachievement" on-tap="openDialog">{{ t('views.tutor.dashboard.card_recommendations.btn_achievement_dialog') }}</button>
-      <button class="btn-action" id="btnsend" on-tap="sendRecommendation">{{ btnSendText }}</button>
+      <button class="btn-action" id="btn-achievement" on-tap="openDialog">{{ t('views.tutor.dashboard.card_recommendations.btn_achievement_dialog') }}</button>
+      <button class="btn-action" id="btn-send" on-tap="sendRecommendation">{{ btnSendText }}</button>
     </moi-actions-row>
 
     <moi-dialog title="[[ t('views.tutor.dashboard.card_achievements.new_achievement') ]]" width="400" id="dialog" theme="yellow"

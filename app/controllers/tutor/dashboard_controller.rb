@@ -31,14 +31,26 @@ module Tutor
       end
     }
 
+    expose(:all_contents) {
+      Content.where(approved: true)
+    }
+
     expose(:clients) {
       all_clients.where.not(
         id: tutor_students.map(&:id)
       ).page(params[:page])
     }
 
-    expose(:contents) {
-      Content.where(approved: true)
+    expose(:unlearned_contents) {
+      if params[:user_id]
+        client = User.find(params[:user_id])
+        unlearned = all_contents.where.not(
+          id: client.content_learnings.map(&:content_id)
+        )
+        unlearned
+      else
+        all_contents
+      end
     }
 
     expose(:questions) {
@@ -123,7 +135,7 @@ module Tutor
 
     def get_contents
       render json: {
-        data: contents
+        data: unlearned_contents
       }
     end
 

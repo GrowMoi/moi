@@ -10,6 +10,14 @@ module Api
                   .find(params[:test_id])
     }
 
+    expose(:my_recommendations) {
+      ClientTutorRecommendation.where(client: current_user)
+    }
+
+    expose(:my_recommendations_in_progress) {
+      my_recommendations.where(status: "in_progress").includes(:tutor_recommendation)
+    }
+
     api :POST,
         "/learn",
         "answer a test and learn contents"
@@ -28,7 +36,6 @@ needs to be a JSON-encoded string having the following format:
     def create
       answerer_result = answerer.result
       serialized_recommendations = []
-
       if is_client?(current_user)
         update_user_leaderboard
         serialized_recommendations = ActiveModel::ArraySerializer.new(
@@ -92,15 +99,23 @@ needs to be a JSON-encoded string having the following format:
     end
 
     def update_recommendations
-      user_tutors = UserTutor.where(user: current_user, status: :accepted)
-      recommendations = []
-      user_tutors.find_each do |user_tutor|
-        tutor = user_tutor.tutor
-        recommendations_updated = TutorService::RecommendationsUpdater.new(current_user, tutor).update
-        recommendations.concat recommendations_updated
+      recommendation_updated = []
+      my_recommendations_in_progress.find_each do |client_tutor_recommendation|
+        content_ids = client_tutor_recommendation.tutor_recommendation
+                                                 .content_tutor_recommendations
+                                                 .map(&:content_id)
+        updated = TutorService::RecommendationsStatusUpdater.new(
+          current_user,
+          client_tutor_recommendation,
+          content_ids
+        ).perform
+        if updated.present?
+          recommendation_updated.push updated
+        end
       end
-      notify_tutor(recommendations)
-      recommendations
+
+      notify_tutor(recommendation_updated)
+      recommendation_updated
     end
 
     def notify_tutor(recommendations)

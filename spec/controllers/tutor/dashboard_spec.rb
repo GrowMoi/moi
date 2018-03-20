@@ -34,10 +34,17 @@ RSpec.describe Tutor::DashboardController, type: :controller do
            approved: true
   }
 
-  let!(:content1) {
+  let!(:content2) {
     create :content,
-           title: "content 1",
-           description: "description 1",
+           title: "content 2",
+           description: "description 2",
+           approved: true
+  }
+
+  let!(:content3) {
+    create :content,
+           title: "content 3",
+           description: "description 3",
            approved: true
   }
 
@@ -61,6 +68,11 @@ RSpec.describe Tutor::DashboardController, type: :controller do
             user: client3,
             tutor: current_user,
             status: :rejected
+
+    create :content_learning,
+      user: client1,
+      content: content1
+
   }
 
   let!(:tutor_students) {
@@ -201,4 +213,25 @@ RSpec.describe Tutor::DashboardController, type: :controller do
     end
   end
 
+  context "contents" do
+
+    describe "Get unlearned contents by user" do
+
+      before {
+        get :get_contents, user_id: client1.id
+      }
+
+      it {
+        expect(response).to have_http_status(:ok)
+      }
+      it {
+        expect(controller.unlearned_contents[0]).to eq(content2)
+        expect(controller.unlearned_contents[1]).to eq(content3)
+      }
+      it {
+        expect(controller.unlearned_contents.size).to eq(2)
+      }
+
+    end
+  end
 end

@@ -307,8 +307,8 @@
         card_recommendations:
           title: "Enviar Recomendaciones"
           btn_send: "Enviar Recom."
-          achievements_placeholder: "Selecciona una recompensa"
-          contents_placeholder: "Selecciona contenidos"
+          achievements_placeholder: "Seleccione una recompensa"
+          contents_placeholder: "Seleccione contenidos no aprendidos"
           loading: "Cargando datos..."
           btn_achievement_dialog: "Crear Recompensa"
         card_send_notifications:
@@ -320,9 +320,9 @@
           form_placeholder_video: "Video destacado"
         card_quizzes:
           title: "Crear un Test"
-          levels_placeholder: "Selecciona un nivel"
+          levels_placeholder: "Seleccione un nivel"
           students_placeholder: "Seleccione un estudiante"
-          levels_placeholder: "Selecciona un nivel"
+          levels_placeholder: "Seleccione un nivel"
           students_placeholder: "Seleccione un estudiante"
           loading: "Cargando datos..."
           questions_label: "Preguntas"
