@@ -75,6 +75,9 @@ class User < ActiveRecord::Base
     has_many :learning_tests,
              dependent: :destroy,
              class_name: "ContentLearningTest"
+    has_many :learning_final_tests,
+             dependent: :destroy,
+             class_name: "ContentLearningFinalTest"
     has_many :content_learnings,
              dependent: :destroy
     has_many :content_reading_times,
