@@ -1,0 +1,70 @@
+html
+  head
+    meta[content="text/html; charset = UTF-8" http-equiv="Content-Type"]
+    style[type="text/css" media="screen"]
+      | body { font-family: Helvetica,Verdana,Arial; color: #979797; font-size: 18px;}
+      | .text-highlight { color: #00bff4; font-size: 40px;}
+      | .margin-sides { margin: 25px; }
+      | .img-section { margin: 10px 0; }
+      | .img-section img { width: 100%; height: 200px; }
+      | .footer-section {
+      |   background-image: url(attachments/footer_email_shared.png);
+      |   height: 150px;
+      |   background-repeat: no-repeat;
+      |   background-size: 100% 100%;
+      |   display: flex;
+      |   justify-content: center;
+      |   align-items: center;
+      |   flex-direction: column;
+      | }
+      | .message-section {
+      |   display: flex;
+      |   justify-content: center;
+      |   flex-direction: column;
+      |   align-items: center;
+      | }
+      | .header-section { justify-content: center; display: flex; }
+      | .footer-section p { margin-top: 5%; }
+      | .networks { display: flex; justify-content: space-between; width: 85px;}
+      | .description {
+      |   display: flex;
+      |   align-items: center;
+      |   justify-content: space-between;
+      |   width: 600px;
+      |   font-weight: bold;
+      | }
+      | .screenshot { display: flex; justify-content: center; }
+      | .screenshot img {width: 800px; height: 600px; }
+      | .left-btn { border-radius: 5px; border: 2px solid #4fb6dc; padding: 5px; }
+      | .left-btn a { color: #4fb6dc; text-decoration: none; }
+      | .right-btn a { color: #ffa644; text-decoration: none; }
+      | .right-btn { border-radius: 5px; border: 2px solid #ffa644; padding: 5px; }
+  body
+    .img-section
+      = image_tag attachments['header_email_shared.png'].url
+    .header-section.margin-sides
+      p.text-highlight
+        | Hola, #{@user_name} pensó que te gustaría conocer esto:
+    .screenshot
+      = image_tag(@image_url)
+    .message-section.margin-sides
+      p
+        | Esta(Pantalla) es parte de la experiencia Moi de #{@user_name}. Para verlo en detalle,
+        | haz clic&nbsp;
+        = link_to "Aqui", @public_url, target: "_blank"
+      .description
+        | Para empezar, a jugar haz clic&nbsp;
+        .left-btn
+          = link_to "Jugar.!", @url_sign_in, target: "_blank"
+        | o seguir su proceso&nbsp;
+        .right-btn
+          = link_to "Tutores", @url_dashboard, target: "_blank"
+        br
+    .footer-section.margin-sides
+      p
+        | Para concer más visita&nbsp;
+        = link_to "www.growmoi.com", @url_web_site, target: "_blank"
+      .networks
+        = image_tag attachments['fb_icon.png'].url
+        = image_tag attachments['tw_icon.png'].url
+        = image_tag attachments['yt_icon.png'].url

@@ -673,6 +673,8 @@
   user_mailer:
     change_permission:
       subject: "Cambio de permisos"
+    shared_content:
+      subject: "Moi - Social Learning"
   tutor_mailer:
     achievement_notification:
       subject: "Contenidos completados"
