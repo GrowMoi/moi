@@ -2,7 +2,7 @@ module Tutor
   class RecommendationsController < TutorController::Base
 
     expose(:contents) {
-      Content.where(approved: true)
+      Neuron.approved_public_contents
     }
 
     expose(:tutor_achievements) {

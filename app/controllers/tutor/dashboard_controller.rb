@@ -32,7 +32,7 @@ module Tutor
     }
 
     expose(:all_contents) {
-      Content.where(approved: true)
+      Neuron.approved_public_contents
     }
 
     expose(:clients) {

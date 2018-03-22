@@ -12,7 +12,7 @@ module Admin
     }
 
     expose(:contents) {
-      Content.where(approved: true)
+      Neuron.approved_public_contents
     }
 
     expose(:questions) {
