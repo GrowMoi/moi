@@ -28,22 +28,20 @@ module Tutor
     def create
       tutor_recommendation.tutor = current_user
       achievement_id = tutor_recommendation_params[:tutor_achievement]
-
       if !achievement_id.empty?
         achievement = TutorAchievement.find(achievement_id)
         tutor_recommendation.tutor_achievement = achievement
       end
 
-      if tutor_recommendation.save
-        content_ids = tutor_recommendation_params[:content_tutor_recommendations]
-        add_contents_to_recommendation(content_ids)
-        names = format_student_names(students_selected)
-        flash[:success] = I18n.t(
-          "views.tutor.recommendations.recommendation_request.created",
-          clients: names
-        )
+      content_ids = tutor_recommendation_params[:content_tutor_recommendations]
+      content_ids = remove_blank(content_ids)
+      students_ids = tutor_recommendation_params[:students]
+      students_ids = remove_blank(students_ids)
+
+      if content_ids.any? && students_ids.any?
+        create_tutor_recommendation(tutor_recommendation, content_ids, students_ids)
       else
-        flash[:error] = I18n.t("views.tutor.common.error")
+        flash[:error] = I18n.t("views.tutor.recommendations.recommendation_request.missing_params")
       end
       if request.xhr?
         render :js => "window.location = '#{request.referrer}'"
@@ -84,15 +82,6 @@ module Tutor
 
     def student_ids_params
       tutor_recommendation_params[:students]
-    end
-
-    def add_contents_to_recommendation(content_ids)
-      content_ids = content_ids.reject(&:blank?)
-      students_ids = tutor_recommendation_params[:students]
-      students_ids = students_ids.reject(&:blank?)
-      if content_ids.any? && students_ids.any?
-        iterate_and_assign_contents(content_ids, students_ids)
-      end
     end
 
     def add_recommendation_to_client (students_ids, recommendation, content_ids)
@@ -144,7 +133,7 @@ module Tutor
       ).perform
     end
 
-    def iterate_and_assign_contents(content_ids, students_ids)
+    def iterate_and_assign_contents_to_recommendation(content_ids, students_ids)
       content_ids.each do |id|
         content = Content.find(id)
         content_tutor_recommendation = ContentTutorRecommendation.new(
@@ -159,5 +148,23 @@ module Tutor
     def format_student_names(students)
       students.map{|s| if s.name.present? then  s.name else s.username end }.join(', ')
     end
+
+    def remove_blank(items)
+      if items.present? then items.reject(&:blank?) else [] end
+    end
+
+    def create_tutor_recommendation(tutor_recommendation, content_ids, students_ids)
+      if tutor_recommendation.save
+        iterate_and_assign_contents_to_recommendation(content_ids, students_ids)
+        names = format_student_names(students_selected)
+        flash[:success] = I18n.t(
+          "views.tutor.recommendations.recommendation_request.created",
+          clients: names
+        )
+      else
+        flash[:error] = I18n.t("views.tutor.common.error")
+      end
+    end
+
   end
 end

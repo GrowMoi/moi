@@ -3,8 +3,9 @@
 
 \:host
   height: 100%
-  position: relative
-
+  .data-container
+    height: 100%
+    position: relative
   .disabled
     pointer-events: none
     opacity: 0.6
@@ -18,11 +19,6 @@
     border: 1px solid $base-color-yellow
     margin: 0.5rem
 
-  .row-select
-    margin-bottom: 0.2rem
-
   .actions
     height: 4rem
     position: relative
-
-  +var(moi-choosen-width, 100%)

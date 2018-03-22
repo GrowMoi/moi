@@ -2,20 +2,23 @@ Polymer({
   is: 'moi-recommendation-card-content',
   behaviors: [TranslateBehavior, StudentBehavior],
   properties: {
-    authToken: String
+    authToken: String,
+    type: {
+      type: String,
+      default: 'card'
+    }
   },
   ready: function () {
     var achievementsAjax, studentsAjax, _this;
     var achievementsApi = '/tutor/dashboard/achievements';
     var studentsApi = '/tutor/dashboard/students';
     this.contentsApi = '/tutor/dashboard/get_contents';
+    this.isCardType = this.type == 'card';
     this.achievements = [];
     this.contents = [];
     this.btnText = this.t('views.tutor.dashboard.card_recommendations.btn_send');
     this.btnSendText = this.btnText;
     this.btnSendingText = this.t('views.submitting');
-    this.achievementsPlaceholder = this.t('views.tutor.dashboard.card_recommendations.achievements_placeholder');
-    this.contentsPlaceholder = this.t('views.tutor.dashboard.card_recommendations.contents_placeholder');;
     this.createRecomendationsApi = '/tutor/recommendations';
     this.loadingContents = false;
     this.apiParams = {
@@ -24,7 +27,7 @@ Polymer({
       students: []
     };
     this.loading = true;
-    this.disableSendButton();
+    this.disableSendButton = true;
     _this = this;
     achievementsAjax = $.ajax({
       url: achievementsApi,
@@ -65,7 +68,7 @@ Polymer({
     this.updateSendButtonState();
   },
   sendRecommendation: function () {
-    this.disableSendButton();
+    this.disableSendButton = true;
     this.btnSendText = _this.btnSendingText;
     $.ajax({
       url: this.createRecomendationsApi,
@@ -88,9 +91,9 @@ Polymer({
        (this.apiParams.content_tutor_recommendations.length === 0) ||
        (this.apiParams.students.length === 0)) {
 
-      return this.disableSendButton();
+      this.disableSendButton = true;
     } else {
-      return this.enableSendButton();
+      this.disableSendButton = false;
     }
   },
   openDialog: function () {
@@ -128,11 +131,5 @@ Polymer({
   },
   enableContentSelector: function() {
     $(this.$$('#moi-choosen-container')).removeClass('disabled');
-  },
-  disableSendButton: function() {
-    $(this.$['btn-send']).addClass('disabled');
-  },
-  enableSendButton: function() {
-    $(this.$['btn-send']).removeClass('disabled');
   }
 });

@@ -271,6 +271,7 @@
           created: "Se ha creado una nueva recompensa."
         recommendation_request:
           created: "Se ha enviado una nueva recomendación de contenidos a %{clients}"
+          missing_params: "No se han seleccionado contenidos o usuario para esta recomendación"
         form_new:
           contents_label: "Contenidos a recomendar"
           contents_input_info: "Elija los contenidos que quiera recomendar."
