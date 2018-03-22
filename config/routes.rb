@@ -101,6 +101,11 @@ Moi::Application.routes.draw do
           put :active
         end
       end
+      resources :final_test, only: [:create, :show] do
+        member do
+          post :answer
+        end
+      end
     end
 
     match "users/search" => 'users#search', via: :get
