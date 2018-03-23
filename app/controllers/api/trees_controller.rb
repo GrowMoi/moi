@@ -41,18 +41,29 @@ module Api
             ]
           }
         },
-        "meta": { "depth": 2 }
+        "meta": {
+          "depth": 2,
+          "depth": 2,
+          "current_learnt_contents": 2,
+          "total_approved_contents": 20,
+          "perform_final_test": false,
+          "total_final_test": 0
+        }
       }
     }
     param :username, String, required: true
     param :neuronId, Integer
 
     def show
-      if user_tree
-        respond_with tree: { root: user_tree.root },
-                     meta: { depth: user_tree.depth,
-                            current_learnt_contents: user.content_learnings.count,
-                            total_approved_contents: total_approved_contents}
+      user_request = params[:neuronId] ? user_tree : user
+      if user_request
+        respond_with tree: { root: user_request.root },
+                     meta: { depth: user_request.depth,
+                            current_learnt_contents: user_request.content_learnings.count,
+                            total_approved_contents: total_approved_contents,
+                            perform_final_test: user_tree.depth == 9,
+                            total_final_test: user_request.learning_final_tests.size
+                           }
       else
         render nothing: true,
                 status: 404
