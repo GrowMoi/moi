@@ -55,18 +55,28 @@ module Api
     param :neuronId, Integer
 
     def show
-      user_request = params[:neuronId] ? user_tree : user
-      if user_request
-        respond_with tree: { root: user_request.root },
-                     meta: { depth: user_request.depth,
-                            current_learnt_contents: user_request.content_learnings.count,
-                            total_approved_contents: total_approved_contents,
-                            perform_final_test: user_tree.depth == 9,
-                            total_final_test: user_request.learning_final_tests.size
-                           }
+      if user_tree
+        assign_achievement
+        respond_with tree: { root: user_tree.root },
+                     meta: { depth: user_tree.depth,
+                            current_learnt_contents: user.content_learnings.count,
+                            total_approved_contents: total_approved_contents}
       else
         render nothing: true,
                 status: 404
+      end
+    end
+
+    private
+
+    def assign_achievement
+      if user_tree.depth == 9
+        achievement = AdminAchievement.find_by_number(10)
+        my_achievements = user_tree.user_admin_achievements.map(&:admin_achievement_id)
+        has_achievements = my_achievements.include? achievement.id
+        unless has_achievements
+          UserAdminAchievement.create!(user_id: user.id, admin_achievement_id: achievement.id)
+        end
       end
     end
   end

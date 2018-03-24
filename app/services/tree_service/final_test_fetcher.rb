@@ -1,15 +1,19 @@
 module TreeService
   class FinalTestFetcher
+    LEVEL = 9
 
-    def initialize(player)
+    def initialize(user)
       @user = user
     end
 
     def user_final_test_for_api
-      @user_test ||= Api::LearningTestSerializer.new(
-        test_creator.user_test,
-        root: false
-      )
+      user_tree = UserTreeFetcher.new(@user, nil)
+      if user_tree.depth == LEVEL
+        @user_test ||= Api::LearningTestSerializer.new(
+          test_creator.user_test,
+          root: false
+        )
+      end
     end
 
     private
