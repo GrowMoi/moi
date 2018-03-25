@@ -155,7 +155,7 @@ module Tutor
         Notification.create!(user: current_user,
                             title: "Nuevo test #{Date.today.to_s}",
                             description: "Disponible en: #{quiz_url}",
-                            data_type: "quiz",
+                            data_type: "tutor_quiz",
                             client_id: client.id)
 
         flash[:success] = I18n.t(
@@ -175,6 +175,7 @@ module Tutor
       if student_ids_params.any?
         student_id = student_ids_params[0]
         notification.client_id = student_id
+        notification.data_type = "tutor_generic"
         if notification.save
           flash[:success] = I18n.t(
             "views.tutor.dashboard.card_send_notifications.sent"

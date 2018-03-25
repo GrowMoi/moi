@@ -48,6 +48,12 @@ RSpec.describe Tutor::DashboardController, type: :controller do
            approved: true
   }
 
+  let!(:neuron) {
+    create :neuron,
+    is_public: true,
+    contents: [content1, content2, content3]
+  }
+
   let!(:level_quiz1) {
     create :level_quiz,
            name: 'level quiz 1',

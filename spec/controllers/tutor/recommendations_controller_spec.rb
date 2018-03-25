@@ -46,6 +46,12 @@ RSpec.describe Tutor::RecommendationsController, type: :controller do
            approved: false
   }
 
+  let!(:neuron) {
+    create :neuron,
+    is_public: true,
+    contents: [content1, content2, content3, content4]
+  }
+
   let!(:achievement1) {
     create :tutor_achievement,
            tutor: current_user,
