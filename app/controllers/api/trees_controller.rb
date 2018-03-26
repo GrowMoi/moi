@@ -72,7 +72,7 @@ module Api
     def assign_achievement
       if user_tree.depth == 9
         achievement = AdminAchievement.find_by_number(10)
-        my_achievements = user_tree.user_admin_achievements.map(&:admin_achievement_id)
+        my_achievements = user.user_admin_achievements.map(&:admin_achievement_id)
         has_achievements = my_achievements.include? achievement.id
         unless has_achievements
           UserAdminAchievement.create!(user_id: user.id, admin_achievement_id: achievement.id)

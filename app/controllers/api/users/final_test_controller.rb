@@ -3,11 +3,11 @@ module Api
     class FinalTestController < BaseController
       before_action :authenticate_user!
 
-      respond_to :json
-
       expose(:user) {
         current_user
       }
+
+      respond_to :json
 
       api :POST,
           "/users/final_test",

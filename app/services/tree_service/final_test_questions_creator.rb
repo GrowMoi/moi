@@ -6,20 +6,22 @@ module TreeService
     end
 
     def user_test
-      unless @user.learning_final_tests
+      # unless @user.learning_final_tests
         @user_test ||= ContentLearningFinalTest.create!(
           user: @user,
           questions: questions
         )
-      else
-        @user.learning_final_tests
-      end
+      # else
+        # @user.learning_final_tests
+      # end
     end
 
     private
 
     def questions
+      puts @contents.size
       @contents.map do |content|
+        puts content.title
         {
           content_id: content.id,
           title: content.title,
