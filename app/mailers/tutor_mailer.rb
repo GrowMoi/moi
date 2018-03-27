@@ -8,4 +8,15 @@ class TutorMailer < ApplicationMailer
     @url  = "http://www.growmoi.com"
     mail(to: tutor.email, subject: I18n.t("tutor_mailer.achievement_notification.subject"))
   end
+
+  def payment_account(name, password, email)
+    @tutor_name = name
+    @tutor_password = password
+    @url_dashboard = "http://moi-backend.growmoi.com/tutor"
+    @url_sign_in = "http://moi-backend.growmoi.com/users/sign_in"
+    attachments.inline['moi_title.png'] = File.read("#{Rails.root}/app/assets/images/moi_title.png")
+    attachments.inline['moicartaimg.png'] = File.read("#{Rails.root}/app/assets/images/moicartaimg.png")
+    mail(to: email, subject: I18n.t("tutor_mailer.payment_account.subject"))
+  end
+
 end

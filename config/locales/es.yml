@@ -676,6 +676,8 @@
   tutor_mailer:
     achievement_notification:
       subject: "Contenidos completados"
+    payment_account:
+      subject: "Cuenta Moi"
   devise:
     sessions:
       user:

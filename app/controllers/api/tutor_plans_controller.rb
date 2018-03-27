@@ -1,15 +1,15 @@
 module Api
-  class PlansController < BaseController
+  class TutorPlansController < BaseController
 
     expose(:plans) {
-      Plan.all
+      Product.where(category: 'plan')
     }
 
     respond_to :json
 
     api :GET,
-        "/plans",
-        "returns all plans"
+        "/tutor_plans",
+        "returns tutor plans"
     def index
       respond_with(
         plans,

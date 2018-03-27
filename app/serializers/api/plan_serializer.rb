@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: plans
+# Table name: Products
 #
 #  id         :integer          not null, primary key
 #  name       :string

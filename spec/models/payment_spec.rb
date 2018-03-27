@@ -1,16 +1,19 @@
 # == Schema Information
 #
-# Table name: plans
+# Table name: payments
 #
 #  id         :integer          not null, primary key
-#  name       :string
-#  code       :string
+#  user_id    :integer          not null
+#  payment_id :string
+#  source     :string
+#  total      :float
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  code_item  :integer
 #
 
 require 'rails_helper'
 
-RSpec.describe Plan, :type => :model do
+RSpec.describe Payment, :type => :model do
   pending "add some examples to (or delete) #{__FILE__}"
 end

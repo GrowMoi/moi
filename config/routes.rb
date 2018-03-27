@@ -4,7 +4,7 @@ Moi::Application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resource :tree, only: :show
     resource :learn, controller: :learn, only: :create
-    resources :plans, only: :index
+    resources :tutor_plans, only: :index
     resources :search, only: :index
     resources :content_preferences, only: :update
     resource :order_preferences, controller: :order, only: :update
@@ -61,6 +61,12 @@ Moi::Application.routes.draw do
                 only: [:statistics] do
       collection do
         get :statistics
+      end
+    end
+
+    resource :payments, only: [] do
+      member do
+        post :tutor_account
       end
     end
 

@@ -1,16 +1,19 @@
 # == Schema Information
 #
-# Table name: plans
+# Table name: payments
 #
 #  id         :integer          not null, primary key
-#  name       :string
-#  code       :string
+#  user_id    :integer          not null
+#  payment_id :string
+#  source     :string
+#  total      :float
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  code_item  :integer
 #
 
 FactoryGirl.define do
-  factory :plan do
+  factory :payment do
     
   end
 
