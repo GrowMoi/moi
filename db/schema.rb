@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(version: 20180315010029) do
     t.text     "content_ids", default: [],              array: true
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "created_by"
   end
 
   create_table "neurons", force: :cascade do |t|
@@ -279,6 +280,8 @@ ActiveRecord::Schema.define(version: 20180315010029) do
     t.integer  "user_id",                 null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "client_id"
+    t.string   "data_type"
   end
 
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
@@ -307,6 +310,7 @@ ActiveRecord::Schema.define(version: 20180315010029) do
     t.integer  "quiz_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "client_id"
   end
 
   add_index "players", ["quiz_id"], name: "index_players_on_quiz_id", using: :btree
@@ -337,6 +341,7 @@ ActiveRecord::Schema.define(version: 20180315010029) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "level_quiz_id", null: false
+    t.integer  "created_by"
   end
 
   add_index "quizzes", ["level_quiz_id"], name: "index_quizzes_on_level_quiz_id", using: :btree
@@ -521,12 +526,10 @@ ActiveRecord::Schema.define(version: 20180315010029) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
-    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "client_tutor_recommendations", "users", column: "client_id"
@@ -545,17 +548,20 @@ ActiveRecord::Schema.define(version: 20180315010029) do
   add_foreign_key "content_readings", "neurons"
   add_foreign_key "content_readings", "users"
   add_foreign_key "content_videos", "contents"
+  add_foreign_key "level_quizzes", "users", column: "created_by"
   add_foreign_key "notification_links", "notifications"
   add_foreign_key "notification_media", "notifications"
   add_foreign_key "notification_videos", "notifications"
+  add_foreign_key "notifications", "users", column: "client_id"
   add_foreign_key "players", "quizzes"
+  add_foreign_key "players", "users", column: "client_id"
   add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
   add_foreign_key "quizzes", "level_quizzes"
+  add_foreign_key "quizzes", "users", column: "created_by"
   add_foreign_key "tutor_achievements", "users", column: "tutor_id"
   add_foreign_key "tutor_recommendations", "users", column: "tutor_id"
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"
-  add_foreign_key "versions", "users", column: "owner_id"
 end

@@ -9,6 +9,8 @@
 #  user_id     :integer          not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  client_id   :integer
+#  data_type   :string
 #
 
 class Notification < ActiveRecord::Base
@@ -23,6 +25,10 @@ class Notification < ActiveRecord::Base
 
   begin :relationships
     belongs_to :user
+
+    belongs_to :client,
+             class_name: "User",
+             foreign_key: "client_id"
 
     has_many :notification_videos,
               dependent: :destroy

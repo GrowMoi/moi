@@ -1,0 +1,5 @@
+#dialog-dashboard-update-achievement
+  = render "tutor/shared/form_achievement",
+    method: "put",
+    url: "/tutor/dashboard/update_achievement?id=#{tutor_achievement_selected.id}",
+    tutor_achievement: tutor_achievement_selected

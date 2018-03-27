@@ -1,0 +1,14 @@
+tr
+  td.list-group-item(id="user_#{client.id}")
+    .name
+      = client.name
+    .username
+      small = client.username
+    .options
+      = button_tag "",
+          type: "button",
+          class: "button-dashboard-send-request",
+          id: "client_#{client.id}",
+          title: t("views.tutor.dashboard.card_achievements.edit"),
+          disable_with: t("views.submitting")
+        span(class="glyphicon glyphicon-send")

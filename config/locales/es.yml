@@ -227,8 +227,10 @@
         title_students: "Mis Alumnos"
         user_notification: "%{tutor_name} ha realizado una solicitud para ser tu tutor."
         tutor_request:
-          created: "se ha enviado una solicitud a %{name} para ser su tutor"
-          not_created: "ups, ya existe una solicitud de tutoría a %{name}"
+          created: "Se ha enviado una solicitud a %{name} para ser su tutor"
+          not_created: "Ups, ya existe una solicitud de tutoría a %{name}"
+          created_list: "Se ha enviado una solicitud de tutoría a: %{clients}"
+          not_created_list: "Ups, al parecer algo salio mal, posiblemente ya existan solicitudes de tutoría activas para los usuarios seleccionados."
       analysis:
         analyze: "Seleccione análisis"
         total_neurons_learnt: "Neuronas aprendidas"
@@ -241,7 +243,7 @@
         reading_time_content: "Tiempo de lectura por contenido"
         content_readings_by_branch: "Número de contenidos leidos según las ramas base"
       client:
-        select_user: "Antes se debe seleccionar un usuario"
+        select_user: "Seleccione un estudiante para mostrar detalles."
         activity: "Actividad"
         description: "Descripción"
         total_neurons_learnt: "Neuronas aprendidas"
@@ -255,6 +257,7 @@
         tutor: "Tutor"
         logout: "Cerrar sesión"
         recommendations: "Recomendaciones"
+        dashboard: "Dashboard"
       report:
         title: 'Social Learning'
         sub_title: 'Estimado tutor, a continuación el reporte solicitado.'
@@ -267,17 +270,74 @@
         achievement_request:
           created: "Se ha creado una nueva recompensa."
         recommendation_request:
-          created: "Se ha creado una nueva recomendación de contenidos para los alumnos del tutor %{name}"
-        form_new_achievement:
-          send: "Guardar Logro"
-          attach_image: ""
+          created: "Se ha enviado una nueva recomendación de contenidos a %{clients}"
+          missing_params: "No se han seleccionado contenidos o usuario para esta recomendación"
         form_new:
           contents_label: "Contenidos a recomendar"
           contents_input_info: "Elija los contenidos que quiera recomendar."
           achievement_label: "Recompensa"
           achievement_input_info: "Establezca una recompensa que recibirá el o los usuarios al completar los contenidos recomendados."
           send: "Enviar Recomendaciones"
-          new_achievement:  " Agregar una nueva recompensa"
+          new_achievement:  "Nueva recompensa"
+      dashboard:
+        achievement_request:
+          created: "Se ha creado una nueva recompensa."
+          updated: "La recompensa ha sido actualizada."
+        quizzes:
+          created: "Se ha creado un nuevo test para el usuario %{client_name} disponible en %{quiz_url}."
+        card_achievements:
+          title: "Recompensas"
+          new_achievement:  "Agregar una nueva recompensa"
+          title_update: "Actualizar recompensa"
+          edit: "Editar Recompensa"
+        card_students:
+          title: "Mis Alumnos"
+          show_report: "Generar Reporte"
+          loading_report: "Generando reporte..."
+          export_xls: "Expor. todo"
+          export_xls_title: "Exportar a excel los datos de todos los alumnos"
+          export_selected_xls: "Expor. seleccionados"
+          export_selected_xls_title: "Exportar a excel los datos de los alumnos seleccionados"
+          loading_students: "Cargando alumnos..."
+        card_users:
+          title: "Usuarios"
+          send_request: "Enviar Solicitud"
+          send_request_title: "Enviar solicitud a nuevos alumnos"
+          send_request_loading: "Enviando solicitudes..."
+          loading_users: "Cargando usuarios..."
+        card_recommendations:
+          title: "Enviar Recomendaciones"
+          btn_send: "Enviar Recom."
+          achievements_placeholder: "Seleccione una recompensa"
+          contents_placeholder: "Seleccione contenidos no aprendidos"
+          loading: "Cargando datos..."
+          btn_achievement_dialog: "Crear Recompensa"
+        card_send_notifications:
+          title: "Enviar mensaje"
+          sent: "Se ha enviado una notificacion a tus alumnos."
+          form_image_label: "Imagen"
+          form_placeholder_title: "Título"
+          form_placeholder_description: "Contenido"
+          form_placeholder_video: "Video destacado"
+        card_quizzes:
+          title: "Crear un Test"
+          levels_placeholder: "Seleccione un nivel"
+          students_placeholder: "Seleccione un estudiante"
+          levels_placeholder: "Seleccione un nivel"
+          students_placeholder: "Seleccione un estudiante"
+          loading: "Cargando datos..."
+          questions_label: "Preguntas"
+      common:
+        error: "Ups, al parecer algo salio mal. Por favor, intenta de nuevo."
+        nothing_found: "No se encontró ningun elemento!"
+        send: "Enviar"
+        form_achievements:
+          name: "Nombre"
+          description: "Descripción"
+          current_image: "Imagen actual"
+          image: "Nueva imagen"
+          send: "Guardar Logro"
+          attach_image: ""
 
   date:
     formats:

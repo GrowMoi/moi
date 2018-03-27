@@ -7,6 +7,9 @@ html
     = javascript_include_tag "tutor", "data-turbolinks-track" => true
     = html_import_tag "tutor_components", "data-turbolinks-track" => true
     = csrf_meta_tags
+    javascript:
+      I18n.defaultLocale = "#{I18n.default_locale}";
+      I18n.locale = "#{I18n.locale}";
 
   body
     = render "tutor/shared/main_navbar"

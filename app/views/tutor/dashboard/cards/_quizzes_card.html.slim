@@ -1,0 +1,7 @@
+.dashboard-card.dashboard-quizzes-card.moi-card.card-orange
+  .moi-card-header
+    .moi-card-title = t("views.tutor.dashboard.card_quizzes.title")
+  .moi-card-content
+    moi-quiz-card-content(
+      auth-token="#{form_authenticity_token}"
+    )

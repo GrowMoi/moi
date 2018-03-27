@@ -8,6 +8,7 @@ gem 'rails', '4.2.7.1'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+gem 'sass', github: 'JhymerMartinez/sass', branch: '3.2.19-var-fix'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
@@ -66,6 +67,8 @@ gem 'jquery-infinite-pages'
 gem 'enumerize', '~> 2.0'
 
 gem 'polymer-rails', '~> 1.0.0'
+gem "i18n-js"
+gem 'js_assets'
 
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'

@@ -162,8 +162,16 @@ Moi::Application.routes.draw do
 
   namespace :tutor do
     resources :moi, only: :index
-    resources :client, only: [:index, :show]
-    resources :analysis, only: [:index, :show]
+    resources :client, only: :index do
+      collection do
+        get :get_client_statistics
+      end
+    end
+    resources :analysis, only: :index do
+      collection do
+        get :get_user_analysis
+      end
+    end
     resources :tree, only: :index
     resources :user_tutors, only: :create
     resources :recommendations, only: [:new, :create] do
@@ -179,8 +187,24 @@ Moi::Application.routes.draw do
         get :time_reading
       end
     end
+    resources :dashboard, only: [:index] do
+      collection do
+        get :achievements
+        post :new_achievement
+        put :update_achievement
+        get :edit_achievement
+        get :students
+        get :get_clients
+        get :download_tutor_analytics
+        get :get_contents
+        post :send_notification
+        get :get_level_quizzes
+        get :get_questions
+        post :create_quiz
+      end
+    end
 
-    root "moi#index"
+    root "dashboard#index"
   end
 
   match "/delayed_job" => DelayedJobWeb,

@@ -14,8 +14,11 @@ loadBubbleChart = () ->
 
     loading.hide(container)
 
+isReportPage = ->
+  $(reportPage).length > 0
+
 loadCharts = ->
-  if $(reportPage).length > 0
+  if isReportPage()
     userId = getParam('user_id')
     loadDonutChart(userId)
     loadBarChart()
