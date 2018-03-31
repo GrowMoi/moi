@@ -12,28 +12,13 @@ html
       |   height: 150px;
       |   background-repeat: no-repeat;
       |   background-size: 100% 100%;
-      |   display: flex;
-      |   justify-content: center;
-      |   align-items: center;
-      |   flex-direction: column;
+      |   text-align: center;
+      |   height: 100px;
       | }
-      | .message-section {
-      |   display: flex;
-      |   justify-content: center;
-      |   flex-direction: column;
-      |   align-items: center;
-      | }
-      | .header-section { justify-content: center; display: flex; }
-      | .footer-section p { margin-top: 5%; }
-      | .networks { display: flex; justify-content: space-between; width: 85px;}
-      | .description {
-      |   display: flex;
-      |   align-items: center;
-      |   justify-content: space-between;
-      |   width: 600px;
-      |   font-weight: bold;
-      | }
-      | .screenshot { display: flex; justify-content: center; }
+      | .message-section { text-align: center; }
+      | .header-section p { text-align: center;}
+      | .footer-section p { margin: 0px 0px 5px 0px; padding-top: 40px;}
+      | .screenshot { text-align: center; }
       | .screenshot img {width: 800px; height: 600px; }
       | .left-btn { border-radius: 5px; border: 2px solid #4fb6dc; padding: 5px; }
       | .left-btn a { color: #4fb6dc; text-decoration: none; }
@@ -46,18 +31,18 @@ html
       p.text-highlight
         | Hola, #{@user_name} pensó que te gustaría conocer esto:
     .screenshot
-      = image_tag(@image_url)
+      = link_to image_tag(@image_url), @public_url, target: "_blank"
     .message-section.margin-sides
       p
         | Esta(Pantalla) es parte de la experiencia Moi de #{@user_name}. Para verlo en detalle,
         | haz clic&nbsp;
         = link_to "Aqui", @public_url, target: "_blank"
-      .description
+      p
         | Para empezar, a jugar haz clic&nbsp;
-        .left-btn
+        span.left-btn
           = link_to "Jugar.!", @url_sign_in, target: "_blank"
         | o seguir su proceso&nbsp;
-        .right-btn
+        span.right-btn
           = link_to "Tutores", @url_dashboard, target: "_blank"
         br
     .footer-section.margin-sides
