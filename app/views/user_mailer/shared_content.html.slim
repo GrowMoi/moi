@@ -35,13 +35,14 @@ html
       = link_to image_tag(@image_url), @public_url, target: "_blank"
     .message-section.margin-sides
       p
-        | Esta(Pantalla) es parte de la experiencia Moi de #{@user_name}. Para verlo en detalle,
-        | haz clic&nbsp;
+        | Esta pantalla es parte de la experiencia Moi de&nbsp;
+        = link_to (@user_name), @profile_url, target: "_blank"
+        | . Para verlo en detalle, haz clic&nbsp;
         = link_to "Aqui", @public_url, target: "_blank"
       p
         | Para empezar, a jugar haz clic&nbsp;
         span.left-btn
-          = link_to "Jugar.!", @url_sign_in, target: "_blank"
+          = link_to "Jugar!", @url_sign_in, target: "_blank"
         | o seguir su proceso&nbsp;
         span.right-btn
           = link_to "Tutores", @url_dashboard, target: "_blank"
@@ -52,5 +53,5 @@ html
         = link_to "www.growmoi.com", @url_web_site, target: "_blank"
       .networks
         = link_to image_tag(attachments['fb_icon.png'].url), @url_facebook, target: "_blank"
-        = image_tag(attachments['tw_icon.png'].url)
+        = link_to image_tag(attachments['tw_icon.png'].url), @url_twitter, target: "_blank"
         = link_to image_tag(attachments['yt_icon.png'].url), @url_youtube, target: "_blank"
