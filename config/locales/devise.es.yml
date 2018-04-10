@@ -10,6 +10,7 @@ es:
     new_password: "Nueva contraseña"
     confirm_new_password: "Confirmar nueva contraseña"
     char_min: "caracteres mínimo"
+    email_placeholder: "usuario@mail.com"
     confirmations:
       confirmed: "Su cuenta ha sido confirmada."
       confirmed_and_signed_in: "Su cuenta ha sido confirmada. Ha sido identificado correctamente."
