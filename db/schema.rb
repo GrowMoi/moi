@@ -394,6 +394,15 @@ ActiveRecord::Schema.define(version: 20180321164901) do
 
   add_index "spellcheck_analyses", ["analysable_id", "analysable_type"], name: "index_spellcheck_analyses_on_analysable_id_and_analysable_type", using: :btree
 
+  create_table "storages", force: :cascade do |t|
+    t.integer  "user_id",        null: false
+    t.json     "frontendValues"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "storages", ["user_id"], name: "index_storages_on_user_id", using: :btree
+
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -540,10 +549,12 @@ ActiveRecord::Schema.define(version: 20180321164901) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
+    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "client_tutor_recommendations", "users", column: "client_id"
@@ -579,4 +590,5 @@ ActiveRecord::Schema.define(version: 20180321164901) do
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"
+  add_foreign_key "versions", "users", column: "owner_id"
 end
