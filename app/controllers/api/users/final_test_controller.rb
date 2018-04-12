@@ -127,11 +127,22 @@ module Api
       def answer
         answerer_result = answerer.result
         render json: {
-          result: answerer_result
+          result: answerer_result,
+          time: time_test,
+          contents_learnt_by_branch: contents_learnt_by_branch
         }
       end
 
       private
+
+      def contents_learnt_by_branch
+        AnalyticService::UtilsStatistic.new(user, nil).contents_learnt_by_branch
+      end
+
+      def time_test
+        time_diff = test.updated_at - test.created_at
+        time = Time.at(time_diff).utc.strftime("%H :%M :%S")
+      end
 
       def answerer
         TreeService::AnswerFinalTest.new(
