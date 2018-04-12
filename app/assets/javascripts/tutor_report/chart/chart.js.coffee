@@ -440,8 +440,8 @@ class window.Chart
         .attr('dy', '.3em')
         .attr('class', 'circle-text')
         .style('text-anchor', 'middle')
-        .text (d) ->
-          d.name
+        .text (d, ind) ->
+          return d.name.substring(0, 10).concat('...')
 
     node.on('mousemove', (d) ->
       div.style 'left', d3.event.pageX + 10 + 'px'
