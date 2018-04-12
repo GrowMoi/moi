@@ -129,11 +129,17 @@ module Api
         render json: {
           result: answerer_result,
           time: time_test,
-          contents_learnt_by_branch: contents_learnt_by_branch
+          contents_learnt_by_branch: contents_learnt_by_branch,
+          current_learnt_contents: user.content_learnings.count,
+          total_approved_contents: total_approved_contents
         }
       end
 
       private
+
+      expose(:total_approved_contents) {
+        Neuron.approved_public_contents.count
+      }
 
       def contents_learnt_by_branch
         AnalyticService::UtilsStatistic.new(user, nil).contents_learnt_by_branch
