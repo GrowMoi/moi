@@ -24,3 +24,6 @@
 
         .forgot-password-container
           = render "devise/shared/links"
+
+        .create-new-user
+          = link_to  t("devise.needs_new_user"), "#", class: "link-new-user"

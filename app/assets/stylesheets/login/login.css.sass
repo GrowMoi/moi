@@ -23,7 +23,7 @@ html
   height: 100%
   background-image: asset-url("login_background_2.png")
   background-size: contain
-  background-repeat: no-repeat
+  background-repeat: repeat
   background-position: left
 
   .login-page-background
@@ -95,9 +95,12 @@ html
               color: white
               background-color: $special-text-color
 
-      .forgot-password-container
+      .forgot-password-container, .create-new-user
         margin-top: 0.7rem
         text-align: center
-        .forgot-password
+        .forgot-password, .link-new-user
           font-weight: bold
           color: $special-text-color
+
+      .create-new-user
+        margin-top: 1rem
