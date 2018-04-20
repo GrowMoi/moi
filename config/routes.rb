@@ -106,6 +106,7 @@ Moi::Application.routes.draw do
           post :answer
         end
       end
+      resources :certificates, except: [:update, :edit]
     end
 
     match "users/search" => 'users#search', via: :get

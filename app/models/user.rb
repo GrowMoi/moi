@@ -134,6 +134,8 @@ class User < ActiveRecord::Base
     has_many :payments
     has_one :storage,
             dependent: :destroy
+    has_many :certificates,
+             dependent: :destroy
   end
 
 
