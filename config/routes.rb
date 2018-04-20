@@ -89,6 +89,8 @@ Moi::Application.routes.draw do
       resource :storage, only: [:show] do
         member do
           put :update
+        end
+      end
       resource :shared_contents, only: [] do
         collection do
           post :send
