@@ -70,6 +70,7 @@ module Tutor
         user = data.user
         {
           user_id: user.id,
+          username: user.username,
           name: user.name,
           contents_learnt: user.content_learnings.size
         }
@@ -126,6 +127,7 @@ module Tutor
         {
           user_id: d.user.id,
           value: value,
+          username: d.user.username,
           name: d.user.name,
           value_humanized: humanize_ms(value)
         }
