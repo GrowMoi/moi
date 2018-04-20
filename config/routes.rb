@@ -91,6 +91,11 @@ Moi::Application.routes.draw do
           put :update
         end
       end
+      resource :shared_contents, only: [] do
+        collection do
+          post :send
+        end
+      end
       resources :achievements, only: [:index] do
         member do
           put :active
@@ -102,6 +107,7 @@ Moi::Application.routes.draw do
     match "users/content_tasks" => 'users#content_tasks', via: :get
     match "users/content_notes" => 'users#content_notes', via: :get
     match "users/content_favorites" => 'users#content_favorites', via: :get
+    match "users/shared_contents" => 'users#shared_contents', via: :post
 
     resources :users,
               only: [] do
