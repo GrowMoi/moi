@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
     extend ActiveSupport::Concern
 
     # roles that will be used by the users
-    ROLES = %w(admin moderador curador cliente tutor)
+    ROLES = %w(admin moderador curador cliente tutor super_tutor)
 
     included do
       validates :role, presence: true,
