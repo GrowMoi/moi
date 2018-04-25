@@ -14,8 +14,17 @@ class TutorMailer < ApplicationMailer
     @tutor_password = password
     @url_dashboard = "http://moi-backend.growmoi.com/tutor"
     @url_sign_in = "http://moi-backend.growmoi.com/users/sign_in"
+    @url_web_site = "http://growmoi.com/"
+    @url_facebook = "http://facebook.com/growmoi"
+    @url_youtube = "https://www.youtube.com/user/growmoi"
+    @url_twitter = "https://twitter.com/growmoi"
     attachments.inline['moi_title.png'] = File.read("#{Rails.root}/app/assets/images/moi_title.png")
     attachments.inline['moicartaimg.png'] = File.read("#{Rails.root}/app/assets/images/moicartaimg.png")
+    attachments.inline['footer_email_shared.png'] = File.read("#{Rails.root}/app/assets/images/footer_email_shared.png")
+    attachments.inline['tw_icon.png'] = File.read("#{Rails.root}/app/assets/images/tw_icon.png")
+    attachments.inline['yt_icon.png'] = File.read("#{Rails.root}/app/assets/images/yt_icon.png")
+    attachments.inline['fb_icon.png'] = File.read("#{Rails.root}/app/assets/images/fb_icon.png")
+    attachments.inline['moi_logo.png'] = File.read("#{Rails.root}/app/assets/images/moi_logo.png")
     mail(to: email, subject: I18n.t("tutor_mailer.payment_account.subject"))
   end
 
