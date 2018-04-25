@@ -6,6 +6,7 @@ RSpec.describe User::Roles do
   let(:curador) { create :user, :curador }
   let(:cliente) { create :user, :cliente }
   let(:tutor) { create :user, :tutor }
+  let(:super_tutor) { create :user, :super_tutor }
 
   User.roles.each do |role|
     describe "role #{role}" do

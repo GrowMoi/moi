@@ -20,7 +20,7 @@ module Admin
         redirect_to(
           tutor_root_path,
           error: I18n.t("views.unauthorized")
-        ) if current_user.tutor?
+        ) if current_user.super_tutor? || current_user.tutor?
       end
 
       # for navbar

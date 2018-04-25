@@ -10,7 +10,7 @@ module Api
     }
 
     expose(:tutor_ids) {
-      User.where(role: :tutor).pluck(:id)
+      User.where(role: [:tutor, :super_tutor]).pluck(:id)
     }
 
     expose(:tutor_requests) {
