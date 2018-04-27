@@ -147,7 +147,7 @@ module Api
 
       def time_test
         time_diff = test.updated_at - test.created_at
-        time = Time.at(time_diff).utc.strftime("%H :%M :%S")
+        time = Time.at(time_diff).utc.strftime("%M :%S")
       end
 
       def answerer
