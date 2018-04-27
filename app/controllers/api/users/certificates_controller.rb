@@ -1,6 +1,8 @@
 module Api
   module Users
     class CertificatesController < BaseController
+      before_action :authenticate_user!
+
       respond_to :json
 
       expose(:all_certificates) {
