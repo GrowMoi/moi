@@ -1,6 +1,8 @@
 module Api
   module Users
     class StoragesController < BaseController
+      before_action :authenticate_user!
+
       respond_to :json
 
       api :PUT,
