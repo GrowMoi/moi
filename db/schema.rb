@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180506081329) do
+ActiveRecord::Schema.define(version: 20180506094841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -405,14 +405,16 @@ ActiveRecord::Schema.define(version: 20180506081329) do
   add_index "search_engines", ["slug"], name: "index_search_engines_on_slug", unique: true, using: :btree
 
   create_table "social_sharings", force: :cascade do |t|
-    t.string   "titulo",      null: false
+    t.string   "titulo",       null: false
     t.string   "descripcion"
-    t.string   "uri",         null: false
+    t.string   "uri",          null: false
     t.string   "imagen_url"
     t.string   "slug"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "image_width"
+    t.integer  "image_height"
   end
 
   add_index "social_sharings", ["slug"], name: "index_social_sharings_on_slug", using: :btree

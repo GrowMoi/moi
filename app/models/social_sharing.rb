@@ -15,6 +15,7 @@ class SocialSharing < ActiveRecord::Base
             presence: true
 
   before_save :ensure_imagen_url
+  before_save :set_image_size
 
   def slug_candidates
     [
@@ -29,6 +30,14 @@ class SocialSharing < ActiveRecord::Base
   def ensure_imagen_url
     if imagen_url.blank?
       self.imagen_url = DEFAULT_SHARING_IMG
+    end
+  end
+
+  def set_image_size
+    sizes = FastImage.size(imagen_url)
+    if sizes.present?
+      self.image_width = sizes[0]
+      self.image_height = sizes[1]
     end
   end
 end

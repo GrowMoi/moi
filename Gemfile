@@ -72,6 +72,7 @@ gem 'js_assets'
 
 gem 'friendly_id', '~> 5.1.0'
 gem 'babosa'
+gem 'fastimage'
 
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'
