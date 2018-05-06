@@ -7,7 +7,7 @@ html
     meta property="og:type" content="article"
     meta(
       property="og:url"
-      content="#{@social_sharing.uri}"
+      content="#{public_sharing_url(id: @social_sharing.slug)}"
     )
     meta(
       property="og:title"
