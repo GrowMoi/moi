@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    title = @social_sharing.titulo
+
+    meta property="og:type" content="article"
+    meta(
+      property="og:url"
+      content="#{@social_sharing.uri}"
+    )
+    meta(
+      property="og:title"
+      content="#{@social_sharing.titulo}"
+    )
+    meta(
+      property="og:description"
+      content="#{@social_sharing.descripcion}"
+    )
+    meta(
+      property="og:image"
+      content="#{@social_sharing.imagen_url}"
+    )

@@ -70,6 +70,9 @@ gem 'polymer-rails', '~> 1.0.0'
 gem "i18n-js"
 gem 'js_assets'
 
+gem 'friendly_id', '~> 5.1.0'
+gem 'babosa'
+
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'
 gem 'daemons' # to manage background processing (delayed_job)

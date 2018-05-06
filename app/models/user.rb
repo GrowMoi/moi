@@ -136,6 +136,7 @@ class User < ActiveRecord::Base
             dependent: :destroy
     has_many :certificates,
              dependent: :destroy
+    has_many :social_sharings, dependent: :destroy
   end
 
 

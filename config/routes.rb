@@ -7,6 +7,7 @@ Moi::Application.routes.draw do
     resources :tutor_plans, only: :index
     resources :search, only: :index
     resources :content_preferences, only: :update
+    resources :sharings, only: :create
     resource :order_preferences, controller: :order, only: :update
     resources :quizzes, only: [] do
       resources :players,
@@ -229,6 +230,8 @@ Moi::Application.routes.draw do
 
     root "dashboard#index"
   end
+
+  resources :public_sharing, only: :show, path: "s"
 
   match "/delayed_job" => DelayedJobWeb,
         anchor: false,
