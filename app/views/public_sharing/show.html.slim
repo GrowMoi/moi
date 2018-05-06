@@ -5,6 +5,7 @@ html
     title = @social_sharing.titulo
 
     meta property="og:type" content="article"
+    meta property="fb:app_id" content="#{facebook_app_id}"
     meta(
       property="og:url"
       content="#{public_sharing_url(id: @social_sharing.slug)}"
