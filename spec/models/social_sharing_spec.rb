@@ -5,6 +5,6 @@ RSpec.describe SocialSharing, :type => :model do
     sharing = create :social_sharing, imagen_url: nil
     expect(
       sharing.reload.imagen_url
-    ).to eq(SocialSharing::DEFAULT_SHARING_IMG)
+    ).to eq(SocialSharing.default_sharing_img)
   end
 end

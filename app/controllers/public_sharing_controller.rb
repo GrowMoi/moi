@@ -3,7 +3,7 @@ class PublicSharingController < ApplicationController
 
   def show
     @social_sharing = SocialSharing.friendly.find(params[:id])
-    unless agent_is_facebook?
+    if !agent_is_facebook? && !Rails.env.test?
       redirect_to(@social_sharing.uri)
     end
   end

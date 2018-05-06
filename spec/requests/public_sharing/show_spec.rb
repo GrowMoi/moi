@@ -6,11 +6,11 @@ RSpec.describe Api::SharingsController, type: :request do
     public_sharing_path(id: sharing.slug)
   }
 
-  describe "creates sharing" do
+  describe "shows sharing" do
     before { get(show_endpoint) }
 
     it "answer contains sharing uid" do
-      %w(titulo descripcion uri imagen_url).each do |attr|
+      %w(titulo descripcion imagen_url).each do |attr|
         expect(response.body).to include(sharing.send(attr))
       end
     end

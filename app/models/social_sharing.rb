@@ -2,8 +2,6 @@ class SocialSharing < ActiveRecord::Base
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
 
-  DEFAULT_SHARING_IMG = "https://growmoi.com/storage/resources/0ijQzNbTe2XBH2mKrtCQVNAaB3YEm5zBcPHZ0Rbv.png"
-
   belongs_to :user
 
   delegate :username, to: :user, prefix: true
@@ -29,7 +27,7 @@ class SocialSharing < ActiveRecord::Base
 
   def ensure_imagen_url
     if imagen_url.blank?
-      self.imagen_url = DEFAULT_SHARING_IMG
+      self.imagen_url = self.class.default_sharing_img
     end
   end
 
@@ -39,5 +37,10 @@ class SocialSharing < ActiveRecord::Base
       self.image_width = sizes[0]
       self.image_height = sizes[1]
     end
+  end
+
+  def self.default_sharing_img
+    host = Rails.application.config.action_controller.asset_host
+    "#{host}/moi_logo_normal.png"
   end
 end
