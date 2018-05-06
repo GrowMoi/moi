@@ -2,7 +2,7 @@ class SocialSharing < ActiveRecord::Base
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
 
-  DEFAULT_SHARING_IMG = "http://moi.growmoi.com/images/moi-logo.png"
+  DEFAULT_SHARING_IMG = "https://growmoi.com/storage/resources/0ijQzNbTe2XBH2mKrtCQVNAaB3YEm5zBcPHZ0Rbv.png"
 
   belongs_to :user
 
