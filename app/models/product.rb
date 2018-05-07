@@ -13,9 +13,10 @@
 
 class Product < ActiveRecord::Base
 
-  CATEGORIES = [
-    'plan'
-  ].freeze
+  CATEGORIES = %w(
+    plan
+    client
+  ).freeze
 
   begin :validations
     validates :code, uniqueness: true

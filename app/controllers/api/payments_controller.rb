@@ -41,6 +41,13 @@ module Api
 
     private
 
+    def add_client
+      user = User.find_by_email(params[:email])
+      if user
+
+      end
+    end
+
     def payment_params
       params.require(:payment).permit(
         :total,

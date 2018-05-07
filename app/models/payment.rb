@@ -10,6 +10,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  code_item  :integer
+#  quantity   :integer          default(1)
 #
 
 class Payment < ActiveRecord::Base

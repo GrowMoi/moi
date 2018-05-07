@@ -318,13 +318,14 @@ ActiveRecord::Schema.define(version: 20180526215050) do
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "payments", force: :cascade do |t|
-    t.integer  "user_id",    null: false
+    t.integer  "user_id",                null: false
     t.string   "payment_id"
     t.string   "source"
     t.float    "total"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "code_item"
+    t.integer  "quantity",   default: 1
   end
 
   add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree

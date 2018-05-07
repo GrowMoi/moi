@@ -8,6 +8,11 @@ MyProducts = [
     name: "Cuenta Tutor Premium",
     category: "plan",
     description:"premium account tutor"
+  },
+  {
+    name: "Agregar cliente atravez de pago",
+    category: "client",
+    description:"add client by payment"
   }
 ]
 
