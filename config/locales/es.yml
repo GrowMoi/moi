@@ -260,6 +260,7 @@
         logout: "Cerrar sesión"
         recommendations: "Recomendaciones"
         dashboard: "Dashboard"
+        profile: "Perfil"
       report:
         title: 'Social Learning'
         sub_title: 'Estimado tutor, a continuación el reporte solicitado.'
@@ -329,6 +330,27 @@
           students_placeholder: "Seleccione un estudiante"
           loading: "Cargando datos..."
           questions_label: "Preguntas"
+      profile:
+        form_profile:
+          title: "Datos personales"
+          username: "Username"
+          name: "Nombre"
+          email: "Email"
+          send: "Actualizar"
+        form_password:
+          title: "Actualizar contraseña"
+          password: "Nueva contraseña"
+          password_confirmation: "Confirmar nueva contraseña"
+          password_current: "Contraseña actual"
+          send: "Actualizar"
+        current_password_invalid: "La contraseña actual es incorrecta."
+        unsafe_password: "La contraseña es poco segura."
+        password_space_warn: "Tu nueva contraseña contiene espacios al principio o al final. Deseas continuar?"
+        different_password: "Las contraseñas no coinciden."
+        password_update_success: "La contraseña se actualizo correctamente."
+        password_update_error: "Hubo un error al actualizar contraseña. Por favor intentelo nuevamente."
+        tutor_update_success: "Los datos de usuario fueron actualizados correctamente."
+        tutor_update_error: "Hubo un error al actualizar los datos de usuario. Por favor intentelo nuevamente."
       common:
         error: "Ups, al parecer algo salio mal. Por favor, intenta de nuevo."
         nothing_found: "No se encontró ningun elemento!"
