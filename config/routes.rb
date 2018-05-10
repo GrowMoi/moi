@@ -242,6 +242,6 @@ Moi::Application.routes.draw do
         anchor: false,
         via: [:get, :post]
 
-  root to: redirect("/users/sign_in")
+  root to: redirect("/apipie")
   apipie
 end
