@@ -8,12 +8,13 @@ module Api
     param :source, String
     param :payment_id, String
     param :code_item, String
+    param :quantity, Float
     param :name, String
     param :email, String
 
     def tutor_account
       tutor_isValid = !params[:name].blank? && !params[:email].blank?
-      payment_isValid = !params[:payment_id].blank? && !params[:code_item].blank?
+      payment_isValid = validate_params(params)
       isValidCode = validate_code(params[:code_item])
       if (tutor_isValid && payment_isValid && isValidCode)
         user = User.new(name: params[:name],
@@ -39,6 +40,39 @@ module Api
       end
     end
 
+    api :POST,
+        "/payments/add_clients",
+        "Allow to add students at the tutor list by payment method"
+    param :total, Integer
+    param :source, String
+    param :payment_id, String
+    param :code_item, String
+    param :quantity, Float
+    param :name, String
+    param :email, String
+
+    def add_students
+      tutor_isValid = !params[:email].blank?
+      payment_isValid = validate_params(params)
+      isValidCode = validate_code(params[:code_item])
+      if (tutor_isValid && payment_isValid && isValidCode)
+        user = User.find_by_email(params[:email])
+        if user
+          payment = Payment.new(payment_params)
+          payment.user = user
+          payment.save
+          render nothing: true,
+                 status: :accepted
+        else
+          render nothing: true,
+                  status: 404
+        end
+      else
+        render text: "invalid payment",
+               status: :unprocessable_entity
+      end
+    end
+
     private
 
     def add_client
@@ -54,7 +88,8 @@ module Api
         :source,
         :payment_id,
         :code_item,
-        :user_id
+        :user_id,
+        :quantity
       )
     end
 
@@ -69,6 +104,10 @@ module Api
     def validate_code(code)
       plan = Product.where(code: code, category:'plan').first
       !plan.nil?
+    end
+
+    def validate_params(params)
+      return !params[:payment_id].blank? && !params[:code_item].blank? && !params[:quantity].blank?
     end
   end
 end

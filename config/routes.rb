@@ -67,6 +67,7 @@ Moi::Application.routes.draw do
     resource :payments, only: [] do
       member do
         post :tutor_account
+        post :add_students
       end
     end
 
