@@ -9,7 +9,7 @@
 #  total      :float
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  code_item  :integer
+#  code_item  :string
 #  quantity   :integer          default(1)
 #
 

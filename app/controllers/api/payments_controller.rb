@@ -21,9 +21,10 @@ module Api
                         email: params[:email],
                         username: generate_username,
                         password: generate_password,
-                        role: "tutor")
+                        role: "tutor_familiar")
         if user.save
           payment = Payment.new(payment_params)
+          payment.quantity = 1
           payment.user = user
           payment.save
           TutorMailer.payment_account(user.name, user.password, user.email).deliver_now
@@ -53,7 +54,7 @@ module Api
 
     def add_students
       tutor_isValid = !params[:email].blank?
-      payment_isValid = validate_params(params)
+      payment_isValid = validate_params(params) && !params[:quantity].blank?
       isValidCode = validate_code(params[:code_item])
       if (tutor_isValid && payment_isValid && isValidCode)
         user = User.find_by_email(params[:email])
@@ -107,7 +108,7 @@ module Api
     end
 
     def validate_params(params)
-      return !params[:payment_id].blank? && !params[:code_item].blank? && !params[:quantity].blank?
+      return !params[:payment_id].blank? && !params[:code_item].blank?
     end
   end
 end

@@ -14,8 +14,7 @@
 class Product < ActiveRecord::Base
 
   CATEGORIES = %w(
-    plan
-    client
+    payments_website
   ).freeze
 
   begin :validations

@@ -324,7 +324,7 @@ ActiveRecord::Schema.define(version: 20180526215050) do
     t.float    "total"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.integer  "code_item"
+    t.string   "code_item"
     t.integer  "quantity",   default: 1
   end
 
