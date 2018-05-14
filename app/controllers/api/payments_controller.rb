@@ -103,7 +103,7 @@ module Api
     end
 
     def validate_code(code)
-      plan = Product.where(code: code, category:'plan').first
+      plan = Product.where(code: code, category:'payments_website').first
       !plan.nil?
     end
 
