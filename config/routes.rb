@@ -179,6 +179,7 @@ Moi::Application.routes.draw do
         post :approve
       end
     end
+    resources :content_importings
 
     root "dashboard#index"
   end

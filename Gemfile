@@ -65,6 +65,7 @@ gem 'foreman'
 gem 'pusher'
 gem 'jquery-infinite-pages'
 gem 'enumerize', '~> 2.0'
+gem 'rubyXL'
 
 gem 'polymer-rails', '~> 1.0.0'
 gem "i18n-js"
