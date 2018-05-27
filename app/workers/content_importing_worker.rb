@@ -13,6 +13,9 @@ class ContentImportingWorker
         workbook: workbook
       ).contents
       saved_contents = contents.select(&:save)
+      saved_contents.each do |content|
+        Content::ContentMediumSanitizer.sanitize!(content)
+      end
       @resource.update!(
         status: :finished,
         imported_contents_ids: saved_contents.map(&:id)
