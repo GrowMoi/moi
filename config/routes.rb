@@ -228,6 +228,14 @@ Moi::Application.routes.draw do
       end
     end
 
+    resources :profile, only: [:index] do
+      collection do
+        get :info
+        put :update_password
+        put :update
+      end
+    end
+
     root "dashboard#index"
   end
 

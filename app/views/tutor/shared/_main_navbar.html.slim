@@ -30,5 +30,7 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-tutor
             = t("views.tutor.navbar.tutor")
             span.caret
           ul.dropdown-menu.dropdown-tutor
+            li
+              = link_to t("views.tutor.navbar.profile"), tutor_profile_index_path
             li.tutor-option-logout
               = link_to t("views.tutor.navbar.logout"), destroy_user_session_path, class:"link-tutor-logout", :method => :delete
