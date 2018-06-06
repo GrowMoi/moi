@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180419174936) do
+ActiveRecord::Schema.define(version: 20180526215050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,17 @@ ActiveRecord::Schema.define(version: 20180419174936) do
 
   add_index "content_favorites", ["content_id"], name: "index_content_favorites_on_content_id", using: :btree
   add_index "content_favorites", ["user_id"], name: "index_content_favorites_on_user_id", using: :btree
+
+  create_table "content_importings", force: :cascade do |t|
+    t.integer  "user_id",                            null: false
+    t.string   "status",                             null: false
+    t.string   "file"
+    t.text     "imported_contents_ids", default: [],              array: true
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "content_importings", ["user_id"], name: "index_content_importings_on_user_id", using: :btree
 
   create_table "content_learning_final_tests", force: :cascade do |t|
     t.integer  "user_id",                    null: false
@@ -567,6 +578,7 @@ ActiveRecord::Schema.define(version: 20180419174936) do
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "client_tutor_recommendations", "users", column: "client_id"
+  add_foreign_key "content_importings", "users"
   add_foreign_key "content_learning_final_tests", "users"
   add_foreign_key "content_learning_quizzes", "players"
   add_foreign_key "content_learning_tests", "users"
