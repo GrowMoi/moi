@@ -301,6 +301,8 @@
           updated: "La recompensa ha sido actualizada."
         quizzes:
           created: "Se ha creado un nuevo test para el usuario %{client_name} disponible en %{quiz_url}."
+          title: "Nuevo test"
+          available: "Disponible en"
         card_achievements:
           title: "Recompensas"
           new_achievement:  "Agregar una nueva recompensa"
@@ -343,6 +345,8 @@
           students_placeholder: "Seleccione un estudiante"
           loading: "Cargando datos..."
           questions_label: "Preguntas"
+        card_tutor_notifications:
+          title: "Mis Notificaciones"
       profile:
         form_profile:
           title: "Datos personales"

@@ -23,6 +23,17 @@ class Notification < ActiveRecord::Base
 
   after_create :delayed_notify_user!
 
+  CATEGORIES = [
+    'tutor_quiz',
+    'tutor_generic',
+    'admin_generic',
+    'quiz'
+  ].freeze
+
+  begin :enumerables
+    enum data_type: CATEGORIES
+  end
+
   begin :relationships
     belongs_to :user
 

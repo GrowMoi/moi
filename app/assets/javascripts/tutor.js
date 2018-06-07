@@ -4,8 +4,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui/widgets/selectable
-//= require jquery-ui/widgets/dialog
 //= require bootstrap
+//= require pusher
 //= require app_assets
 //= require chosen.jquery.min
 //= require jquery.infinite-pages

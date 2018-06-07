@@ -10,6 +10,8 @@ html
     javascript:
       I18n.defaultLocale = "#{I18n.default_locale}";
       I18n.locale = "#{I18n.locale}";
+      ENV = {};
+      ENV.pusherAppKey = "#{Rails.application.secrets.pusher_app_key}";
 
   body
     = render "tutor/shared/main_navbar"

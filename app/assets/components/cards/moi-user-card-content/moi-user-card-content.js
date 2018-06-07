@@ -1,6 +1,6 @@
 Polymer({
   is: 'moi-user-card-content',
-  behaviors: [TranslateBehavior, AssetBehavior],
+  behaviors: [TranslateBehavior, AssetBehavior, NotificationBehavior],
   ready: function () {
     this.searchValue = '';
     this.usersApi = '/tutor/dashboard/get_clients';
@@ -13,56 +13,53 @@ Polymer({
     this.init();
   },
   init: function () {
-    var _this = this;
-    _this.loading = true;
-    $(_this.$.btnsend).addClass('disabled');
-    $(_this.$.listcontainer).scrollTop(0);
-    $(_this.$.listcontainer).scroll(_this.debounce(function (e) {
-      return _this.onListScroll(e);
-    }, 200));
-    return $.ajax({
-      url: _this.usersApi,
+    this.loading = true;
+    $(this.$.btnsend).addClass('disabled');
+    $(this.$.listcontainer).scrollTop(0);
+    $(this.$.listcontainer).scroll(this.debounce(function (e) {
+      return this.onListScroll(e);
+    }, 200).bind(this));
+    $.ajax({
+      url: this.usersApi,
       type: 'GET',
       data: {
-        page: _this.count
+        page: this.count
       },
-      success: function (res) {
-        _this.loading = false;
-        _this.clients = res.data;
-        _this.totalItems = res.meta.total_items;
-      }
+      success: function(res) {
+        this.loading = false;
+        this.clients = res.data;
+        this.totalItems = res.meta.total_items;
+      }.bind(this)
     });
   },
   onListScroll: function (e) {
     var diff, elem, existsData, scrollBottom;
-    var _this = this;
     elem = $(e.currentTarget);
     diff = elem[0].scrollHeight - elem.scrollTop();
     scrollBottom = Math.round(diff) <= elem.outerHeight();
-    existsData = _this.clients.length < _this.totalItems;
+    existsData = this.clients.length < this.totalItems;
     if (scrollBottom && existsData) {
-      _this.loading = true;
-      _this.count++;
-      $(_this.$.listcontainer).addClass('stop-scrolling');
+      this.loading = true;
+      this.count++;
+      $(this.$.listcontainer).addClass('stop-scrolling');
       $.ajax({
-        url: _this.usersApi,
+        url: this.usersApi,
         type: 'GET',
         data: {
-          page: _this.count,
-          search: _this.searchValue
+          page: this.count,
+          search: this.searchValue
         },
         success: function (res) {
-          _this.loading = false;
-          _this.clients = _this.clients.concat(res.data);
-          _this.totalItems = res.meta.total_items;
-          $(_this.$.listcontainer).removeClass('stop-scrolling');
-        }
+          this.loading = false;
+          this.clients = this.clients.concat(res.data);
+          this.totalItems = res.meta.total_items;
+          $(this.$.listcontainer).removeClass('stop-scrolling');
+        }.bind(this)
       });
     }
   },
   onRowSelectedHandler: function (e, data) {
-    var index;
-    index = this.clientsSelected.indexOf(data);
+    var index = this.clientsSelected.indexOf(data);
     if (index !== -1) {
       this.splice('clientsSelected', index, 1);
     } else {
@@ -88,22 +85,21 @@ Polymer({
     };
   },
   onInputEnter: function (e, value) {
-    var _this = this;
-    _this.searchValue = value;
-    _this.initValues();
-    $(_this.$.btnsend).addClass('disabled');
+    this.searchValue = value;
+    this.initValues();
+    $(this.$.btnsend).addClass('disabled');
     $.ajax({
-      url: _this.usersApi,
+      url: this.usersApi,
       type: 'GET',
       data: {
-        page: _this.count,
+        page: this.count,
         search: value
       },
       success: function (res) {
-        _this.loading = false;
-        _this.clients = res.data;
-        _this.totalItems = res.meta.total_items;
-      }
+        this.loading = false;
+        this.clients = res.data;
+        this.totalItems = res.meta.total_items;
+      }.bind(this)
     });
   },
   initValues: function () {

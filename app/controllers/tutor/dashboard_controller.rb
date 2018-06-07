@@ -153,8 +153,8 @@ module Tutor
       if quiz.save
         quiz_url = decorate(player).link_to_test
         Notification.create!(user: current_user,
-                            title: "Nuevo test #{Date.today.to_s}",
-                            description: "Disponible en: #{quiz_url}",
+                            title: "#{I18n.t('views.tutor.dashboard.quizzes.title')} #{Date.today.to_s}",
+                            description: "#{I18n.t('views.tutor.dashboard.quizzes.available')}: #{quiz_url}",
                             data_type: "tutor_quiz",
                             client_id: client.id)
 

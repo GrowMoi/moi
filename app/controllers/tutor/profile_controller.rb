@@ -18,7 +18,8 @@ module Tutor
       else
         render json: {
           message: I18n.t("views.tutor.profile.tutor_update_error")
-        }
+        },
+        status: :unprocessable_entity
       end
     end
 
