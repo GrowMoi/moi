@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20180606223211) do
 
   create_table "client_notifications", force: :cascade do |t|
     t.integer  "client_id",  null: false
-    t.string   "data_type",  null: false
+    t.integer  "data_type",  null: false
     t.json     "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

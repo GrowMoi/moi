@@ -14,7 +14,7 @@ NotificationBehavior.createNewPusherClient = function (pusherAppKey, onConnected
     encrypted: true,
     cluster: 'us2'
   });
-
+  NotificationBehavior.pusherClient = pusherClient;
   pusherClient.connection.bind('connected', onConnected);
 }
 
@@ -24,4 +24,13 @@ NotificationBehavior.isActivePusherClient = function () {
   var isActive = NotificationBehavior.pusherClient ? true : false;
   return isActive;
 };
+
+NotificationBehavior.listenChannel = function(channelName, eventName, callback){
+  if (NotificationBehavior.pusherClient) {
+    var channel = NotificationBehavior.pusherClient.subscribe(channelName);
+    channel.bind(eventName, callback);
+  } else {
+    console.error('There is not Pusher client active.');
+  }
+}
 

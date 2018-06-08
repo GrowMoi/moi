@@ -2,7 +2,7 @@ class CreateClientNotifications < ActiveRecord::Migration
   def change
     create_table :client_notifications do |t|
       t.references :client, index: true, null: false
-      t.string :data_type, null: false
+      t.integer :data_type, null: false
       t.json :data
       t.timestamps null: false
     end

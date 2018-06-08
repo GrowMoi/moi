@@ -10,6 +10,10 @@ module Api
                   .find(params[:test_id])
     }
 
+    expose(:my_tutors) {
+      UserTutor.where(user: current_user, status: :accepted)
+    }
+
     expose(:my_recommendations) {
       ClientTutorRecommendation.where(client: current_user)
     }
@@ -50,6 +54,12 @@ needs to be a JSON-encoded string having the following format:
           each_serializer: Api::UserAchievementSerializer
         )
 
+        notification = create_test_completed_notification
+        if notification
+          my_tutors.each do |relation|
+            notify_test_completed_to_tutor(relation.tutor_id, notification)
+          end
+        end
       end
       render json: {
         result: answerer_result,
@@ -61,6 +71,7 @@ needs to be a JSON-encoded string having the following format:
     private
 
     def answerer
+      binding.pry
       TreeService::AnswerLearningTest.new(
         user_test: user_test,
         answers: JSON.parse(params[:answers])
@@ -114,16 +125,33 @@ needs to be a JSON-encoded string having the following format:
         end
       end
 
-      notify_tutor(recommendation_updated)
+      send_email_to_tutor(recommendation_updated)
       recommendation_updated
     end
 
-    def notify_tutor(recommendations)
+    def send_email_to_tutor(recommendations)
       recommendations.each do |recommendation|
         tutor = recommendation.tutor_recommendation.tutor
         achievement = recommendation.tutor_recommendation.tutor_achievement
         TutorMailer.achievement_notification(tutor, current_user, achievement).deliver_now
       end
+    end
+
+    def notify_test_completed_to_tutor(tutor_id, notification_data)
+      unless Rails.env.test?
+        user_channel_general = "tutornotifications.#{tutor_id}"
+        Pusher.trigger(user_channel_general, 'client-test-completed', notification_data)
+      end
+    end
+
+    def create_test_completed_notification
+      notification = ClientNotification.new
+      notification.client_id = current_user.id
+      notification.data_type = "client_test_completed"
+      notification.data = {
+        content_learning_test_id: user_test.id
+      }
+      return notification.save ? notification : nil;
     end
 
   end
