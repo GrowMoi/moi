@@ -274,6 +274,7 @@
         recommendations: "Recomendaciones"
         dashboard: "Dashboard"
         profile: "Perfil"
+        change_to_admin: "Cambiar a Administrador"
       report:
         title: 'Social Learning'
         sub_title: 'Estimado tutor, a continuación el reporte solicitado.'
@@ -710,6 +711,7 @@
     preview: Vista previa
     search: Buscar
     actions: Acciones
+    change_to_tutor: Cambiar a Tutor
   enumerize:
     content_importing:
       status:
