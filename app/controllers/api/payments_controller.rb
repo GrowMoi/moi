@@ -89,6 +89,7 @@ module Api
           payment.user = user
           payment.product = product
           payment.save
+          TutorMailer.payment_add_student(user.name, user.email, params[:quantity]).deliver_now
           render text: "Valid payment",
                  status: :accepted
         else
