@@ -3,19 +3,19 @@ MyProducts = [
     name: "Cuenta Tutor Básico",
     category: "payments_website",
     description:"basic account tutor",
-    key: "CTB"
+    key: Rails.application.secrets.basic_account_tutor_key
   },
   {
     name: "Cuenta Tutor Premium",
     category: "payments_website",
     description:"premium account tutor",
-    key: "CTP"
+    key: Rails.application.secrets.premiun_account_tutor_key
   },
   {
     name: "Agregar cliente atravez de pago",
     category: "payments_website",
     description:"add client by payment",
-    key: "ACP"
+    key: Rails.application.secrets.add_client_to_tutor_key
   }
 ]
 

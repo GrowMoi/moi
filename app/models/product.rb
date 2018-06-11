@@ -23,7 +23,7 @@ class Product < ActiveRecord::Base
   end
 
   begin :validations
-    validates :code, uniqueness: true
+    validates :code, :key, uniqueness: true
     validates :name, presence: true,
                      uniqueness: true
     validates :category, presence: true,

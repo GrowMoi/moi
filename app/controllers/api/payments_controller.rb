@@ -15,7 +15,8 @@ module Api
     def tutor_basic_account
       tutor_isValid = !params[:name].blank? && !params[:email].blank?
       payment_isValid = validate_params(params)
-      product = Product.where(code: params[:code_item], key: "CTB").first
+      product_key = Rails.application.secrets.basic_account_tutor_key
+      product = Product.where(code: params[:code_item], key: product_key ).first
       isValidCode = !product.nil?
 
       if (tutor_isValid && payment_isValid && isValidCode)
@@ -26,7 +27,8 @@ module Api
                         role: "tutor_familiar")
         if user.save
           #account and 1 student free
-          product_add_student  = Product.find_by_key("ACP")
+          product_key = Rails.application.secrets.add_client_to_tutor_key
+          product_add_student  = Product.find_by_key(product_key)
           payment_products =  [
             {
               total: params[:total],
@@ -76,7 +78,8 @@ module Api
     def add_students
       tutor_isValid = !params[:email].blank?
       payment_isValid = validate_params(params) && !params[:quantity].blank?
-      product = Product.where(code: params[:code_item], key: "ACP").first
+      product_key = Rails.application.secrets.add_client_to_tutor_key
+      product = Product.where(code: params[:code_item], key: product_key).first
       isValidCode = !product.nil?
 
       if (tutor_isValid && payment_isValid && isValidCode)
