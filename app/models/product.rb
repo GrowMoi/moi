@@ -9,6 +9,7 @@
 #  updated_at  :datetime         not null
 #  category    :string
 #  description :string
+#  key         :string
 #
 
 class Product < ActiveRecord::Base
@@ -16,6 +17,10 @@ class Product < ActiveRecord::Base
   CATEGORIES = %w(
     payments_website
   ).freeze
+
+  begin :relationships
+    has_many :payments
+  end
 
   begin :validations
     validates :code, uniqueness: true

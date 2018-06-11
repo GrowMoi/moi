@@ -2,17 +2,20 @@ MyProducts = [
   {
     name: "Cuenta Tutor Básico",
     category: "payments_website",
-    description:"basic account tutor"
+    description:"basic account tutor",
+    key: "CTB"
   },
   {
     name: "Cuenta Tutor Premium",
     category: "payments_website",
-    description:"premium account tutor"
+    description:"premium account tutor",
+    key: "CTP"
   },
   {
     name: "Agregar cliente atravez de pago",
     category: "payments_website",
-    description:"add client by payment"
+    description:"add client by payment",
+    key: "ACP"
   }
 ]
 
