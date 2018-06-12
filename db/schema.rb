@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180606223211) do
+ActiveRecord::Schema.define(version: 20180611001406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -328,13 +328,15 @@ ActiveRecord::Schema.define(version: 20180606223211) do
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "payments", force: :cascade do |t|
-    t.integer  "user_id",    null: false
+    t.integer  "user_id",                null: false
     t.string   "payment_id"
     t.string   "source"
     t.float    "total"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "code_item"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "code_item"
+    t.integer  "quantity",   default: 1
+    t.integer  "product_id"
   end
 
   add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
@@ -368,6 +370,7 @@ ActiveRecord::Schema.define(version: 20180606223211) do
     t.datetime "updated_at",  null: false
     t.string   "category"
     t.string   "description"
+    t.string   "key"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -579,12 +582,10 @@ ActiveRecord::Schema.define(version: 20180606223211) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
-    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "client_notifications", "users", column: "client_id"
@@ -622,5 +623,4 @@ ActiveRecord::Schema.define(version: 20180606223211) do
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"
-  add_foreign_key "versions", "users", column: "owner_id"
 end

@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if resource.admin?
       admin_root_path
-    elsif resource.tutor? || resource.super_tutor?
+    elsif resource.tutor? || resource.tutor_familiar?
       tutor_root_path
     else
       root_path

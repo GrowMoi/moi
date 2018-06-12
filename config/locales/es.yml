@@ -246,6 +246,7 @@
           not_created_list: "Ups, al parecer algo salio mal, posiblemente ya existan solicitudes de tutoría activas para los usuarios seleccionados."
           user_added: "Se han agregado nuevos estudiantes a tu lista: %{clients}"
           user_added_error: "Ups, al parecer algo salio mal"
+          cant_add_users: "Ups, Solo puedes agregar %{number} usuarios"
       analysis:
         analyze: "Seleccione análisis"
         total_neurons_learnt: "Neuronas aprendidas"
@@ -274,6 +275,7 @@
         recommendations: "Recomendaciones"
         dashboard: "Dashboard"
         profile: "Perfil"
+        change_to_admin: "Cambiar a Administrador"
       report:
         title: 'Social Learning'
         sub_title: 'Estimado tutor, a continuación el reporte solicitado.'
@@ -719,6 +721,7 @@
     preview: Vista previa
     search: Buscar
     actions: Acciones
+    change_to_tutor: Cambiar a Tutor
   enumerize:
     content_importing:
       status:

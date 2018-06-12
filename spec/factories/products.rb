@@ -9,6 +9,7 @@
 #  updated_at  :datetime         not null
 #  category    :string
 #  description :string
+#  key         :string
 #
 
 FactoryGirl.define do
