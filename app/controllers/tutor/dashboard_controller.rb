@@ -35,9 +35,13 @@ module Tutor
       Neuron.approved_public_contents
     }
 
+    expose(:student_ids) {
+      tutor_students.map(&:id)
+    }
+
     expose(:clients) {
       all_clients.where.not(
-        id: tutor_students.map(&:id)
+        id: student_ids
       ).page(params[:page])
     }
 
@@ -66,6 +70,10 @@ module Tutor
     }
 
     expose(:notification, attributes: :notification_params)
+
+    expose(:client_notifications) {
+      ClientNotification.where(client: student_ids)
+    }
 
     def achievements
       render json: {
@@ -137,6 +145,12 @@ module Tutor
       render json: {
         data: unlearned_contents
       }
+    end
+
+    def notifications
+      render json: client_notifications,
+      each_serializer: Api::ClientNotificationSerializer,
+      root: "data"
     end
 
     def create_quiz

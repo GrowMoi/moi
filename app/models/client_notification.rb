@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  client_id  :integer          not null
-#  data_type  :string           not null
+#  data_type  :integer          not null
 #  data       :json
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

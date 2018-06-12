@@ -225,6 +225,7 @@ Moi::Application.routes.draw do
         get :get_level_quizzes
         get :get_questions
         post :create_quiz
+        get :notifications
       end
     end
 

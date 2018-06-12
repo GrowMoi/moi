@@ -13,6 +13,10 @@ module Api
       Player.find(params[:id]).learning_quiz
     }
 
+    expose(:my_tutors) {
+      UserTutor.where(user: current_user, status: :accepted)
+    }
+
     api :GET,
         "/quiz/:quiz_id/player/:player_id",
         "get new notifications for current user"
@@ -130,6 +134,23 @@ module Api
     def timeQuiz
       time_diff = player_test.updated_at - player_test.created_at
       time_quiz = Time.at(time_diff).utc.strftime("%H :%M :%S")
+    end
+
+    def notify_test_completed_to_tutor(tutor_id, notification_data)
+      unless Rails.env.test?
+        user_channel_general = "tutornotifications.#{tutor_id}"
+        Pusher.trigger(user_channel_general, 'client-test-completed', notification_data)
+      end
+    end
+
+    def create_test_completed_notification
+      notification = ClientNotification.new
+      notification.client_id = current_user.id
+      notification.data_type = "client_test_completed"
+      notification.data = {
+
+      }
+      return notification.save ? notification : nil;
     end
 
   end

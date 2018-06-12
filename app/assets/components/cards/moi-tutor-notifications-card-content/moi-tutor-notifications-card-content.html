@@ -1,6 +1,18 @@
 <dom-module id="moi-tutor-notifications-card-content">
   <link rel="stylesheet" href="moi-tutor-notifications-card-content.css" />
   <template>
+    <template is="dom-if" if="{{ loading }}" restamp>
+      <div>{{ t('views.loading') }}</div>
+    </template>
+    <template is="dom-if" if="{{ !loading }}" restamp>
+      <template is="dom-repeat" items="{{ notifications }}">
+          <moi-selectable-row name="[[ item.title ]]"
+            username="[[ item.client.username ]]"
+            student-id$="[[ item.id ]]"
+            img-avatar-inactive="[[ rowImage ]]">
+          </moi-selectable-row>
+        </template>
+    </template>
 
   </template>
   <script src="moi-tutor-notifications-card-content.js"></script>

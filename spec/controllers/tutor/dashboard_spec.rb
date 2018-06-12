@@ -79,6 +79,24 @@ RSpec.describe Tutor::DashboardController, type: :controller do
       user: client1,
       content: content1
 
+    create :client_notification,
+          client: client1,
+          data_type: "client_test_completed",
+          data: {
+            test: "test1"
+          }
+
+    create :client_notification,
+          client: client2,
+          data_type: "client_got_item",
+          data: {
+            test: "test2"
+          }
+
+    create :client_notification,
+          client: client3,
+          data_type: "client_message_opened",
+          data: {}
   }
 
   let!(:tutor_students) {
@@ -236,6 +254,44 @@ RSpec.describe Tutor::DashboardController, type: :controller do
       }
       it {
         expect(controller.unlearned_contents.size).to eq(2)
+      }
+
+    end
+  end
+
+  context "notifications" do
+
+    describe "Get tutor notifications" do
+
+      before {
+        get :notifications
+      }
+
+      it {
+        expect(response).to have_http_status(:ok)
+      }
+
+      it {
+        expect(controller.client_notifications.size).to eq(2)
+      }
+
+      it {
+        parsed_body = JSON.parse(response.body)
+        print parsed_body
+        expect(parsed_body["data"].count).to eq(2)
+        expect(parsed_body["data"][0]["data_type"]).to eq("client_test_completed")
+        expect(parsed_body["data"][0]["data"]).to eq({"test"=>"test1"})
+        expect(parsed_body["data"][0]["client"]["id"]).to eq(client1.id)
+        expect(parsed_body["data"][0]["client"]["name"]).to eq(client1.name)
+        expect(parsed_body["data"][0]["client"]["username"]).to eq(client1.username)
+        expect(parsed_body["data"][0]["client"]["email"]).to eq(client1.email)
+
+        expect(parsed_body["data"][1]["data_type"]).to eq("client_got_item")
+        expect(parsed_body["data"][1]["data"]).to eq({"test"=>"test2"})
+        expect(parsed_body["data"][1]["client"]["id"]).to eq(client2.id)
+        expect(parsed_body["data"][1]["client"]["name"]).to eq(client2.name)
+        expect(parsed_body["data"][1]["client"]["username"]).to eq(client2.username)
+        expect(parsed_body["data"][1]["client"]["email"]).to eq(client2.email)
       }
 
     end
