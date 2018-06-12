@@ -17,7 +17,7 @@ module Tutor
       if (params[:ids].present?)
         User.where(id:params[:ids], role: :cliente)
       else
-        current_user.tutor_requests_sent.accepted.map(&:user)
+        current_user.tutor_requests_sent.map(&:user)
       end
     }
 

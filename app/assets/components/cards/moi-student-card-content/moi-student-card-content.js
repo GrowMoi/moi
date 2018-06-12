@@ -2,6 +2,7 @@ Polymer({
   is: 'moi-student-card-content',
   behaviors: [TranslateBehavior, AssetBehavior],
   ready: function () {
+    debugger
     var _this = this;
     var studentsApi = '/tutor/dashboard/students';
     _this.students = [];
@@ -33,5 +34,8 @@ Polymer({
     } else {
       $(this.$.btnSelectiveDownload).addClass('disabled');
     }
+  },
+  openDialog: function() {
+    this.$.toast2.show();
   }
 });

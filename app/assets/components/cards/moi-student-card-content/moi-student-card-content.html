@@ -1,8 +1,14 @@
 <dom-module id="moi-student-card-content">
     <link rel="stylesheet" href="moi-student-card-content.css" />
     <template>
-
       <div class="list-group list-group-flush">
+        <div>
+            <paper-toast id="toast2" text="test text">
+              <span>new changes</span>
+            </paper-toast>
+
+            <paper-button on-tap="openDialog">flat button</paper-button>
+        </div>
         <template is="dom-repeat" items="{{ students }}">
           <moi-selectable-row name="[[ item.name ]]"
             username="[[ item.username ]]"
