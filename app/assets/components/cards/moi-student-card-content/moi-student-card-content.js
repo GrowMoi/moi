@@ -33,5 +33,16 @@ Polymer({
     } else {
       $(this.$.btnSelectiveDownload).addClass('disabled');
     }
+  },
+  cancelRequest: function (e) {
+    $.ajax({
+      url: '/tutor/user_tutors/' + e.model.item.id,
+      type: 'DELETE',
+      data: {
+        id: e.model.item.id
+      },
+      success: function (res) {
+      }
+    });
   }
 });

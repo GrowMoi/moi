@@ -198,7 +198,7 @@ Moi::Application.routes.draw do
       end
     end
     resources :tree, only: :index
-    resources :user_tutors, only: :create
+    resources :user_tutors, only: [:new, :create, :destroy, :delete]
     resources :recommendations, only: [:new, :create] do
       collection do
         post :new_achievement

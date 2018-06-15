@@ -14,6 +14,27 @@ module Tutor
       end
     end
 
+    def destroy
+      request = UserTutor.where(tutor_id: current_user.id, user_id: params[:id] ).first
+      if request.destroy
+        render json: {
+          message: I18n.t(
+            "views.tutor.moi.tutor_request.cancel_request_ok"
+          ),
+          type: 'cancel_request_ok',
+        },
+        status: 200
+      else
+        render json: {
+          message: I18n.t(
+            "views.tutor.moi.tutor_request.cancel_request_failed"
+          ),
+          type: 'cancel_request_failed',
+        },
+        status: 422
+      end
+    end
+
     private
 
     def add_new_students

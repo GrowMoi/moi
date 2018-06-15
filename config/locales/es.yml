@@ -247,6 +247,8 @@
           user_added: "Se han agregado nuevos estudiantes a tu lista: %{clients}"
           user_added_error: "Ups, al parecer algo salio mal"
           cant_add_users: "Ups, Solo puedes agregar %{number} usuarios"
+          cancel_request_ok: "Tu solicitud ha sido cancelada"
+          cancel_request_failed: "Tu solicitud no ha podido ser cancelada"
       analysis:
         analyze: "Seleccione análisis"
         total_neurons_learnt: "Neuronas aprendidas"

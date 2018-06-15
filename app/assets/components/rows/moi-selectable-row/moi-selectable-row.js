@@ -20,7 +20,6 @@ Polymer({
   ready: function() {
     this.imgAvatar = this.imgAvatarInactive;
     this.className = this.disableSelection ? 'disabled' : '';
-    debugger
     if (this.options && this.options.onRegisterApi) {
       var api = this.createPublicApi();
       this.options.onRegisterApi(api);
