@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/JhymerMartinez/paper-elements.git
+  revision: 99f0717d373aae88fee04201e5b9ed3d3f9acbed
+  specs:
+    polymer-paper-elements-rails (0.0.1)
+      polymer-rails (~> 1.0)
+
+GIT
   remote: git://github.com/JhymerMartinez/sass.git
   revision: 9852c297b48eb4e2ec103d3eb9161aad330e5946
   branch: 3.2.19-var-fix
@@ -518,6 +525,7 @@ DEPENDENCIES
   paper_trail (~> 4.0.0.beta)
   pg
   poltergeist (~> 1.6)
+  polymer-paper-elements-rails!
   polymer-rails (~> 1.0.0)
   pry-rails
   puma

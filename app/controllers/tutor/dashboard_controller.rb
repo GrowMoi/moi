@@ -17,7 +17,7 @@ module Tutor
       if (params[:ids].present?)
         User.where(id:params[:ids], role: :cliente)
       else
-        current_user.tutor_requests_sent.accepted.map(&:user)
+        current_user.tutor_requests_sent.map(&:user)
       end
     }
 
@@ -86,9 +86,10 @@ module Tutor
     end
 
     def students
-      render json: {
-        data: tutor_students
-      }
+      render json: tutor_students,
+      each_serializer: Tutor::DashboardStudentsSerializer,
+      scope: current_user,
+      root: "data"
     end
 
     def get_clients

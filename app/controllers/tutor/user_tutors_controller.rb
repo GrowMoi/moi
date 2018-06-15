@@ -12,12 +12,6 @@ module Tutor
       if current_user.tutor_familiar?
         check_payment_and_sent_new_requests
       end
-
-      if request.xhr?
-        render :js => "window.location = '#{request.referrer}'"
-      else
-        redirect_to :back
-      end
     end
 
     private
@@ -36,12 +30,17 @@ module Tutor
           end
         end
         if user_names.any?
-          flash[:success] = I18n.t(
-            "views.tutor.moi.tutor_request.user_added",
-            clients: user_names.join(", ")
-          )
+          render json: {
+            message: I18n.t(
+              "views.tutor.moi.tutor_request.user_added",
+              clients: user_names.join(", ")
+            )
+          }
         else
-          flash[:error] = I18n.t("views.tutor.moi.tutor_request.user_added_error")
+          render json: {
+            message: I18n.t("views.tutor.moi.tutor_request.user_added_error")
+          },
+          status: 422
         end
       end
     end
@@ -72,13 +71,25 @@ module Tutor
           if total_payments >= total_users
             add_many_user
           else
-            flash[:error] = I18n.t("views.tutor.moi.tutor_request.cant_add_users",
-                                    number: total_payments)
+            render json: {
+              message: I18n.t(
+                "views.tutor.moi.tutor_request.cant_add_users",
+                number: total_payments
+              ),
+              type: 'limit_exceeded'
+            },
+            status: 422
           end
         end
       else
-        flash[:error] = I18n.t("views.tutor.moi.tutor_request.cant_add_users",
-                                number: total_payments)
+        render json: {
+          message: I18n.t(
+            "views.tutor.moi.tutor_request.cant_add_users",
+            number: total_payments
+          ),
+          type: 'limit_exceeded'
+        },
+        status: 422
       end
     end
 
@@ -88,15 +99,21 @@ module Tutor
         user_id: params[:user_id]
       )
       if tutor_request.save
-        flash[:success] = I18n.t(
-          "views.tutor.moi.tutor_request.created",
-          name: tutor_request.user.name
-        )
+        render json: {
+          message: I18n.t(
+            "views.tutor.moi.tutor_request.created",
+            name: tutor_request.user.name
+          )
+        }
       else
-        flash[:error] = I18n.t(
-          "views.tutor.moi.tutor_request.not_created",
-          name: tutor_request.user.name
-        )
+        binding.pry
+        render json: {
+          message: I18n.t(
+            "views.tutor.moi.tutor_request.not_created",
+            name: tutor_request.user.name
+          )
+        },
+        status: 422
       end
     end
 
@@ -112,12 +129,17 @@ module Tutor
         end
       end
       if user_names.any?
-        flash[:success] = I18n.t(
-          "views.tutor.moi.tutor_request.created_list",
-          clients: user_names.join(", ")
-        )
+        render json: {
+          message: I18n.t(
+            "views.tutor.moi.tutor_request.created_list",
+            clients: user_names.join(", ")
+          )
+        }
       else
-        flash[:error] = I18n.t("views.tutor.moi.tutor_request.not_created_list")
+        render json: {
+          message: I18n.t("views.tutor.moi.tutor_request.not_created_list")
+        },
+        status: 422
       end
     end
   end

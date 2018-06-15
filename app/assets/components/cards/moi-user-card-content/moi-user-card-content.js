@@ -9,6 +9,12 @@ Polymer({
     this.rowImgInactive = this.assetPath('client_avatar_inactive.png');
     this.rowImgCheck = this.assetPath('check_blue.png');
     this.inputIconImage = this.assetPath('icon_search.png');
+    this.rowApis = [];
+    this.rowOptions = {
+      onRegisterApi: function(api) {
+        this.rowApis.push(api);
+      }.bind(this)
+    }
     this.initValues();
     this.init();
   },
@@ -107,5 +113,26 @@ Polymer({
     this.clients = [];
     this.loading = true;
     this.clientsSelected = [];
+  },
+  onRequestSuccess: function(event, res) {
+    this.toastMessage = res.message;
+    this.$['toast-message'].show();
+    this.clientsSelected = [];
+    $(this.$.btnsend).addClass('disabled');
+    this.resetAllRows();
+  },
+  onRequestError: function(event, res) {
+    this.toastMessage = res.responseJSON.message;
+    this.$['toast-message'].show();
+    if (res.responseJSON.type === 'limit_exceeded') {
+      $(this.$['dialog-info']).show();
+    }
+  },
+  resetAllRows: function() {
+    if (this.rowApis && this.rowApis.length > 0) {
+      this.rowApis.forEach(function(api) {
+        api.reset();
+      });
+    }
   }
 });

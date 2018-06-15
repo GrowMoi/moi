@@ -319,12 +319,16 @@
           export_selected_xls: "Expor. seleccionados"
           export_selected_xls_title: "Exportar a excel los datos de los alumnos seleccionados"
           loading_students: "Cargando alumnos..."
+          pending: "Pendiente aceptación"
         card_users:
           title: "Usuarios"
           send_request: "Enviar Solicitud"
           send_request_title: "Enviar solicitud a nuevos alumnos"
           send_request_loading: "Enviando solicitudes..."
           loading_users: "Cargando usuarios..."
+          improve_account_title: "Mejorar tu cuenta"
+          improve_account: "Si deseas enviar mas solicitudes te sugerimos "
+          improve_account_link: "mejorar tu cuenta"
         card_recommendations:
           title: "Enviar Recomendaciones"
           btn_send: "Enviar Recom."
