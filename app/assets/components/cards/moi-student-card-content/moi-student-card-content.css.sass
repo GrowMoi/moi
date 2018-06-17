@@ -5,12 +5,27 @@
   height: 100%
   position: relative
 
+  paper-button
+    border: 1px solid
+    height: 4rem
+    width: 100%
+    font-size: 1rem
+
+  paper-toast
+    top: 0
+    bottom: auto
+    width: auto
+    right: 10%
+    left: auto
+    z-index: 10000
+
   .disabled
     opacity: 0.5
     pointer-events: none
 
   .status
-    max-width: 6rem
+    max-width: 7rem
 
   +var(moi-download-button-color, $base-color-green)
   +var(moi-download-button-border-color, $base-color-green)
+  +var(moi-selectable-row-info-width, 14rem)

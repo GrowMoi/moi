@@ -100,7 +100,7 @@ RSpec.describe Tutor::DashboardController, type: :controller do
   }
 
   let!(:tutor_students) {
-    current_user.tutor_requests_sent.accepted.map(&:user)
+    current_user.tutor_requests_sent.map(&:user)
   }
 
   before {
@@ -200,10 +200,10 @@ RSpec.describe Tutor::DashboardController, type: :controller do
         expect(response).to have_http_status(:ok)
       }
       it {
-        expect(controller.tutor_students).to eq(tutor_students)
+        expect(controller.tutor_students_both_status).to eq(tutor_students)
       }
       it {
-        expect(controller.tutor_students.size).to eq(2)
+        expect(controller.tutor_students_both_status.size).to eq(3)
       }
 
     end
@@ -277,7 +277,6 @@ RSpec.describe Tutor::DashboardController, type: :controller do
 
       it {
         parsed_body = JSON.parse(response.body)
-        print parsed_body
         expect(parsed_body["data"].count).to eq(2)
         expect(parsed_body["data"][0]["data_type"]).to eq("client_test_completed")
         expect(parsed_body["data"][0]["data"]).to eq({"test"=>"test1"})

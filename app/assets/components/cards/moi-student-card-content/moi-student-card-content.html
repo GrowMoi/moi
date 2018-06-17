@@ -2,6 +2,8 @@
     <link rel="stylesheet" href="moi-student-card-content.css" />
     <template>
 
+      <paper-toast id="toast-message" duration="5000" text="{{ toastMessage }}"></paper-toast>
+
       <div class="list-group list-group-flush">
         <template is="dom-repeat" items="{{ students }}">
           <template is="dom-if" if="[[ item.status ]]" restamp>
@@ -32,8 +34,7 @@
               img-avatar-inactive="[[ rowImgInactive ]]"
               disable-selection>
               <div class="status">
-                <!-- <div><span>{{ t('views.tutor.dashboard.card_students.pending') }}</span></div> -->
-                <button type="button" name="button" on-tap="cancelRequest">Cancelar Solicitud</button>
+                <paper-button on-tap="cancelRequest">[[ t('views.tutor.dashboard.card_students.cancel_request') ]]</paper-button>
               </div>
             </moi-selectable-row>
 

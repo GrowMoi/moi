@@ -115,14 +115,17 @@ Polymer({
     this.clientsSelected = [];
   },
   onRequestSuccess: function(event, res) {
-    this.toastMessage = res.message;
-    this.$['toast-message'].show();
+    this.removeSelectedClients();
+
     this.clientsSelected = [];
     $(this.$.btnsend).addClass('disabled');
     this.resetAllRows();
+    this.toastMessage = res.message;
+    this.$['toast-message'].show();
   },
   onRequestError: function(event, res) {
-    this.toastMessage = res.responseJSON.message;
+    var message = res.responseJSON && res.responseJSON.message ? res.responseJSON.message : '';
+    this.toastMessage = message;
     this.$['toast-message'].show();
     if (res.responseJSON.type === 'limit_exceeded') {
       $(this.$['dialog-info']).show();
@@ -134,5 +137,23 @@ Polymer({
         api.reset();
       });
     }
+  },
+  removeSelectedClients: function() {
+    var clientsSelectedWithData = this.clients.filter(function(client) {
+      var clientSelected = this.clientsSelected.find(function(id) {
+        return id == client.id;
+      });
+      if (clientSelected) {
+        return true;
+      }
+      return false;
+    }.bind(this));
+
+    clientsSelectedWithData.forEach(function(client) {
+      var index = this.clients.indexOf(client);
+      if (index !== -1) {
+        this.splice('clients', index, 1);
+      }
+    }.bind(this));
   }
 });

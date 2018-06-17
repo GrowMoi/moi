@@ -34,15 +34,28 @@ Polymer({
       $(this.$.btnSelectiveDownload).addClass('disabled');
     }
   },
-  cancelRequest: function (e) {
+  cancelRequest: function (ev) {
+    var element = ev.target;
+    $(element).addClass('disabled');
     $.ajax({
-      url: '/tutor/user_tutors/' + e.model.item.id,
+      url: '/tutor/user_tutors/' + ev.model.item.id,
       type: 'DELETE',
       data: {
-        id: e.model.item.id
+        id: ev.model.item.id
       },
       success: function (res) {
-      }
+        var index = this.students.indexOf(ev.model.item);
+        if (index !== -1) {
+          this.splice('students', index, 1);
+        }
+        this.toastMessage = res.message;
+        this.$['toast-message'].show();
+      }.bind(this),
+      error: function(res) {
+        var message = res.responseJSON && res.responseJSON.message ? res.responseJSON.message : '';
+        this.toastMessage = message;
+        this.$['toast-message'].show();
+      }.bind(this)
     });
   }
 });

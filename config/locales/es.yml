@@ -322,6 +322,7 @@
           export_selected_xls_title: "Exportar a excel los datos de los alumnos seleccionados"
           loading_students: "Cargando alumnos..."
           pending: "Pendiente aceptación"
+          cancel_request: "Cancelar Solicitud"
         card_users:
           title: "Usuarios"
           send_request: "Enviar Solicitud"
