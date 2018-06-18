@@ -329,9 +329,9 @@
           send_request_title: "Enviar solicitud a nuevos alumnos"
           send_request_loading: "Enviando solicitudes..."
           loading_users: "Cargando usuarios..."
-          improve_account_title: "Tickets"
-          improve_account: "Si deseas enviar solicitudes a nuevos alumnos adquiere más tickets, revisa "
-          improve_account_link: "nuestros productos"
+          improve_account_title: "Agrega otro alumno"
+          improve_account: "No puedes agregar otro alumno. Para agregar uno nuevo, elimina uno de tu lista o compra otro ticket aquí "
+          improve_account_link: "moi productos"
         card_recommendations:
           title: "Enviar Recomendaciones"
           btn_send: "Enviar Recom."
