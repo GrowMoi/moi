@@ -329,9 +329,9 @@
           send_request_title: "Enviar solicitud a nuevos alumnos"
           send_request_loading: "Enviando solicitudes..."
           loading_users: "Cargando usuarios..."
-          improve_account_title: "Mejorar tu cuenta"
-          improve_account: "Si deseas enviar mas solicitudes te sugerimos "
-          improve_account_link: "mejorar tu cuenta"
+          improve_account_title: "Tickets"
+          improve_account: "Si deseas enviar solicitudes a nuevos alumnos adquiere más tickets, revisa "
+          improve_account_link: "nuestros productos"
         card_recommendations:
           title: "Enviar Recomendaciones"
           btn_send: "Enviar Recom."
