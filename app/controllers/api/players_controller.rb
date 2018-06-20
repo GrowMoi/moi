@@ -139,7 +139,15 @@ module Api
     def notify_test_completed_to_tutor(tutor_id, notification_data)
       unless Rails.env.test?
         user_channel_general = "tutornotifications.#{tutor_id}"
-        Pusher.trigger(user_channel_general, 'client-test-completed', notification_data)
+        begin
+          Pusher.trigger(user_channel_general, 'client-test-completed', notification_data)
+        rescue Exception => e
+          puts e.message
+          puts e.backtrace.inspect
+        else
+          puts "PUSHER: Message sent successfully!"
+          puts "PUSHER: #{notification_data}"
+        end
       end
     end
 

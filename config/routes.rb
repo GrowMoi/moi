@@ -217,7 +217,6 @@ Moi::Application.routes.draw do
         get :achievements
         post :new_achievement
         put :update_achievement
-        get :edit_achievement
         get :students
         get :get_clients
         get :download_tutor_analytics

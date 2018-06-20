@@ -77,7 +77,15 @@ class Notification < ActiveRecord::Base
   def send_pusher_notification!
     formated = format_notification(self)
     user_channel_general = "usernotifications.general"
-    Pusher.trigger(user_channel_general, 'new-notification', formated)
+    begin
+      Pusher.trigger(user_channel_general, 'new-notification', formated)
+    rescue Exception => e
+      puts e.message
+      puts e.backtrace.inspect
+    else
+      puts "PUSHER: Message sent successfully!"
+      puts "PUSHER: #{formated}"
+    end
   end
 
   def format_notification(notification_created)

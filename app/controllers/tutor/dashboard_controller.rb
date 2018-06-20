@@ -77,8 +77,6 @@ module Tutor
       LevelQuiz.order(created_at: :desc)
     }
 
-    expose(:notification, attributes: :notification_params)
-
     expose(:client_notifications) {
       ClientNotification.where(client: student_ids)
     }
@@ -132,10 +130,6 @@ module Tutor
       end
 
       redirect_to :back
-    end
-
-    def edit_achievement
-      render partial: "tutor/dashboard/dialogs/edit_achievement"
     end
 
     def update_achievement
@@ -194,6 +188,7 @@ module Tutor
     end
 
     def send_notification
+      notification = Notification.new(notification_params)
       notification.user = current_user
       if student_ids_params.any?
         student_id = student_ids_params[0]

@@ -1,25 +1,33 @@
 Polymer({
   is: 'moi-student-card-content',
   behaviors: [TranslateBehavior, AssetBehavior],
+  properties: {
+    options: {
+      type: Object,
+      observer: 'bindOptions'
+    }
+  },
   ready: function () {
-    var _this = this;
     var studentsApi = '/tutor/dashboard/students';
-    _this.students = [];
-    _this.studentsSelected = [];
-    _this.rowImgActive = _this.assetPath('client_avatar_green.png');
-    _this.rowImgInactive = _this.assetPath('client_avatar_inactive.png');
-    _this.rowImgCheck = _this.assetPath('check_green.png');
-    _this.downloadBtnFilename = 'reporte_' + Date.now() + '.xls';
-    $(_this.$.btnSelectiveDownload).addClass('disabled');
-    _this.loading = true;
+    this.students = [];
+    this.studentsSelected = [];
+    this.rowImgActive = this.assetPath('client_avatar_green.png');
+    this.rowImgInactive = this.assetPath('client_avatar_inactive.png');
+    this.rowImgCheck = this.assetPath('check_green.png');
+    this.downloadBtnFilename = 'reporte_' + Date.now() + '.xls';
+    $(this.$.btnSelectiveDownload).addClass('disabled');
+    this.loading = true;
     $.ajax({
       url: studentsApi,
       type: 'GET',
       success: function (res) {
-        _this.loading = false;
-        _this.students = res.data;
-      }
+        this.loading = false;
+        this.students = res.data;
+      }.bind(this)
     });
+  },
+  bindOptions: function() {
+    this.registerLocalApi();
   },
   onRowSelectedHandler: function (e, data) {
     var index = this.studentsSelected.indexOf(data);
@@ -57,5 +65,20 @@ Polymer({
         this.$['toast-message'].show();
       }.bind(this)
     });
+  },
+  registerLocalApi: function() {
+    if (this.options && this.options.onRegisterApi) {
+      var api = this.createPublicApi();
+      this.options.onRegisterApi(api);
+    }
+  },
+  createPublicApi: function() {
+    return {
+      addStudent: this.addStudent.bind(this)
+    };
+  },
+  addStudent: function(student) {
+    student.status = false;
+    this.push('students', student);
   }
 });

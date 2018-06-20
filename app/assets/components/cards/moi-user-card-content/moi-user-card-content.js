@@ -1,6 +1,12 @@
 Polymer({
   is: 'moi-user-card-content',
   behaviors: [TranslateBehavior, AssetBehavior, NotificationBehavior],
+  properties: {
+    options: {
+      type: Object,
+      observer: 'bindOptions'
+    }
+  },
   ready: function () {
     this.searchValue = '';
     this.usersApi = '/tutor/dashboard/get_clients';
@@ -10,13 +16,17 @@ Polymer({
     this.rowImgCheck = this.assetPath('check_blue.png');
     this.inputIconImage = this.assetPath('icon_search.png');
     this.rowApis = [];
+    this.emitters = {};
     this.rowOptions = {
       onRegisterApi: function(api) {
         this.rowApis.push(api);
       }.bind(this)
-    }
+    };
     this.initValues();
     this.init();
+  },
+  bindOptions: function() {
+    this.registerLocalApi();
   },
   init: function () {
     this.loading = true;
@@ -153,7 +163,25 @@ Polymer({
       var index = this.clients.indexOf(client);
       if (index !== -1) {
         this.splice('clients', index, 1);
+
+        if (this.emitters.userRemoved) {
+          this.emitters.userRemoved(client);
+        }
       }
     }.bind(this));
+  },
+  registerLocalApi: function() {
+    if (this.options && this.options.onRegisterApi) {
+      var api = this.createPublicApi();
+      this.options.onRegisterApi(api);
+    }
+  },
+  createPublicApi: function() {
+    return {
+      onUserRemoved: this.onUserRemoved.bind(this)
+    };
+  },
+  onUserRemoved: function(callback) {
+    this.emitters.userRemoved = callback;
   }
 });

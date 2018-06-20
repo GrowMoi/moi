@@ -41,12 +41,21 @@ class UserTutor < ActiveRecord::Base
 
   def send_pusher_notification!
     user_channel = "usernotifications.#{user.id}"
-    Pusher.trigger(user_channel, 'new-notification', {
+    data = {
       description: I18n.t(
         "views.tutor.moi.user_notification",
         tutor_name: tutor.name
       )
-    })
+    }
+    begin
+      Pusher.trigger(user_channel, 'new-notification', data)
+    rescue Exception => e
+      puts e.message
+      puts e.backtrace.inspect
+    else
+      puts "PUSHER: Message sent successfully!"
+      puts "PUSHER: #{data}"
+    end
   end
 
   def unique_request_for_user
