@@ -77,10 +77,6 @@ module Tutor
       LevelQuiz.order(created_at: :desc)
     }
 
-    expose(:client_notifications) {
-      ClientNotification.where(client: student_ids)
-    }
-
     def achievements
       render json: {
         data: tutor_achievements
@@ -148,12 +144,6 @@ module Tutor
       render json: {
         data: unlearned_contents
       }
-    end
-
-    def notifications
-      render json: client_notifications,
-      each_serializer: Api::ClientNotificationSerializer,
-      root: "data"
     end
 
     def create_quiz

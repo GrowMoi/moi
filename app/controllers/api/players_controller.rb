@@ -111,6 +111,17 @@ module Api
 
     def answer
       answerer_result = answerer.result
+      notification = create_test_completed_notification
+      if notification
+        tutor = player.quiz.created_by
+        tutor_id = tutor ? tutor.id : nil
+        notification_serialized = ClientNotificationSerializer.new(
+          notification,
+          root: false
+        )
+        notify_test_completed_to_tutor(tutor_id, notification_serialized)
+      end
+
       render json: {
         result: answerer_result
       }

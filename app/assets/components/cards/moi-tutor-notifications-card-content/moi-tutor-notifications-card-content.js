@@ -1,13 +1,13 @@
 Polymer({
   is: 'moi-tutor-notifications-card-content',
-  behaviors: [TranslateBehavior, AssetBehavior],
+  behaviors: [TranslateBehavior, AssetBehavior, NotificationBehavior],
   properties: {
     tutorId: String,
   },
   ready: function () {
-    this.startPusherClient();
     this.notifications = [];
-    var notificationsApi = '/tutor/dashboard/notifications';
+    this.startPusher();
+    var notificationsApi = '/tutor/notifications/info';
     this.rowImage = this.assetPath('check_green.png');
     this.titleMapping = {
       'client_got_item': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_item'),
@@ -15,7 +15,7 @@ Polymer({
       'client_message_opened': this.t('views.tutor.dashboard.card_tutor_notifications.client_message_opened'),
       'client_recommended_contents_completed': this.t('views.tutor.dashboard.card_tutor_notifications.client_recommended_contents_completed'),
       'client_got_diploma': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_diploma')
-    }
+    };
     this.loading = true;
     $.ajax({
       url: notificationsApi,
@@ -24,21 +24,9 @@ Polymer({
       //error:  this.onGetNotificationsApiError.bind(this)
     });
   },
-  onNotificationReceived: function(message) {
-
-  },
-  startPusherClient: function() {
-    if (!NotificationBehavior.pusherClient) {
-      NotificationBehavior.createNewPusherClient(ENV.pusherAppKey, function() {
-        console.log('Pusher: connection successful!');
-      });
-      var channel = 'tutornotifications.' + this.tutorId;
-      NotificationBehavior.listenChannel(
-        channel,
-        'client-test-completed',
-        this.onNotificationReceived
-      );
-    }
+  onNotificationReceived: function(notification) {
+    this.addTitleToNotification(notification);
+    this.push('notifications', notification);
   },
   onGetNotificationsApiSuccess: function(res) {
     this.loading = false;
@@ -52,5 +40,23 @@ Polymer({
   },
   addTitleToNotification: function(notification) {
     notification.title = this.titleMapping[notification.data_type] || '';
+  },
+  startPusher: function() {
+    if (!NotificationBehavior.pusherClient) {
+      NotificationBehavior.createNewPusherClient(ENV.pusherAppKey, function() {
+        console.log('Pusher: connection successful!');
+        this.startPusherNotificationChannel();
+      }.bind(this));
+    } else {
+      this.startPusherNotificationChannel();
+    }
+  },
+  startPusherNotificationChannel: function() {
+    var channel = 'tutornotifications.' + this.tutorId;
+    NotificationBehavior.listenChannel(
+      channel,
+      'client-test-completed',
+      this.onNotificationReceived.bind(this)
+    );
   }
 });

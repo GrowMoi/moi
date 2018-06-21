@@ -229,7 +229,6 @@ Moi::Application.routes.draw do
         get :get_level_quizzes
         get :get_questions
         post :create_quiz
-        get :notifications
       end
     end
 
@@ -238,6 +237,12 @@ Moi::Application.routes.draw do
         get :info
         put :update_password
         put :update
+      end
+    end
+
+    resources :notifications, only: [:index] do
+      collection do
+        get :info
       end
     end
 
