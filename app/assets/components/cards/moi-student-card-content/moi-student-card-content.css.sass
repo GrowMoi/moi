@@ -10,6 +10,7 @@
     height: 4rem
     width: 100%
     font-size: 1rem
+    margin: 0
 
   paper-toast
     top: 0
@@ -25,6 +26,10 @@
 
   .status
     max-width: 7rem
+
+    &:hover
+      background-color: $base-color-red
+      color: $white
 
   +var(moi-download-button-color, $base-color-green)
   +var(moi-download-button-border-color, $base-color-green)

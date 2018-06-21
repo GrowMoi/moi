@@ -249,6 +249,8 @@
           cant_add_users: "Ups, Solo puedes agregar %{number} usuarios"
           cancel_request_ok: "Tu solicitud ha sido cancelada"
           cancel_request_failed: "Tu solicitud no ha podido ser cancelada"
+          remove_user_ok: "El estudiante ha sido eliminado"
+          remove_user_failed: "El estudiante no ha podido ser eliminado"
       analysis:
         analyze: "Seleccione análisis"
         total_neurons_learnt: "Neuronas aprendidas"

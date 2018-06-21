@@ -35,6 +35,29 @@ module Tutor
       end
     end
 
+    def remove_user
+      request = UserTutor.where(tutor_id: current_user.id, user_id: params[:id] ).first
+      if request
+        request.status = "deleted"
+        request.save
+        render json: {
+          message: I18n.t(
+            "views.tutor.moi.tutor_request.remove_user_ok"
+          ),
+          type: 'deleted_ok',
+        },
+        status: 200
+      else
+        render json: {
+          message: I18n.t(
+            "views.tutor.moi.tutor_request.remove_user_failed"
+          ),
+          type: 'deleted_failed',
+        },
+        status: 422
+      end
+    end
+
     private
 
     def add_new_students

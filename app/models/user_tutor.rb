@@ -14,13 +14,14 @@ class UserTutor < ActiveRecord::Base
   belongs_to :user
   belongs_to :tutor, class_name: "User"
 
-  STATUSES = %w(accepted rejected).freeze
+  STATUSES = %w(accepted rejected deleted).freeze
 
   validates :status, inclusion: { in: STATUSES }, allow_blank: true
   validate :unique_request_for_user, on: :create
 
   scope :pending, -> { where status: nil }
   scope :accepted, -> { where status: "accepted" }
+  scope :deleted, -> { where status: "deleted" }
 
   after_create :delayed_notify_user!
 
