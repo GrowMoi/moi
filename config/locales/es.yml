@@ -14,6 +14,10 @@
     search_engines: Motores de búsqueda
     notifications: Notificaciones
     loading: "Cargando.."
+    translation_not_present: No ha sido traducido
+    languages:
+      es: Español
+      en: Inglés
     pagination:
       previous: "&lt;"
       next: "&gt;"

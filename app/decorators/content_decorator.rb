@@ -1,4 +1,4 @@
-class ContentDecorator < LittleDecorator
+class ContentDecorator < ResourceDecorator
   def build_one_link!
     if content_links.length === 0
       content_links.build
@@ -85,10 +85,6 @@ class ContentDecorator < LittleDecorator
            }
   end
 
-  def spellchecked(name)
-    spellcheck_analysis.spellchecked(name.to_s)
-  end
-
   def approved_to_s
     approved_options(record.approved?)
   end
@@ -133,12 +129,5 @@ class ContentDecorator < LittleDecorator
     # taken from
     # http://stackoverflow.com/questions/1805761/check-if-url-is-valid-ruby#answer-1805788
     record.source =~ /\A#{URI::regexp}\z/
-  end
-
-  def spellcheck_analysis
-    @spellcheck_analysis ||= SpellcheckDecorator.new(
-      record,
-      self
-    )
   end
 end

@@ -11,9 +11,12 @@
 #
 
 class PossibleAnswer < ActiveRecord::Base
+  include TranslatableAttrs
   include SpellcheckAnalysable
 
   SPELLCHECK_ATTRIBUTES = %w( text ).freeze
+
+  translates :text
 
   begin :relationships
     belongs_to :content

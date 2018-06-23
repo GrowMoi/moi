@@ -79,9 +79,13 @@ module Admin
     end
 
     def update
-      if neuron.save_with_version
+      edition_service = TranslatableEditionService.new(
+        neuron: neuron,
+        params: params
+      )
+      if edition_service.save
         redirect_to(
-          {action: :show, id: neuron.id},
+          {action: :show, id: neuron.id, lang: current_language},
           notice: I18n.t("views.neurons.updated")
         )
       else

@@ -16,6 +16,7 @@
 #
 
 class Content < ActiveRecord::Base
+  include TranslatableAttrs
   include ContentAnnotable
   include SpellcheckAnalysable
 
@@ -33,6 +34,8 @@ class Content < ActiveRecord::Base
     por-que-es
     quien-cuando-donde
   }.split("\n").map(&:squish).map(&:to_sym).reject(&:blank?)
+
+  translates :title, :description, :source
 
   has_paper_trail ignore: [:created_at, :updated_at, :id]
 

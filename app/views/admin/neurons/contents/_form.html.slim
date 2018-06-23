@@ -8,12 +8,14 @@ fieldset
               place: "left" do
       = f.text_field :title,
                      placeholder: t("activerecord.attributes.content.title"),
-                     class: "form-control content-title"
+                     class: "form-control content-title",
+                     value: translate_attribute(f.object, :title)
 
   .form-group
     = f.text_area :description,
                   placeholder: t("activerecord.attributes.content.description"),
-                  class: "form-control"
+                  class: "form-control",
+                  value: translate_attribute(f.object, :description)
 
   .form-group
     = tooltip t("views.contents.keyword_list_form_instructions"),
@@ -28,7 +30,8 @@ fieldset
       .col-xs-11
         = f.text_field :source,
                        placeholder: t("activerecord.attributes.content.source"),
-                       class: "form-control"
+                       class: "form-control",
+                       value: translate_attribute(f.object, :source)
 
       .col-xs-1.text-right.external-source-btn
           = tooltip t("views.contents.external_source"),

@@ -15,7 +15,7 @@
 #
 
 module Api
-  class ContentSerializer < ActiveModel::Serializer
+  class ContentSerializer < ResourceSerializer
     root false
     attributes :id,
                :neuron_id,
@@ -34,6 +34,8 @@ module Api
                :content_tasks,
                :neuron_can_read,
                :favorite
+
+    translates :title, :description, :source
 
     def read
       current_user.already_read?(object)

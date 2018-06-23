@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  DEFAULT_LANGUAGE = "es"
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -30,6 +32,16 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(*added_attrs) }
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(*added_attrs) }
   end
+
+  def current_language
+    params[:lang].presence || DEFAULT_LANGUAGE
+  end
+  helper_method :current_language
+
+  def translate_attribute(resource, attribute)
+    TranslateAttributeService.translate(resource, attribute, current_language)
+  end
+  helper_method :translate_attribute
 
   private
 

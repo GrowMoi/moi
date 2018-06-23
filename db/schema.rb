@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180526215050) do
+ActiveRecord::Schema.define(version: 20180603060345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -442,6 +442,18 @@ ActiveRecord::Schema.define(version: 20180526215050) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
+  create_table "translated_attributes", force: :cascade do |t|
+    t.integer  "translatable_id",   null: false
+    t.string   "translatable_type", null: false
+    t.string   "name",              null: false
+    t.text     "content"
+    t.string   "language",          null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "translated_attributes", ["translatable_id", "translatable_type"], name: "index_translated_attributes_resource", using: :btree
 
   create_table "tutor_achievements", force: :cascade do |t|
     t.integer  "tutor_id",    null: false

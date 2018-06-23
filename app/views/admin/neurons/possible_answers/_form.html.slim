@@ -10,4 +10,5 @@
   .col-xs-11
     = f.text_field :text,
                    placeholder: t("activerecord.attributes.possible_answer.text"),
-                   class: "form-control"
+                   class: "form-control",
+                   value: translate_attribute(f.object, :text)

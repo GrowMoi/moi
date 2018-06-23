@@ -1,5 +1,8 @@
 - content_for :title, t("views.neurons.show")
 
+.pull-right.btn-group
+  = render "admin/shared/language_switcher"
+
 ul.nav.nav-tabs.default-tabs
   li.active data-toggle="tab"
     = link_to t("views.neurons.general"),
@@ -53,5 +56,5 @@ ul.nav.nav-tabs.default-tabs
 
   - unless neuron.new_record?
     = link_to t("actions.edit"),
-              edit_admin_neuron_path(neuron),
+              edit_admin_neuron_path(neuron, lang: params[:lang]),
               class: "btn btn-link"

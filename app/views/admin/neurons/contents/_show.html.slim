@@ -2,19 +2,21 @@
   .neuron-content
     p
       strong
-        = content.spellchecked(:title)
+        = content.translated_or_spellchecked(:title)
+
       - if content.can_be_approved?
         span.neuron-moderate-actions
           = content.toggle_approved
 
     .content-description
-      = content.spellchecked(:description)
+      = content.translated_or_spellchecked(:description)
 
     = content.video_list_group
     = content.media_list_group
     = content.links_list_group
     p = content.keywords
-    p = content.source
+    p
+      = content.translated_or_spellchecked(:source)
 
     - if content.possible_answers.any?
       .possible-answers
