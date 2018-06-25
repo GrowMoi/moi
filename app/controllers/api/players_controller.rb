@@ -167,7 +167,8 @@ module Api
       notification.client_id = current_user.id
       notification.data_type = "client_test_completed"
       notification.data = {
-
+        quiz_id: player.quiz_id,
+        player_id: player.id
       }
       return notification.save ? notification : nil;
     end

@@ -68,7 +68,6 @@ gem 'enumerize', '~> 2.0'
 gem 'rubyXL'
 
 gem "i18n-js"
-gem 'js_assets'
 
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'

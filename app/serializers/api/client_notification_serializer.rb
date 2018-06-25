@@ -3,6 +3,7 @@ module Api
     attributes :id,
         :data_type,
         :data,
+        :deleted,
         :created_at
 
     has_one :client

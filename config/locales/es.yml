@@ -371,6 +371,8 @@
           client_message_opened: "Mensaje leido"
           client_recommended_contents_completed: "Contenidos recomendados completados"
           client_got_diploma: "Nuevo diploma obtenido"
+          results: "Resultados"
+          player: "Jugador: "
       profile:
         form_profile:
           title: "Datos personales"
