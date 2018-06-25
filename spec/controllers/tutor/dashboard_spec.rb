@@ -181,10 +181,10 @@ RSpec.describe Tutor::DashboardController, type: :controller do
         expect(response).to have_http_status(:ok)
       }
       it {
-        expect(controller.tutor_students_with_status_pending).to eq(tutor_students)
+        expect(controller.tutor_students_with_status_not_deleted).to eq(tutor_students)
       }
       it {
-        expect(controller.tutor_students_with_status_pending.size).to eq(3)
+        expect(controller.tutor_students_with_status_not_deleted.size).to eq(2)
       }
 
     end

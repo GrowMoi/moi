@@ -21,7 +21,7 @@ module Tutor
       end
     }
 
-    expose(:tutor_students_with_status_pending) {
+    expose(:tutor_students_with_status_not_deleted) {
       if (params[:ids].present?)
         User.where(id:params[:ids], role: :cliente)
       else
@@ -49,7 +49,7 @@ module Tutor
 
     expose(:clients) {
       all_clients.where.not(
-        id: tutor_students_with_status_pending.map(&:id)
+        id: tutor_students_with_status_not_deleted.map(&:id)
       ).page(params[:page])
     }
 
@@ -88,7 +88,7 @@ module Tutor
     end
 
     def students
-      render json: tutor_students_with_status_pending,
+      render json: tutor_students_with_status_not_deleted,
       each_serializer: Tutor::DashboardStudentsSerializer,
       scope: current_user,
       root: "data"

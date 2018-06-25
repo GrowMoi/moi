@@ -22,7 +22,7 @@ class UserTutor < ActiveRecord::Base
   scope :pending, -> { where status: nil }
   scope :accepted, -> { where status: "accepted" }
   scope :deleted, -> { where status: "deleted" }
-  scope :not_deleted, -> { where status: nil && "accepted" }
+  scope :not_deleted, -> { where("status IS NULL OR status = ?", "accepted") }
 
   after_create :delayed_notify_user!
 
