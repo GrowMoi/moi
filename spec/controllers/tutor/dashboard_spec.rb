@@ -81,7 +81,7 @@ RSpec.describe Tutor::DashboardController, type: :controller do
   }
 
   let!(:tutor_students) {
-    current_user.tutor_requests_sent.map(&:user)
+    current_user.tutor_requests_sent.not_deleted.map(&:user)
   }
 
   before {

@@ -22,6 +22,7 @@ class UserTutor < ActiveRecord::Base
   scope :pending, -> { where status: nil }
   scope :accepted, -> { where status: "accepted" }
   scope :deleted, -> { where status: "deleted" }
+  scope :not_deleted, -> { where status: nil && "accepted" }
 
   after_create :delayed_notify_user!
 
@@ -60,7 +61,8 @@ class UserTutor < ActiveRecord::Base
   end
 
   def unique_request_for_user
-    if self.class.where(user_id: user_id, tutor_id: tutor_id).exists?
+    was_deleted  = self.class.where(user_id: user_id, tutor_id: tutor_id, status: "deleted").exists?
+    if self.class.where(user_id: user_id, tutor_id: tutor_id).exists? && !was_deleted
       errors.add(:user_id, :invalid)
     end
   end

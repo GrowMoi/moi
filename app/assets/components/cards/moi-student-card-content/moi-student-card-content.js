@@ -17,6 +17,7 @@ Polymer({
     this.downloadBtnFilename = 'reporte_' + Date.now() + '.xls';
     $(this.$.btnSelectiveDownload).addClass('disabled');
     this.loading = true;
+    this.userRemove = null;
     $.ajax({
       url: studentsApi,
       type: 'GET',
@@ -63,6 +64,39 @@ Polymer({
         var message = res.responseJSON && res.responseJSON.message ? res.responseJSON.message : '';
         this.toastMessage = message;
         this.$['toast-message'].show();
+      }.bind(this)
+    });
+  },
+  openDialogConfirm: function (ev) {
+    ev.stopPropagation();
+    this.userRemove = ev.model.item;
+    this.username = {username: this.userRemove.username};
+    $(this.$['dialog-confirm']).show();
+  },
+  closeDialog: function(ev){
+    $(this.$['dialog-confirm']).hide();
+  },
+  removeUser: function (ev) {
+    $.ajax({
+      url: '/tutor/user_tutors/' + this.userRemove.id + '/remove_user',
+      type: 'PUT',
+      data: {
+        id: this.userRemove.id
+      },
+      success: function (res) {
+        var index = this.students.indexOf(this.userRemove);
+        if (index !== -1) {
+          this.splice('students', index, 1);
+        }
+        this.toastMessage = res.message;
+        this.$['toast-message'].show();
+        $(this.$['dialog-confirm']).hide();
+      }.bind(this),
+      error: function(res) {
+        var message = res.responseJSON && res.responseJSON.message ? res.responseJSON.message : '';
+        this.toastMessage = message;
+        this.$['toast-message'].show();
+        $(this.$['dialog-confirm']).hide();
       }.bind(this)
     });
   },

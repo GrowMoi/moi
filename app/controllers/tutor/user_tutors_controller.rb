@@ -103,7 +103,7 @@ module Tutor
       product_key = Rails.application.secrets.add_client_to_tutor_key
       product = Product.find_by_key(product_key)
       total_payments = Payment.where(user: current_user, code_item: product.code).sum(:quantity)
-      total_my_users = current_user.tutor_requests_sent.count
+      total_my_users = current_user.tutor_requests_sent.accepted.count
 
       if total_payments > total_my_users
         if params[:user_id]
@@ -150,7 +150,6 @@ module Tutor
           )
         }
       else
-        binding.pry
         render json: {
           message: I18n.t(
             "views.tutor.moi.tutor_request.not_created",

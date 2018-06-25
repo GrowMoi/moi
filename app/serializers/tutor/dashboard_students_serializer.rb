@@ -1,5 +1,6 @@
 module Tutor
   class DashboardStudentsSerializer < ActiveModel::Serializer
+
     attributes :id,
         :name,
         :username,
@@ -7,9 +8,8 @@ module Tutor
         :created_at
 
     def status
-      tutor_request = scope.tutor_requests_sent.find_by(user_id: object.id)
-      status = tutor_request.status ? true : false
-      status
+      tutor_request = scope.tutor_requests_sent.not_deleted.find_by(user_id: object.id)
+      tutor_request.status
     end
   end
 end
