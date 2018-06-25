@@ -61,7 +61,7 @@ Polymer({
       this.onNotificationReceived.bind(this)
     );
   },
-  showMoreData: function(ev) {
+  openDialogDetails: function(ev) {
     var id = ev.model.item.id,
         username = ev.model.item.client.username;
     this.loadingDialogData = true;
@@ -93,9 +93,6 @@ Polymer({
         this.$['toast-message'].show();
       }.bind(this)
     });
-  },
-  test: function(value) {
-    return value ? 'aaaa' : 'bbbbb';
   },
   rigthAnswers: function (results) {
     var count = 0;

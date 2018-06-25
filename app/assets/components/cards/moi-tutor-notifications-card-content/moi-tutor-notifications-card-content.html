@@ -11,13 +11,17 @@
       <div class="notification-list-container">
         <template is="dom-repeat" items="{{ notifications }}">
           <div class="notification-info">
-            <div>{{item.title}}</div>
-            <div>
-              <small>{{ item.client.username}}</small>
+            <div class="info">
+              <div>{{item.title}}</div>
+              <div>
+                <small>{{ item.client.username}}</small>
+              </div>
             </div>
-            <button on-tap="showMoreData">
-              Mostrar mas
-            </button>
+            <div class="options">
+              <paper-button on-tap="openDialogDetails">
+                <span>[[ t('views.tutor.dashboard.card_tutor_notifications.details') ]]</span>
+              </paper-button>
+            </div>
           </div>
         </template>
       </div>
@@ -30,9 +34,12 @@
       </template>
       <template is="dom-if" if="{{ !loadingDialogData }}" restamp>
         <h3>
-          <span>[[ t('views.tutor.dashboard.card_tutor_notifications.player') ]]</span><span>{{notificationData.playerName}}</span>
+          <span>[[ t('views.tutor.dashboard.card_tutor_notifications.player') ]]</span>
+          <span>{{notificationData.playerName}}</span>
         </h3>
-        <span>Username: <span>{{notificationData.username}}</span></span>
+        <span>Username:
+          <span>{{notificationData.username}}</span>
+        </span>
         <br>
         <br>
         <div>

@@ -373,6 +373,7 @@
           client_got_diploma: "Nuevo diploma obtenido"
           results: "Resultados"
           player: "Jugador: "
+          details: "Detalles"
       profile:
         form_profile:
           title: "Datos personales"
