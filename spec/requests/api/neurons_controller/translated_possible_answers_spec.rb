@@ -65,7 +65,6 @@ RSpec.describe Api::TreesController,
           end
         ).to be_truthy
       end
-      binding.pry
     }
   end
 end

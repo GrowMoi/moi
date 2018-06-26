@@ -3,7 +3,6 @@ require "translatable_edition_service/translatable_content"
 class TranslatableEditionService
   def initialize(neuron:, params:)
     @neuron = neuron
-    @params = params
     @target_lang = params[:lang]
   end
 

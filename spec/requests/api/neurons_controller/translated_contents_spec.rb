@@ -28,6 +28,18 @@ RSpec.describe Api::TreesController,
              content: "translated_source",
              language: "en"
     end
+    let(:translated_video) do
+      create :content_video,
+             content: target_content,
+             language: "en",
+             url: "http://youtube.com/translated_video_for_content"
+    end
+    let(:translated_link) do
+      create :content_link,
+             content: target_content,
+             language: "en",
+             link: "http://mytranslatedcustomlink.domain.org"
+    end
 
     include_examples "requests:current_user"
 
@@ -35,6 +47,8 @@ RSpec.describe Api::TreesController,
       translate_title
       translate_description
       translate_source
+      translated_video
+      translated_link
       root_neuron root
       # mock user preference
       allow_any_instance_of(User).to receive(:preferred_lang).and_return("en")
@@ -46,6 +60,12 @@ RSpec.describe Api::TreesController,
       expect(subject["title"]).to eq(translate_title.content)
       expect(subject["description"]).to eq(translate_description.content)
       expect(subject["source"]).to eq(translate_source.content)
+      expect(subject["links"]).to include(translated_link.link)
+      expect(
+        subject["videos"].any? do |video|
+          video["url"] == translated_video.url
+        end
+      ).to be_truthy
     }
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180603060345) do
+ActiveRecord::Schema.define(version: 20180626042853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,13 +128,15 @@ ActiveRecord::Schema.define(version: 20180603060345) do
   add_index "content_learnings", ["user_id"], name: "index_content_learnings_on_user_id", using: :btree
 
   create_table "content_links", force: :cascade do |t|
-    t.integer  "content_id", null: false
-    t.string   "link",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "content_id",                null: false
+    t.string   "link",                      null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "language",   default: "es"
   end
 
   add_index "content_links", ["content_id"], name: "index_content_links_on_content_id", using: :btree
+  add_index "content_links", ["language"], name: "index_content_links_on_language", using: :btree
 
   create_table "content_media", force: :cascade do |t|
     t.string   "media"
@@ -200,13 +202,15 @@ ActiveRecord::Schema.define(version: 20180603060345) do
   add_index "content_tutor_recommendations", ["tutor_recommendation_id"], name: "index_content_tutor_recommendations_on_tutor_recommendation_id", using: :btree
 
   create_table "content_videos", force: :cascade do |t|
-    t.integer  "content_id", null: false
-    t.string   "url",        null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "content_id",                null: false
+    t.string   "url",                       null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "language",   default: "es"
   end
 
   add_index "content_videos", ["content_id"], name: "index_content_videos_on_content_id", using: :btree
+  add_index "content_videos", ["language"], name: "index_content_videos_on_language", using: :btree
 
   create_table "contents", force: :cascade do |t|
     t.integer  "level",                       null: false

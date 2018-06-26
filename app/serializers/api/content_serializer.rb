@@ -54,7 +54,9 @@ module Api
     end
 
     def links
-      object.content_links.map(&:link)
+      object.content_links
+            .with_language(current_user.preferred_lang)
+            .map(&:link)
     end
 
     def favorite
@@ -71,7 +73,7 @@ module Api
 
     def videos
       ActiveModel::ArraySerializer.new(
-        object.content_videos,
+        object.content_videos.with_language(current_user.preferred_lang),
         each_serializer: ContentVideoSerializer
       )
     end

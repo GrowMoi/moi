@@ -2,7 +2,8 @@ fieldset
   legend = t("views.contents.videos")
   .row
     .col-xs-12.content-videos-form
-      = f.fields_for :content_videos do |content_video_form|
+      = f.fields_for :content_videos,
+                     decorate(f.object).content_videos_for_current_lang do |content_video_form|
         = render "admin/neurons/content_videos/form",
                  f: content_video_form
 

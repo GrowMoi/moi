@@ -6,8 +6,8 @@ class ContentDecorator < ResourceDecorator
   end
 
   def build_one_video!
-    if content_videos.length === 0
-      content_videos.build
+    if content_videos_for_current_lang.length === 0
+      content_videos.build(language: current_language)
     end
   end
 
@@ -105,6 +105,12 @@ class ContentDecorator < ResourceDecorator
                     end
   end
 
+  def content_videos_for_current_lang
+    content_videos.select do |video|
+      video.language == current_language
+    end
+  end
+
   private
 
   def decorated_medium
@@ -114,7 +120,7 @@ class ContentDecorator < ResourceDecorator
   end
 
   def decorated_videos
-    @decorated_videos ||= content_videos.map do |content_video|
+    @decorated_videos ||= content_videos.with_language(current_language).map do |content_video|
       decorate content_video
     end
   end

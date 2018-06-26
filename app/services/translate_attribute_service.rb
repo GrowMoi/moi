@@ -1,6 +1,10 @@
 class TranslateAttributeService
   def self.translate(resource, attribute, target_lang)
-    new(resource, attribute, target_lang).translate
+    if target_lang == ApplicationController::DEFAULT_LANGUAGE
+      resource.send(attribute)
+    else
+      new(resource, attribute, target_lang).translate
+    end
   end
 
   def initialize(resource, attribute, target_lang)
