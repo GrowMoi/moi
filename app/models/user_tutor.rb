@@ -17,7 +17,7 @@ class UserTutor < ActiveRecord::Base
   STATUSES = %w(accepted rejected deleted).freeze
 
   validates :status, inclusion: { in: STATUSES }, allow_blank: true
-  validate :unique_request_for_user, on: :create
+  validate :unique_request_for_user_accepted, on: :create
 
   scope :pending, -> { where status: nil }
   scope :accepted, -> { where status: "accepted" }
@@ -60,7 +60,7 @@ class UserTutor < ActiveRecord::Base
     end
   end
 
-  def unique_request_for_user
+  def unique_request_for_user_accepted
     was_deleted  = self.class.where(user_id: user_id, tutor_id: tutor_id, status: "deleted").exists?
     if self.class.where(user_id: user_id, tutor_id: tutor_id).exists? && !was_deleted
       errors.add(:user_id, :invalid)
