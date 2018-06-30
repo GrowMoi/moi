@@ -368,7 +368,7 @@
           title: "Mis Notificaciones"
           client_got_item: "Nuevo item obtenido"
           client_test_completed: "Test finalizado"
-          client_message_opened: "Mensaje leido"
+          client_message_open: "Mensaje leido"
           client_recommended_contents_completed: "Contenidos recomendados completados"
           client_got_diploma: "Nuevo diploma obtenido"
           results: "Resultados"

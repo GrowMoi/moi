@@ -27,36 +27,62 @@
       </div>
     </template>
 
-    <moi-dialog title="[[ t('views.tutor.dashboard.card_tutor_notifications.results') ]]" width="500" id="dialog-notification-info"
-      theme="green">
-      <template is="dom-if" if="{{ loadingDialogData }}" restamp>
-        <div>{{ t('views.loading') }}</div>
-      </template>
-      <template is="dom-if" if="{{ !loadingDialogData }}" restamp>
-        <h3>
-          <span>[[ t('views.tutor.dashboard.card_tutor_notifications.player') ]]</span>
-          <span>{{notificationData.playerName}}</span>
-        </h3>
-        <span>Username:
-          <span>{{notificationData.username}}</span>
-        </span>
-        <br>
-        <br>
-        <div>
-          <p>{{notificationData.description}}</p>
-          <p>{{notificationDatatimeMessage}}</p>
-        </div>
-        <div>
-          <ul>
-            <template is="dom-repeat" items="{{ notificationData.answers }}" as="result">
-              <li>
-                <span>{{ result }}</span>
-              </li>
-            </template>
-          </ul>
-        </div>
-      </template>
-    </moi-dialog>
+    <template is="dom-if" if="{{ clientTestCompleted }}" restamp>
+      <moi-dialog title="[[ t('views.tutor.dashboard.card_tutor_notifications.results') ]]" width="500" id="dialog-notification-info"
+        theme="green">
+        <template is="dom-if" if="{{ loadingDialogData }}" restamp>
+          <div>{{ t('views.loading') }}</div>
+        </template>
+        <template is="dom-if" if="{{ !loadingDialogData }}" restamp>
+          <h3>
+            <span>[[ t('views.tutor.dashboard.card_tutor_notifications.player') ]]</span>
+            <span>{{notificationData.playerName}}</span>
+          </h3>
+          <span>Username:
+            <span>{{notificationData.username}}</span>
+          </span>
+          <br>
+          <br>
+          <div>
+            <p>{{notificationData.description}}</p>
+            <p>{{notificationDatatimeMessage}}</p>
+          </div>
+          <div>
+            <ul>
+              <template is="dom-repeat" items="{{ notificationData.answers }}" as="result">
+                <li>
+                  <span>{{ result }}</span>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </template>
+      </moi-dialog>
+    </template>
+
+    <template is="dom-if" if="{{ clientMessageOpen }}" restamp>
+      <moi-dialog title="Detalles" width="500" id="dialog-notification-info"
+        theme="green">
+        <template is="dom-if" if="{{ loadingDialogData }}" restamp>
+          <div>{{ t('views.loading') }}</div>
+        </template>
+        <template is="dom-if" if="{{ !loadingDialogData }}" restamp>
+          <div>Usuario:</div>
+          <h3>{{notificationData.username}}</h3>
+          <br>
+          <div>
+            <div>Título:</div>
+            <h4>{{notificationData.title}}</h4>
+            <br>
+            <div>Descripción:</div>
+            <p>{{notificationData.description}}</p>
+            <br>
+            <div>Visto en:</div>
+            <p>{{notificationData.seenAt}}</p>
+          </div>
+        </template>
+      </moi-dialog>
+    </template>
 
   </template>
   <script src="moi-tutor-notifications-card-content.js"></script>

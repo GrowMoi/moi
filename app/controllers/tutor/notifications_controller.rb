@@ -60,6 +60,15 @@ module Tutor
           answers: player_test.answers,
           time: timeQuiz
         }
+
+      elsif type == "client_message_open"
+        message_id = client_notification.data['api_notification_id']
+        message = Notification.find(message_id)
+        render json: {
+          title: message.title,
+          description: message.description,
+          seen_at: client_notification.created_at
+        }
       else
         render json: {}
       end

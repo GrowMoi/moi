@@ -12,12 +12,20 @@ Polymer({
     this.titleMapping = {
       'client_got_item': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_item'),
       'client_test_completed': this.t('views.tutor.dashboard.card_tutor_notifications.client_test_completed'),
-      'client_message_opened': this.t('views.tutor.dashboard.card_tutor_notifications.client_message_opened'),
+      'client_message_open': this.t('views.tutor.dashboard.card_tutor_notifications.client_message_open'),
       'client_recommended_contents_completed': this.t('views.tutor.dashboard.card_tutor_notifications.client_recommended_contents_completed'),
       'client_got_diploma': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_diploma')
     };
+
+    this.actionsMapping = {
+      'client_test_completed': this.buildClientTestCompleted.bind(this),
+      'client_message_open': this.buildClientMessageOpen.bind(this)
+    };
+
     this.loading = true;
     this.loadingDialogData = false;
+    this.clientTestCompleted = false;
+    this.clientMessageOpen = false;
 
     $.ajax({
       url: notificationsApi,
@@ -62,29 +70,19 @@ Polymer({
     );
   },
   openDialogDetails: function(ev) {
-    var id = ev.model.item.id,
-        username = ev.model.item.client.username;
     this.loadingDialogData = true;
     this.notificationData = {};
+    this.clientTestCompleted = false;
+    this.clientMessageOpen = false;
+    var notificationSelected = ev.model.item;
+
     $(this.$['dialog-notification-info']).show();
     $.ajax({
-      url: '/tutor/notifications/' + id + '/details',
+      url: '/tutor/notifications/' + notificationSelected.id + '/details',
       type: 'GET',
       success: function(res) {
         this.loadingDialogData = false;
-        var totalQuestions = res.questions.questions.length,
-          successAnswers = this.rigthAnswers(res.answers),
-          description = 'Respondió ' + successAnswers + ' de ' + totalQuestions + ' preguntas correctamente';
-          timeMessage = 'Tiempo usado: ' + res.time_quiz;
-          answersWithResults =  this.mapQuizResults(res.answers, res.questions.questions)
-        this.notificationData =  {
-          playerName: res.player_name,
-          username: username,
-          description: description,
-          timeMessage: timeMessage,
-          answers: answersWithResults
-        };
-
+        this.validateAndBuildDialogData(res, notificationSelected);
       }.bind(this),
       error: function(res) {
         this.loadingDialogData = false;
@@ -110,5 +108,39 @@ Polymer({
       results.push(questionResult);
     }
     return results;
+  },
+  validateAndBuildDialogData: function(res, notificationSelected) {
+    var action = this.actionsMapping[notificationSelected.data_type];
+    if (action) {
+      action(res, notificationSelected);
+    }
+  },
+  buildClientTestCompleted: function(res, notificationSelected) {
+    this.clientTestCompleted = true;
+    var totalQuestions = res.questions.questions.length,
+        successAnswers = this.rigthAnswers(res.answers),
+        description = 'Respondió ' + successAnswers + ' de ' + totalQuestions + ' preguntas correctamente',
+        timeMessage = 'Tiempo usado: ' + res.time_quiz,
+        answersWithResults =  this.mapQuizResults(res.answers, res.questions.questions),
+        username = notificationSelected.client.username;
+
+        this.notificationData =  {
+          playerName: res.player_name,
+          username: username,
+          description: description,
+          timeMessage: timeMessage,
+          answers: answersWithResults
+        };
+  },
+  buildClientMessageOpen: function(res, notificationSelected) {
+    this.clientMessageOpen = true;
+    var username = notificationSelected.client.username;
+    this.notificationData =  {
+      username: username,
+      title: res.title,
+      description: res.description,
+      seenAt: res.seen_at
+    };
+
   }
 });

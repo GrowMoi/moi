@@ -18,7 +18,7 @@ class ClientNotification < ActiveRecord::Base
   CATEGORIES = [
     'client_got_item',
     'client_test_completed',
-    'client_message_opened',
+    'client_message_open',
     'client_recommended_contents_completed',
     'client_got_diploma'
   ].freeze

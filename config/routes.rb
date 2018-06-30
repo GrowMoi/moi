@@ -22,6 +22,7 @@ Moi::Application.routes.draw do
       end
       member do
         post :read_notifications
+        get :open
       end
     end
     resources :achievements, only: [] do

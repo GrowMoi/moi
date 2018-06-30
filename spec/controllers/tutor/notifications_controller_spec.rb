@@ -84,7 +84,7 @@ RSpec.describe Tutor::NotificationsController, type: :controller do
 
     create :client_notification,
           client: client3,
-          data_type: "client_message_opened",
+          data_type: "client_message_open",
           data: {}
   }
 
