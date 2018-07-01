@@ -9,24 +9,29 @@ Polymer({
     this.startPusher();
     var notificationsApi = '/tutor/notifications/info';
     this.rowImage = this.assetPath('bell.svg');
+    this.pusherEvents = [
+      'client_test_completed',
+      'client_message_open',
+      'client_got_item'
+    ];
+
     this.titleMapping = {
-      'client_got_item': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_item'),
       'client_test_completed': this.t('views.tutor.dashboard.card_tutor_notifications.client_test_completed'),
       'client_message_open': this.t('views.tutor.dashboard.card_tutor_notifications.client_message_open'),
+      'client_got_item': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_item'),
       'client_recommended_contents_completed': this.t('views.tutor.dashboard.card_tutor_notifications.client_recommended_contents_completed'),
       'client_got_diploma': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_diploma')
     };
 
     this.actionsMapping = {
       'client_test_completed': this.buildClientTestCompleted.bind(this),
-      'client_message_open': this.buildClientMessageOpen.bind(this)
+      'client_message_open': this.buildClientMessageOpen.bind(this),
+      'client_got_item': this.buildClientGotItem.bind(this),
     };
 
     this.loading = true;
     this.loadingDialogData = false;
-    this.clientTestCompleted = false;
-    this.clientMessageOpen = false;
-
+    this.resetDialogFlags();
     $.ajax({
       url: notificationsApi,
       type: 'GET',
@@ -63,17 +68,18 @@ Polymer({
   },
   startPusherNotificationChannel: function() {
     var channel = 'tutornotifications.' + this.tutorId;
-    NotificationBehavior.listenChannel(
-      channel,
-      'client-test-completed',
-      this.onNotificationReceived.bind(this)
-    );
+    this.pusherEvents.forEach(function(eventName) {
+      NotificationBehavior.listenChannel(
+        channel,
+        eventName,
+        this.onNotificationReceived.bind(this)
+      );
+    }.bind(this));
   },
   openDialogDetails: function(ev) {
     this.loadingDialogData = true;
     this.notificationData = {};
-    this.clientTestCompleted = false;
-    this.clientMessageOpen = false;
+    this.resetDialogFlags();
     var notificationSelected = ev.model.item;
 
     $(this.$['dialog-notification-info']).show();
@@ -141,6 +147,19 @@ Polymer({
       description: res.description,
       seenAt: res.seen_at
     };
-
+  },
+  buildClientGotItem: function(res, notificationSelected) {
+    this.clientGotItem = true;
+    var username = notificationSelected.client.username;
+    this.notificationData =  {
+      username: username,
+      name: res.name,
+      description: res.description
+    };
+  },
+  resetDialogFlags: function() {
+    this.clientTestCompleted = false;
+    this.clientMessageOpen = false;
+    this.clientGotItem = false;
   }
 });

@@ -69,6 +69,14 @@ module Tutor
           description: message.description,
           seen_at: client_notification.created_at
         }
+
+      elsif type == "client_got_item"
+        achievement_id = client_notification.data['user_admin_achievement_id']
+        achievement = UserAdminAchievement.find(achievement_id).admin_achievement
+        render json: {
+          name: achievement.name,
+          description: achievement.description
+        }
       else
         render json: {}
       end

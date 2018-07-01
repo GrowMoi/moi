@@ -166,9 +166,7 @@ module Api
         api_notification_id = params[:id]
         my_tutor = my_tutors.where(tutor_id: params[:tutor_id]).map(&:user).first
         my_notification = my_notifications.where(id: api_notification_id)
-        binding.pry
         previous_notification = ClientNotification.where("data->>'api_notification_id' = ?", api_notification_id)
-        binding.pry
 
         if my_tutor && my_notification && previous_notification.empty?
 

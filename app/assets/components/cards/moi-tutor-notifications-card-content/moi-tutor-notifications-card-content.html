@@ -12,10 +12,15 @@
         <template is="dom-repeat" items="{{ notifications }}">
           <div class="notification-info">
             <div class="info">
-              <div>{{item.title}}</div>
-              <div>
-                <small>{{ item.client.username}}</small>
+              <div class="image">
+                <img src$="[[ rowImage ]]" alt="">
               </div>
+              <div class="details">
+                <div>{{item.title}}</div>
+                <div>
+                  <small>{{ item.client.username}}</small>
+                </div>
+              </div >
             </div>
             <div class="options">
               <paper-button on-tap="openDialogDetails">
@@ -79,6 +84,27 @@
             <br>
             <div>Visto en:</div>
             <p>{{notificationData.seenAt}}</p>
+          </div>
+        </template>
+      </moi-dialog>
+    </template>
+
+    <template is="dom-if" if="{{ clientGotItem }}" restamp>
+      <moi-dialog title="Detalles" width="500" id="dialog-notification-info"
+        theme="green">
+        <template is="dom-if" if="{{ loadingDialogData }}" restamp>
+          <div>{{ t('views.loading') }}</div>
+        </template>
+        <template is="dom-if" if="{{ !loadingDialogData }}" restamp>
+          <div>Usuario:</div>
+          <h3>{{notificationData.username}}</h3>
+          <br>
+          <div>
+            <div>Nombre de la recompensa:</div>
+            <h4>{{notificationData.name}}</h4>
+            <br>
+            <div>Descripción:</div>
+            <p>{{notificationData.description}}</p>
           </div>
         </template>
       </moi-dialog>

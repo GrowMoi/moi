@@ -168,7 +168,7 @@ module Tutor
           user_id: id
         )
         if tutor_request.save
-          user_names.push(tutor_request.user.name)
+          user_names.push(tutor_request.user.name || tutor_request.user.username || tutor_request.user.email)
         end
       end
       if user_names.any?
