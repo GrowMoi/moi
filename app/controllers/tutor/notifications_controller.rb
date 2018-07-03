@@ -77,6 +77,18 @@ module Tutor
           name: achievement.name,
           description: achievement.description
         }
+
+      elsif type == "client_recommended_contents_completed"
+        client_tutor_recommendation_id = client_notification.data['client_tutor_recommendation_id']
+        content_ids = get_content_ids(client_tutor_recommendation_id)
+        contents = Content.find(content_ids)
+        serialized_contents = ActiveModel::ArraySerializer.new(
+          contents,
+          each_serializer: Tutor::SimpleContentSerializer
+        )
+        render json: {
+          contents: serialized_contents
+        }
       else
         render json: {}
       end
@@ -94,6 +106,13 @@ module Tutor
     def timeQuiz
       time_diff = player_test.updated_at - player_test.created_at
       Time.at(time_diff).utc.strftime("%H :%M :%S")
+    end
+
+    def get_content_ids(id)
+      ClientTutorRecommendation.find(id)
+                               .tutor_recommendation
+                               .content_tutor_recommendations
+                               .map(&:content_id)
     end
 
   end

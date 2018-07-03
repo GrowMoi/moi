@@ -110,6 +110,28 @@
       </moi-dialog>
     </template>
 
+    <template is="dom-if" if="{{ clientRecommendedContentsCompleted }}" restamp>
+      <moi-dialog title="Detalles" width="500" id="dialog-notification-info"
+        theme="green">
+        <template is="dom-if" if="{{ loadingDialogData }}" restamp>
+          <div>{{ t('views.loading') }}</div>
+        </template>
+        <template is="dom-if" if="{{ !loadingDialogData }}" restamp>
+          <div>Usuario:</div>
+          <h3>{{notificationData.username}}</h3>
+          <br>
+          <div>
+            <div>Contenidos recomendados:</div>
+            <ul>
+              <template is="dom-repeat" items="{{ notificationData.contents }}" as="content">
+                <li>{{content.title}}</li>
+              </template>
+            </ul>
+          </div>
+        </template>
+      </moi-dialog>
+    </template>
+
   </template>
   <script src="moi-tutor-notifications-card-content.js"></script>
 </dom-module>

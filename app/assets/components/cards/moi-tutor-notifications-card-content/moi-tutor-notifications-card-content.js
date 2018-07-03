@@ -12,7 +12,8 @@ Polymer({
     this.pusherEvents = [
       'client_test_completed',
       'client_message_open',
-      'client_got_item'
+      'client_got_item',
+      'client_recommended_contents_completed'
     ];
 
     this.titleMapping = {
@@ -27,6 +28,7 @@ Polymer({
       'client_test_completed': this.buildClientTestCompleted.bind(this),
       'client_message_open': this.buildClientMessageOpen.bind(this),
       'client_got_item': this.buildClientGotItem.bind(this),
+      'client_recommended_contents_completed': this.buildClientRecommendedContentsCompleted.bind(this)
     };
 
     this.loading = true;
@@ -157,9 +159,18 @@ Polymer({
       description: res.description
     };
   },
+  buildClientRecommendedContentsCompleted: function(res, notificationSelected) {
+    this.clientRecommendedContentsCompleted = true;
+    var username = notificationSelected.client.username;
+    this.notificationData =  {
+      username: username,
+      contents: res.contents || []
+    };
+  },
   resetDialogFlags: function() {
     this.clientTestCompleted = false;
     this.clientMessageOpen = false;
     this.clientGotItem = false;
+    this.clientRecommendedContentsCompleted =  false;
   }
 });
