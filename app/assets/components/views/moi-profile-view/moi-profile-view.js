@@ -1,8 +1,11 @@
 Polymer({
   is: 'moi-profile-view',
-  behaviors: [TranslateBehavior, UtilsBehavior],
+  behaviors: [TranslateBehavior, UtilsBehavior, NotificationBehavior],
   ready: function () {
     var profileApi = '/tutor/profile/info';
+    NotificationBehavior.getNotifications(function(counter) {
+      this.notificationCounter = counter;
+    }.bind(this));
     this.userInfo = {
       name: '',
       username: '',

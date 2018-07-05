@@ -3,6 +3,10 @@ Polymer({
   behaviors: [TranslateBehavior, AssetBehavior, NotificationBehavior, UtilsBehavior],
   properties: {
     tutorId: String,
+    options: {
+      type: Object,
+      observer: 'bindOptions'
+    }
   },
   ready: function () {
     this.notifications = [];
@@ -34,6 +38,9 @@ Polymer({
     this.loading = true;
     this.loadingDialogData = false;
     this.itemToRemove = null;
+    this.emitters = {
+      onNotificationOpen: null
+    };
     this.resetDialogFlags();
     $.ajax({
       url: notificationsApi,
@@ -41,6 +48,23 @@ Polymer({
       success: this.onGetNotificationsApiSuccess.bind(this)
       //error:  this.onGetNotificationsApiError.bind(this)
     });
+  },
+  bindOptions: function() {
+    this.registerLocalApi();
+  },
+  registerLocalApi: function() {
+    if (this.options && this.options.onRegisterApi) {
+      var api = this.createPublicApi();
+      this.options.onRegisterApi(api);
+    }
+  },
+  createPublicApi: function() {
+    return {
+      onNotificationOpen: this.onNotificationOpen.bind(this)
+    };
+  },
+  onNotificationOpen: function(callback) {
+    this.emitters.onNotificationOpen = callback;
   },
   onNotificationReceived: function(notification) {
     this.addTitleToNotification(notification);
@@ -92,6 +116,9 @@ Polymer({
       success: function(res) {
         this.loadingDialogData = false;
         model.set('item.opened', true);
+        if (this.emitters.onNotificationOpen) {
+          this.emitters.onNotificationOpen(notificationSelected);
+        }
         this.validateAndBuildDialogData(res, notificationSelected);
       }.bind(this),
       error: function(res) {

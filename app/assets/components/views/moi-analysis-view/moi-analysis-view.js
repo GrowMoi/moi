@@ -1,8 +1,11 @@
 Polymer({
   is: 'moi-analysis-view',
-  behaviors: [TranslateBehavior, AssetBehavior, StudentBehavior, UtilsBehavior],
+  behaviors: [TranslateBehavior, AssetBehavior, StudentBehavior, UtilsBehavior, NotificationBehavior],
   ready: function () {
     var _this = this;
+    NotificationBehavior.getNotifications(function(counter) {
+      this.notificationCounter = counter;
+    }.bind(this));
     var studentsApi = '/tutor/dashboard/students';
     var studentsAjax = $.ajax({
       url: studentsApi,

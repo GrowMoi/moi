@@ -27,5 +27,29 @@ NotificationBehavior.listenChannel = function(channelName, eventName, callback){
   } else {
     console.error('There is not Pusher client active.');
   }
-}
+};
+
+NotificationBehavior.notificationCounter = null;
+
+NotificationBehavior.getNotifications = function(cb) {
+  if (NotificationBehavior.notificationCounter === null) {
+    var notificationsApi = '/tutor/notifications/info';
+    $.ajax({
+      url: notificationsApi,
+      type: 'GET',
+      success: function(res) {
+        var newNotifications = res.data.filter(function(notification) {
+          return !notification.opened;
+        }) || [];
+        var counter = newNotifications.length;
+        cb(counter);
+      },
+      error: function() {
+        cb(0);
+      }
+    });
+  } else {
+    cb(NotificationBehavior.notificationCounter);
+  }
+};
 

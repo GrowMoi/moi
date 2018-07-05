@@ -1,12 +1,16 @@
 Polymer({
   is: 'moi-dashboard-view',
-  behaviors: [TranslateBehavior],
+  behaviors: [TranslateBehavior, NotificationBehavior],
   properties: {
     authToken: String
   },
   ready: function() {
     this.userCardApi = null;
     this.studentCardApi = null;
+    NotificationBehavior.getNotifications(function(counter) {
+      this.notificationCounter = counter;
+    }.bind(this));
+
     this.userCardOptions = {
       onRegisterApi: this.onRegisterUserCardApi.bind(this)
     };
