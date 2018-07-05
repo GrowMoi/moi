@@ -8,7 +8,13 @@ Polymer({
       observer: 'bindOptions'
     }
   },
-  ready: function () {
+  ready: function() {
+    this.init();
+  },
+  reload: function() {
+    this.init();
+  },
+  init: function () {
     this.notifications = [];
     this.startPusher();
     var notificationsApi = '/tutor/notifications/info';
@@ -60,7 +66,8 @@ Polymer({
   },
   createPublicApi: function() {
     return {
-      onNotificationOpen: this.onNotificationOpen.bind(this)
+      onNotificationOpen: this.onNotificationOpen.bind(this),
+      reload: this.reload.bind(this)
     };
   },
   onNotificationOpen: function(callback) {

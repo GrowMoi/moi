@@ -7,7 +7,13 @@ Polymer({
       observer: 'bindOptions'
     }
   },
-  ready: function () {
+  ready: function() {
+    this.init();
+  },
+  reload: function() {
+    this.init();
+  },
+  init: function () {
     var studentsApi = '/tutor/dashboard/students';
     this.students = [];
     this.studentsSelected = [];
@@ -16,6 +22,7 @@ Polymer({
     this.rowImgCheck = this.assetPath('check_green.png');
     this.downloadBtnFilename = 'reporte_' + Date.now() + '.xls';
     $(this.$.btnSelectiveDownload).addClass('disabled');
+    this.emitters = {};
     this.loading = true;
     this.userRemove = null;
     $.ajax({
@@ -91,6 +98,9 @@ Polymer({
         this.toastMessage = res.message;
         this.$['toast-message'].show();
         $(this.$['dialog-confirm']).hide();
+        if (this.emitters.onStudentRemoved) {
+          this.emitters.onStudentRemoved(this.userRemove);
+        }
       }.bind(this),
       error: function(res) {
         var message = res.responseJSON && res.responseJSON.message ? res.responseJSON.message : '';
@@ -108,11 +118,16 @@ Polymer({
   },
   createPublicApi: function() {
     return {
-      addStudent: this.addStudent.bind(this)
+      addStudent: this.addStudent.bind(this),
+      onStudentRemoved: this.onStudentRemoved.bind(this),
+      reload: this.reload.bind(this)
     };
   },
   addStudent: function(student) {
     student.status = false;
     this.push('students', student);
+  },
+  onStudentRemoved: function(callback) {
+    this.emitters.onStudentRemoved = callback;
   }
 });

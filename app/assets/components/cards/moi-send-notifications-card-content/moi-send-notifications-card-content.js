@@ -11,9 +11,19 @@ Polymer({
       type: String,
       value: '',
       observer: 'enterTitle'
+    },
+    options: {
+      type: Object,
+      observer: 'bindOptions'
     }
   },
-  ready: function () {
+  ready: function() {
+    this.init();
+  },
+  reload: function() {
+    this.init();
+  },
+  init: function () {
     this.loading = true;
     this.btnsendId = '#btnsend';
     this.formId = '#form';
@@ -38,6 +48,20 @@ Polymer({
         return this.buildInputFileName(currentTime);
       }.bind(this));
     }.bind(this));
+  },
+  bindOptions: function() {
+    this.registerLocalApi();
+  },
+  registerLocalApi: function() {
+    if (this.options && this.options.onRegisterApi) {
+      var api = this.createPublicApi();
+      this.options.onRegisterApi(api);
+    }
+  },
+  createPublicApi: function() {
+    return {
+      reload: this.reload.bind(this)
+    };
   },
   onSelectFile: function (e, val) {
     var currentTime = Date.now();
