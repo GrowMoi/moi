@@ -12,6 +12,11 @@
         <template is="dom-repeat" items="{{ notifications }}">
           <div class="notification-info">
             <div class="info">
+              <div class="opened-container">
+                <template is="dom-if" if="{{ !item.opened }}" restamp>
+                  <span>*</span>
+                </template>
+              </div>
               <div class="image">
                 <img src$="[[ rowImage ]]" alt="">
               </div>
@@ -20,17 +25,33 @@
                 <div>
                   <small>{{ item.client.username}}</small>
                 </div>
+
               </div >
             </div>
             <div class="options">
               <paper-button on-tap="openDialogDetails">
                 <span>[[ t('views.tutor.dashboard.card_tutor_notifications.details') ]]</span>
               </paper-button>
+              <paper-button class="btn-remove" on-tap="openDialogConfirm">
+                <span>X</span>
+              </paper-button>
             </div>
           </div>
         </template>
       </div>
     </template>
+
+    <moi-dialog title="Confirmación" width="500" id="dialog-confirm" theme="red">
+      <p>¿Desea eliminar esta notificacion?</p>
+      <div class="options">
+        <paper-button on-tap="closeDialogConfirm" class="btn-cancel">
+          <span>[[ t('views.tutor.dashboard.card_students.dialog.confirm.buttons.cancel') ]]</span>
+        </paper-button>
+        <paper-button on-tap="removeNotification" class="btn-remove">
+          <span>[[ t('views.tutor.dashboard.card_students.dialog.confirm.buttons.remove') ]]</span>
+        </paper-button>
+      </div>
+    </moi-dialog>
 
     <template is="dom-if" if="{{ clientTestCompleted }}" restamp>
       <moi-dialog title="[[ t('views.tutor.dashboard.card_tutor_notifications.results') ]]" width="500" id="dialog-notification-info"

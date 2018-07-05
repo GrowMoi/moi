@@ -244,6 +244,7 @@ Moi::Application.routes.draw do
     resources :notifications, only: [:index] do
       member do
         get :details
+        delete :remove
       end
       collection do
         get :info

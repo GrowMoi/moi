@@ -33,6 +33,7 @@ Polymer({
 
     this.loading = true;
     this.loadingDialogData = false;
+    this.itemToRemove = null;
     this.resetDialogFlags();
     $.ajax({
       url: notificationsApi,
@@ -82,14 +83,15 @@ Polymer({
     this.loadingDialogData = true;
     this.notificationData = {};
     this.resetDialogFlags();
-    var notificationSelected = ev.model.item;
-
+    var model = ev.model;
+    var notificationSelected = model.item;
     $(this.$['dialog-notification-info']).show();
     $.ajax({
       url: '/tutor/notifications/' + notificationSelected.id + '/details',
       type: 'GET',
       success: function(res) {
         this.loadingDialogData = false;
+        model.set('item.opened', true);
         this.validateAndBuildDialogData(res, notificationSelected);
       }.bind(this),
       error: function(res) {
@@ -121,6 +123,36 @@ Polymer({
     var action = this.actionsMapping[notificationSelected.data_type];
     if (action) {
       action(res, notificationSelected);
+    }
+  },
+  openDialogConfirm: function (ev) {
+    ev.stopPropagation();
+    this.itemToRemove = null;
+    var notificationSelected = ev.model.item;
+    this.itemToRemove = notificationSelected;
+    $(this.$['dialog-confirm']).show();
+  },
+  closeDialogConfirm: function(ev){
+    $(this.$['dialog-confirm']).hide();
+  },
+  removeNotification: function() {
+    var notificationSelected = this.itemToRemove;
+    var index = this.notifications.indexOf(notificationSelected);
+    if (index !== -1) {
+      $.ajax({
+        url: '/tutor/notifications/' + notificationSelected.id + '/remove',
+        type: 'DELETE',
+        success: function(res) {
+          this.splice('notifications', index, 1);
+          $(this.$['dialog-confirm']).hide();
+        }.bind(this),
+        error: function(res) {
+          $(this.$['dialog-confirm']).hide();
+          var message = res.responseJSON && res.responseJSON.message ? res.responseJSON.message : '';
+          this.toastMessage = message;
+          this.$['toast-message'].show();
+        }.bind(this)
+      });
     }
   },
   buildClientTestCompleted: function(res, notificationSelected) {

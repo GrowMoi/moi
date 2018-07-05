@@ -332,7 +332,7 @@
               message: "Estas seguro que quieres eliminar a: %{username} de tu lista?"
               buttons:
                 cancel: "Cancelar"
-                remove: "Elminar"
+                remove: "Eliminar"
         card_users:
           title: "Usuarios"
           send_request: "Enviar Solicitud"
@@ -374,6 +374,8 @@
           results: "Resultados"
           player: "Jugador: "
           details: "Detalles"
+          notification_removed: "La notificación fue eliminada exitosamente"
+          notification_removed_error: "Se presento un error al eliminar la notificación. Por favor intentalo nuevamente."
       profile:
         form_profile:
           title: "Datos personales"

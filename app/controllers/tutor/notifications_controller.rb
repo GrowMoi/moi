@@ -25,7 +25,7 @@ module Tutor
     }
 
     expose(:client_notifications) {
-      ClientNotification.where(client: student_ids, deleted: false)
+      ClientNotification.where(client: student_ids, deleted: false).order(created_at: :desc)
     }
 
     expose(:client_notification) {
@@ -45,6 +45,7 @@ module Tutor
     def details
       type = client_notification.data_type
       if type == "client_test_completed"
+        client_notification.update(opened: true)
         if !player.present?
           return render json: {
             message: 'Player not found',
@@ -62,6 +63,7 @@ module Tutor
         }
 
       elsif type == "client_message_open"
+        client_notification.update(opened: true)
         message_id = client_notification.data['api_notification_id']
         message = Notification.find(message_id)
         render json: {
@@ -71,6 +73,7 @@ module Tutor
         }
 
       elsif type == "client_got_item"
+        client_notification.update(opened: true)
         achievement_id = client_notification.data['user_admin_achievement_id']
         achievement = UserAdminAchievement.find(achievement_id).admin_achievement
         render json: {
@@ -79,6 +82,7 @@ module Tutor
         }
 
       elsif type == "client_recommended_contents_completed"
+        client_notification.update(opened: true)
         client_tutor_recommendation_id = client_notification.data['client_tutor_recommendation_id']
         content_ids = get_content_ids(client_tutor_recommendation_id)
         contents = Content.find(content_ids)
@@ -91,6 +95,19 @@ module Tutor
         }
       else
         render json: {}
+      end
+    end
+
+    def remove
+      if client_notification.update(deleted: true)
+        render json: {
+          message: I18n.t("views.tutor.dashboard.card_tutor_notifications.notification_removed")
+        }
+      else
+        render json: {
+          message: I18n.t("views.tutor.dashboard.card_tutor_notifications.notification_removed_error")
+        },
+        status: 422
       end
     end
 

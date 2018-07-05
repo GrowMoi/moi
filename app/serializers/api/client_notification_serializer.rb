@@ -4,6 +4,7 @@ module Api
         :data_type,
         :data,
         :deleted,
+        :opened,
         :created_at
 
     has_one :client
