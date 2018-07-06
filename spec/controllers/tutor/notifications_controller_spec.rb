@@ -122,19 +122,20 @@ RSpec.describe Tutor::NotificationsController, type: :controller do
       it {
         parsed_body = JSON.parse(response.body)
         expect(parsed_body["data"].count).to eq(2)
-        expect(parsed_body["data"][0]["data_type"]).to eq("client_test_completed")
-        expect(parsed_body["data"][0]["data"]).to eq({"test"=>"test1"})
-        expect(parsed_body["data"][0]["client"]["id"]).to eq(client1.id)
-        expect(parsed_body["data"][0]["client"]["name"]).to eq(client1.name)
-        expect(parsed_body["data"][0]["client"]["username"]).to eq(client1.username)
-        expect(parsed_body["data"][0]["client"]["email"]).to eq(client1.email)
 
-        expect(parsed_body["data"][1]["data_type"]).to eq("client_got_item")
-        expect(parsed_body["data"][1]["data"]).to eq({"test"=>"test2"})
-        expect(parsed_body["data"][1]["client"]["id"]).to eq(client2.id)
-        expect(parsed_body["data"][1]["client"]["name"]).to eq(client2.name)
-        expect(parsed_body["data"][1]["client"]["username"]).to eq(client2.username)
-        expect(parsed_body["data"][1]["client"]["email"]).to eq(client2.email)
+        expect(parsed_body["data"][0]["data_type"]).to eq("client_got_item")
+        expect(parsed_body["data"][0]["data"]).to eq({"test"=>"test2"})
+        expect(parsed_body["data"][0]["client"]["id"]).to eq(client2.id)
+        expect(parsed_body["data"][0]["client"]["name"]).to eq(client2.name)
+        expect(parsed_body["data"][0]["client"]["username"]).to eq(client2.username)
+        expect(parsed_body["data"][0]["client"]["email"]).to eq(client2.email)
+
+        expect(parsed_body["data"][1]["data_type"]).to eq("client_test_completed")
+        expect(parsed_body["data"][1]["data"]).to eq({"test"=>"test1"})
+        expect(parsed_body["data"][1]["client"]["id"]).to eq(client1.id)
+        expect(parsed_body["data"][1]["client"]["name"]).to eq(client1.name)
+        expect(parsed_body["data"][1]["client"]["username"]).to eq(client1.username)
+        expect(parsed_body["data"][1]["client"]["email"]).to eq(client1.email)
       }
 
     end
