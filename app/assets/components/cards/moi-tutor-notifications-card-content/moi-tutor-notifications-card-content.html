@@ -9,6 +9,13 @@
     </template>
     <template is="dom-if" if="{{ !loading }}" restamp>
       <div class="notification-list-container">
+
+        <template is="dom-if" if="{{emptyNotifications}}" restamp>
+          <div class="message-empty">
+            <span>[[ t('views.tutor.dashboard.card_tutor_notifications.empty_notifications') ]]</span>
+          </div>
+        </template>
+
         <template is="dom-repeat" items="{{ notifications }}">
           <div class="notification-info">
             <div class="info">

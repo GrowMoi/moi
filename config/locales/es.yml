@@ -376,6 +376,7 @@
           details: "Detalles"
           notification_removed: "La notificación fue eliminada exitosamente"
           notification_removed_error: "Se presento un error al eliminar la notificación. Por favor intentalo nuevamente."
+          empty_notifications: "No se encontraron notificaciones nuevas"
       profile:
         form_profile:
           title: "Datos personales"

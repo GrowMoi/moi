@@ -19,5 +19,10 @@ Polymer({
     this.notificationCardApi.onNotificationOpen(function(item) {
       this.notificationCounter--;
     }.bind(this));
+    this.notificationCardApi.onNotificationRemoved(function(item) {
+      if (!item.opened) {
+        this.notificationCounter--;
+      }
+    }.bind(this));
   }
 });

@@ -19,6 +19,7 @@ Polymer({
     this.startPusher();
     var notificationsApi = '/tutor/notifications/info';
     this.rowImage = this.assetPath('bell.svg');
+    this.emptyNotifications = true;
     this.pusherEvents = [
       'client_test_completed',
       'client_message_open',
@@ -67,11 +68,15 @@ Polymer({
   createPublicApi: function() {
     return {
       onNotificationOpen: this.onNotificationOpen.bind(this),
+      onNotificationRemoved: this.onNotificationRemoved.bind(this),
       reload: this.reload.bind(this)
     };
   },
   onNotificationOpen: function(callback) {
     this.emitters.onNotificationOpen = callback;
+  },
+  onNotificationRemoved: function(callback) {
+    this.emitters.onNotificationRemoved = callback;
   },
   onNotificationReceived: function(notification) {
     this.addTitleToNotification(notification);
@@ -80,6 +85,7 @@ Polymer({
   onGetNotificationsApiSuccess: function(res) {
     this.loading = false;
     this.notifications = res.data || [];
+    this.emptyNotifications = this.notifications.length === 0;
     this.formatNotifications(this.notifications);
   },
   formatNotifications: function(data) {
@@ -179,6 +185,13 @@ Polymer({
         success: function(res) {
           this.splice('notifications', index, 1);
           $(this.$['dialog-confirm']).hide();
+          if (this.emitters.onNotificationRemoved) {
+            this.emitters.onNotificationRemoved(notificationSelected);
+          }
+          this.async(function() {
+            this.emptyNotifications = this.notifications.length === 0;
+          }.bind(this));
+
         }.bind(this),
         error: function(res) {
           $(this.$['dialog-confirm']).hide();
