@@ -37,4 +37,25 @@ describe ContentDecorator do
       end
     end
   end
+
+  describe "#can_have_more_links?" do
+    subject { decorator }
+    it {
+      is_expected.to be_able_to_have_more_links
+    }
+
+    context "can't" do
+      let!(:links) {
+        1.upto(Content::NUMBER_OF_LINKS).each do
+          create :content_link,
+                 content: subject,
+                 language: ApplicationController::DEFAULT_LANGUAGE
+        end
+      }
+
+      it {
+        is_expected.to_not be_able_to_have_more_links
+      }
+    end
+  end
 end
