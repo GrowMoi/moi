@@ -2,11 +2,12 @@ fieldset
   legend = t("views.contents.links")
   .row
     .col-xs-12.content-links-form
-      = f.fields_for :content_links do |link_form|
+      = f.fields_for :content_links,
+                     decorate(f.object).content_links_for_current_lang do |link_form|
         = render "admin/neurons/content_links/form",
                  f: link_form
 
-      - if f.object.able_to_have_more_links?
+      - if decorate(f.object).able_to_have_more_links?
         = f.link_to_add :content_links,
                         class: "btn btn-sm btn-default add-content-link bs-tooltip",
                         title: t("views.contents.add_link"),

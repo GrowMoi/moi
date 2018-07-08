@@ -82,13 +82,13 @@ class Content < ActiveRecord::Base
 
     accepts_nested_attributes_for :content_links,
       reject_if: ->(attributes) {
-        attributes["link"].blank?
+        attributes["id"].blank? && attributes["link"].blank?
       }
 
     accepts_nested_attributes_for :content_videos,
       allow_destroy: true,
       reject_if: ->(attributes) {
-        attributes["url"].blank?
+        attributes["id"].blank? && attributes["url"].blank?
       }
   end
 
@@ -118,14 +118,6 @@ class Content < ActiveRecord::Base
                      inclusion: {in: KINDS}
     validate :has_description_media_or_links
     validates :source, presence: true
-  end
-
-  def able_to_have_more_links?
-    content_links.length < NUMBER_OF_LINKS
-  end
-
-  def able_to_have_more_videos?
-    content_videos.length < NUMBER_OF_VIDEOS
   end
 
   def kind

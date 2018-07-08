@@ -5,7 +5,8 @@
     = tooltip t("views.possible_answers.correct"),
               place: "bottom",
               tag: :span do
-      = f.check_box :correct
+      = f.check_box :correct,
+                    disabled: current_language != ApplicationController::DEFAULT_LANGUAGE
 
   .col-xs-11
     = f.text_field :text,

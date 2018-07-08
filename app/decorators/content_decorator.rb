@@ -1,7 +1,7 @@
 class ContentDecorator < ResourceDecorator
   def build_one_link!
-    if content_links.length === 0
-      content_links.build
+    if content_links_for_current_lang.length === 0
+      content_links.build(language: current_language)
     end
   end
 
@@ -111,6 +111,20 @@ class ContentDecorator < ResourceDecorator
     end
   end
 
+  def content_links_for_current_lang
+    content_links.select do |link|
+      link.language == current_language
+    end
+  end
+
+  def able_to_have_more_links?
+    content_links_for_current_lang.length < Content::NUMBER_OF_LINKS
+  end
+
+  def able_to_have_more_videos?
+    content_videos_for_current_lang.length < Content::NUMBER_OF_VIDEOS
+  end
+
   private
 
   def decorated_medium
@@ -126,7 +140,7 @@ class ContentDecorator < ResourceDecorator
   end
 
   def decorated_links
-    @decorated_links ||= content_links.map do |content_link|
+    @decorated_links ||= content_links.with_language(current_language).map do |content_link|
       decorate content_link
     end
   end

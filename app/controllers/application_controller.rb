@@ -43,6 +43,15 @@ class ApplicationController < ActionController::Base
   end
   helper_method :translate_attribute
 
+  def show_if_translation_available?(resource, attribute)
+    if current_language == DEFAULT_LANGUAGE
+      true
+    else
+      resource.class.translated_attrs.include?(attribute)
+    end
+  end
+  helper_method :show_if_translation_available?
+
   private
 
   def after_sign_out_path_for(resource_or_scope)

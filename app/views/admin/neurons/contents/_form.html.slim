@@ -17,13 +17,14 @@ fieldset
                   class: "form-control",
                   value: translate_attribute(f.object, :description)
 
-  .form-group
-    = tooltip t("views.contents.keyword_list_form_instructions"),
-              place: "left" do
-      = f.text_field :keyword_list,
-                      placeholder: t("activerecord.attributes.content.keyword_list"),
-                     value: f.object.keyword_list.join(","),
-                     class: "form-control input-tags"
+  - if show_if_translation_available?(f.object, :keyword_list)
+    .form-group
+      = tooltip t("views.contents.keyword_list_form_instructions"),
+                place: "left" do
+        = f.text_field :keyword_list,
+                        placeholder: t("activerecord.attributes.content.keyword_list"),
+                       value: f.object.keyword_list.join(","),
+                       class: "form-control input-tags"
 
   .form-group.content-form-source
     .row
@@ -41,8 +42,11 @@ fieldset
 
 = render "admin/neurons/contents/videos_form",
          f: f
-= render "admin/neurons/contents/media_form",
-         f: f
+
+- if show_if_translation_available?(f.object, :content_medium)
+  = render "admin/neurons/contents/media_form",
+           f: f
+
 = render "admin/neurons/contents/links_form",
          f: f
 = render "admin/neurons/contents/possible_answers_form",

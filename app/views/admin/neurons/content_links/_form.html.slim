@@ -1,5 +1,7 @@
 .nested-content-link
   = f.hidden_field :id
+  = f.hidden_field :language,
+                   value: f.object.new_record? ?  current_language : f.object.language
 
   .form-group
     = f.text_field :link,
