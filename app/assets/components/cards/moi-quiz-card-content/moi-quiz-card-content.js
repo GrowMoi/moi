@@ -2,9 +2,19 @@ Polymer({
   is: 'moi-quiz-card-content',
   behaviors: [TranslateBehavior, StudentBehavior],
   properties: {
-    authToken: String
+    authToken: String,
+    options: {
+      type: Object,
+      observer: 'bindOptions'
+    }
   },
-  ready: function () {
+  ready: function() {
+    this.init();
+  },
+  reload: function() {
+    this.init();
+  },
+  init: function () {
     var levelsAjax, studentsAjax, _this;
     this.levels = [];
     this.students = [];
@@ -93,5 +103,19 @@ Polymer({
     } else {
       return $(this.$.btnsend).removeClass('disabled');
     }
+  },
+  bindOptions: function() {
+    this.registerLocalApi();
+  },
+  registerLocalApi: function() {
+    if (this.options && this.options.onRegisterApi) {
+      var api = this.createPublicApi();
+      this.options.onRegisterApi(api);
+    }
+  },
+  createPublicApi: function() {
+    return {
+      reload: this.reload.bind(this)
+    };
   }
 });

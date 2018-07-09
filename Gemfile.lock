@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/JhymerMartinez/paper-elements.git
+  revision: 99f0717d373aae88fee04201e5b9ed3d3f9acbed
+  specs:
+    polymer-paper-elements-rails (0.0.1)
+      polymer-rails (~> 1.0)
+
+GIT
   remote: git://github.com/JhymerMartinez/sass.git
   revision: 9852c297b48eb4e2ec103d3eb9161aad330e5946
   branch: 3.2.19-var-fix
@@ -229,9 +236,6 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    js_assets (0.0.10)
-      rails
-      sprockets (~> 2.0)
     json (1.8.6)
     jwt (1.2.1)
     kaminari (0.16.2)
@@ -504,7 +508,6 @@ DEPENDENCIES
   jquery-infinite-pages
   jquery-rails
   jquery-ui-rails
-  js_assets
   kaminari
   letter_opener
   little_decorator!
@@ -518,6 +521,7 @@ DEPENDENCIES
   paper_trail (~> 4.0.0.beta)
   pg
   poltergeist (~> 1.6)
+  polymer-paper-elements-rails!
   polymer-rails (~> 1.0.0)
   pry-rails
   puma

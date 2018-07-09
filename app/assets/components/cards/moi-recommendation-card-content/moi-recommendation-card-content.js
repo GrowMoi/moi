@@ -6,9 +6,19 @@ Polymer({
     type: {
       type: String,
       default: 'card'
+    },
+    options: {
+      type: Object,
+      observer: 'bindOptions'
     }
   },
-  ready: function () {
+  ready: function() {
+    this.init();
+  },
+  reload: function() {
+    this.init();
+  },
+  init: function () {
     var achievementsAjax, studentsAjax, _this;
     var achievementsApi = '/tutor/dashboard/achievements';
     var studentsApi = '/tutor/dashboard/students';
@@ -51,6 +61,20 @@ Polymer({
       });
 
     });
+  },
+  bindOptions: function() {
+    this.registerLocalApi();
+  },
+  registerLocalApi: function() {
+    if (this.options && this.options.onRegisterApi) {
+      var api = this.createPublicApi();
+      this.options.onRegisterApi(api);
+    }
+  },
+  createPublicApi: function() {
+    return {
+      reload: this.reload.bind(this)
+    };
   },
   onAchievementSelected: function (e, val) {
     this.apiParams.tutor_achievement = val;

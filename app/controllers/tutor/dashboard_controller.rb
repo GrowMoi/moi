@@ -21,6 +21,14 @@ module Tutor
       end
     }
 
+    expose(:tutor_students_with_status_not_deleted) {
+      if (params[:ids].present?)
+        User.where(id:params[:ids], role: :cliente)
+      else
+        current_user.tutor_requests_sent.not_deleted.map(&:user)
+      end
+    }
+
     expose(:tutor_achievement, attributes: :tutor_achievement_params)
 
     expose(:all_clients) {
@@ -35,9 +43,13 @@ module Tutor
       Neuron.approved_public_contents
     }
 
+    expose(:student_ids) {
+      tutor_students.map(&:id)
+    }
+
     expose(:clients) {
       all_clients.where.not(
-        id: tutor_students.map(&:id)
+        id: tutor_students_with_status_not_deleted.map(&:id)
       ).page(params[:page])
     }
 
@@ -65,8 +77,6 @@ module Tutor
       LevelQuiz.order(created_at: :desc)
     }
 
-    expose(:notification, attributes: :notification_params)
-
     def achievements
       render json: {
         data: tutor_achievements
@@ -78,9 +88,10 @@ module Tutor
     end
 
     def students
-      render json: {
-        data: tutor_students
-      }
+      render json: tutor_students_with_status_not_deleted,
+      each_serializer: Tutor::DashboardStudentsSerializer,
+      scope: current_user,
+      root: "data"
     end
 
     def get_clients
@@ -117,10 +128,6 @@ module Tutor
       redirect_to :back
     end
 
-    def edit_achievement
-      render partial: "tutor/dashboard/dialogs/edit_achievement"
-    end
-
     def update_achievement
       achievement = TutorAchievement.find(params[:id])
       if achievement.update(tutor_achievement_params)
@@ -153,8 +160,8 @@ module Tutor
       if quiz.save
         quiz_url = decorate(player).link_to_test
         Notification.create!(user: current_user,
-                            title: "Nuevo test #{Date.today.to_s}",
-                            description: "Disponible en: #{quiz_url}",
+                            title: "#{I18n.t('views.tutor.dashboard.quizzes.title')} #{Date.today.to_s}",
+                            description: "#{I18n.t('views.tutor.dashboard.quizzes.available')}: #{quiz_url}",
                             data_type: "tutor_quiz",
                             client_id: client.id)
 
@@ -171,6 +178,7 @@ module Tutor
     end
 
     def send_notification
+      notification = Notification.new(notification_params)
       notification.user = current_user
       if student_ids_params.any?
         student_id = student_ids_params[0]

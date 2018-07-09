@@ -1,8 +1,11 @@
 Polymer({
   is: 'moi-client-view',
-  behaviors: [TranslateBehavior, AssetBehavior, StudentBehavior, UtilsBehavior],
+  behaviors: [TranslateBehavior, AssetBehavior, StudentBehavior, UtilsBehavior, NotificationBehavior],
   ready: function () {
     var _this = this;
+    NotificationBehavior.getNotifications(function(counter) {
+      this.notificationCounter = counter;
+    }.bind(this));
     var studentsApi = '/tutor/dashboard/students';
     _this.statisticsApi = '/tutor/client/get_client_statistics';
     var params = _this.getCurrentUrlParams();

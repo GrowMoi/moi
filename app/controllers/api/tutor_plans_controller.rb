@@ -2,7 +2,7 @@ module Api
   class TutorPlansController < BaseController
 
     expose(:plans) {
-      Product.where(category: 'plan')
+      Product.where(category: 'payments_website')
     }
 
     respond_to :json

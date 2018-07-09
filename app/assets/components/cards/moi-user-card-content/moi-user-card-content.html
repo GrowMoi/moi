@@ -1,6 +1,9 @@
 <dom-module id="moi-user-card-content">
     <link rel="stylesheet" href="moi-user-card-content.css" />
     <template>
+
+      <paper-toast id="toast-message" duration="5000" text="{{ toastMessage }}"></paper-toast>
+
       <div>
         <moi-input on-press-enter="onInputEnter" id="inputcontainer" icon-image="[[ inputIconImage ]]"></moi-input>
       </div>
@@ -15,7 +18,9 @@
             img-selector="[[ rowImgCheck ]]"
             img-avatar-active="[[ rowImgActive ]]"
             img-avatar-inactive="[[ rowImgInactive ]]"
-            on-row-selected="onRowSelectedHandler">
+            selected$="{{ item.selected }}"
+            on-row-selected="onRowSelectedHandler"
+            options="{{rowOptions}}">
           </moi-selectable-row>
         </template>
       </div>
@@ -26,9 +31,16 @@
           text="[[ t('views.tutor.dashboard.card_users.send_request') ]]"
           title$="[[ t('views.tutor.dashboard.card_users.send_request_title') ]]"
           loading-text="[[ t('views.tutor.dashboard.card_users.send_request_loading') ]]"
-          ids="[[ clientsSelected ]]">
+          ids="[[ clientsSelected ]]"
+          on-success="onRequestSuccess"
+          on-error="onRequestError">
         </moi-send-client-request-button>
       </moi-actions-row>
+
+      <moi-dialog title="[[ t('views.tutor.dashboard.card_users.improve_account_title') ]]" width="500" id="dialog-info" theme="green">
+        <span>[[ t('views.tutor.dashboard.card_users.improve_account') ]]</span>
+        <span><a href="//growmoi.com/productos" target="_blank">growmoi.com/productos</a></span>
+      </moi-dialog>
     </template>
     <script src="moi-user-card-content.js"></script>
   </dom-module>

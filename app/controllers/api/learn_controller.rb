@@ -123,8 +123,45 @@ needs to be a JSON-encoded string having the following format:
         tutor = recommendation.tutor_recommendation.tutor
         achievement = recommendation.tutor_recommendation.tutor_achievement
         TutorMailer.achievement_notification(tutor, current_user, achievement).deliver_now
+
+        client_tutor_recommendation_id = recommendation.id
+        client_notification = create_recommended_contents_completed_notification(client_tutor_recommendation_id)
+        if client_notification
+          notification_serialized = ClientNotificationSerializer.new(
+            client_notification,
+            root: false
+          )
+          notify_client_recommended_contents_completed_to_tutor(tutor.id, notification_serialized)
+        end
+
       end
     end
+
+    def create_recommended_contents_completed_notification(client_tutor_recommendation_id)
+      notification = ClientNotification.new
+      notification.client_id = current_user.id
+      notification.data_type = "client_recommended_contents_completed"
+      notification.data = {
+        client_tutor_recommendation_id: client_tutor_recommendation_id
+      }
+      return notification.save ? notification : nil;
+    end
+
+    def notify_client_recommended_contents_completed_to_tutor(tutor_id, notification_data)
+      unless Rails.env.test?
+        user_channel_general = "tutornotifications.#{tutor_id}"
+        begin
+          Pusher.trigger(user_channel_general, 'client_recommended_contents_completed', notification_data)
+        rescue Exception => e
+          puts e.message
+          puts e.backtrace.inspect
+        else
+          puts "PUSHER: Message sent successfully!"
+          puts "PUSHER: #{notification_data}"
+        end
+      end
+    end
+
 
   end
 end

@@ -3,6 +3,7 @@
 <dom-module id="moi-profile-view">
   <link rel="stylesheet" href="moi-profile-view.css" />
   <template>
+    <moi-badge counter="{{notificationCounter}}"></moi-badge>
     <moi-flash-message id="flash-message"></moi-flash-message>
 
     <form id="profile-form">
@@ -35,7 +36,7 @@
       </div>
     </form>
 
-    <form id="password-form">
+    <form id="password-form" class="password-form">
         <legend>[[ t('views.tutor.profile.form_password.title') ]]</legend>
         <div class="form-group">
           <label for="currentPassword">[[ t('views.tutor.profile.form_password.password_current') ]]</label>

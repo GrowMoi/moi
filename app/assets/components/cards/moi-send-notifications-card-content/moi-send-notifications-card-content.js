@@ -11,34 +11,57 @@ Polymer({
       type: String,
       value: '',
       observer: 'enterTitle'
+    },
+    options: {
+      type: Object,
+      observer: 'bindOptions'
     }
   },
-  ready: function () {
-    var _this = this;
-    _this.loading = true;
-    _this.btnsendId = '#btnsend';
-    _this.formId = '#form';
-    _this.studentsApi = '/tutor/dashboard/students';
-    _this.sendNotificationApi = '/tutor/dashboard/send_notification';
-    _this.userIdSelect = '';
-    _this.title = '';
+  ready: function() {
+    this.init();
+  },
+  reload: function() {
+    this.init();
+  },
+  init: function () {
+    this.loading = true;
+    this.btnsendId = '#btnsend';
+    this.formId = '#form';
+    this.studentsApi = '/tutor/dashboard/students';
+    this.sendNotificationApi = '/tutor/dashboard/send_notification';
+    this.userIdSelect = '';
+    this.title = '';
 
     var studentsAjax = $.ajax({
-      url: _this.studentsApi,
+      url: this.studentsApi,
       type: 'GET'
     });
     return $.when(studentsAjax).then(function (res1) {
       var currentTime;
-      _this.loading = false;
+      this.loading = false;
       currentTime = Date.now();
       if (res1.data) {
-        _this.students = _this.formatStudentData(res1.data);
+        this.students = this.formatStudentData(res1.data);
       }
-      return _this.async(function () {
-        _this.disableBtn(_this.btnsendId);
-        return _this.buildInputFileName(currentTime);
-      });
-    });
+      return this.async(function () {
+        this.disableBtn(this.btnsendId);
+        return this.buildInputFileName(currentTime);
+      }.bind(this));
+    }.bind(this));
+  },
+  bindOptions: function() {
+    this.registerLocalApi();
+  },
+  registerLocalApi: function() {
+    if (this.options && this.options.onRegisterApi) {
+      var api = this.createPublicApi();
+      this.options.onRegisterApi(api);
+    }
+  },
+  createPublicApi: function() {
+    return {
+      reload: this.reload.bind(this)
+    };
   },
   onSelectFile: function (e, val) {
     var currentTime = Date.now();

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180526215050) do
+ActiveRecord::Schema.define(version: 20180704124652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,18 @@ ActiveRecord::Schema.define(version: 20180526215050) do
   end
 
   add_index "certificates", ["user_id"], name: "index_certificates_on_user_id", using: :btree
+
+  create_table "client_notifications", force: :cascade do |t|
+    t.integer  "client_id",                  null: false
+    t.integer  "data_type",                  null: false
+    t.json     "data"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "deleted",    default: false
+    t.boolean  "opened",     default: false
+  end
+
+  add_index "client_notifications", ["client_id"], name: "index_client_notifications_on_client_id", using: :btree
 
   create_table "client_tutor_recommendations", force: :cascade do |t|
     t.integer  "client_id",               null: false
@@ -318,13 +330,15 @@ ActiveRecord::Schema.define(version: 20180526215050) do
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "payments", force: :cascade do |t|
-    t.integer  "user_id",    null: false
+    t.integer  "user_id",                null: false
     t.string   "payment_id"
     t.string   "source"
     t.float    "total"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "code_item"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "code_item"
+    t.integer  "quantity",   default: 1
+    t.integer  "product_id"
   end
 
   add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
@@ -358,6 +372,7 @@ ActiveRecord::Schema.define(version: 20180526215050) do
     t.datetime "updated_at",  null: false
     t.string   "category"
     t.string   "description"
+    t.string   "key"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -577,6 +592,7 @@ ActiveRecord::Schema.define(version: 20180526215050) do
   add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
+  add_foreign_key "client_notifications", "users", column: "client_id"
   add_foreign_key "client_tutor_recommendations", "users", column: "client_id"
   add_foreign_key "content_importings", "users"
   add_foreign_key "content_learning_final_tests", "users"
