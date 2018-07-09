@@ -252,6 +252,19 @@ ActiveRecord::Schema.define(version: 20180704124652) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
   create_table "leaderboards", force: :cascade do |t|
     t.integer  "user_id",                               null: false
     t.integer  "time_elapsed",    limit: 8, default: 0
@@ -416,6 +429,22 @@ ActiveRecord::Schema.define(version: 20180704124652) do
 
   add_index "search_engines", ["gcse_id"], name: "index_search_engines_on_gcse_id", unique: true, using: :btree
   add_index "search_engines", ["slug"], name: "index_search_engines_on_slug", unique: true, using: :btree
+
+  create_table "social_sharings", force: :cascade do |t|
+    t.string   "titulo",       null: false
+    t.string   "descripcion"
+    t.string   "uri",          null: false
+    t.string   "imagen_url"
+    t.string   "slug"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "image_width"
+    t.integer  "image_height"
+  end
+
+  add_index "social_sharings", ["slug"], name: "index_social_sharings_on_slug", using: :btree
+  add_index "social_sharings", ["user_id"], name: "index_social_sharings_on_user_id", using: :btree
 
   create_table "spellcheck_analyses", force: :cascade do |t|
     t.string   "attr_name",                       null: false
@@ -622,6 +651,7 @@ ActiveRecord::Schema.define(version: 20180704124652) do
   add_foreign_key "profiles", "users"
   add_foreign_key "quizzes", "level_quizzes"
   add_foreign_key "quizzes", "users", column: "created_by"
+  add_foreign_key "social_sharings", "users"
   add_foreign_key "tutor_achievements", "users", column: "tutor_id"
   add_foreign_key "tutor_recommendations", "users", column: "tutor_id"
   add_foreign_key "user_content_preferences", "users"
