@@ -23,6 +23,7 @@ Moi::Application.routes.draw do
       end
       member do
         post :read_notifications
+        get :open
       end
     end
     resources :achievements, only: [] do
@@ -67,7 +68,8 @@ Moi::Application.routes.draw do
 
     resource :payments, only: [] do
       member do
-        post :tutor_account
+        post :tutor_basic_account
+        post :add_students
       end
     end
 
@@ -180,6 +182,7 @@ Moi::Application.routes.draw do
         post :approve
       end
     end
+    resources :content_importings
 
     root "dashboard#index"
   end
@@ -197,7 +200,11 @@ Moi::Application.routes.draw do
       end
     end
     resources :tree, only: :index
-    resources :user_tutors, only: :create
+    resources :user_tutors, only: [:new, :create, :destroy, :delete] do
+      member do
+        put :remove_user
+      end
+    end
     resources :recommendations, only: [:new, :create] do
       collection do
         post :new_achievement
@@ -216,7 +223,6 @@ Moi::Application.routes.draw do
         get :achievements
         post :new_achievement
         put :update_achievement
-        get :edit_achievement
         get :students
         get :get_clients
         get :download_tutor_analytics
@@ -225,6 +231,24 @@ Moi::Application.routes.draw do
         get :get_level_quizzes
         get :get_questions
         post :create_quiz
+      end
+    end
+
+    resources :profile, only: [:index] do
+      collection do
+        get :info
+        put :update_password
+        put :update
+      end
+    end
+
+    resources :notifications, only: [:index] do
+      member do
+        get :details
+        delete :remove
+      end
+      collection do
+        get :info
       end
     end
 

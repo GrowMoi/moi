@@ -137,6 +137,7 @@ class User < ActiveRecord::Base
     has_many :certificates,
              dependent: :destroy
     has_many :social_sharings, dependent: :destroy
+    has_many :content_importings
   end
 
 

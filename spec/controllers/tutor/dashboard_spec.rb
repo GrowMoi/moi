@@ -78,11 +78,10 @@ RSpec.describe Tutor::DashboardController, type: :controller do
     create :content_learning,
       user: client1,
       content: content1
-
   }
 
   let!(:tutor_students) {
-    current_user.tutor_requests_sent.accepted.map(&:user)
+    current_user.tutor_requests_sent.not_deleted.map(&:user)
   }
 
   before {
@@ -182,10 +181,10 @@ RSpec.describe Tutor::DashboardController, type: :controller do
         expect(response).to have_http_status(:ok)
       }
       it {
-        expect(controller.tutor_students).to eq(tutor_students)
+        expect(controller.tutor_students_with_status_not_deleted).to eq(tutor_students)
       }
       it {
-        expect(controller.tutor_students.size).to eq(2)
+        expect(controller.tutor_students_with_status_not_deleted.size).to eq(2)
       }
 
     end
