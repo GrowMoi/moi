@@ -147,31 +147,46 @@ module Tutor
     end
 
     def create_quiz
-      quiz = Quiz.new
-      player = Player.new
-      client = User.find(quiz_params[:client_id])
-      level = LevelQuiz.find(quiz_params[:level_quiz_id])
-      player.client_id = client.id
-      player.name = client.name || client.username
-      quiz.level_quiz = level
-      quiz.created_by = current_user
-      quiz.players.push(player)
 
-      if quiz.save
-        quiz_url = decorate(player).link_to_test
-        Notification.create!(user: current_user,
-                            title: "#{I18n.t('views.tutor.dashboard.quizzes.title')} #{Date.today.to_s}",
-                            description: "#{I18n.t('views.tutor.dashboard.quizzes.available')}: #{quiz_url}",
-                            data_type: "tutor_quiz",
-                            client_id: client.id)
-
-        flash[:success] = I18n.t(
-          "views.tutor.dashboard.quizzes.created",
-          client_name: client.name,
-          quiz_url: quiz_url
-        )
+      send_to_all = quiz_params[:send_to_all]
+      clients = []
+      if send_to_all == "true"
+        clients = tutor_students
       else
-        flash[:error] = I18n.t("views.tutor.common.error")
+        clients = User.where(id: quiz_params[:client_id])
+      end
+
+      client_usernames = []
+      clients.each do |client|
+        quiz = Quiz.new
+        player = Player.new
+        level = LevelQuiz.find(quiz_params[:level_quiz_id])
+        player.client_id = client.id
+        player.name = client.name || client.username
+        quiz.level_quiz = level
+        quiz.created_by = current_user
+        quiz.players.push(player)
+
+        if quiz.save
+          quiz_url = decorate(player).link_to_test
+          Notification.create!(user: current_user,
+                              title: "#{I18n.t('views.tutor.dashboard.quizzes.title')} #{Date.today.to_s}",
+                              description: "#{I18n.t('views.tutor.dashboard.quizzes.available')}: #{quiz_url}",
+                              data_type: "tutor_quiz",
+                              client_id: client.id)
+
+          client_usernames.push(client.username || client.email)
+        end
+
+        if client_usernames.any?
+          flash[:success] = I18n.t(
+            "views.tutor.dashboard.quizzes.created_all",
+            client_usernames: client_usernames.join(", ")
+          )
+        else
+          flash[:error] = I18n.t("views.tutor.common.error")
+        end
+
       end
 
       render js: "window.location = '#{request.referrer}'"
@@ -281,7 +296,8 @@ module Tutor
     def permitted_attributes
       [
         :level_quiz_id,
-        :client_id
+        :client_id,
+        :send_to_all
       ]
     end
 

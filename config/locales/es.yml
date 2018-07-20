@@ -310,6 +310,7 @@
           updated: "La recompensa ha sido actualizada."
         quizzes:
           created: "Se ha creado un nuevo test para el usuario %{client_name} disponible en %{quiz_url}."
+          created_all: "Se han creado tests para los usuarios: %{client_usernames}"
           title: "Nuevo test"
           available: "Disponible en"
         card_achievements:
