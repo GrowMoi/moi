@@ -180,20 +180,36 @@ module Tutor
     def send_notification
       notification = Notification.new(notification_params)
       notification.user = current_user
-      if student_ids_params.any?
-        student_id = student_ids_params[0]
-        notification.client_id = student_id
-        notification.data_type = "tutor_generic"
-        if notification.save
-          flash[:success] = I18n.t(
-            "views.tutor.dashboard.card_send_notifications.sent"
-          )
+
+      ids = []
+      if send_to_all == "true"
+        ids = tutor_students.map(&:id)
+      else
+        if student_ids_params.any?
+          ids = student_ids_params
         else
           flash[:error] = I18n.t("views.tutor.common.error")
+          return redirect_to :back
         end
+      end
+
+      all_status = []
+      ids.each do |student_id|
+        notification.client_id = student_id
+        notification.data_type = "tutor_generic"
+        saved = notification.save
+        all_status.push(saved)
+      end
+
+      result = all_status.uniq
+      if result.any? && result.size == 1 && result[0] == true
+        flash[:success] = I18n.t(
+          "views.tutor.dashboard.card_send_notifications.sent"
+        )
       else
         flash[:error] = I18n.t("views.tutor.common.error")
       end
+
       redirect_to :back
     end
 
@@ -252,6 +268,10 @@ module Tutor
 
     def student_ids_params
       params[:notification][:students] || []
+    end
+
+    def send_to_all
+      params[:notification][:send_to_all] || "false"
     end
 
     def quiz_params
