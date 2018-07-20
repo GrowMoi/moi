@@ -5,7 +5,10 @@
       <template is="dom-if" if="{{ !loading }}" restamp>
 
         <div class="row-select">
-          <moi-select items="{{ students }}" on-item-selected="onStudentSelected" placeholder$="[[ t('views.tutor.dashboard.card_quizzes.students_placeholder') ]]"></moi-select>
+          <moi-select id="studentSelector" items="{{ students }}" on-item-selected="onStudentSelected" placeholder$="[[ t('views.tutor.dashboard.card_quizzes.students_placeholder') ]]"></moi-select>
+        </div>
+        <div class="checkbox-container">
+          <paper-checkbox on-change="onCheckboxChange">[[ t('views.tutor.dashboard.common.send_to_all') ]] </paper-checkbox>
         </div>
 
         <div class="row-select">
