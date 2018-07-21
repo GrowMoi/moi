@@ -193,15 +193,12 @@ module Tutor
     end
 
     def send_notification
-      notification = Notification.new(notification_params)
-      notification.user = current_user
-
-      ids = []
+      student_ids = []
       if send_to_all == "true"
-        ids = tutor_students.map(&:id)
+        student_ids = tutor_students.map(&:id)
       else
         if student_ids_params.any?
-          ids = student_ids_params
+          student_ids = student_ids_params
         else
           flash[:error] = I18n.t("views.tutor.common.error")
           return redirect_to :back
@@ -209,7 +206,9 @@ module Tutor
       end
 
       all_status = []
-      ids.each do |student_id|
+      student_ids.each do |student_id|
+        notification = Notification.new(notification_params)
+        notification.user = current_user
         notification.client_id = student_id
         notification.data_type = "tutor_generic"
         saved = notification.save

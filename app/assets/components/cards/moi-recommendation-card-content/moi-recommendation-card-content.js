@@ -153,10 +153,14 @@ Polymer({
     });
   },
   disableContentSelector: function () {
-    $(this.$$('#moi-choosen-container')).addClass('disabled');
+    if (this.partialCardRecommendationApi.disableChoosen) {
+      this.partialCardRecommendationApi.disableChoosen(true);
+    }
   },
   enableContentSelector: function () {
-    $(this.$$('#moi-choosen-container')).removeClass('disabled');
+    if (this.partialCardRecommendationApi.disableChoosen) {
+      this.partialCardRecommendationApi.disableChoosen(false);
+    }
   },
   onRegisterPartialCardRecommendationOptions: function (api) {
     this.partialCardRecommendationApi = api;
@@ -169,13 +173,41 @@ Polymer({
         this.apiParams.students = allStudentIds;
         if (this.partialCardRecommendationApi.disableSelector) {
           this.partialCardRecommendationApi.disableSelector(true);
+          this.disableContentSelector();
+          this.loadingContents = true;
+          this.reloadContents(null);
         }
       } else {
         this.apiParams.students = this.previousStudentIds || [];
         if (this.partialCardRecommendationApi.disableSelector) {
           this.partialCardRecommendationApi.disableSelector(false);
+          if (this.apiParams.students && this.apiParams.students[0]) {
+            this.loadingContents = true;
+            this.reloadContents(this.apiParams.students[0]);
+          } else {
+            this.disableContentSelector();
+          }
         }
       }
     }.bind(this));
+  },
+  reloadContents: function(studentId) {
+    var data = {};
+    if (studentId) {
+      data.user_id = studentId;
+    }
+    $.ajax({
+      url: this.contentsApi,
+      type: 'GET',
+      data: data,
+      success: function (res) {
+        if (res.data) {
+          this.loadingContents = false;
+          this.contents = this.formatData(res.data, 'title');
+          this.enableContentSelector();
+          this.updateSendButtonState();
+        }
+      }.bind(this)
+    });
   }
 });

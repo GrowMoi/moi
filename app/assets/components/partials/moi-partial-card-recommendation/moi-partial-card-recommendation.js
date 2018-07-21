@@ -23,7 +23,8 @@ Polymer({
   createPublicApi: function() {
     return {
       onCheckboxChange: this.loadOnCheckboxChangeCb.bind(this),
-      disableSelector: this.disableSelector.bind(this)
+      disableSelector: this.disableSelector.bind(this),
+      disableChoosen: this.disableChoosen.bind(this)
     };
   },
   loadOnCheckboxChangeCb: function(cb) {
@@ -41,6 +42,12 @@ Polymer({
     } else {
       $(this.$$('#studentSelector')).removeClass('disabled');
     }
-
+  },
+  disableChoosen: function(disable) {
+    if (disable) {
+      $(this.$$('#moi-choosen-container')).addClass('disabled');
+    } else {
+      $(this.$$('#moi-choosen-container')).removeClass('disabled');
+    }
   }
 });
