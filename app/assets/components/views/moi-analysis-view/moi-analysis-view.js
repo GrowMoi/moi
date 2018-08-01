@@ -1,11 +1,11 @@
 Polymer({
   is: 'moi-analysis-view',
   behaviors: [TranslateBehavior, AssetBehavior, StudentBehavior, UtilsBehavior, NotificationBehavior],
+  properties: {
+    tutorId: String
+  },
   ready: function () {
     var _this = this;
-    NotificationBehavior.getNotifications(function(counter) {
-      this.notificationCounter = counter;
-    }.bind(this));
     var studentsApi = '/tutor/dashboard/students';
     var studentsAjax = $.ajax({
       url: studentsApi,
@@ -29,6 +29,11 @@ Polymer({
         _this.loading = false;
       });
     }
+    NotificationBehavior.getNotifications(function(counter) {
+      this.notificationCounter = counter;
+    }.bind(this));
+
+    NotificationBehavior.startPusherForTutorAccount(this.tutorId, this.onNotificationReceived.bind(this));
   },
   getStudents: function (studentsAjax) {
     var _this = this;
@@ -87,6 +92,9 @@ Polymer({
         client_id: userIdSelected
       }
     });
+  },
+  onNotificationReceived: function(notification) {
+    this.notificationCounter++;
   }
 
 });

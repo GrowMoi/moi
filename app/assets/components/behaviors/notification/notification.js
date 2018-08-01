@@ -53,3 +53,31 @@ NotificationBehavior.getNotifications = function(cb) {
   }
 };
 
+NotificationBehavior.pusherEvents = [
+  'client_test_completed',
+  'client_message_open',
+  'client_got_item',
+  'client_recommended_contents_completed'
+];
+
+NotificationBehavior.startPusherForTutorAccount = function(tutorId, onNotificationReceived) {
+  if (!NotificationBehavior.pusherClient) {
+    NotificationBehavior.createNewPusherClient(ENV.pusherAppKey, function() {
+      console.log('Pusher: connection successful!');
+      NotificationBehavior.startPusherNotificationChannel(tutorId, onNotificationReceived);
+    });
+  } else {
+    NotificationBehavior.startPusherNotificationChannel(tutorId, onNotificationReceived);
+  }
+}
+
+NotificationBehavior.startPusherNotificationChannel = function(tutorId, onNotificationReceived) {
+  var channel = 'tutornotifications.' + tutorId;
+  NotificationBehavior.pusherEvents.forEach(function(eventName) {
+    NotificationBehavior.listenChannel(
+      channel,
+      eventName,
+      onNotificationReceived
+    );
+  });
+};

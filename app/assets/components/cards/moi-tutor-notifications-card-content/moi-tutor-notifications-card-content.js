@@ -16,17 +16,9 @@ Polymer({
   },
   init: function () {
     this.notifications = [];
-    this.startPusher();
     var notificationsApi = '/tutor/notifications/info';
     this.rowImage = this.assetPath('bell.svg');
     this.emptyNotifications = true;
-    this.pusherEvents = [
-      'client_test_completed',
-      'client_message_open',
-      'client_got_item',
-      'client_recommended_contents_completed'
-    ];
-
     this.titleMapping = {
       'client_test_completed': this.t('views.tutor.dashboard.card_tutor_notifications.client_test_completed'),
       'client_message_open': this.t('views.tutor.dashboard.card_tutor_notifications.client_message_open'),
@@ -46,7 +38,8 @@ Polymer({
     this.loadingDialogData = false;
     this.itemToRemove = null;
     this.emitters = {
-      onNotificationOpen: null
+      onNotificationOpen: null,
+      onNotificationReceived: null
     };
     this.resetDialogFlags();
     $.ajax({
@@ -55,6 +48,8 @@ Polymer({
       success: this.onGetNotificationsApiSuccess.bind(this)
       //error:  this.onGetNotificationsApiError.bind(this)
     });
+
+    NotificationBehavior.startPusherForTutorAccount(this.tutorId, this.onNotificationReceived.bind(this));
   },
   bindOptions: function() {
     this.registerLocalApi();
@@ -67,20 +62,27 @@ Polymer({
   },
   createPublicApi: function() {
     return {
-      onNotificationOpen: this.onNotificationOpen.bind(this),
-      onNotificationRemoved: this.onNotificationRemoved.bind(this),
+      onNotificationOpen: this.loadEmitterNotificationOpen.bind(this),
+      onNotificationRemoved: this.loadEmitterOnNotificationRemoved.bind(this),
+      onNotificationReceived: this.loadEmitterOnNotificationReceived.bind(this),
       reload: this.reload.bind(this)
     };
   },
-  onNotificationOpen: function(callback) {
+  loadEmitterNotificationOpen: function(callback) {
     this.emitters.onNotificationOpen = callback;
   },
-  onNotificationRemoved: function(callback) {
+  loadEmitterOnNotificationRemoved: function(callback) {
     this.emitters.onNotificationRemoved = callback;
+  },
+  loadEmitterOnNotificationReceived: function(callback) {
+    this.emitters.onNotificationReceived = callback;
   },
   onNotificationReceived: function(notification) {
     this.addTitleToNotification(notification);
     this.push('notifications', notification);
+    if (this.emitters.onNotificationReceived) {
+      this.emitters.onNotificationReceived(notification);
+    }
   },
   onGetNotificationsApiSuccess: function(res) {
     this.loading = false;
@@ -95,26 +97,6 @@ Polymer({
   },
   addTitleToNotification: function(notification) {
     notification.title = this.titleMapping[notification.data_type] || '';
-  },
-  startPusher: function() {
-    if (!NotificationBehavior.pusherClient) {
-      NotificationBehavior.createNewPusherClient(ENV.pusherAppKey, function() {
-        console.log('Pusher: connection successful!');
-        this.startPusherNotificationChannel();
-      }.bind(this));
-    } else {
-      this.startPusherNotificationChannel();
-    }
-  },
-  startPusherNotificationChannel: function() {
-    var channel = 'tutornotifications.' + this.tutorId;
-    this.pusherEvents.forEach(function(eventName) {
-      NotificationBehavior.listenChannel(
-        channel,
-        eventName,
-        this.onNotificationReceived.bind(this)
-      );
-    }.bind(this));
   },
   openDialogDetails: function(ev) {
     this.loadingDialogData = true;

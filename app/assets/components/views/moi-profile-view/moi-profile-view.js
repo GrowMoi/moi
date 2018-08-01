@@ -1,11 +1,11 @@
 Polymer({
   is: 'moi-profile-view',
   behaviors: [TranslateBehavior, UtilsBehavior, NotificationBehavior],
+  properties: {
+    tutorId: String
+  },
   ready: function () {
     var profileApi = '/tutor/profile/info';
-    NotificationBehavior.getNotifications(function(counter) {
-      this.notificationCounter = counter;
-    }.bind(this));
     this.userInfo = {
       name: '',
       username: '',
@@ -26,6 +26,12 @@ Polymer({
     this.btnSendPassword = $(this.$['btn-send-password']);
     this.$['profile-form'].addEventListener('submit', this.onSubmitUserForm.bind(this));
     this.$['password-form'].addEventListener('submit', this.onSubmitPasswordForm.bind(this));
+    NotificationBehavior.getNotifications(function(counter) {
+      this.notificationCounter = counter;
+    }.bind(this));
+
+    NotificationBehavior.startPusherForTutorAccount(this.tutorId, this.onNotificationReceived.bind(this));
+
   },
   onGetProfileApiSuccess: function(res) {
     this.userInfo = this.mergeObjectsWithSpecificProps(this.userInfo, res);
@@ -89,5 +95,8 @@ Polymer({
     this.btnSendPassword.removeClass('disabled');
     var json = res.responseJSON || {};
     this.$['flash-message'].error(json.message);
+  },
+  onNotificationReceived: function(notification) {
+    this.notificationCounter++;
   }
 });

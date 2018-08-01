@@ -2,7 +2,8 @@ Polymer({
   is: 'moi-dashboard-view',
   behaviors: [TranslateBehavior, NotificationBehavior],
   properties: {
-    authToken: String
+    authToken: String,
+    tutorId: String
   },
   ready: function() {
     this.userCardApi = {};
@@ -14,6 +15,8 @@ Polymer({
     NotificationBehavior.getNotifications(function(counter) {
       this.notificationCounter = counter;
     }.bind(this));
+
+    NotificationBehavior.startPusherForTutorAccount(this.tutorId, this.onNotificationReceived.bind(this));
 
     this.userCardOptions = {
       onRegisterApi: this.onRegisterUserCardApi.bind(this)
@@ -70,5 +73,8 @@ Polymer({
   },
   onRegisterQuizContentCardApi: function(api) {
     this.quizContentCardApi = api;
+  },
+  onNotificationReceived: function(notification) {
+    this.notificationCounter++;
   }
 });
