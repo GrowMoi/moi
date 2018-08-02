@@ -81,3 +81,12 @@ NotificationBehavior.startPusherNotificationChannel = function(tutorId, onNotifi
     );
   });
 };
+
+NotificationBehavior.applyBadgetEffect = function(moiBadgeElem) {
+  $(moiBadgeElem).addClass('badge-zoom-active');
+    setTimeout(function() {
+      if (moiBadgeElem) {
+        $(moiBadgeElem).removeClass('badge-zoom-active');
+      }
+    }.bind(this), 1000);
+}

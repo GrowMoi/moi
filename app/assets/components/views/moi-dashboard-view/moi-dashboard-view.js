@@ -12,6 +12,12 @@ Polymer({
     this.contentWrapperCardApi = {};
     this.quizContentCardApi = {};
 
+    setTimeout(function() {
+
+    }.bind(this), 5000)
+
+
+
     NotificationBehavior.getNotifications(function(counter) {
       this.notificationCounter = counter;
     }.bind(this));
@@ -34,7 +40,7 @@ Polymer({
       onRegisterApi: this.onRegisterQuizContentCardApi.bind(this)
     };
   },
-  onRegisterUserCardApi: function(api) {
+  onRegisterUserCardApi: function (api) {
     this.userCardApi = api;
     this.userCardApi.onUserRemoved(function(userRemoved) {
       if (this.sendNotificationCardApi.reload) {
@@ -76,5 +82,6 @@ Polymer({
   },
   onNotificationReceived: function(notification) {
     this.notificationCounter++;
+    NotificationBehavior.applyBadgetEffect(this.$.moiBadge);
   }
 });

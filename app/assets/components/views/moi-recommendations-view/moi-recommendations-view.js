@@ -13,5 +13,6 @@ Polymer({
   },
   onNotificationReceived: function(notification) {
     this.notificationCounter++;
+    NotificationBehavior.applyBadgetEffect(this.$.moiBadge);
   }
 });

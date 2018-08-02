@@ -26,6 +26,7 @@ Polymer({
     }.bind(this));
     this.notificationCardApi.onNotificationReceived(function(item) {
       this.notificationCounter++;
+      NotificationBehavior.applyBadgetEffect(this.$.moiBadge);
     }.bind(this));
   }
 });
