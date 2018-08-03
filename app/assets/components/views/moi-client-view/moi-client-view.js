@@ -1,11 +1,11 @@
 Polymer({
   is: 'moi-client-view',
   behaviors: [TranslateBehavior, AssetBehavior, StudentBehavior, UtilsBehavior, NotificationBehavior],
+  properties: {
+    tutorId: String
+  },
   ready: function () {
     var _this = this;
-    NotificationBehavior.getNotifications(function(counter) {
-      this.notificationCounter = counter;
-    }.bind(this));
     var studentsApi = '/tutor/dashboard/students';
     _this.statisticsApi = '/tutor/client/get_client_statistics';
     var params = _this.getCurrentUrlParams();
@@ -30,6 +30,11 @@ Polymer({
         _this.loading = false;
       });
     }
+    NotificationBehavior.getNotifications(function(counter) {
+      this.notificationCounter = counter;
+    }.bind(this));
+
+    NotificationBehavior.startPusherForTutorAccount(this.tutorId, this.onNotificationReceived.bind(this));
   },
   onStudentSelected: function (e, val) {
     var _this = this;
@@ -84,6 +89,10 @@ Polymer({
     _this.data = res.data;
     _this.data.client = res.meta.client;
     _this.activityHref = _this.activityPath + '?client_id=' + _this.userIdSelected;
+  },
+  onNotificationReceived: function(notification) {
+    this.notificationCounter++;
+    NotificationBehavior.applyBadgetEffect(this.$.moiBadge);
   }
 
 });

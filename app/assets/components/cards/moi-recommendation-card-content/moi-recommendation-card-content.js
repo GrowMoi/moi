@@ -93,7 +93,7 @@ Polymer({
   },
   sendRecommendation: function () {
     this.disableSendButton = true;
-    this.btnSendText = _this.btnSendingText;
+    this.btnSendText = this.btnSendingText;
     $.ajax({
       url: this.createRecomendationsApi,
       type: 'POST',
@@ -131,23 +131,22 @@ Polymer({
   },
   onStudentSelected: function (e, val) {
     this.apiParams.students = [val];
-    _this = this;
-    _this.disableContentSelector();
-    _this.loadingContents = true;
+    this.disableContentSelector();
+    this.loadingContents = true;
     $.ajax({
-      url: _this.contentsApi,
+      url: this.contentsApi,
       type: 'GET',
       data: {
         user_id: val
       },
       success: function (res) {
         if (res.data) {
-          _this.loadingContents = false;
-          _this.contents = _this.formatData(res.data, 'title');
-          _this.enableContentSelector();
-          _this.updateSendButtonState();
+          this.loadingContents = false;
+          this.contents = this.formatData(res.data, 'title');
+          this.enableContentSelector();
+          this.updateSendButtonState();
         }
-      }
+      }.bind(this)
     });
   },
   disableContentSelector: function() {
