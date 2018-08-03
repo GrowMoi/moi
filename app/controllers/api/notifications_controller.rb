@@ -164,12 +164,17 @@ module Api
       if notification_type == "tutor_generic"
 
         api_notification_id = params[:id]
-        my_tutor = my_tutors.where(tutor_id: params[:tutor_id]).map(&:user).first
+        my_tutor = my_tutors.where(tutor_id: params[:tutor_id]).map(&:tutor).first
         my_notification = my_notifications.where(id: api_notification_id)
         previous_notification = ClientNotification.where("data->>'api_notification_id' = ?", api_notification_id)
+        if !my_tutor
+          return render json: {
+            message: "Tutor not found"
+          },
+          status: 422
+        end
 
-        if my_tutor && my_notification && previous_notification.empty?
-
+        if my_notification && previous_notification.empty?
           client_notification = create_message_open_notification(api_notification_id)
           if client_notification
             notification_serialized = ClientNotificationSerializer.new(
@@ -181,11 +186,6 @@ module Api
             return render nothing: true,
             status: :created
           end
-        else
-          return render json: {
-            message: "Tutor not found"
-          },
-          status: 422
         end
       end
 

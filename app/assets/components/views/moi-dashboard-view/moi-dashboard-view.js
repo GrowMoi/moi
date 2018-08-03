@@ -2,7 +2,8 @@ Polymer({
   is: 'moi-dashboard-view',
   behaviors: [TranslateBehavior, NotificationBehavior],
   properties: {
-    authToken: String
+    authToken: String,
+    tutorId: String
   },
   ready: function() {
     this.userCardApi = {};
@@ -11,9 +12,17 @@ Polymer({
     this.contentWrapperCardApi = {};
     this.quizContentCardApi = {};
 
+    setTimeout(function() {
+
+    }.bind(this), 5000)
+
+
+
     NotificationBehavior.getNotifications(function(counter) {
       this.notificationCounter = counter;
     }.bind(this));
+
+    NotificationBehavior.startPusherForTutorAccount(this.tutorId, this.onNotificationReceived.bind(this));
 
     this.userCardOptions = {
       onRegisterApi: this.onRegisterUserCardApi.bind(this)
@@ -31,7 +40,7 @@ Polymer({
       onRegisterApi: this.onRegisterQuizContentCardApi.bind(this)
     };
   },
-  onRegisterUserCardApi: function(api) {
+  onRegisterUserCardApi: function (api) {
     this.userCardApi = api;
     this.userCardApi.onUserRemoved(function(userRemoved) {
       if (this.sendNotificationCardApi.reload) {
@@ -70,5 +79,9 @@ Polymer({
   },
   onRegisterQuizContentCardApi: function(api) {
     this.quizContentCardApi = api;
+  },
+  onNotificationReceived: function(notification) {
+    this.notificationCounter++;
+    NotificationBehavior.applyBadgetEffect(this.$.moiBadge);
   }
 });
