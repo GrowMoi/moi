@@ -21,4 +21,4 @@ doc/
 .env
 .DS_Store
 public/
-.vscode
+.vscode/

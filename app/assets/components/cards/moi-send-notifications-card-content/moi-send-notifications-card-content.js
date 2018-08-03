@@ -17,10 +17,10 @@ Polymer({
       observer: 'bindOptions'
     }
   },
-  ready: function() {
+  ready: function () {
     this.init();
   },
-  reload: function() {
+  reload: function () {
     this.init();
   },
   init: function () {
@@ -28,15 +28,15 @@ Polymer({
     this.btnsendId = '#btnsend';
     this.formId = '#form';
     this.studentsApi = '/tutor/dashboard/students';
-    this.sendNotificationApi = '/tutor/dashboard/send_notification';
     this.userIdSelect = '';
     this.title = '';
+    this.checkboxStatus = false;
 
     var studentsAjax = $.ajax({
       url: this.studentsApi,
       type: 'GET'
     });
-    return $.when(studentsAjax).then(function (res1) {
+    $.when(studentsAjax).then(function (res1) {
       var currentTime;
       this.loading = false;
       currentTime = Date.now();
@@ -49,16 +49,16 @@ Polymer({
       }.bind(this));
     }.bind(this));
   },
-  bindOptions: function() {
+  bindOptions: function () {
     this.registerLocalApi();
   },
-  registerLocalApi: function() {
+  registerLocalApi: function () {
     if (this.options && this.options.onRegisterApi) {
       var api = this.createPublicApi();
       this.options.onRegisterApi(api);
     }
   },
-  createPublicApi: function() {
+  createPublicApi: function () {
     return {
       reload: this.reload.bind(this)
     };
@@ -76,7 +76,7 @@ Polymer({
     this.buildInputFileName(currentTime);
   },
   enableSendButton: function () {
-    if (this.title.length > 0 && this.userIdSelect.length > 0) {
+    if (this.title.length > 0 && (this.userIdSelect.length > 0 || this.checkboxStatus)) {
       return this.enableBtn(this.btnsendId);
     } else {
       return this.disableBtn(this.btnsendId);
@@ -97,5 +97,16 @@ Polymer({
   enterTitle: function (newVal) {
     this.title = newVal;
     return this.enableSendButton();
+  },
+  onCheckboxChange: function () {
+    this.checkboxStatus = !this.checkboxStatus;
+    this.disableSelector(this.checkboxStatus);
+  },
+  disableSelector: function (disable) {
+    if (disable) {
+      $(this.$$('#studentSelector')).addClass('disabled');
+    } else {
+      $(this.$$('#studentSelector')).removeClass('disabled');
+    }
   }
 });

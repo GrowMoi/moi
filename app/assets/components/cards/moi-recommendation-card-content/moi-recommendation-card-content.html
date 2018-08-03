@@ -8,7 +8,8 @@
       <moi-partial-card-recommendation loading="{{ loading }}" btn-send-text="{{ btnSendText }}" disable-send-button="{{ disableSendButton }}"
         students="{{ students }}" achievements="{{ achievements }}" loading-contents="{{ loadingContents }}" contents="{{ contents }}"
         on-student-selected="onStudentSelected" on-achievement-selected="onAchievementSelected" on-choosen-content-selected="onChoosenContentSelected"
-        on-choosen-content-deselected="onChoosenContentDeselected" on-open-dialog="openDialog" on-send-recommendation="sendRecommendation">
+        on-choosen-content-deselected="onChoosenContentDeselected" on-open-dialog="openDialog" on-send-recommendation="sendRecommendation"
+        options="{{partialCardRecommendationOptions}}">
       </moi-partial-card-recommendation>
     </template>
     <template is="dom-if" if="{{ !isCardType }}" restamp>

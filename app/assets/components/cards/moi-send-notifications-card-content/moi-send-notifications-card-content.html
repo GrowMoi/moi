@@ -10,7 +10,11 @@
         <input name="utf8" value="✓" type="hidden">
         <input name="authenticity_token" value="{{authToken}}" type="hidden">
         <div class="form-group">
-          <moi-select items="{{ students }}" name="notification[students][]"  on-item-selected="onStudentSelected" placeholder$="[[ t('views.tutor.dashboard.card_quizzes.students_placeholder') ]]"></moi-select>
+          <moi-select id="studentSelector" items="{{ students }}" name="notification[students][]"  on-item-selected="onStudentSelected" placeholder$="[[ t('views.tutor.dashboard.card_quizzes.students_placeholder') ]]"></moi-select>
+        </div>
+        <div class="checkbox-container">
+          <paper-checkbox on-change="onCheckboxChange">[[ t('views.tutor.dashboard.common.send_to_all') ]] </paper-checkbox>
+          <input type="hidden" name="notification[send_to_all]" value="{{checkboxStatus}}">
         </div>
         <div class="form-group">
           <input class="form-control" value="{{notificationTitle::input}}" name="notification[title]" type="text" placeholder$="[[ t('views.tutor.dashboard.card_send_notifications.form_placeholder_title') ]]">
