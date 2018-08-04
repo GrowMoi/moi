@@ -1,5 +1,3 @@
-require 'pry'
-
 class ContentImportingWorker
   class ContentsBuilder
     class ContentBuilder
