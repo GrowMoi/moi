@@ -10,42 +10,42 @@ achievements_params = [
     number: 1
   },
   {
-    name: "Contenidos aprendidos rama Lenguaje",
-    description: "Han sido aprendidos 20 contenidos de la rama Lenguaje",
+    name: "Contenidos aprendidos rama Comunicación",
+    description: "Han sido aprendidos 20 contenidos de la rama Comunicación",
     category: "branch",
     settings: {
       quantity: 20,
-      branch: "Lenguaje"
+      branch: "Comunicación"
     },
     number: 2
   },
   {
-    name: "Contenidos aprendidos rama Arte",
-    description: "Han sido aprendidos 20 contenidos de la rama Arte",
+    name: "Contenidos aprendidos rama Creatividad",
+    description: "Han sido aprendidos 20 contenidos de la rama Creatividad",
     category: "branch",
     settings: {
       quantity: 20,
-      branch: "Arte"
+      branch: "Creatividad"
     },
     number: 3
   },
   {
-    name: "Contenidos aprendidos rama Aprender",
-    description: "Han sido aprendidos 20 contenidos de la rama Aprender",
+    name: "Contenidos aprendidos rama Pensamiento Crítico",
+    description: "Han sido aprendidos 20 contenidos de la rama Pensamiento Crítico",
     category: "branch",
     settings: {
       quantity: 20,
-      branch: "Aprender"
+      branch: "Pensamiento Crítico"
     },
     number: 4
   },
   {
-    name: "Contenidos aprendidos rama Naturaleza",
-    description: "Han sido aprendidos 20 contenidos de la rama Naturaleza",
+    name: "Contenidos aprendidos rama Colaboración",
+    description: "Han sido aprendidos 20 contenidos de la rama Colaboración",
     category: "branch",
     settings: {
       quantity: 20,
-      branch: "Naturaleza"
+      branch: "Colaboración"
     },
     number: 5
   },

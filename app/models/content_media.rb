@@ -15,5 +15,6 @@ class ContentMedia < ActiveRecord::Base
 
   has_paper_trail ignore: [:created_at, :updated_at, :id]
 
-  mount_uploader :media, ContentMediaUploader
+  mount_uploader :media, ContentMediaUploader, validate_download: false
+
 end

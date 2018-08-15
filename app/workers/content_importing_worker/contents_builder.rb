@@ -32,15 +32,19 @@ class ContentImportingWorker
       end
 
       def content_medium_attributes
-        [
-          { remote_media_url: (@row[10] && @row[10].value) }
-        ]
+        links = @row[10] && @row[10].value ? @row[10].value : ""
+        links = links.split("\n")
+        links = links.map {|link| {remote_media_url: link.gsub(/\s+/, '')}}
+        puts links
+        links
       end
 
       def content_links_attributes
-        [
-          { link: (@row[9] && @row[9].value) }
-        ]
+        links = @row[9] && @row[9].value ? @row[9].value : ""
+        links = links.split("\n")
+        links = links.map {|link| {link: link.gsub(/\s+/, '')}}
+        puts links
+        links
       end
 
       def content_videos_attributes
