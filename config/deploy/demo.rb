@@ -1,4 +1,4 @@
-server 'moi-demo.shiriculapo.com', user: 'moi', roles: %w{app db web}
+server 'moi.backend.haedus.cl', user: 'moi', roles: %w{app db web}
 
 set :deploy_to, '/home/moi/moi-backend'
 

@@ -1,7 +1,7 @@
 ### moi
 server {
   listen 80;
-  server_name moi-demo-backend.shiriculapo.com www.moi-demo-backend.shiriculapo.com;
+  server_name moi.backend.haedus.cl www.moi.backend.haedus.cl moi-demo-backend.shiriculapo.com www.moi-demo-backend.shiriculapo.com;
   root /home/moi/moi-backend/current/public;
 
   passenger_enabled on;

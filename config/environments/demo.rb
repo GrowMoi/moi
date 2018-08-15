@@ -88,7 +88,9 @@ Rails.application.configure do
 
   config.middleware.insert_before 0, "Rack::Cors" do
     allow do
-      origins "http://moi-demo.shiriculapo.com",
+      origins "http://moi.haedus.cl",
+              "https://moi.haedus.cl",
+              "http://moi-demo.shiriculapo.com",
               "https://moi-demo.shiriculapo.com"
 
       resource "/api/*",
@@ -98,7 +100,11 @@ Rails.application.configure do
     end
 
     allow do
-      origins "http://moi-demo.shiriculapo.com",
+      origins "http://moi.haedus.cl",
+              "https://moi.haedus.cl",
+              "http://moi.backend.haedus.cl",
+              "https://moi.backend.haedus.cl",
+              "http://moi-demo.shiriculapo.com",
               "https://moi-demo.shiriculapo.com",
               "http://moi-demo-backend.shiriculapo.com",
               "https://moi-demo-backend.shiriculapo.com"
