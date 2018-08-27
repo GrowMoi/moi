@@ -83,6 +83,8 @@ Moi::Application.routes.draw do
     namespace :users do
       resource :account,
                 only: [:update]
+      resource :user_image,
+                only: [:update]
       resource :tree_image,
                 only: [:update]
       resource :profile,
