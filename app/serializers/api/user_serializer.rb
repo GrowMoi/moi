@@ -41,7 +41,8 @@ module Api
                :city,
                :tree_image,
                :username,
-               :achievements
+               :achievements,
+               :image
 
     has_many :content_preferences
 
@@ -65,6 +66,10 @@ module Api
 
     def tree_image
       object.tree_image.url
+    end
+
+    def image
+      object.image ? object.image.url : ''
     end
   end
 end

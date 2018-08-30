@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   include UserStorage
 
   mount_base64_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
-  mount_uploader :image, ContentMediaUploader
+  mount_base64_uploader :image, ContentMediaUploader, file_name: -> { 'user_image' }
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable and :omniauthable
