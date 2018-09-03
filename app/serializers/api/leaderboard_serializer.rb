@@ -5,7 +5,8 @@ module Api
         :time_elapsed,
         :username,
         :email,
-        :user_id
+        :user_id,
+        :user_image
 
     def username
       object.user ? object.user.username : 'unknow'
@@ -17,6 +18,10 @@ module Api
 
     def user_id
       object.user ? object.user.username : nil
+    end
+
+    def user_image
+      object.user ? object.user.image.url : nil
     end
   end
 end

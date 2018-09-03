@@ -40,7 +40,8 @@ module Api
                :last_contents_learnt,
                :tree_image,
                :successful_tests,
-               :content_summary
+               :content_summary,
+               :image
 
     def last_contents_learnt
       object.content_learnings.last(4).map do |content_learnt|
@@ -55,7 +56,7 @@ module Api
     end
 
     def tree_image
-      object.tree_image.url
+      object.image ? object.tree_image.url : ''
     end
 
     def successful_tests
@@ -67,6 +68,10 @@ module Api
         current_learnt_contents: object.content_learnings.count,
         total_approved_contents: Neuron.approved_public_contents.count
       }
+    end
+
+    def image
+      object.image ? object.image.url : ''
     end
   end
 end
