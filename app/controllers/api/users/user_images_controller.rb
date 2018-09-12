@@ -16,7 +16,7 @@ module Api
         if user.update_attribute("image", params[:image])
           response = {
             status: :accepted,
-            nothing: true
+            image: user.image.url
           }
         else
           response = {
