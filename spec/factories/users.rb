@@ -28,6 +28,7 @@
 #  username               :string
 #  authorization_key      :string
 #  age                    :integer
+#  image                  :string
 #
 
 FactoryGirl.define do
