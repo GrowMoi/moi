@@ -34,6 +34,7 @@ module Api
       pending_notifications.where.not(user: my_tutors.pluck(:tutor_id))
                            .where(client_id: nil)
                            .where.not(user: tutor_ids)
+                           .where('created_at > ?', current_user.created_at)
     }
 
     expose(:total_user_notifications) {
