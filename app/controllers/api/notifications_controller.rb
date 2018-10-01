@@ -10,7 +10,7 @@ module Api
     }
 
     expose(:tutor_ids) {
-      User.where(role: [:tutor, :super_tutor]).pluck(:id)
+      User.where(role: [:tutor, :tutor_familiar]).pluck(:id)
     }
 
     expose(:tutor_requests) {
@@ -34,6 +34,7 @@ module Api
       pending_notifications.where.not(user: my_tutors.pluck(:tutor_id))
                            .where(client_id: nil)
                            .where.not(user: tutor_ids)
+                           .where('created_at > ?', current_user.created_at)
     }
 
     expose(:total_user_notifications) {
@@ -153,6 +154,45 @@ module Api
       }
     end
 
+    api :GET,
+    "/notifications/:id/open"
+    param :id, Integer, required: true
+    param :type, String, required: true
+    param :tutor_id, String, required: true
+
+    def open
+      notification_type = params[:type]
+      if notification_type == "tutor_generic"
+
+        api_notification_id = params[:id]
+        my_tutor = my_tutors.where(tutor_id: params[:tutor_id]).map(&:tutor).first
+        my_notification = my_notifications.where(id: api_notification_id)
+        previous_notification = ClientNotification.where("data->>'api_notification_id' = ?", api_notification_id)
+        if !my_tutor
+          return render json: {
+            message: "Tutor not found"
+          },
+          status: 422
+        end
+
+        if my_notification && previous_notification.empty?
+          client_notification = create_message_open_notification(api_notification_id)
+          if client_notification
+            notification_serialized = ClientNotificationSerializer.new(
+              client_notification,
+              root: false
+            )
+            notify_message_open_to_tutor(my_tutor.id, notification_serialized)
+
+            return render nothing: true,
+            status: :created
+          end
+        end
+      end
+
+      render nothing: true
+    end
+
     private
 
     def paginate_notifications(notifications_data)
@@ -180,6 +220,31 @@ module Api
         each_serializer: Api::UserTutorSerializer
       )
       serialized
+    end
+
+    def create_message_open_notification(api_notification_id)
+      notification = ClientNotification.new
+      notification.client_id = current_user.id
+      notification.data_type = "client_message_open"
+      notification.data = {
+        api_notification_id: api_notification_id
+      }
+      return notification.save ? notification : nil;
+    end
+
+    def notify_message_open_to_tutor(tutor_id, notification_data)
+      unless Rails.env.test?
+        user_channel_general = "tutornotifications.#{tutor_id}"
+        begin
+          Pusher.trigger(user_channel_general, 'client_message_open', notification_data)
+        rescue Exception => e
+          puts e.message
+          puts e.backtrace.inspect
+        else
+          puts "PUSHER: Message sent successfully!"
+          puts "PUSHER: #{notification_data}"
+        end
+      end
     end
 
   end

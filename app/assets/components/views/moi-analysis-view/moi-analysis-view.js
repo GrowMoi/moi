@@ -1,6 +1,9 @@
 Polymer({
   is: 'moi-analysis-view',
-  behaviors: [TranslateBehavior, AssetBehavior, StudentBehavior, UtilsBehavior],
+  behaviors: [TranslateBehavior, AssetBehavior, StudentBehavior, UtilsBehavior, NotificationBehavior],
+  properties: {
+    tutorId: String
+  },
   ready: function () {
     var _this = this;
     var studentsApi = '/tutor/dashboard/students';
@@ -26,6 +29,11 @@ Polymer({
         _this.loading = false;
       });
     }
+    NotificationBehavior.getNotifications(function(counter) {
+      this.notificationCounter = counter;
+    }.bind(this));
+
+    NotificationBehavior.startPusherForTutorAccount(this.tutorId, this.onNotificationReceived.bind(this));
   },
   getStudents: function (studentsAjax) {
     var _this = this;
@@ -84,6 +92,10 @@ Polymer({
         client_id: userIdSelected
       }
     });
+  },
+  onNotificationReceived: function(notification) {
+    this.notificationCounter++;
+    NotificationBehavior.applyBadgetEffect(this.$.moiBadge);
   }
 
 });

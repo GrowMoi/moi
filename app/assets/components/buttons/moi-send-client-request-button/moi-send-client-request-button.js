@@ -12,17 +12,25 @@ Polymer({
     }
   },
   onClick: function() {
-    var _this;
-    _this = this;
-    _this.prevText = _this.text;
-    _this.text = _this.loadingText;
-    $(_this.$.btnsend).addClass('disabled');
+    this.prevText = this.text;
+    this.text = this.loadingText;
+    $(this.$.btnsend).addClass('disabled');
     $.ajax({
-      url: _this.sendRequestApi,
+      url: this.sendRequestApi,
       type: 'POST',
       data: {
-        user_ids: _this.ids
-      }
+        user_ids: this.ids
+      },
+      success: function(res) {
+        this.text = this.prevText;
+        $(this.$.btnsend).removeClass('disabled');
+        this.fire('success', res);
+      }.bind(this),
+      error: function(res) {
+        this.text = this.prevText;
+        $(this.$.btnsend).removeClass('disabled');
+        this.fire('error', res);
+      }.bind(this)
     });
   }
 });

@@ -2,10 +2,20 @@ Polymer({
   is: 'moi-quiz-card-content',
   behaviors: [TranslateBehavior, StudentBehavior],
   properties: {
-    authToken: String
+    authToken: String,
+    options: {
+      type: Object,
+      observer: 'bindOptions'
+    }
   },
-  ready: function () {
-    var levelsAjax, studentsAjax, _this;
+  ready: function() {
+    this.init();
+  },
+  reload: function() {
+    this.init();
+  },
+  init: function () {
+    var levelsAjax, studentsAjax;
     this.levels = [];
     this.students = [];
     this.questions = [];
@@ -17,48 +27,48 @@ Polymer({
     this.studentsApi = '/tutor/dashboard/students';
     this.questionsApi = '/tutor/dashboard/get_questions';
     this.quizzesApi = '/tutor/dashboard/create_quiz';
+    this.checkboxStatus = false;
     $(this.$.btnsend).addClass('disabled');
     this.apiParams = {
       level_quiz_id: '',
-      client_id: ''
+      client_id: '',
+      send_to_all: false
     };
-    _this = this;
     levelsAjax = $.ajax({
-      url: _this.levelsApi,
+      url: this.levelsApi,
       type: 'GET'
     });
     studentsAjax = $.ajax({
-      url: _this.studentsApi,
+      url: this.studentsApi,
       type: 'GET'
     });
     $.when(levelsAjax, studentsAjax).then(function (res1, res2) {
       if (res1[0].data) {
-        _this.levels = _this.formatData(res1[0].data);
+        this.levels = this.formatData(res1[0].data);
       }
       if (res2[0].data) {
-        _this.students = _this.formatStudentData(res2[0].data);
+        this.students = this.formatStudentData(res2[0].data);
       }
-      _this.loading = false;
-    });
+      this.loading = false;
+    }.bind(this));
   },
   onLevelSelected: function (e, val) {
-    var content_ids, item, _this;
+    var content_ids, item;
     item = this.levels.find(function (item) {
       return item.id === parseInt(val);
     });
     this.apiParams.level_quiz_id = val;
     content_ids = item.content_ids;
     this.enableSendButton();
-    _this = this;
     $.ajax({
-      url: _this.questionsApi,
+      url: this.questionsApi,
       type: 'GET',
       data: {
         content_ids: content_ids
       },
       success: function (res) {
-        _this.questions = res.data;
-      }
+        this.questions = res.data;
+      }.bind(this)
     });
   },
   onStudentSelected: function (e, val) {
@@ -75,23 +85,51 @@ Polymer({
     });
   },
   sendQuiz: function () {
-    var _this;
-    _this = this;
-    $(_this.$.btnsend).addClass('disabled');
-    _this.btnSendText = _this.btnSendingText;
+    $(this.$.btnsend).addClass('disabled');
+    this.btnSendText = this.btnSendingText;
     $.ajax({
-      url: _this.quizzesApi,
+      url: this.quizzesApi,
       type: 'POST',
       data: {
-        quiz: _this.apiParams
+        quiz: this.apiParams
       }
     });
   },
   enableSendButton: function () {
-    if ((this.apiParams.level_quiz_id === '') || (this.apiParams.client_id === '')) {
+    debugger
+    if (((this.apiParams.level_quiz_id === '') || (this.apiParams.client_id === '') &&
+        !this.apiParams.send_to_all)) {
+
       return $(this.$.btnsend).addClass('disabled');
     } else {
       return $(this.$.btnsend).removeClass('disabled');
+    }
+  },
+  bindOptions: function() {
+    this.registerLocalApi();
+  },
+  registerLocalApi: function() {
+    if (this.options && this.options.onRegisterApi) {
+      var api = this.createPublicApi();
+      this.options.onRegisterApi(api);
+    }
+  },
+  createPublicApi: function() {
+    return {
+      reload: this.reload.bind(this)
+    };
+  },
+  onCheckboxChange: function() {
+    this.checkboxStatus = !this.checkboxStatus;
+    this.apiParams.send_to_all = this.checkboxStatus;
+    this.enableSendButton();
+    this.disableSelector(this.checkboxStatus);
+  },
+  disableSelector: function (disable) {
+    if (disable) {
+      $(this.$$('#studentSelector')).addClass('disabled');
+    } else {
+      $(this.$$('#studentSelector')).removeClass('disabled');
     }
   }
 });

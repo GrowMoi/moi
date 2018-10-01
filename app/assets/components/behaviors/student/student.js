@@ -1,6 +1,10 @@
 var StudentBehavior = StudentBehavior || {};
 StudentBehavior.formatStudentData = function(items) {
-  return $.map(items, function(item) {
+  var students = items.filter(function(item) {
+    return item.status == 'accepted';
+  });
+
+  return $.map(students, function(item) {
     var text;
     text = item.username;
     if (item.name) {

@@ -1,6 +1,7 @@
 <dom-module id="moi-client-view">
   <link rel="stylesheet" href="moi-client-view.css" />
   <template>
+    <moi-badge counter="{{notificationCounter}}" class="badge-zoom" id="moiBadge"></moi-badge>
     <div>
       <moi-select items="{{ students }}" on-item-selected="onStudentSelected" placeholder$="[[ t('views.tutor.dashboard.card_quizzes.students_placeholder') ]]" on-items-loaded="onSelectItemsLoaded"></moi-select>
     </div>

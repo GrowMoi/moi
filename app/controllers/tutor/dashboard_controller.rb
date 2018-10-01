@@ -21,6 +21,14 @@ module Tutor
       end
     }
 
+    expose(:tutor_students_with_status_not_deleted) {
+      if (params[:ids].present?)
+        User.where(id:params[:ids], role: :cliente)
+      else
+        current_user.tutor_requests_sent.not_deleted.map(&:user)
+      end
+    }
+
     expose(:tutor_achievement, attributes: :tutor_achievement_params)
 
     expose(:all_clients) {
@@ -35,9 +43,13 @@ module Tutor
       Neuron.approved_public_contents
     }
 
+    expose(:student_ids) {
+      tutor_students.map(&:id)
+    }
+
     expose(:clients) {
       all_clients.where.not(
-        id: tutor_students.map(&:id)
+        id: tutor_students_with_status_not_deleted.map(&:id)
       ).page(params[:page])
     }
 
@@ -65,8 +77,6 @@ module Tutor
       LevelQuiz.order(created_at: :desc)
     }
 
-    expose(:notification, attributes: :notification_params)
-
     def achievements
       render json: {
         data: tutor_achievements
@@ -78,9 +88,10 @@ module Tutor
     end
 
     def students
-      render json: {
-        data: tutor_students
-      }
+      render json: tutor_students_with_status_not_deleted,
+      each_serializer: Tutor::DashboardStudentsSerializer,
+      scope: current_user,
+      root: "data"
     end
 
     def get_clients
@@ -117,10 +128,6 @@ module Tutor
       redirect_to :back
     end
 
-    def edit_achievement
-      render partial: "tutor/dashboard/dialogs/edit_achievement"
-    end
-
     def update_achievement
       achievement = TutorAchievement.find(params[:id])
       if achievement.update(tutor_achievement_params)
@@ -140,52 +147,83 @@ module Tutor
     end
 
     def create_quiz
-      quiz = Quiz.new
-      player = Player.new
-      client = User.find(quiz_params[:client_id])
-      level = LevelQuiz.find(quiz_params[:level_quiz_id])
-      player.client_id = client.id
-      player.name = client.name || client.username
-      quiz.level_quiz = level
-      quiz.created_by = current_user
-      quiz.players.push(player)
 
-      if quiz.save
-        quiz_url = decorate(player).link_to_test
-        Notification.create!(user: current_user,
-                            title: "Nuevo test #{Date.today.to_s}",
-                            description: "Disponible en: #{quiz_url}",
-                            data_type: "tutor_quiz",
-                            client_id: client.id)
-
-        flash[:success] = I18n.t(
-          "views.tutor.dashboard.quizzes.created",
-          client_name: client.name,
-          quiz_url: quiz_url
-        )
+      send_to_all = quiz_params[:send_to_all]
+      clients = []
+      if send_to_all == "true"
+        clients = tutor_students
       else
-        flash[:error] = I18n.t("views.tutor.common.error")
+        clients = User.where(id: quiz_params[:client_id])
+      end
+
+      client_usernames = []
+      clients.each do |client|
+        quiz = Quiz.new
+        player = Player.new
+        level = LevelQuiz.find(quiz_params[:level_quiz_id])
+        player.client_id = client.id
+        player.name = client.name || client.username
+        quiz.level_quiz = level
+        quiz.created_by = current_user
+        quiz.players.push(player)
+
+        if quiz.save
+          quiz_url = decorate(player).link_to_test
+          Notification.create!(user: current_user,
+                              title: "#{I18n.t('views.tutor.dashboard.quizzes.title')} #{Date.today.to_s}",
+                              description: "#{I18n.t('views.tutor.dashboard.quizzes.available')}: #{quiz_url}",
+                              data_type: "tutor_quiz",
+                              client_id: client.id)
+
+          client_usernames.push(client.username || client.email)
+        end
+
+        if client_usernames.any?
+          flash[:success] = I18n.t(
+            "views.tutor.dashboard.quizzes.created_all",
+            client_usernames: client_usernames.join(", ")
+          )
+        else
+          flash[:error] = I18n.t("views.tutor.common.error")
+        end
+
       end
 
       render js: "window.location = '#{request.referrer}'"
     end
 
     def send_notification
-      notification.user = current_user
-      if student_ids_params.any?
-        student_id = student_ids_params[0]
-        notification.client_id = student_id
-        notification.data_type = "tutor_generic"
-        if notification.save
-          flash[:success] = I18n.t(
-            "views.tutor.dashboard.card_send_notifications.sent"
-          )
+      student_ids = []
+      if send_to_all == "true"
+        student_ids = tutor_students.map(&:id)
+      else
+        if student_ids_params.any?
+          student_ids = student_ids_params
         else
           flash[:error] = I18n.t("views.tutor.common.error")
+          return redirect_to :back
         end
+      end
+
+      all_status = []
+      student_ids.each do |student_id|
+        notification = Notification.new(notification_params)
+        notification.user = current_user
+        notification.client_id = student_id
+        notification.data_type = "tutor_generic"
+        saved = notification.save
+        all_status.push(saved)
+      end
+
+      result = all_status.uniq
+      if result.any? && result.size == 1 && result[0] == true
+        flash[:success] = I18n.t(
+          "views.tutor.dashboard.card_send_notifications.sent"
+        )
       else
         flash[:error] = I18n.t("views.tutor.common.error")
       end
+
       redirect_to :back
     end
 
@@ -246,6 +284,10 @@ module Tutor
       params[:notification][:students] || []
     end
 
+    def send_to_all
+      params[:notification][:send_to_all] || "false"
+    end
+
     def quiz_params
       params.require(:quiz).permit(*permitted_attributes)
     end
@@ -253,7 +295,8 @@ module Tutor
     def permitted_attributes
       [
         :level_quiz_id,
-        :client_id
+        :client_id,
+        :send_to_all
       ]
     end
 

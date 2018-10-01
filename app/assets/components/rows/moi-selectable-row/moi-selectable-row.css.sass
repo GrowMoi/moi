@@ -5,6 +5,10 @@ $base-color-light-gray: #EEEEEE
   display: flex
   position: relative
 
+  &.disabled
+    .row-container
+      background-color: $base-color-light-gray
+      opacity: 0.7
 
 .row-container
   display: flex
@@ -13,6 +17,9 @@ $base-color-light-gray: #EEEEEE
   padding-right: 3rem
   flex-basis: 100%
   border-bottom: 1px solid $base-color-light-gray
+
+  .user-info
+    width: var(--moi-selectable-row-info-width)
 
   &:hover
     background-color: $base-color-light-gray

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180626042853) do
+ActiveRecord::Schema.define(version: 20180827174318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,18 @@ ActiveRecord::Schema.define(version: 20180626042853) do
   end
 
   add_index "certificates", ["user_id"], name: "index_certificates_on_user_id", using: :btree
+
+  create_table "client_notifications", force: :cascade do |t|
+    t.integer  "client_id",                  null: false
+    t.integer  "data_type",                  null: false
+    t.json     "data"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "deleted",    default: false
+    t.boolean  "opened",     default: false
+  end
+
+  add_index "client_notifications", ["client_id"], name: "index_client_notifications_on_client_id", using: :btree
 
   create_table "client_tutor_recommendations", force: :cascade do |t|
     t.integer  "client_id",               null: false
@@ -244,6 +256,19 @@ ActiveRecord::Schema.define(version: 20180626042853) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
   create_table "leaderboards", force: :cascade do |t|
     t.integer  "user_id",                               null: false
     t.integer  "time_elapsed",    limit: 8, default: 0
@@ -322,13 +347,15 @@ ActiveRecord::Schema.define(version: 20180626042853) do
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "payments", force: :cascade do |t|
-    t.integer  "user_id",    null: false
+    t.integer  "user_id",                null: false
     t.string   "payment_id"
     t.string   "source"
     t.float    "total"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "code_item"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "code_item"
+    t.integer  "quantity",   default: 1
+    t.integer  "product_id"
   end
 
   add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
@@ -362,6 +389,7 @@ ActiveRecord::Schema.define(version: 20180626042853) do
     t.datetime "updated_at",  null: false
     t.string   "category"
     t.string   "description"
+    t.string   "key"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -405,6 +433,22 @@ ActiveRecord::Schema.define(version: 20180626042853) do
 
   add_index "search_engines", ["gcse_id"], name: "index_search_engines_on_gcse_id", unique: true, using: :btree
   add_index "search_engines", ["slug"], name: "index_search_engines_on_slug", unique: true, using: :btree
+
+  create_table "social_sharings", force: :cascade do |t|
+    t.string   "titulo",       null: false
+    t.string   "descripcion"
+    t.string   "uri",          null: false
+    t.string   "imagen_url"
+    t.string   "slug"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "image_width"
+    t.integer  "image_height"
+  end
+
+  add_index "social_sharings", ["slug"], name: "index_social_sharings_on_slug", using: :btree
+  add_index "social_sharings", ["user_id"], name: "index_social_sharings_on_user_id", using: :btree
 
   create_table "spellcheck_analyses", force: :cascade do |t|
     t.string   "attr_name",                       null: false
@@ -560,6 +604,7 @@ ActiveRecord::Schema.define(version: 20180626042853) do
     t.string   "username"
     t.string   "authorization_key"
     t.integer  "age"
+    t.string   "image"
   end
 
   add_index "users", ["authorization_key"], name: "index_users_on_authorization_key", using: :btree
@@ -593,6 +638,7 @@ ActiveRecord::Schema.define(version: 20180626042853) do
   add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
+  add_foreign_key "client_notifications", "users", column: "client_id"
   add_foreign_key "client_tutor_recommendations", "users", column: "client_id"
   add_foreign_key "content_importings", "users"
   add_foreign_key "content_learning_final_tests", "users"
@@ -622,6 +668,7 @@ ActiveRecord::Schema.define(version: 20180626042853) do
   add_foreign_key "profiles", "users"
   add_foreign_key "quizzes", "level_quizzes"
   add_foreign_key "quizzes", "users", column: "created_by"
+  add_foreign_key "social_sharings", "users"
   add_foreign_key "tutor_achievements", "users", column: "tutor_id"
   add_foreign_key "tutor_recommendations", "users", column: "tutor_id"
   add_foreign_key "user_content_preferences", "users"

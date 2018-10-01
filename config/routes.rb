@@ -7,6 +7,7 @@ Moi::Application.routes.draw do
     resources :tutor_plans, only: :index
     resources :search, only: :index
     resources :content_preferences, only: :update
+    resources :sharings, only: :create
     resource :order_preferences, controller: :order, only: :update
     resources :quizzes, only: [] do
       resources :players,
@@ -22,6 +23,7 @@ Moi::Application.routes.draw do
       end
       member do
         post :read_notifications
+        get :open
       end
     end
     resources :achievements, only: [] do
@@ -66,7 +68,8 @@ Moi::Application.routes.draw do
 
     resource :payments, only: [] do
       member do
-        post :tutor_account
+        post :tutor_basic_account
+        post :add_students
       end
     end
 
@@ -79,6 +82,8 @@ Moi::Application.routes.draw do
 
     namespace :users do
       resource :account,
+                only: [:update]
+      resource :user_image,
                 only: [:update]
       resource :tree_image,
                 only: [:update]
@@ -197,7 +202,11 @@ Moi::Application.routes.draw do
       end
     end
     resources :tree, only: :index
-    resources :user_tutors, only: :create
+    resources :user_tutors, only: [:new, :create, :destroy, :delete] do
+      member do
+        put :remove_user
+      end
+    end
     resources :recommendations, only: [:new, :create] do
       collection do
         post :new_achievement
@@ -216,7 +225,6 @@ Moi::Application.routes.draw do
         get :achievements
         post :new_achievement
         put :update_achievement
-        get :edit_achievement
         get :students
         get :get_clients
         get :download_tutor_analytics
@@ -228,8 +236,28 @@ Moi::Application.routes.draw do
       end
     end
 
+    resources :profile, only: [:index] do
+      collection do
+        get :info
+        put :update_password
+        put :update
+      end
+    end
+
+    resources :notifications, only: [:index] do
+      member do
+        get :details
+        delete :remove
+      end
+      collection do
+        get :info
+      end
+    end
+
     root "dashboard#index"
   end
+
+  resources :public_sharing, only: :show, path: "s"
 
   match "/delayed_job" => DelayedJobWeb,
         anchor: false,

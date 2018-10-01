@@ -67,13 +67,17 @@ gem 'jquery-infinite-pages'
 gem 'enumerize', '~> 2.0'
 gem 'rubyXL'
 
-gem 'polymer-rails', '~> 1.0.0'
 gem "i18n-js"
-gem 'js_assets'
+
+gem 'friendly_id', '~> 5.1.0'
+gem 'babosa'
+gem 'fastimage'
 
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'
 gem 'daemons' # to manage background processing (delayed_job)
+gem 'polymer-rails', '~> 1.0.0'
+gem 'polymer-paper-elements-rails', github: 'JhymerMartinez/paper-elements'
 
 group :doc do
   gem 'yard'
