@@ -13,7 +13,7 @@ module Api
       param :image, String
 
       def update
-        if user.update_attribute("tree_image", params[:image])
+        if params[:image] && user.update_attribute("tree_image", params[:image])
           response = {
             status: :accepted,
             user: user
