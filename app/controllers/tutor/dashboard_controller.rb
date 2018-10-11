@@ -13,6 +13,8 @@ module Tutor
       end
     }
 
+    expose(:level_quiz, attributes: :level_quiz_params)
+
     expose(:tutor_students) {
       if (params[:ids].present?)
         User.where(id:params[:ids], role: :cliente)
@@ -144,6 +146,21 @@ module Tutor
       render json: {
         data: unlearned_contents
       }
+    end
+
+    def level
+      level_quiz.created_by = current_user.id
+      if level_quiz.save
+        render json: {
+          data: level_quiz
+        }
+      else
+        render json: {
+          message: 'There was an error saving the Level',
+        },
+        status: 422
+      end
+
     end
 
     def create_quiz
@@ -297,6 +314,17 @@ module Tutor
         :level_quiz_id,
         :client_id,
         :send_to_all
+      ]
+    end
+
+    def level_quiz_params
+      params.require(:level_quiz).permit(*permitted_attributes_level_quiz)
+    end
+
+    def permitted_attributes_level_quiz
+      [ :name,
+        :description,
+        content_ids: []
       ]
     end
 

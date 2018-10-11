@@ -153,12 +153,12 @@ Polymer({
     });
   },
   disableContentSelector: function () {
-    if (this.partialCardRecommendationApi.disableChoosen) {
+    if (this.partialCardRecommendationApi && this.partialCardRecommendationApi.disableChoosen) {
       this.partialCardRecommendationApi.disableChoosen(true);
     }
   },
   enableContentSelector: function () {
-    if (this.partialCardRecommendationApi.disableChoosen) {
+    if (this.partialCardRecommendationApi && this.partialCardRecommendationApi.disableChoosen) {
       this.partialCardRecommendationApi.disableChoosen(false);
     }
   },

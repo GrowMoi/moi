@@ -1,12 +1,17 @@
 <dom-module id="moi-quiz-card-content">
   <link rel="stylesheet" href="moi-quiz-card-content.css" />
   <template>
+
+    <paper-toast id="toastMessage" duration="5000" text="{{ toastMessage }}"></paper-toast>
+
     <template is="dom-if" if="{{ loading }}" restamp>
       <div>{{ t('views.tutor.dashboard.card_quizzes.loading') }}</div>
     </template>
     <template is="dom-if" if="{{ !loading }}" restamp>
-      <div class="form-group">
+      <div class="form-group text-selector-row">
         <moi-select items="{{ levels }}" on-item-selected="onLevelSelected" placeholder$="[[ t('views.tutor.dashboard.card_quizzes.levels_placeholder') ]]"></moi-select>
+        <div class="row-label">o</div>
+        <button id="btnCreateQuiz" on-tap="openNewLevelDialog" class="btn action-send action-quiz-create">{{ t('views.tutor.dashboard.card_quizzes.create_quiz') }}</button>
       </div>
       <div class="form-group">
         <moi-select id="studentSelector" items="{{ students }}" on-item-selected="onStudentSelected" placeholder$="[[ t('views.tutor.dashboard.card_quizzes.students_placeholder') ]]"></moi-select>
@@ -29,6 +34,32 @@
     <moi-actions-row>
       <button id="btnsend" class="btn action-send" on-tap="sendQuiz">{{ btnSendText }}</button>
     </moi-actions-row>
+
+    <moi-dialog title="{{ t('views.tutor.dashboard.card_quizzes.dialog.title') }}" width="600" id="dialogNewQuiz" theme="orange">
+      <form on-submit="onSubmitNewTutorLevel" id="quizForm">
+        <div class="form-group">
+          <label for="">{{ t('views.tutor.dashboard.card_quizzes.dialog.name') }}</label>
+          <input value="{{newTutorLevelParams.name::input}}" name="name" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="">{{ t('views.tutor.dashboard.card_quizzes.dialog.contents') }}</label>
+          <template is="dom-if" if="{{ choosenRestarted }}" restamp>
+            <moi-chosen items="{{ contents }}" on-item-selected="onChoosenContentSelected" on-item-deselected="onChoosenContentDeselected"
+              placeholder="[[ t('views.tutor.dashboard.card_recommendations.contents_placeholder') ]]">
+            </moi-chosen>
+          </template>
+        </div>
+        <div class="form-group">
+          <label for="">{{ t('views.tutor.dashboard.card_quizzes.dialog.description') }}</label>
+          <input value="{{newTutorLevelParams.description::input}}"  name="description"  class="form-control">
+        </div>
+        <div class="actions">
+          <moi-actions-row>
+            <button id="btnLevelSend" type="submit" name="commit" class="btn-action">{{ btnLevelSendText }}</button>
+          </moi-actions-row>
+        </div>
+      </form>
+    </moi-dialog>
   </template>
   <script src="moi-quiz-card-content.js"></script>
 </dom-module>
