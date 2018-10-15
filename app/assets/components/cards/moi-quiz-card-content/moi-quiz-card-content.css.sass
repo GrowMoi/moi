@@ -5,9 +5,26 @@
   height: 100%
   position: relative
 
+  paper-toast
+    top: 0
+    bottom: auto
+    width: auto
+    right: 10%
+    left: auto
+    z-index: 10000
+
   .disabled
     pointer-events: none
     opacity: 0.6
+
+  .row-label
+    text-align: center
+
+  .text-selector-row
+    margin-top: 1rem
+    display: flex
+    justify-content: space-around
+    align-items: center
 
   .checkbox-container
     height: 3rem
@@ -21,9 +38,9 @@
     .list
       border: 1px solid $base-color-orange
       border-radius: 0.3rem
-      max-height: 8rem
+      max-height: 5rem
       overflow-y: scroll
-      height: 8rem
+      height: 5rem
   #btnsend
     &.disabled
       pointer-events: none
@@ -34,6 +51,22 @@
       color: $white
 
   .action-send
+    padding: 0.5rem
+    border-radius: 0.3rem
+    text-transform: uppercase
+    background-color: transparent
+    color: $base-color-orange
+    border: 1px solid $base-color-orange
+    margin: 0.5rem
+
+  .action-quiz-create
+    margin: 0
+
+  .actions
+    height: 4rem
+    position: relative
+
+  .btn-action
     padding: 0.5rem
     border-radius: 0.3rem
     text-transform: uppercase

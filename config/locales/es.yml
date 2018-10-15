@@ -360,13 +360,20 @@
           form_placeholder_description: "Contenido"
           form_placeholder_video: "Video destacado"
         card_quizzes:
-          title: "Crear un Test"
-          levels_placeholder: "Seleccione un nivel"
+          title: "Enviar un Test"
           students_placeholder: "Seleccione un estudiante"
-          levels_placeholder: "Seleccione un nivel"
-          students_placeholder: "Seleccione un estudiante"
+          levels_placeholder: "Selecciona un nivel"
           loading: "Cargando datos..."
           questions_label: "Preguntas"
+          create_quiz: "Crea uno nuevo"
+          create_level_success: "Nivel creado exitosamente"
+          create_level_error: "Hubo un error al crear el nivel, por favor intentalo nuevamente"
+          dialog:
+            title: "Nuevo Nivel"
+            name: "Nombre:"
+            contents: "Contenidos a evaluar:"
+            description: "Descripción:"
+
         card_tutor_notifications:
           title: "Mis Notificaciones"
           client_got_item: "Nuevo item obtenido"
