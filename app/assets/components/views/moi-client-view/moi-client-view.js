@@ -6,6 +6,10 @@ Polymer({
   },
   ready: function () {
     var _this = this;
+    var path = location.pathname;
+    AnalyticsBehavior.track('set', 'page', path);
+    AnalyticsBehavior.track('send', 'pageview');
+
     var studentsApi = '/tutor/dashboard/students';
     _this.statisticsApi = '/tutor/client/get_client_statistics';
     var params = _this.getCurrentUrlParams();

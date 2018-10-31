@@ -6,6 +6,10 @@ Polymer({
   },
   ready: function () {
     var _this = this;
+    var path = location.pathname;
+    AnalyticsBehavior.track('set', 'page', path);
+    AnalyticsBehavior.track('send', 'pageview');
+
     var studentsApi = '/tutor/dashboard/students';
     var studentsAjax = $.ajax({
       url: studentsApi,
