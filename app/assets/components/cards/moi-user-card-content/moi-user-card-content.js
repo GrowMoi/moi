@@ -1,6 +1,6 @@
 Polymer({
   is: 'moi-user-card-content',
-  behaviors: [TranslateBehavior, AssetBehavior, NotificationBehavior],
+  behaviors: [TranslateBehavior, AssetBehavior, NotificationBehavior, AnalyticsBehavior],
   properties: {
     options: {
       type: Object,
@@ -101,6 +101,7 @@ Polymer({
     };
   },
   onInputEnter: function (e, value) {
+    AnalyticsBehavior.track('send', 'event', 'Ejecutar búsqueda: \'' + value + '\'', 'Search');
     this.searchValue = value;
     this.initValues();
     $(this.$.btnsend).addClass('disabled');
@@ -126,6 +127,8 @@ Polymer({
   },
   onRequestSuccess: function(event, res) {
     this.removeSelectedClients();
+    var usernames = res.usernames || [];
+    AnalyticsBehavior.track('send', 'event', 'Enviar solicitud de tutoría a: ' + usernames.join(', '), 'Click');
 
     this.clientsSelected = [];
     $(this.$.btnsend).addClass('disabled');

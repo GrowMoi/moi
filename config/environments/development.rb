@@ -58,4 +58,6 @@ Rails.application.configure do
                expose:  ["access-token", "expiry", "token-type", "uid", "client"]
     end
   end
+
+  GA.tracker = "UA-126506920-2"
 end
