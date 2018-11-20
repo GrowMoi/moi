@@ -6,7 +6,7 @@
     </template>
 
     <template is="dom-if" if="{{ !loading }}" restamp>
-      <form enctype="multipart/form-data" action="/tutor/dashboard/send_notification" accept-charset="UTF-8" method="post" id="form">
+      <form enctype="multipart/form-data" on-submit="registerOnSubmitNotificationForm" action="/tutor/dashboard/send_notification" accept-charset="UTF-8" method="post" id="form">
         <input name="utf8" value="✓" type="hidden">
         <input name="authenticity_token" value="{{authToken}}" type="hidden">
         <div class="form-group">

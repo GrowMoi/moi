@@ -128,7 +128,7 @@ Polymer({
   onRequestSuccess: function(event, res) {
     this.removeSelectedClients();
     var usernames = res.usernames || [];
-    AnalyticsBehavior.track('send', 'event', 'Enviar solicitud de tutoría a: ' + usernames.join(', '), 'Click');
+    AnalyticsBehavior.track('send', 'event', 'Enviar solicitud de tutoría a ' + usernames.join(', '), 'Click');
 
     this.clientsSelected = [];
     $(this.$.btnsend).addClass('disabled');

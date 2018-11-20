@@ -108,5 +108,12 @@ Polymer({
     } else {
       $(this.$$('#studentSelector')).removeClass('disabled');
     }
+  },
+  registerOnSubmitNotificationForm: function(){
+    if (this.checkboxStatus) {
+      AnalyticsBehavior.track('send', 'event', 'Enviar notificación a todos los alumnos', 'Click');
+    } else {
+      AnalyticsBehavior.track('send', 'event', 'Enviar notificación a un alumno', 'Click');
+    }
   }
 });

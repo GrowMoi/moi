@@ -27,6 +27,7 @@ Polymer({
         ids: _this.ids
       },
       success: function(res) {
+        AnalyticsBehavior.track('send', 'event', 'Generar reporte en formato para excel', 'Click');
         _this.download.call(_this, res);
       }
     });
