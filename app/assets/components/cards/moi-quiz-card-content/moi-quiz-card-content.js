@@ -112,7 +112,14 @@ Polymer({
       type: 'POST',
       data: {
         quiz: this.apiParams
-      }
+      },
+      success: function() {
+        if (this.apiParams.send_to_all) {
+          AnalyticsBehavior.track('send', 'event', 'Enviar un nuevo test a todos los alumnos', 'Click');
+        } else {
+          AnalyticsBehavior.track('send', 'event', 'Enviar un nuevo test', 'Click');
+        }
+      }.bind(this)
     });
   },
   enableSendButton: function () {
@@ -166,6 +173,7 @@ Polymer({
         level_quiz: this.newTutorLevelParams
       },
       success: function (res) {
+        AnalyticsBehavior.track('send', 'event', 'Crear nuevo nivel ' + this.newTutorLevelParams.name, 'Click');
         this.btnLevelSendText = this.btnText;
         $(this.$.btnLevelSend).removeClass('disabled');
         if (res.data) {
