@@ -21,14 +21,17 @@ Polymer({
   onRegisterNotificationCardApi: function(api) {
     this.notificationCardApi = api;
     this.notificationCardApi.onNotificationOpen(function(item) {
+      AnalyticsBehavior.track('send', 'event', 'Abrir notificación', 'Click');
       this.notificationCounter--;
     }.bind(this));
     this.notificationCardApi.onNotificationRemoved(function(item) {
+      AnalyticsBehavior.track('send', 'event', 'Remover notificación', 'Click');
       if (!item.opened) {
         this.notificationCounter--;
       }
     }.bind(this));
     this.notificationCardApi.onNotificationReceived(function(item) {
+      AnalyticsBehavior.track('send', 'event', 'Recibir nueva notificación', 'Click');
       this.notificationCounter++;
       NotificationBehavior.applyBadgetEffect(this.$.moiBadge);
     }.bind(this));

@@ -90,6 +90,7 @@ Polymer({
     });
   },
   onSubmitSuccess: function(res) {
+    AnalyticsBehavior.track('send', 'event', 'Actualizar credenciales', 'Click');
     this.btnSendProfile.removeClass('disabled');
     this.btnSendPassword.removeClass('disabled');
     this.$['flash-message'].success(res.message);

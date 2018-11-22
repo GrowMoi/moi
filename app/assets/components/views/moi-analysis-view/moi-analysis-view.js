@@ -53,6 +53,7 @@ Polymer({
     _this.loading = true;
     var analysisAjax = _this.buildAnalysisAjax(_this.userIdSelected);
     $.when(analysisAjax).then(function (res) {
+      AnalyticsBehavior.track('send', 'event', 'Obtener analíticas de un alumno', 'Select');
       _this.prepareAndFormatAnalysisData(res);
       _this.addParamToUrl('analysis', 'client_id', _this.userIdSelected);
     }).done(function () {
