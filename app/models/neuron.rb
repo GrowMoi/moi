@@ -15,7 +15,10 @@
 #
 
 class Neuron < ActiveRecord::Base
+  include TranslatableAttrs
   include Relationable
+
+  translates :title
 
   has_paper_trail ignore: [:created_at, :id, :pending_contents_count]
 

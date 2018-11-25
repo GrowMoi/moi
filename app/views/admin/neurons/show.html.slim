@@ -16,7 +16,7 @@ ul.nav.nav-tabs.default-tabs
 
 .tab-content
   .tab-pane#general.active
-    h3 = decorated_neuron.title
+    h3 = decorated_neuron.translated_or_spellchecked(:title)
     h5 = decorated_neuron.parent_title
     h5 = decorated_neuron.status_label
     h5 = decorated_neuron.deleted_label if neuron.deleted?

@@ -1,7 +1,8 @@
 .form-group
   = f.label :title
-  = f.text_field :title, class: "form-control"
-
+  = f.text_field :title,
+                class: "form-control",
+                value: translate_attribute(f.object, :title)
 .form-group
   = f.label :parent
   = f.select :parent_id,

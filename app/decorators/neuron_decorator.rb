@@ -1,4 +1,4 @@
-class NeuronDecorator < LittleDecorator
+class NeuronDecorator < ResourceDecorator
   def parent_title
     parent.try :title
   end
