@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827174318) do
+ActiveRecord::Schema.define(version: 20181126225452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,12 +84,13 @@ ActiveRecord::Schema.define(version: 20180827174318) do
   add_index "content_favorites", ["user_id"], name: "index_content_favorites_on_user_id", using: :btree
 
   create_table "content_importings", force: :cascade do |t|
-    t.integer  "user_id",                            null: false
-    t.string   "status",                             null: false
+    t.integer  "user_id",                                  null: false
+    t.string   "status",                                   null: false
     t.string   "file"
-    t.text     "imported_contents_ids", default: [],              array: true
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.text     "imported_contents_ids", default: [],                    array: true
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "kind",                  default: "normal"
   end
 
   add_index "content_importings", ["user_id"], name: "index_content_importings_on_user_id", using: :btree

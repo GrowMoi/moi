@@ -10,8 +10,8 @@
 
 hr
 
-= form_for [:admin, @content_importing] do |f|
-  = render "admin/shared/form_errors", resource: @content_importing
+= form_for [:admin, @content_translate_importing], url: admin_content_translate_importings_path do |f|
+  = render "admin/shared/form_errors", resource: @content_translate_importing
 
   .form-group
     = f.label :file

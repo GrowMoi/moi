@@ -187,12 +187,6 @@ Moi::Application.routes.draw do
     resources :content_importings
     resource :content_translate_importings, only: [:create, :new, :show]
 
-    # resource :order_preferences, controller: :order, only: :update
-    # get 'profiles/charities/:id', :to => 'profiles#charities_show'
-    # match "content_importings/new_translate_import" => 'content_importings#new_translate_import',
-    #       via: [:get],
-    #       as: :translate_import
-
     root "dashboard#index"
   end
 
