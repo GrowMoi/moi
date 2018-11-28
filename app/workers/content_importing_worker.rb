@@ -9,11 +9,15 @@ class ContentImportingWorker
     begin
       @resource.update!(status: :in_progress)
       if @resource.kind == 'translate'
+        puts 'Iam translatedddd'
         contents = ContentsTranslateBuilder.new(
           user: @resource.user,
           workbook: workbook
-        )
-        saved_contents = []
+        ).contents_translate
+        saved_contents = contents.select(&:save)
+        # saved_contents.each do |content|
+        #   Content::ContentMediumSanitizer.sanitize!(content)
+        # end
       else
         contents = ContentsBuilder.new(
           user: @resource.user,
