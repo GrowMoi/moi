@@ -59,5 +59,4 @@ Rails.application.configure do
     end
   end
 
-  GA.tracker = "UA-126506920-2"
 end
