@@ -15,6 +15,7 @@ class ContentImportingWorker
           translate_content_description!
           translate_possible_answers!
           translate_content_videos!
+          translate_content_links!
           TranslatableEditionService::TranslatableContent.new(
             content: @content,
             target_lang: @target_lang
@@ -54,20 +55,22 @@ class ContentImportingWorker
       end
 
       def translate_content_links!
-        @content.content_links.each_with_index do |content_link, index|
-          attr = content_links_attributes[index]
-          if attr
-            content_link.link = attr[:link]
-          end
+        content_links_attributes.each_with_index do |content_link, index|
+          link = ContentLink.new
+          link.link = content_link[:link]
+          link.content_id = @content.id
+          link.language = @target_lang
+          link.save
         end
       end
 
       def translate_content_videos!
-        @content.content_videos.each_with_index do |content_video, index|
-          attr = content_videos_attributes[index]
-          if attr
-            content_video.url = attr[:url]
-          end
+        content_videos_attributes.each_with_index do |content_video, index|
+          video = ContentVideo.new
+          video.url = content_video[:url]
+          video.content_id = @content.id
+          video.language = @target_lang
+          video.save
         end
       end
 
