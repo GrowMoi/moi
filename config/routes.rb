@@ -153,6 +153,10 @@ Moi::Application.routes.draw do
     resources :level_quizzes
     resources :achievements, except: [:create, :destroy]
     resources :admin_achievements, except: [:create, :destroy]
+    resources :payments
+
+    match "payments/:user_id/tutor_assign_tickets" => 'payments#tutor_assign_tickets', as: :tutor_assign_tickets, via: :get
+    match "payments/create_tutor_assign_tickets" => 'payments#create_tutor_assign_tickets', as: :create_tutor_assign_tickets, via: :post
 
     # settings
     resources :settings, only: :index
