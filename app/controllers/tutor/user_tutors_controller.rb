@@ -176,7 +176,8 @@ module Tutor
           message: I18n.t(
             "views.tutor.moi.tutor_request.created_list",
             clients: user_names.join(", ")
-          )
+          ),
+          usernames: user_names
         }
       else
         render json: {

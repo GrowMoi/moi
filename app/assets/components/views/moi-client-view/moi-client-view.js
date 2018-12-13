@@ -6,6 +6,10 @@ Polymer({
   },
   ready: function () {
     var _this = this;
+    var path = location.pathname;
+    AnalyticsBehavior.track('set', 'page', path);
+    AnalyticsBehavior.track('send', 'pageview');
+
     var studentsApi = '/tutor/dashboard/students';
     _this.statisticsApi = '/tutor/client/get_client_statistics';
     var params = _this.getCurrentUrlParams();
@@ -42,6 +46,7 @@ Polymer({
     _this.loading = true;
     var statisticsAjax = _this.buildStatisticsAjax(_this.userIdSelected);
     $.when(statisticsAjax).then(function (res) {
+      AnalyticsBehavior.track('send', 'event', 'Obtener detalles de un alumno', 'Select');
       _this.prepareAndFormatAnalysisData(res);
       _this.addParamToUrl('client', 'client_id', _this.userIdSelected);
     }).done(function (x) {

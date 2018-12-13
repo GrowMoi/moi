@@ -23,7 +23,7 @@
 
     <moi-dialog title="[[ t('views.tutor.dashboard.card_achievements.new_achievement') ]]" width="400" id="dialog" theme="yellow"
       class="achievement-dialog">
-      <form id="form" enctype="multipart/form-data" action="/tutor/recommendations/new_achievement" accept-charset="UTF-8" method="post">
+      <form id="form" enctype="multipart/form-data" on-submit="registerOnSubmitNewAchievement" action="/tutor/recommendations/new_achievement" accept-charset="UTF-8" method="post">
         <input name="utf8" type="hidden" value="✓">
         <input name="authenticity_token" value="{{ authToken }}" type="hidden">
         <div class="form-group">

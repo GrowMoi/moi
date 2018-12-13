@@ -5,6 +5,10 @@ Polymer({
     tutorId: String
   },
   ready: function() {
+    var path = location.pathname;
+    AnalyticsBehavior.track('set', 'page', path);
+    AnalyticsBehavior.track('send', 'pageview');
+
     NotificationBehavior.getNotifications(function(counter) {
       this.notificationCounter = counter;
     }.bind(this));

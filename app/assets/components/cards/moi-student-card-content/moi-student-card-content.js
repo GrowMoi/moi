@@ -60,6 +60,7 @@ Polymer({
         id: ev.model.item.id
       },
       success: function (res) {
+        AnalyticsBehavior.track('send', 'event', 'Cancelar solicitud alumno ' + ev.model.item.username, 'Click');
         var index = this.students.indexOf(ev.model.item);
         if (index !== -1) {
           this.splice('students', index, 1);
@@ -91,6 +92,7 @@ Polymer({
         id: this.userRemove.id
       },
       success: function (res) {
+        AnalyticsBehavior.track('send', 'event', 'Remover alumno ' + this.userRemove.username, 'Click');
         var index = this.students.indexOf(this.userRemove);
         if (index !== -1) {
           this.splice('students', index, 1);
