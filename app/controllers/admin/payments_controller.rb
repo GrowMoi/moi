@@ -3,11 +3,12 @@ module Admin
   class PaymentsController < AdminController::Base
     include Breadcrumbs
 
-    before_action :add_breadcrumbs
+    before_action :authenticate_user!, :add_breadcrumbs
 
     authorize_resource
 
     expose(:payment, attributes: :payment_params)
+
     expose(:user) {
       user = User.find(params[:user_id])
     }
@@ -15,8 +16,25 @@ module Admin
       decorate user
     }
 
-    expose(:payment_tutor) {
-      Payment.new
+    expose(:product_add_client) {
+      product_key = Rails.application.secrets.add_client_to_tutor_key
+      product = Product.find_by_key(product_key)
+    }
+
+    expose(:tickets_bought) {
+      Payment.where(user: user, code_item: product_add_client.code).sum(:quantity)
+    }
+
+    expose(:tickets_spend) {
+      user.tutor_requests_sent.accepted.count
+    }
+
+    expose(:tickets_availables) {
+      total = tickets_bought - tickets_spend
+    }
+
+    expose(:all_payments_tickets) {
+      Payment.where(product_id: product_add_client.id)
     }
 
     def index
@@ -24,29 +42,25 @@ module Admin
 
     def create
       if payment.save
-        redirect_to admin_users_path, notice: I18n.t("views.users.created")
+        redirect_to admin_users_path, notice: I18n.t("views.payments.tickets.created")
       else
-        render :new
+        render :tutor_assign_tickets
       end
     end
 
     def update
       if payment.save
-        redirect_to admin_users_path, notice: I18n.t("views.users.updated")
+        redirect_to admin_users_path, notice: I18n.t("views.payments.tickets.updated")
       else
         render :edit
       end
     end
 
     def tutor_assign_tickets
-      # decorated_user
-      product_key = Rails.application.secrets.add_client_to_tutor_key
-      product = Product.find_by_key(product_key)
-
       if user
         payment.user = user
-        payment.product = product
-        payment.code_item = product_key
+        payment.product = product_add_client
+        payment.code_item = product_add_client.code
         payment.payment_id = "MOI-3271312"
         payment.source = "MOI-ADMIN"
       end

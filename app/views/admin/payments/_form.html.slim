@@ -3,11 +3,11 @@
 
   .form-group
     = f.label :quantity
-    = f.text_field :quantity, class: "form-control", type:'number', min: 1
+    = f.number_field :quantity, class: "form-control", min: 1
 
   .form-group
     = f.label :total
-    = f.number_field :total, class: "form-control", min: 0, step: :any
+    = f.number_field :total, class: "form-control", min: 0, value:0, step: :any
 
     = f.hidden_field :user_id
     = f.hidden_field :product_id
@@ -16,4 +16,4 @@
     = f.hidden_field :payment_id
 
   .actions
-    = f.submit class: "btn btn-primary", data: {disable_with: t("views.submitting")}
+    = f.submit t("views.payments.assign-tickets"), class: "btn btn-primary", data: {disable_with: t("views.submitting")}
