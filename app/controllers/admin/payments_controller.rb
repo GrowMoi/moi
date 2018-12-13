@@ -1,4 +1,3 @@
-require 'pry'
 module Admin
   class PaymentsController < AdminController::Base
     include Breadcrumbs
