@@ -14,6 +14,19 @@ module Admin
     expose(:decorated_user) {
       decorate user
     }
+    expose(:product_add_client) {
+      product_key = Rails.application.secrets.add_client_to_tutor_key
+      product = Product.find_by_key(product_key)
+    }
+    expose(:tickets_bought) {
+      Payment.where(user: user, code_item: product_add_client.code).sum(:quantity)
+    }
+    expose(:tickets_spend) {
+      user.tutor_requests_sent.accepted.count
+    }
+    expose(:tickets_availables) {
+      total = tickets_bought - tickets_spend
+    }
 
     def index
       respond_to do |format|

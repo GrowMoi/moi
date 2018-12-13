@@ -103,7 +103,7 @@ module Tutor
       product_key = Rails.application.secrets.add_client_to_tutor_key
       product = Product.find_by_key(product_key)
       total_payments = Payment.where(user: current_user, code_item: product.code).sum(:quantity)
-      total_my_users = current_user.tutor_requests_sent.accepted.count
+      total_my_users = current_user.tutor_requests_sent.accepted.count + current_user.tutor_requests_sent.pending.count
 
       if total_payments > total_my_users
         if params[:user_id]
