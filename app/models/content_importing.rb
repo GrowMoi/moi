@@ -9,6 +9,7 @@
 #  imported_contents_ids :text             default([]), is an Array
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
+#  kind                  :string           default("normal")
 #
 
 class ContentImporting < ActiveRecord::Base

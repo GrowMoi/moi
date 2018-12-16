@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827174318) do
+ActiveRecord::Schema.define(version: 20181216211305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,12 +84,13 @@ ActiveRecord::Schema.define(version: 20180827174318) do
   add_index "content_favorites", ["user_id"], name: "index_content_favorites_on_user_id", using: :btree
 
   create_table "content_importings", force: :cascade do |t|
-    t.integer  "user_id",                            null: false
-    t.string   "status",                             null: false
+    t.integer  "user_id",                                  null: false
+    t.string   "status",                                   null: false
     t.string   "file"
-    t.text     "imported_contents_ids", default: [],              array: true
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.text     "imported_contents_ids", default: [],                    array: true
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "kind",                  default: "normal"
   end
 
   add_index "content_importings", ["user_id"], name: "index_content_importings_on_user_id", using: :btree
@@ -140,13 +141,15 @@ ActiveRecord::Schema.define(version: 20180827174318) do
   add_index "content_learnings", ["user_id"], name: "index_content_learnings_on_user_id", using: :btree
 
   create_table "content_links", force: :cascade do |t|
-    t.integer  "content_id", null: false
-    t.string   "link",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "content_id",                null: false
+    t.string   "link",                      null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "language",   default: "es"
   end
 
   add_index "content_links", ["content_id"], name: "index_content_links_on_content_id", using: :btree
+  add_index "content_links", ["language"], name: "index_content_links_on_language", using: :btree
 
   create_table "content_media", force: :cascade do |t|
     t.string   "media"
@@ -212,13 +215,15 @@ ActiveRecord::Schema.define(version: 20180827174318) do
   add_index "content_tutor_recommendations", ["tutor_recommendation_id"], name: "index_content_tutor_recommendations_on_tutor_recommendation_id", using: :btree
 
   create_table "content_videos", force: :cascade do |t|
-    t.integer  "content_id", null: false
-    t.string   "url",        null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "content_id",                null: false
+    t.string   "url",                       null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "language",   default: "es"
   end
 
   add_index "content_videos", ["content_id"], name: "index_content_videos_on_content_id", using: :btree
+  add_index "content_videos", ["language"], name: "index_content_videos_on_language", using: :btree
 
   create_table "contents", force: :cascade do |t|
     t.integer  "level",                       null: false
@@ -487,6 +492,18 @@ ActiveRecord::Schema.define(version: 20180827174318) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
+  create_table "translated_attributes", force: :cascade do |t|
+    t.integer  "translatable_id",   null: false
+    t.string   "translatable_type", null: false
+    t.string   "name",              null: false
+    t.text     "content"
+    t.string   "language",          null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "translated_attributes", ["translatable_id", "translatable_type"], name: "index_translated_attributes_resource", using: :btree
+
   create_table "tutor_achievements", force: :cascade do |t|
     t.integer  "tutor_id",    null: false
     t.string   "name",        null: false
@@ -551,11 +568,13 @@ ActiveRecord::Schema.define(version: 20180827174318) do
   add_index "user_seen_images", ["user_id"], name: "index_user_seen_images_on_user_id", using: :btree
 
   create_table "user_tutors", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "tutor_id",   null: false
+    t.integer  "user_id",            null: false
+    t.integer  "tutor_id",           null: false
     t.string   "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.datetime "start_date_request"
+    t.datetime "end_date_request"
   end
 
   add_index "user_tutors", ["status"], name: "index_user_tutors_on_status", using: :btree

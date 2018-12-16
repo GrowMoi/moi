@@ -239,7 +239,7 @@
         created: Tickets Asignados
         updated: Tickets Actualizados
         available: Tickets Disponibles
-        spend: Tickets Gastados
+        spend: Tickets Utilizados
         bought: Tickets Adquiridos
     tutor:
       moi:
