@@ -5,10 +5,10 @@ class ContentImportingWorker
       def initialize(row:, user:)
         @row = row
         @user = user
-        @target_lang = 'en'
       end
 
       def content
+        translate_title_neuron!
         if process_row?
           @content = Content.where(title: @row[3].value).first
           translate_content_title!
@@ -18,7 +18,7 @@ class ContentImportingWorker
           translate_content_links!
           TranslatableEditionService::TranslatableContent.new(
             content: @content,
-            target_lang: @target_lang
+            target_lang: "en"
           ).translate!
           @content
         end
@@ -29,6 +29,19 @@ class ContentImportingWorker
       end
 
       private
+
+      def translate_title_neuron!
+        if @row && @row[1].value.present? && @row[2].value.present?
+          neuron = Neuron.where(title: @row[1].value).first
+          if neuron
+            neuron.title = @row[2].value;
+            TranslatableEditionService::TranslatableNeuron.new(
+              neuron: neuron,
+              target_lang: "en"
+            ).translate!
+          end
+        end
+      end
 
       def translate_content_title!
         title = @row[4] && @row[4].value ? @row[4].value : nil
@@ -59,7 +72,7 @@ class ContentImportingWorker
           link = ContentLink.new
           link.link = content_link[:link]
           link.content_id = @content.id
-          link.language = @target_lang
+          link.language = "en"
           link.save
         end
       end
@@ -69,7 +82,7 @@ class ContentImportingWorker
           video = ContentVideo.new
           video.url = content_video[:url]
           video.content_id = @content.id
-          video.language = @target_lang
+          video.language = "en"
           video.save
         end
       end

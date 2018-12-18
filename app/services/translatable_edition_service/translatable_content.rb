@@ -22,7 +22,6 @@ class TranslatableContent < GenericTranslatableResource
     @resource.content_links.each do |content_link|
       TranslatableContentLink.new(
         content_link: content_link,
-        target_lang: @target_lang
       ).translate!
     end
   end
@@ -30,8 +29,7 @@ class TranslatableContent < GenericTranslatableResource
   def translate_content_videos!
     @resource.content_videos.each do |content_video|
       TranslatableContentVideo.new(
-        content_video: content_video,
-        target_lang: @target_lang
+        content_video: content_video
       ).translate!
     end
   end

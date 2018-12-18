@@ -9,7 +9,6 @@ class ContentImportingWorker
     begin
       @resource.update!(status: :in_progress)
       if @resource.kind == 'translate'
-        puts 'Iam translatedddd'
         contents = ContentsTranslateBuilder.new(
           user: @resource.user,
           workbook: workbook
