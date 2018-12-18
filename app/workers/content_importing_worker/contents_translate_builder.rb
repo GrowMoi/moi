@@ -11,16 +11,20 @@ class ContentImportingWorker
         translate_title_neuron!
         if process_row?
           @content = Content.where(title: @row[3].value).first
-          translate_content_title!
-          translate_content_description!
-          translate_possible_answers!
-          translate_content_videos!
-          translate_content_links!
-          TranslatableEditionService::TranslatableContent.new(
-            content: @content,
-            target_lang: "en"
-          ).translate!
-          @content
+          unless @content.nil?
+            translate_content_title!
+            translate_content_description!
+            translate_possible_answers!
+            translate_content_videos!
+            translate_content_links!
+            TranslatableEditionService::TranslatableContent.new(
+              content: @content,
+              target_lang: "en"
+            ).translate!
+            @content
+          else
+            nil
+          end
         end
       end
 
@@ -33,7 +37,7 @@ class ContentImportingWorker
       def translate_title_neuron!
         if @row && @row[1].value.present? && @row[2].value.present?
           neuron = Neuron.where(title: @row[1].value).first
-          if neuron
+          unless neuron.nil?
             neuron.title = @row[2].value;
             TranslatableEditionService::TranslatableNeuron.new(
               neuron: neuron,
@@ -44,15 +48,15 @@ class ContentImportingWorker
       end
 
       def translate_content_title!
-        title = @row[4] && @row[4].value ? @row[4].value : nil
-        if title
+        title = (@row[4] && @row[4].value) ? @row[4].value : nil
+        unless title.nil?
           @content.title = title
         end
       end
 
       def translate_content_description!
         description = @row[5] && @row[5].value ? @row[5].value : nil
-        if description
+        if description.nil?
           @content.description = description
         end
       end
@@ -60,7 +64,7 @@ class ContentImportingWorker
       def translate_possible_answers!
         @content.possible_answers.each_with_index do |possible_answer, index|
           attr = possible_answers_attributes[index]
-          if attr
+          if attr.nil?
             possible_answer.text = attr[:text]
             possible_answer.correct = attr[:correct]
           end
@@ -79,11 +83,13 @@ class ContentImportingWorker
 
       def translate_content_videos!
         content_videos_attributes.each_with_index do |content_video, index|
-          video = ContentVideo.new
-          video.url = content_video[:url]
-          video.content_id = @content.id
-          video.language = "en"
-          video.save
+          if !content_video[:url].blank?
+            video = ContentVideo.new
+            video.url = content_video[:url]
+            video.content_id = @content.id
+            video.language = "en"
+            video.save
+          end
         end
       end
 
