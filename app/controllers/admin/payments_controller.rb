@@ -12,7 +12,9 @@ module Admin
       if params[:user_id]
         User.find(params[:user_id])
       else
-        Payment.find(params[:id]).user
+        if payment
+          payment.user
+        end
       end
     }
 
@@ -88,7 +90,7 @@ module Admin
     end
 
     def resource
-      @resource ||= user
+      @resource ||= payment.id
     end
   end
 end

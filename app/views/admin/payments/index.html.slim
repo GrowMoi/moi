@@ -15,5 +15,5 @@
         td = l(payment.created_at, :format => :short)
         td = payment.user.name || q.user.username
         td = payment.product.name
-        td = payment.quantity
+        td = link_to payment.quantity, admin_payment_path(payment.id)
         td = payment.total
