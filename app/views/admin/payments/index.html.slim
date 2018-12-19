@@ -6,12 +6,14 @@
       tr
         th =t("activerecord.attributes.payment.date")
         th =t("activerecord.attributes.payment.user")
+        th =t("activerecord.attributes.payment.product")
         th =t("activerecord.attributes.payment.quantity")
         th =t("activerecord.attributes.payment.total")
     tbody
-    -all_payments_tickets.each do |q|
+    -all_payments_tickets.each do |payment|
       tr
-        td = l(q.created_at, :format => :short)
-        td = q.user.name || q.user.username
-        td = q.quantity
-        td = q.total
+        td = l(payment.created_at, :format => :short)
+        td = payment.user.name || q.user.username
+        td = payment.product.name
+        td = payment.quantity
+        td = payment.total

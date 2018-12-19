@@ -1,10 +1,15 @@
-- content_for :title, t("views.users.show")
+- content_for :title, t("views.payments.show")
 
 .row.user-view
-  .col-xs-3.avatar-container
+  .col-xs-2.avatar-container
     = decorated_user.avatar_small
-  .col-xs-9
+  .col-xs-6
     h2 = decorated_user.username || decorated_user.name
     div = decorated_user.name
     div = decorated_user.role_label
     div = mail_to decorated_user.email
+  .col-xs-2
+    div = payment.quantity
+    div = payment.product.name
+    div = payment.payment_id
+    div = payment.total

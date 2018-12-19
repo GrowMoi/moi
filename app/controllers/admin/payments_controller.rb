@@ -9,8 +9,13 @@ module Admin
     expose(:payment, attributes: :payment_params)
 
     expose(:user) {
-      user = User.find(params[:user_id])
+      if params[:user_id]
+        User.find(params[:user_id])
+      else
+        Payment.find(params[:id]).user
+      end
     }
+
     expose(:decorated_user) {
       decorate user
     }
@@ -39,6 +44,9 @@ module Admin
     def index
     end
 
+    def show
+    end
+
     def create
       if payment.save
         redirect_to admin_users_path, notice: I18n.t("views.payments.tickets.created")
@@ -60,7 +68,7 @@ module Admin
         payment.user = user
         payment.product = product_add_client
         payment.code_item = product_add_client.code
-        payment.payment_id = "MOI-3271312"
+        payment.payment_id = "MOI-PAYMENT"
         payment.source = "MOI-ADMIN"
       end
     end
