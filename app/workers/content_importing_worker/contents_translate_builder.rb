@@ -1,4 +1,3 @@
-require 'pry'
 class ContentImportingWorker
   class ContentsTranslateBuilder
     class ContenTranslateBuilder
@@ -10,7 +9,7 @@ class ContentImportingWorker
       def content
         translate_title_neuron!
         if process_row?
-          @content = Content.where(title: @row[3].value).first
+          @content = Content.where('unaccent(TRIM(title)) ILIKE unaccent(?)', @row[3].value).first
           unless @content.nil?
             translate_content_title!
             translate_content_description!
@@ -36,7 +35,7 @@ class ContentImportingWorker
 
       def translate_title_neuron!
         if @row && @row[1].value.present? && @row[2].value.present?
-          neuron = Neuron.where(title: @row[1].value).first
+          neuron = Neuron.where('unaccent(TRIM(title)) ILIKE unaccent(?)', @row[1].value.downcase).first
           unless neuron.nil?
             neuron.title = @row[2].value;
             TranslatableEditionService::TranslatableNeuron.new(
