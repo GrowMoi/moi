@@ -22,8 +22,12 @@ class ContentImportingWorker
             ).translate!
             @content
           else
+            puts "not found content in DB #{@row[3].value}"
             nil
           end
+        else
+          puts "not found value in row 3"
+          nil
         end
       end
 
@@ -42,20 +46,24 @@ class ContentImportingWorker
               neuron: neuron,
               target_lang: "en"
             ).translate!
+          else
+            puts "not found neuron in DB #{@row[1].value}"
           end
+        else
+          puts "not found value in row 2"
         end
       end
 
       def translate_content_title!
         title = (@row[4] && @row[4].value) ? @row[4].value : nil
-        unless title.nil?
+        if title
           @content.title = title
         end
       end
 
       def translate_content_description!
         description = @row[5] && @row[5].value ? @row[5].value : nil
-        if description.nil?
+        if description
           @content.description = description
         end
       end
@@ -63,7 +71,7 @@ class ContentImportingWorker
       def translate_possible_answers!
         @content.possible_answers.each_with_index do |possible_answer, index|
           attr = possible_answers_attributes[index]
-          if attr.nil?
+          if attr
             possible_answer.text = attr[:text]
             possible_answer.correct = attr[:correct]
           end
