@@ -232,6 +232,16 @@
       form:
         help: Sube un archivo Excel con contenidos para importarlos. El archivo debe tener el siguiente formato para ser procesado correctamente. Si la neurona no es encontrada, será creada automáticamente.
         sample_file: Archivo excel ejemplo
+    payments:
+      tutor-assign-tickets: Asignar tickets a tutores
+      assign-tickets: Asignar Tickets
+      show: Resumen de pago
+      tickets:
+        created: Tickets Asignados
+        updated: Tickets Actualizados
+        available: Tickets Disponibles
+        spend: Tickets Utilizados
+        bought: Tickets Adquiridos
     tutor:
       moi:
         analyze: "Enviar solicitud"
@@ -657,6 +667,7 @@
       achievement: Logro
       admin_achievement: Logro
       content_importing: Importar contenidos
+      payment: Pagos
     attributes:
       user:
         username: "Nombre de usuario"
@@ -729,6 +740,12 @@
         active: Activo?
       content_importing:
         file: Archivo
+      payment:
+        quantity: Cantidad
+        total: Total
+        user: Usuario
+        date: Fecha
+        product: Producto
     errors:
       messages:
         <<: *errors_messages

@@ -12,18 +12,32 @@
   max-width: 35px !important
   max-height: 35px !important
 
-.user-view
-  .avatar-container
-    text-align: right
-    padding-right: 0
-    img
-      max-width: 100%
+.show-user-page
+  .user-view
+    .avatar-container
+      text-align: right
+      padding-right: 0
+      img
+        max-width: 100%
 
-.authorization-keys-in-form
-  img
-    cursor: pointer
-    filter: grayscale(100%)
-    -webkit-filter: grayscale(100%)
-    &.active
-      filter: none
-      -webkit-filter: none
+  .authorization-keys-in-form
+    img
+      cursor: pointer
+      filter: grayscale(100%)
+      -webkit-filter: grayscale(100%)
+      &.active
+        filter: none
+        -webkit-filter: none
+
+  .payments-sumary
+    display: flex
+    margin-left: 10%
+
+    .detail
+      display: flex
+      justify-content: center
+      align-items: center
+      margin-right: 1rem
+
+      .number
+        margin-left: 0.5rem

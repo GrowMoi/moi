@@ -7,6 +7,7 @@
 #  link       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  language   :string           default("es")
 #
 
 require 'rails_helper'
