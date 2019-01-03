@@ -1,6 +1,6 @@
 Polymer({
   is: 'moi-recommendation-card-content',
-  behaviors: [TranslateBehavior, StudentBehavior],
+  behaviors: [TranslateBehavior, StudentBehavior, AnalyticsBehavior],
   properties: {
     authToken: String,
     type: {
@@ -102,6 +102,9 @@ Polymer({
       type: 'POST',
       data: {
         tutor_recommendation: this.apiParams
+      },
+      success: function() {
+        AnalyticsBehavior.track('send', 'event', 'Enviar recomendación de contenidos', 'Click');
       }
     });
   },
@@ -153,12 +156,12 @@ Polymer({
     });
   },
   disableContentSelector: function () {
-    if (this.partialCardRecommendationApi.disableChoosen) {
+    if (this.partialCardRecommendationApi && this.partialCardRecommendationApi.disableChoosen) {
       this.partialCardRecommendationApi.disableChoosen(true);
     }
   },
   enableContentSelector: function () {
-    if (this.partialCardRecommendationApi.disableChoosen) {
+    if (this.partialCardRecommendationApi && this.partialCardRecommendationApi.disableChoosen) {
       this.partialCardRecommendationApi.disableChoosen(false);
     }
   },
@@ -209,5 +212,10 @@ Polymer({
         }
       }.bind(this)
     });
+  },
+  registerOnSubmitNewAchievement: function() {
+    var arrayFormData = $(this.$$('form')).serializeArray() || [];
+    var achievementName = arrayFormData[2].value || '';
+    AnalyticsBehavior.track('send', 'event', 'Crear nueva recompensa ' + achievementName, 'Click');
   }
 });

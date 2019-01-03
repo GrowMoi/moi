@@ -238,6 +238,16 @@
       form:
         help: Sube un archivo Excel con contenidos para importarlos. El archivo debe tener el siguiente formato para ser procesado correctamente. Si la neurona no es encontrada, será creada automáticamente.
         sample_file: Archivo excel ejemplo
+    payments:
+      tutor-assign-tickets: Asignar tickets a tutores
+      assign-tickets: Asignar Tickets
+      show: Resumen de pago
+      tickets:
+        created: Tickets Asignados
+        updated: Tickets Actualizados
+        available: Tickets Disponibles
+        spend: Tickets Utilizados
+        bought: Tickets Adquiridos
     tutor:
       moi:
         analyze: "Enviar solicitud"
@@ -366,13 +376,20 @@
           form_placeholder_description: "Contenido"
           form_placeholder_video: "Video destacado"
         card_quizzes:
-          title: "Crear un Test"
-          levels_placeholder: "Seleccione un nivel"
+          title: "Enviar un Test"
           students_placeholder: "Seleccione un estudiante"
-          levels_placeholder: "Seleccione un nivel"
-          students_placeholder: "Seleccione un estudiante"
+          levels_placeholder: "Selecciona un nivel"
           loading: "Cargando datos..."
           questions_label: "Preguntas"
+          create_quiz: "Crea uno nuevo"
+          create_level_success: "Nivel creado exitosamente"
+          create_level_error: "Hubo un error al crear el nivel, por favor intentalo nuevamente"
+          dialog:
+            title: "Nuevo Nivel"
+            name: "Nombre:"
+            contents: "Contenidos a evaluar:"
+            description: "Descripción:"
+
         card_tutor_notifications:
           title: "Mis Notificaciones"
           client_got_item: "Nuevo item obtenido"
@@ -656,6 +673,7 @@
       achievement: Logro
       admin_achievement: Logro
       content_importing: Importar contenidos
+      payment: Pagos
     attributes:
       user:
         username: "Nombre de usuario"
@@ -728,6 +746,12 @@
         active: Activo?
       content_importing:
         file: Archivo
+      payment:
+        quantity: Cantidad
+        total: Total
+        user: Usuario
+        date: Fecha
+        product: Producto
     errors:
       messages:
         <<: *errors_messages

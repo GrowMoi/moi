@@ -38,6 +38,8 @@ gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 gem 'momentjs-rails'
 
+gem 'google-analytics-rails', '~> 1.1.1'
+
 gem 'slim'
 gem 'devise'
 gem 'devise_token_auth', github: "lynndylanhurley/devise_token_auth"

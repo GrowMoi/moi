@@ -1,14 +1,28 @@
 - content_for :title, t("views.users.show")
 
-.row.user-view
-  .col-xs-3.avatar-container
-    = decorated_user.avatar_small
-  .col-xs-9
-    h2 = decorated_user.username || decorated_user.name
-    div = decorated_user.name
-    div = decorated_user.role_label
-    div = mail_to decorated_user.email
+.show-user-page
+  .row.user-view
+    .col-xs-3.avatar-container
+      = decorated_user.avatar_small
+    .col-xs-9
+      h2 = decorated_user.username || decorated_user.name
+      div = decorated_user.name
+      div = decorated_user.role_label
+      div = mail_to decorated_user.email
+  - if decorated_user.role == 'tutor_familiar'
+    .payments-sumary
+      .detail
+        h6.text-muted = t("views.payments.tickets.bought")
+        h6.text-muted.number = tickets_bought
+      .detail
+        h6.text-muted = t("views.payments.tickets.spend")
+        h6.text-muted.number = tickets_spend
+      .detail
+        h6 = t("views.payments.tickets.available")
+        h6.number = tickets_availables
 
-hr
-.pull-right
-  = link_to "Editar", edit_admin_user_path(decorated_user), class: "btn btn-link"
+  hr
+  .pull-right
+    = link_to "Editar", edit_admin_user_path(decorated_user), class: "btn btn-link"
+    - if decorated_user.role == 'tutor_familiar'
+      = link_to "Asignar tickets", admin_tutor_assign_tickets_path(decorated_user), class: "btn btn-link"

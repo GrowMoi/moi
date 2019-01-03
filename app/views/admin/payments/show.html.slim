@@ -1,0 +1,24 @@
+- content_for :title, t("views.payments.show")
+
+.row
+  .col-xs-8.col-xs-offset-2.payment-view
+    .header-payment
+      = decorated_user.avatar_small
+      .profile
+        div = decorated_user.username || decorated_user.name
+        div = decorated_user.role_label
+        div = mail_to decorated_user.email
+    .body-header
+      table.table.table-striped
+        thead
+          tr
+            th =t("activerecord.attributes.payment.date")
+            th =t("activerecord.attributes.payment.product")
+            th =t("activerecord.attributes.payment.quantity")
+            th =t("activerecord.attributes.payment.total")
+        tbody
+          tr
+            td = l(payment.created_at, :format => :short)
+            td = payment.product.name
+            td = payment.quantity
+            td = payment.total

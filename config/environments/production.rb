@@ -106,4 +106,6 @@ Rails.application.configure do
       resource '/assets/*'
     end
   end
+
+  GA.tracker = ENV["GA_TUTOR_APP_TRACK_ID"]
 end

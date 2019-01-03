@@ -1,22 +1,19 @@
 Polymer({
   is: 'moi-dashboard-view',
-  behaviors: [TranslateBehavior, NotificationBehavior],
+  behaviors: [TranslateBehavior, NotificationBehavior, AnalyticsBehavior],
   properties: {
     authToken: String,
     tutorId: String
   },
   ready: function() {
+    var path = location.pathname;
+    AnalyticsBehavior.track('set', 'page', path);
+    AnalyticsBehavior.track('send', 'pageview');
     this.userCardApi = {};
     this.studentCardApi = {};
     this.sendNotificationCardApi = {};
     this.contentWrapperCardApi = {};
     this.quizContentCardApi = {};
-
-    setTimeout(function() {
-
-    }.bind(this), 5000)
-
-
 
     NotificationBehavior.getNotifications(function(counter) {
       this.notificationCounter = counter;

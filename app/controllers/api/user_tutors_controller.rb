@@ -19,7 +19,7 @@ module Api
         user_deleted.update_attributes(status: params[:response])
         user_tutor.destroy
       else
-        user_tutor.update_attributes(status: params[:response])
+        user_tutor.update_attributes(status: params[:response], start_date_request: Time.now, end_date_request: 1.year.from_now)
         user_tutor.destroy if user_tutor.status == "rejected"
       end
       render json: UserTutorSerializer.new(user_tutor),

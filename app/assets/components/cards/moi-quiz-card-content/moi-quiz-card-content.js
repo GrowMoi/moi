@@ -19,15 +19,25 @@ Polymer({
     this.levels = [];
     this.students = [];
     this.questions = [];
+    this.contents = [];
     this.loading = true;
     this.btnText = I18n.t('views.tutor.common.send');
     this.btnSendText = this.btnText;
     this.btnSendingText = I18n.t('views.submitting');
+    this.btnLevelSendText = this.btnText;
     this.levelsApi = '/tutor/dashboard/get_level_quizzes';
     this.studentsApi = '/tutor/dashboard/students';
     this.questionsApi = '/tutor/dashboard/get_questions';
     this.quizzesApi = '/tutor/dashboard/create_quiz';
+    this.contentsApi = '/tutor/dashboard/get_contents';
+    this.createlevelApi = '/tutor/dashboard/level';
     this.checkboxStatus = false;
+    this.newTutorLevelParams = {
+      name: '',
+      content_ids: [],
+      description: ''
+    };
+
     $(this.$.btnsend).addClass('disabled');
     this.apiParams = {
       level_quiz_id: '',
@@ -51,6 +61,16 @@ Polymer({
       }
       this.loading = false;
     }.bind(this));
+
+    $.ajax({
+      url: this.contentsApi,
+      type: 'GET',
+      success: function (res) {
+        if (res.data) {
+          this.contents = this.formatContentsData(res.data, 'title');
+        }
+      }.bind(this)
+    });
   },
   onLevelSelected: function (e, val) {
     var content_ids, item;
@@ -92,11 +112,17 @@ Polymer({
       type: 'POST',
       data: {
         quiz: this.apiParams
-      }
+      },
+      success: function() {
+        if (this.apiParams.send_to_all) {
+          AnalyticsBehavior.track('send', 'event', 'Enviar un nuevo test a todos los alumnos', 'Click');
+        } else {
+          AnalyticsBehavior.track('send', 'event', 'Enviar un nuevo test', 'Click');
+        }
+      }.bind(this)
     });
   },
   enableSendButton: function () {
-    debugger
     if (((this.apiParams.level_quiz_id === '') || (this.apiParams.client_id === '') &&
         !this.apiParams.send_to_all)) {
 
@@ -131,5 +157,69 @@ Polymer({
     } else {
       $(this.$$('#studentSelector')).removeClass('disabled');
     }
+  },
+  openNewLevelDialog: function () {
+    this.resetFormData();
+    $(this.$.dialogNewQuiz).show();
+  },
+  onSubmitNewTutorLevel: function (event) {
+    event.preventDefault();
+    this.btnLevelSendText = this.btnSendingText;
+    $(this.$.btnLevelSend).addClass('disabled');
+    $.ajax({
+      url: this.createlevelApi,
+      type: 'POST',
+      data: {
+        level_quiz: this.newTutorLevelParams
+      },
+      success: function (res) {
+        AnalyticsBehavior.track('send', 'event', 'Crear nuevo nivel ' + this.newTutorLevelParams.name, 'Click');
+        this.btnLevelSendText = this.btnText;
+        $(this.$.btnLevelSend).removeClass('disabled');
+        if (res.data) {
+          $(this.$['dialogNewQuiz']).hide();
+          var newLevelasArray = this.formatData([res.data]);
+          this.unshift('levels', newLevelasArray[0]);
+        }
+        this.toastMessage = this.t('views.tutor.dashboard.card_quizzes.create_level_success');
+
+        this.$.toastMessage.show();
+      }.bind(this),
+      error: function () {
+        this.btnLevelSendText = this.btnText;
+        $(this.$.btnLevelSend).removeClass('disabled');
+        this.toastMessage = this.t('views.tutor.dashboard.card_quizzes.create_level_error');
+        this.$.toastMessage.show();
+      }.bind(this),
+    });
+  },
+  formatContentsData: function (items, textParamName) {
+    return $.map(items, function (item) {
+      return {
+        id: item.id,
+        text: item[textParamName]
+      };
+    });
+  },
+  onChoosenContentSelected: function (e, val) {
+    this.newTutorLevelParams.content_ids.push(val);
+  },
+  onChoosenContentDeselected: function (e, val) {
+    var index = this.newTutorLevelParams.content_ids.indexOf(val);
+    if (index !== -1) {
+      this.newTutorLevelParams.content_ids.splice(index, 1);
+    }
+  },
+  resetFormData: function() {
+    this.$.quizForm.reset();
+    this.newTutorLevelParams = {
+      name: '',
+      content_ids: [],
+      description: ''
+    };
+    this.choosenRestarted = false;
+    this.async(function() {
+      this.choosenRestarted = true;
+    }.bind(this));
   }
 });

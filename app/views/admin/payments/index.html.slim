@@ -1,0 +1,19 @@
+.payments-page
+  - content_for :title, t("activerecord.models.payment").pluralize
+
+  table.table.table-striped
+    thead
+      tr
+        th =t("activerecord.attributes.payment.date")
+        th =t("activerecord.attributes.payment.user")
+        th =t("activerecord.attributes.payment.product")
+        th =t("activerecord.attributes.payment.quantity")
+        th =t("activerecord.attributes.payment.total")
+    tbody
+    -all_payments_tickets.each do |payment|
+      tr
+        td = l(payment.created_at, :format => :short)
+        td = payment.user.name || q.user.username
+        td = payment.product.name
+        td = link_to payment.quantity, admin_payment_path(payment.id)
+        td = payment.total

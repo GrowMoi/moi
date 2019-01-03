@@ -58,4 +58,5 @@ Rails.application.configure do
                expose:  ["access-token", "expiry", "token-type", "uid", "client"]
     end
   end
+
 end

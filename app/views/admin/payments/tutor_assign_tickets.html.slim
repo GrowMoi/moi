@@ -1,0 +1,23 @@
+- content_for :title, t("views.payments.tutor-assign-tickets")
+
+.assign-tickets
+  .payments-sumary
+    .detail
+      h6.text-muted = t("views.payments.tickets.bought")
+      h6.text-muted.number = tickets_bought
+    .detail
+      h6.text-muted = t("views.payments.tickets.spend")
+      h6.text-muted.number = tickets_spend
+    .detail
+      h6 = t("views.payments.tickets.available")
+      h6.number = tickets_availables
+
+  .form
+    .user-view
+      .user-avatar
+        = decorated_user.avatar_small
+      .information
+        h4 = decorated_user.username || decorated_user.name
+        div = mail_to decorated_user.email
+    .payment-form
+      = render "form", payment: payment
