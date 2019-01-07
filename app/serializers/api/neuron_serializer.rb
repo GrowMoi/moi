@@ -20,7 +20,17 @@ module Api
 
     has_many :contents
 
+    def title
+      language = current_user.storage.frontendValues["language"] || "en"
+      if language == "es"
+        object.title
+      else
+        TranslatedAttribute.where(translatable_id: object.id).first.content
+      end
+    end
+
     def contents
+      language = current_user.storage.frontendValues["language"] || "en"
       object.approved_contents.map do |content|
         {
           id: content.id,
@@ -30,11 +40,12 @@ module Api
           level: content.level,
           read: current_user.already_read?(content),
           learnt: current_user.already_learnt?(content),
-          title: content.title,
+          title: language == "en" ? TranslatedAttribute.where(translatable_id: content.id, name: "title").last.content : content.title,
           favorite: is_favorite?(content)
         }
       end
     end
+
 
     def neuron_can_read
       visible_neurons = TreeService::PublicScopeFetcher.new(@scope).neurons

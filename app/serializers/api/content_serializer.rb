@@ -37,6 +37,16 @@ module Api
 
     translates :title, :description, :source
 
+    def title
+      language = current_user.storage.frontendValues["language"] || current_user.preferred_lang
+      language == "en" ? TranslatedAttribute.where(translatable_id: object.id, name: "title").first.content : object.title
+    end
+
+    def description
+      language = current_user.storage.frontendValues["language"] || current_user.preferred_lang
+      language == "en" ? TranslatedAttribute.where(translatable_id: object.id, name: "description").first.content : object.description
+    end
+
     def read
       current_user.already_read?(object)
     end
@@ -72,6 +82,7 @@ module Api
     end
 
     def videos
+      language = current_user.storage.frontendValues["language"] || current_user.preferred_lang
       ActiveModel::ArraySerializer.new(
         object.content_videos.with_language(current_user.preferred_lang),
         each_serializer: ContentVideoSerializer
