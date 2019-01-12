@@ -7,7 +7,8 @@ module Api
       :state,
       :total_approved_contents,
       :learnt_contents,
-      :in_desired_neuron_path
+      :in_desired_neuron_path,
+      :title_translate
     ].freeze
 
     attributes *ATTRIBUTES
@@ -46,6 +47,19 @@ module Api
       desired_neuron_id = context[:desired_neuron_path]
       return false if desired_neuron_id.blank?
       ::TreeService::RecursiveParentsIdsFetcher.new(desired_neuron_id).parents_ids.include?(object.id)
+    end
+
+    def title_translate
+      lang = current_user.preferred_lang
+      if lang == ApplicationController::DEFAULT_LANGUAGE
+        object.title
+      else
+        resp = TranslatedAttribute.where(translatable_id: object.id,
+                                  language: lang,
+                                  translatable_type: "Neuron")
+                                  .first
+        resp ? resp.content : object.title
+      end
     end
 
     alias_method :current_user, :scope

@@ -199,7 +199,8 @@ class User < ActiveRecord::Base
 
   def preferred_lang
     # TODO un-mock
-    ApplicationController::DEFAULT_LANGUAGE
+    storage = self.storage
+    storage ? storage.frontendValues["language"] : ApplicationController::DEFAULT_LANGUAGE
   end
 
   private
