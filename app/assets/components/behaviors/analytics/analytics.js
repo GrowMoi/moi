@@ -1,4 +1,7 @@
 var AnalyticsBehavior = AnalyticsBehavior || {};
 AnalyticsBehavior.track = function() {
-  return ga.apply(this, arguments);
+  if (window && window.ga) {
+    return ga.apply(this, arguments);
+  }
+  return null;
 };

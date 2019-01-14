@@ -18,7 +18,9 @@ html
       currentUser.email = "#{current_user.email}"
       currentUser.username = "#{current_user.username}"
 
-      ga('set', 'userId', currentUser.username);
+      if (window && window.ga) {
+        ga('set', 'userId', currentUser.username);
+      }
 
       assets = {
         'bell.svg': "#{asset_path('bell.svg')}",
