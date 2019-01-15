@@ -20,21 +20,14 @@ module Api
 
     has_many :contents
 
-    def title
-      lang = current_user.preferred_lang
-      if lang == ApplicationController::DEFAULT_LANGUAGE
-        object.title
-      else
-        resp = TranslatedAttribute.where(translatable_id: object.id,
-                                  language: lang,
-                                  translatable_type: "Neuron")
-                                  .first
-        resp ? resp.content : object.title                  
-      end
-    end
-
     def contents
       object.approved_contents.map do |content|
+        title = content.title
+        lang = current_user.preferred_lang
+        unless lang == ApplicationController::DEFAULT_LANGUAGE
+          resp = TranslatedAttribute.where(translatable_id: content.id, name: "title").last
+          title = resp ? resp.content : title
+        end
         {
           id: content.id,
           neuron_id: content.neuron_id,
@@ -43,7 +36,7 @@ module Api
           level: content.level,
           read: current_user.already_read?(content),
           learnt: current_user.already_learnt?(content),
-          title: current_user.preferred_lang == ApplicationController::DEFAULT_LANGUAGE ? content.title : TranslatedAttribute.where(translatable_id: content.id, name: "title").last.content,
+          title: title,
           favorite: is_favorite?(content)
         }
       end
