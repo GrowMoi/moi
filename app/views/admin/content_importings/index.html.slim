@@ -6,6 +6,12 @@
     span.glyphicon.glyphicon-plus
     =< t("actions.new")
 
+.pull-right
+  = link_to new_admin_content_translate_importings_path,
+            class: "btn btn-sm btn-default" do
+    span.glyphicon.glyphicon-plus
+    =< t("views.content_importings.new_translate_import_btn")
+
 table.table.table-striped
   thead
     tr

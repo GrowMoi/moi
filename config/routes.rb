@@ -189,6 +189,7 @@ Moi::Application.routes.draw do
       end
     end
     resources :content_importings
+    resource :content_translate_importings, only: [:create, :new, :show]
 
     root "dashboard#index"
   end

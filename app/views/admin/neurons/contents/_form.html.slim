@@ -8,27 +8,31 @@ fieldset
               place: "left" do
       = f.text_field :title,
                      placeholder: t("activerecord.attributes.content.title"),
-                     class: "form-control content-title"
+                     class: "form-control content-title",
+                     value: translate_attribute(f.object, :title)
 
   .form-group
     = f.text_area :description,
                   placeholder: t("activerecord.attributes.content.description"),
-                  class: "form-control"
+                  class: "form-control",
+                  value: translate_attribute(f.object, :description)
 
-  .form-group
-    = tooltip t("views.contents.keyword_list_form_instructions"),
-              place: "left" do
-      = f.text_field :keyword_list,
-                      placeholder: t("activerecord.attributes.content.keyword_list"),
-                     value: f.object.keyword_list.join(","),
-                     class: "form-control input-tags"
+  - if show_if_translation_available?(f.object, :keyword_list)
+    .form-group
+      = tooltip t("views.contents.keyword_list_form_instructions"),
+                place: "left" do
+        = f.text_field :keyword_list,
+                        placeholder: t("activerecord.attributes.content.keyword_list"),
+                       value: f.object.keyword_list.join(","),
+                       class: "form-control input-tags"
 
   .form-group.content-form-source
     .row
       .col-xs-11
         = f.text_field :source,
                        placeholder: t("activerecord.attributes.content.source"),
-                       class: "form-control"
+                       class: "form-control",
+                       value: translate_attribute(f.object, :source)
 
       .col-xs-1.text-right.external-source-btn
           = tooltip t("views.contents.external_source"),
@@ -38,8 +42,11 @@ fieldset
 
 = render "admin/neurons/contents/videos_form",
          f: f
-= render "admin/neurons/contents/media_form",
-         f: f
+
+- if show_if_translation_available?(f.object, :content_medium)
+  = render "admin/neurons/contents/media_form",
+           f: f
+
 = render "admin/neurons/contents/links_form",
          f: f
 = render "admin/neurons/contents/possible_answers_form",

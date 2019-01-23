@@ -1,13 +1,13 @@
-class ContentDecorator < LittleDecorator
+class ContentDecorator < ResourceDecorator
   def build_one_link!
-    if content_links.length === 0
-      content_links.build
+    if content_links_for_current_lang.length === 0
+      content_links.build(language: current_language)
     end
   end
 
   def build_one_video!
-    if content_videos.length === 0
-      content_videos.build
+    if content_videos_for_current_lang.length === 0
+      content_videos.build(language: current_language)
     end
   end
 
@@ -85,10 +85,6 @@ class ContentDecorator < LittleDecorator
            }
   end
 
-  def spellchecked(name)
-    spellcheck_analysis.spellchecked(name.to_s)
-  end
-
   def approved_to_s
     approved_options(record.approved?)
   end
@@ -109,6 +105,26 @@ class ContentDecorator < LittleDecorator
                     end
   end
 
+  def content_videos_for_current_lang
+    content_videos.select do |video|
+      video.language == current_language
+    end
+  end
+
+  def content_links_for_current_lang
+    content_links.select do |link|
+      link.language == current_language
+    end
+  end
+
+  def able_to_have_more_links?
+    content_links_for_current_lang.length < Content::NUMBER_OF_LINKS
+  end
+
+  def able_to_have_more_videos?
+    content_videos_for_current_lang.length < Content::NUMBER_OF_VIDEOS
+  end
+
   private
 
   def decorated_medium
@@ -118,13 +134,13 @@ class ContentDecorator < LittleDecorator
   end
 
   def decorated_videos
-    @decorated_videos ||= content_videos.map do |content_video|
+    @decorated_videos ||= content_videos.with_language(current_language).map do |content_video|
       decorate content_video
     end
   end
 
   def decorated_links
-    @decorated_links ||= content_links.map do |content_link|
+    @decorated_links ||= content_links.with_language(current_language).map do |content_link|
       decorate content_link
     end
   end
@@ -133,12 +149,5 @@ class ContentDecorator < LittleDecorator
     # taken from
     # http://stackoverflow.com/questions/1805761/check-if-url-is-valid-ruby#answer-1805788
     record.source =~ /\A#{URI::regexp}\z/
-  end
-
-  def spellcheck_analysis
-    @spellcheck_analysis ||= SpellcheckDecorator.new(
-      record,
-      self
-    )
   end
 end

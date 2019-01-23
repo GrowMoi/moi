@@ -1,8 +1,4 @@
-class PossibleAnswerDecorator < LittleDecorator
-  def spellchecked(name)
-    spellcheck_analysis.spellchecked(name.to_s)
-  end
-
+class PossibleAnswerDecorator < ResourceDecorator
   def correct_label
     if correct?
       klass = "ok-circle"
@@ -16,15 +12,6 @@ class PossibleAnswerDecorator < LittleDecorator
       nil,
       class: "glyphicon glyphicon-#{klass} bs-tooltip",
       title: t("views.possible_answers.#{tooltip_key}")
-    )
-  end
-
-  private
-
-  def spellcheck_analysis
-    @spellcheck_analysis ||= SpellcheckDecorator.new(
-      record,
-      self
     )
   end
 end

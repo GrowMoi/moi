@@ -1,0 +1,8 @@
+- disable = defined?(disabled) && disabled
+
+- %w(es en).each do |language|
+  - is_active = language == current_language
+
+  = link_to is_active ? "#" : params.merge(lang: language),
+            class: "btn btn-sm btn-default #{'active' if is_active} #{'disabled' if !is_active && disable}" do
+    = t("views.languages.#{language}")

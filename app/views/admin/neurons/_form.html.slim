@@ -4,7 +4,11 @@
 = nested_form_for [:admin, neuron], html: {class: "neuron-form"} do |f|
   = render "admin/shared/form_errors", resource: neuron
 
+  = hidden_field_tag :lang, current_language
   = f.hidden_field :id
+
+  .pull-right.btn-group
+    = render "admin/shared/language_switcher", disabled: true
 
   ul.nav.nav-tabs.default-tabs
     li.active data-toggle="tab"

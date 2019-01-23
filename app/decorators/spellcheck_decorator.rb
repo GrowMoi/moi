@@ -44,10 +44,19 @@ class SpellcheckDecorator < LittleDecorator
   def spellcheck_error
     content_tag(
       :span,
-      nil,
-      class: "glyphicon glyphicon-exclamation-sign bs-tooltip spellcheck-error",
+      class: "spellcheck-error bs-tooltip",
       title: I18n.t("views.contents.aspell_not_present")
-    )
+    ) do
+      content_tag(
+        :span,
+        nil,
+        class: "glyphicon glyphicon-exclamation-sign"
+      ) + content_tag(
+        :span,
+        nil,
+        class: "glyphicon glyphicon-book"
+      )
+    end
   end
 
   def regexp_for(word)

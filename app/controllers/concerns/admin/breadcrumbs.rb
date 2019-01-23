@@ -52,7 +52,7 @@ module Admin
       when "show"
         add_breadcrumb(
           resource,
-          send("admin_#{breadcrumbs_base_path}_path", resource)
+          send("admin_#{breadcrumbs_base_path}_path", resource, lang: params[:lang])
         )
       when "edit"
         breadcrumb_for "show"

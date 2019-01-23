@@ -8,18 +8,29 @@ class ContentImportingWorker
   def perform!
     begin
       @resource.update!(status: :in_progress)
-      contents = ContentsBuilder.new(
-        user: @resource.user,
-        workbook: workbook
-      ).contents
-      saved_contents = contents.select(&:save)
-      saved_contents.each do |content|
-        Content::ContentMediumSanitizer.sanitize!(content)
+      if @resource.kind == 'translate'
+        contents = ContentsTranslateBuilder.new(
+          user: @resource.user,
+          workbook: workbook
+        ).contents_translate
+        @resource.update!(
+          status: :finished,
+          imported_contents_ids: contents.map(&:id)
+        )
+      else
+        contents = ContentsBuilder.new(
+          user: @resource.user,
+          workbook: workbook
+        ).contents
+        saved_contents = contents.select(&:save)
+        saved_contents.each do |content|
+          Content::ContentMediumSanitizer.sanitize!(content)
+        end
+        @resource.update!(
+          status: :finished,
+          imported_contents_ids: saved_contents.map(&:id)
+        )
       end
-      @resource.update!(
-        status: :finished,
-        imported_contents_ids: saved_contents.map(&:id)
-      )
     rescue StandardError => err
       @resource.update!(status: :error)
       raise err

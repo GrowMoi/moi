@@ -197,6 +197,11 @@ class User < ActiveRecord::Base
     count
   end
 
+  def preferred_lang
+    # TODO un-mock
+    ApplicationController::DEFAULT_LANGUAGE
+  end
+
   private
 
   def send_role_changed_email

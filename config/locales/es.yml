@@ -14,6 +14,10 @@
     search_engines: Motores de búsqueda
     notifications: Notificaciones
     loading: "Cargando.."
+    translation_not_present: No ha sido traducido
+    languages:
+      es: Español
+      en: Inglés
     pagination:
       previous: "&lt;"
       next: "&gt;"
@@ -227,6 +231,8 @@
       file: Archivo
       imported_contents: Contenidos importados
       new: Subir archivo para importar contenidos
+      new_translate_import: Subir archivo para importar traduccion de contenidos
+      new_translate_import_btn: Importar traduccion de contenidos
       created: El archivo será procesado
       show_detail: 'ver detalle'
       form:

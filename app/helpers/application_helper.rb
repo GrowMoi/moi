@@ -90,4 +90,8 @@ module ApplicationHelper
       end
     }.compact.reverse.join(' ')
   end
+
+  def default_language?
+    current_language == ApplicationController::DEFAULT_LANGUAGE
+  end
 end

@@ -131,24 +131,4 @@ RSpec.describe Content, :type => :model do
 
     include_examples "spellchecker examples"
   end
-
-  describe "#can_have_more_links?" do
-    subject { create :content }
-    it {
-      is_expected.to be_able_to_have_more_links
-    }
-
-    context "can't" do
-      let!(:links) {
-        1.upto(Content::NUMBER_OF_LINKS).each do
-          create :content_link,
-                 content: subject
-        end
-      }
-
-      it {
-        is_expected.to_not be_able_to_have_more_links
-      }
-    end
-  end
 end
