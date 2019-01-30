@@ -33,6 +33,7 @@
       notifications: Notificaciones
       achievements: Logros
       quiz: Tests
+      events: Eventos
     users:
       new: "Nuevo Usuario"
       edit: "Editar Usuario"
@@ -674,6 +675,7 @@
       admin_achievement: Logro
       content_importing: Importar contenidos
       payment: Pagos
+      events: Eventos
     attributes:
       user:
         username: "Nombre de usuario"
@@ -752,6 +754,14 @@
         user: Usuario
         date: Fecha
         product: Producto
+      event:
+        title: Titulo
+        description: Descripción
+        content_ids: Contenidos
+        publish_days: Publicar los dias
+        user_level: Nivel de usuario
+        kind: Tipo
+        duration: Duracion (minutos)
     errors:
       messages:
         <<: *errors_messages

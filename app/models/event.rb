@@ -18,4 +18,6 @@
 class Event < ActiveRecord::Base
   has_many :user_events,
            dependent: :destroy
+
+  mount_uploader :image, ContentMediaUploader
 end

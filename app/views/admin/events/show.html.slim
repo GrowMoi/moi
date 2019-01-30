@@ -1,0 +1,19 @@
+- content_for :title, t("activerecord.models.event")
+
+h3.text-center = event.title
+
+.form-group
+  = label_tag t("activerecord.attributes.event.content_ids")
+.questions
+  ul
+    -contents.each do |p|
+      li
+        span = p.title
+
+.form-group
+  = label_tag t("activerecord.attributes.event.description")
+  p = event.description
+
+hr
+.pull-right
+  = link_to "Editar", edit_admin_event_path(event), class: "btn btn-link"
