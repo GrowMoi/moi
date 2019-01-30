@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181216211305) do
+ActiveRecord::Schema.define(version: 20190130014446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -256,6 +256,19 @@ ActiveRecord::Schema.define(version: 20181216211305) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "events", force: :cascade do |t|
+    t.string   "title",                     null: false
+    t.string   "description"
+    t.string   "image"
+    t.text     "content_ids",  default: [],              array: true
+    t.text     "publish_days", default: [],              array: true
+    t.integer  "duration",                  null: false
+    t.string   "kind"
+    t.integer  "user_level",   default: 1
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -557,6 +570,17 @@ ActiveRecord::Schema.define(version: 20181216211305) do
   end
 
   add_index "user_content_preferences", ["user_id"], name: "index_user_content_preferences_on_user_id", using: :btree
+
+  create_table "user_events", force: :cascade do |t|
+    t.integer  "user_id",                    null: false
+    t.integer  "event_id",                   null: false
+    t.boolean  "completed",  default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "user_events", ["event_id"], name: "index_user_events_on_event_id", using: :btree
+  add_index "user_events", ["user_id"], name: "index_user_events_on_user_id", using: :btree
 
   create_table "user_seen_images", force: :cascade do |t|
     t.integer  "user_id",    null: false

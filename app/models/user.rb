@@ -140,6 +140,8 @@ class User < ActiveRecord::Base
              dependent: :destroy
     has_many :social_sharings, dependent: :destroy
     has_many :content_importings
+    has_many :user_events,
+             dependent: :destroy
   end
 
 
