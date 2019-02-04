@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190130014446) do
+ActiveRecord::Schema.define(version: 20190204020329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -632,6 +632,7 @@ ActiveRecord::Schema.define(version: 20190130014446) do
     t.string   "authorization_key"
     t.integer  "age"
     t.string   "image"
+    t.integer  "level",                  default: 1
   end
 
   add_index "users", ["authorization_key"], name: "index_users_on_authorization_key", using: :btree

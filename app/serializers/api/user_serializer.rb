@@ -42,7 +42,8 @@ module Api
                :tree_image,
                :username,
                :achievements,
-               :image
+               :image,
+               :level
 
     has_many :content_preferences
 

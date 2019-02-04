@@ -41,7 +41,8 @@ module Api
                :tree_image,
                :successful_tests,
                :content_summary,
-               :image
+               :image,
+               :level
 
     def last_contents_learnt
       object.content_learnings.last(4).map do |content_learnt|

@@ -29,6 +29,7 @@
 #  authorization_key      :string
 #  age                    :integer
 #  image                  :string
+#  level                  :integer          default(1)
 #
 
 class User < ActiveRecord::Base
