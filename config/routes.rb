@@ -118,6 +118,11 @@ Moi::Application.routes.draw do
         end
       end
       resources :certificates, except: [:update, :edit]
+      resources :events, only: [:index,:update, :show] do
+        member do
+          post :take
+        end
+      end
     end
 
     match "users/search" => 'users#search', via: :get

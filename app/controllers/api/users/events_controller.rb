@@ -1,0 +1,38 @@
+module Api
+  module Users
+    class EventsController < BaseController
+      before_action :authenticate_user!
+
+      expose(:user) {
+        current_user
+      }
+
+      expose(:event) {
+        Event.find(params[:id])
+      }
+
+      respond_to :json
+
+      api :POST,
+          "/users/events/:id/take",
+          "take a event"
+      param :id, String, required: true
+      def take
+        if event
+          user_event = UserEvent.new
+          user_event.user = current_user
+          user_event.event = event
+          response = {
+            status: :created,
+            event: event,
+            user_event: user_event
+          }
+        else
+          response = { status: :unprocessable_entity }
+        end
+        render json: response,
+               status: response[:status]
+      end
+    end
+  end
+end
