@@ -15,7 +15,7 @@ module Api
 
       api :POST,
           "/users/events/:id/take",
-          "take a event"
+          "take an event"
       param :id, String, required: true
       def take
         if event
