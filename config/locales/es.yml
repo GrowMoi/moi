@@ -249,6 +249,12 @@
         available: Tickets Disponibles
         spend: Tickets Utilizados
         bought: Tickets Adquiridos
+    events:
+      new: "Nuevo Evento"
+      edit: "Editar Evento"
+      created: "Evento creado"
+      updated: "Evento actualizado"
+      show: "Mostrar Evento"
     tutor:
       moi:
         analyze: "Enviar solicitud"
@@ -675,7 +681,7 @@
       admin_achievement: Logro
       content_importing: Importar contenidos
       payment: Pagos
-      events: Eventos
+      event: Eventos
     attributes:
       user:
         username: "Nombre de usuario"
@@ -762,6 +768,7 @@
         user_level: Nivel de usuario
         kind: Tipo
         duration: Duracion (minutos)
+        image: Imagen premio
     errors:
       messages:
         <<: *errors_messages

@@ -25,7 +25,7 @@ module Admin
 
     def create
       if event.save
-        redirect_to admin_level_quiz_path(event), notice: I18n.t("views.level_quizzes.created")
+        redirect_to admin_event_path(event), notice: I18n.t("views.events.created")
       else
         render :new
       end
@@ -33,7 +33,7 @@ module Admin
 
     def update
       if event.save
-        redirect_to admin_level_quiz_path(event), notice: I18n.t("views.level_quizzes.updated")
+        redirect_to admin_event_path(event), notice: I18n.t("views.events.updated")
       else
         render :edit
       end

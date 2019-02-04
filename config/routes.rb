@@ -80,6 +80,12 @@ Moi::Application.routes.draw do
       end
     end
 
+    resources :events, only: [:show] do
+      collection do
+        get :today
+      end
+    end
+
     namespace :users do
       resource :account,
                 only: [:update]
