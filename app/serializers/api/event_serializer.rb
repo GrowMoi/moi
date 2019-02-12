@@ -18,12 +18,28 @@ module Api
   class EventSerializer < ActiveModel::Serializer
     attributes :id,
                :title,
-               :descripcion,
+               :description,
                :image,
-               :content_ids,
+               :contents,
                :publish_days,
                :duration,
                :kind,
                :user_level
+
+    def image
+      image = object.image
+      image ? image.url : ''
+    end
+
+    def contents
+      ids = object.content_ids.map.reject { |id| id.empty? }
+      ids.map do |id|
+        content = Content.find(id)
+        {
+          content_id: id,
+          neuron: content.neuron.title
+        }
+      end
+    end
   end
 end
