@@ -283,7 +283,7 @@ module Api
     end
 
     def event_expired?
-      exprired_date = user_event.created_at + (user_event.event.duration * 60)
+      exprired_date = user_event.created_at + (user_event.event.duration * 60 * 60)
       expired = exprired_date <= Time.now
       if expired
         user_event.expired = true;

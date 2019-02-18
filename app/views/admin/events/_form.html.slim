@@ -47,6 +47,12 @@
       span.content-media-name-on-form
         - if f.object.image?
           = decorate(f.object).link_for_form
+  br
+  .form-group
+    .checkbox
+      label
+        = f.check_box :active
+        = f.label :active
 
   .actions
     = f.submit class: "btn btn-primary",

@@ -31,6 +31,11 @@ h3.text-center = event.title
     span.content-media-name-on-form
       - if event.image?
         img src=event.image.url
+
+.form-group
+  = label_tag t("activerecord.attributes.event.active")
+  p = event.active
+
 hr
 .pull-right
   = link_to "Editar", edit_admin_event_path(event), class: "btn btn-link"

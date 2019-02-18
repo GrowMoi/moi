@@ -767,8 +767,9 @@
         publish_days: Publicar los dias
         user_level: Nivel de usuario
         kind: Tipo
-        duration: Duracion (minutos)
+        duration: Duración (horas)
         image: Imagen premio
+        active: Activo
     errors:
       messages:
         <<: *errors_messages

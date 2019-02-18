@@ -6,7 +6,7 @@ class CreateEvents < ActiveRecord::Migration
       t.string :image
       t.text :content_ids, array: true, default: []
       t.text :publish_days, array: true, default: []
-      t.integer :duration, null: false #seconds
+      t.integer :duration, null: false #hours
       t.string :kind
       t.integer :user_level, default: 1
       t.timestamps null: false
