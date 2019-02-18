@@ -6,6 +6,14 @@ module Api
       neuron.contents.find(params[:id])
     }
 
+    expose(:user_event) {
+      UserEvent.where(
+        user: current_user,
+        completed: false,
+        expired: false
+      ).first
+    }
+
     respond_to :json
 
     api :POST,
@@ -117,6 +125,12 @@ module Api
           perform_test: test_fetcher.perform_test?,
           test: test_fetcher.user_test_for_api
         }
+        if event_completed?
+          response[:event] = {
+            completed: user_event.completed,
+            event: user_event.event
+          }
+        end
       else
         response = { status: :unprocessable_entity }
       end
@@ -257,6 +271,49 @@ module Api
       @test_fetcher ||= TreeService::ReadingTestFetcher.new(
         current_user
       )
+    end
+
+    def event_completed?
+      event_completed = false
+      if content_belong_any_event? && !event_expired?
+        update_event
+        event_completed = true
+      end
+      event_completed
+    end
+
+    def event_expired?
+      exprired_date = user_event.created_at + (user_event.event.duration * 60)
+      expired = exprired_date <= Time.now
+      if expired
+        user_event.expired = true;
+        user_event.save
+      end
+      expired
+    end
+
+    def content_belong_any_event?
+      content_belong = false
+      if user_event
+        content_belong = user_event.event.content_ids.detect{|id| id == content.id}
+      end
+      content_belong
+    end
+
+    def update_event
+      user_event.contents_learning.map do |content|
+        if (content["content_id"]).to_i == content.id
+          content["learnt"] = true
+        end
+      end
+      if is_successful_event?
+        user_event.completed = true;
+      end
+      user_event.save
+    end
+
+    def is_successful_event?
+      user_event.contents_learning.any? { |content| content['correct'] == false }
     end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190204020329) do
+ActiveRecord::Schema.define(version: 20190218034255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -572,11 +572,14 @@ ActiveRecord::Schema.define(version: 20190204020329) do
   add_index "user_content_preferences", ["user_id"], name: "index_user_content_preferences_on_user_id", using: :btree
 
   create_table "user_events", force: :cascade do |t|
-    t.integer  "user_id",                    null: false
-    t.integer  "event_id",                   null: false
-    t.boolean  "completed",  default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "user_id",                           null: false
+    t.integer  "event_id",                          null: false
+    t.boolean  "completed",         default: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.json     "contents",          default: [],                 array: true
+    t.json     "contents_learning", default: [],                 array: true
+    t.boolean  "expired",           default: false
   end
 
   add_index "user_events", ["event_id"], name: "index_user_events_on_event_id", using: :btree
