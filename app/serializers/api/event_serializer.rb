@@ -43,7 +43,7 @@ module Api
     end
 
     def is_available
-      !!current_user.user_events.find_by_event_id(object.id)
+      !current_user.user_events.find_by_event_id(object.id)
     end
 
     alias_method :current_user, :scope

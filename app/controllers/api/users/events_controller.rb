@@ -22,6 +22,7 @@ module Api
           user_event = UserEvent.new
           user_event.user = current_user
           user_event.event = event
+          user_event.save
           response = {
             status: :created,
             event: event,
