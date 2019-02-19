@@ -123,6 +123,9 @@ Moi::Application.routes.draw do
         member do
           post :take
         end
+        collection do
+          get :my_events
+        end
       end
     end
 

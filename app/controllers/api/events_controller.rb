@@ -64,7 +64,8 @@ module Api
       events = events.where(active: true)
       respond_with(
         events,
-        each_serializer: Api::EventSerializer
+        each_serializer: Api::EventSerializer,
+        scope: current_user
       )
     end
 
@@ -120,7 +121,8 @@ module Api
       events_by_days.each do |day, events|
         serialized = ActiveModel::ArraySerializer.new(
           events,
-          each_serializer: Api::EventSerializer
+          each_serializer: Api::EventSerializer,
+          scope: current_user
         )
         events_by_days[day] = serialized
       end
@@ -157,6 +159,7 @@ module Api
       respond_with(
         event,
         serializer: Api::EventSerializer
+        scope: current_user
       )
     end
   end

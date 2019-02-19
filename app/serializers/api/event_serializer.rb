@@ -23,7 +23,8 @@ module Api
                :contents,
                :duration,
                :kind,
-               :user_level
+               :user_level,
+               :is_available
 
     def image
       image = object.image
@@ -40,5 +41,11 @@ module Api
         }
       end
     end
+
+    def is_available
+      !!current_user.user_events.find_by_event_id(object.id)
+    end
+
+    alias_method :current_user, :scope
   end
 end
