@@ -21,7 +21,6 @@ module Api
                :description,
                :image,
                :contents,
-               :publish_days,
                :duration,
                :kind,
                :user_level

@@ -7,6 +7,10 @@ module Api
       Event.find(params[:id])
     }
 
+    expose(:days) {
+      Date::DAYNAMES
+    }
+
     respond_to :json
 
     api :GET,
@@ -111,9 +115,17 @@ module Api
     }
     def week
       events = Event.where(active: true)
+      events_by_days = {}
+      days.map{ |day| events_by_days[day] = events.where("'#{day}' = ANY (publish_days)") }
+      events_by_days.each do |day, events|
+        serialized = ActiveModel::ArraySerializer.new(
+          events,
+          each_serializer: Api::EventSerializer
+        )
+        events_by_days[day] = serialized
+      end
       respond_with(
-        events,
-        each_serializer: Api::EventSerializer
+        events_by_days
       )
     end
 
