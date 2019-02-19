@@ -138,7 +138,7 @@ module Api
       "event": {
         "title": "Evento rama verder",
         "description": "Completa todos estos contenidos y haz crecer tu arbol",
-        "id: 32,
+        "id": 32,
         "image": "https://cdn4.iconfinder.com/data/icons/badges-and-votes-1/128/Badges_Votes_star-512.png",
         "duration": 120,
         "user_level": 5,
@@ -158,7 +158,7 @@ module Api
     def show
       respond_with(
         event,
-        serializer: Api::EventSerializer
+        serializer: Api::EventSerializer,
         scope: current_user
       )
     end
