@@ -24,7 +24,8 @@ module Api
                :duration,
                :kind,
                :user_level,
-               :is_available
+               :is_available,
+               :completed
 
     def image
       image = object.image
@@ -44,6 +45,11 @@ module Api
 
     def is_available
       !current_user.user_events.find_by_event_id(object.id)
+    end
+
+    def completed
+      event_user = current_user.user_events.find_by_event_id(object.id)
+      event_user ? event_user.completed : false
     end
 
     alias_method :current_user, :scope

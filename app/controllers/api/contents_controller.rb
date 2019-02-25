@@ -126,13 +126,23 @@ module Api
           test: test_fetcher.user_test_for_api
         }
         if event_completed?
-          response[:event] = {
+          response["event"] = {
             completed: user_event.completed,
             event: user_event.event
           }
         end
       else
-        response = { status: :unprocessable_entity }
+        if event_completed?
+          response = {
+            completed: user_event.completed,
+            event: user_event.event
+          }
+        else
+          response = {
+            status: :created,
+            user_event: user_event
+          }
+        end
       end
       render json: response,
              status: response[:status]
@@ -295,25 +305,28 @@ module Api
     def content_belong_any_event?
       content_belong = false
       if user_event
-        content_belong = user_event.event.content_ids.detect{|id| id == content.id}
+        content_belong = user_event.event.content_ids.include? (content.id.to_s)
       end
       content_belong
     end
 
     def update_event
-      user_event.contents_learning.map do |content|
-        if (content["content_id"]).to_i == content.id
-          content["learnt"] = true
+      new_user_event = user_event;
+      contents_learning = new_user_event.contents_learning.map do |content_event|
+        if (content_event["content_id"]).to_i == content.id
+          content_event["learnt"] = true
         end
+        content_event
       end
-      if is_successful_event?
-        user_event.completed = true;
+      new_user_event.contents_learning = contents_learning
+      if is_successful_event?(new_user_event)
+        new_user_event.completed = true;
       end
-      user_event.save
+      new_user_event.save;
     end
 
-    def is_successful_event?
-      user_event.contents_learning.any? { |content| content['correct'] == false }
+    def is_successful_event?(event)
+      !event.contents_learning.any? { |content| content['learnt'] == false }
     end
   end
 end

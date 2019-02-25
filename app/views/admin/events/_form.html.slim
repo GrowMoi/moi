@@ -15,7 +15,7 @@
 
   .form-group
     = f.label :user_level
-    = f.number_field :total, class: "form-control", min: 1, max: 9, value:1, step: :any
+    = f.number_field :user_level, class: "form-control", min: 1, max: 9, step: :any
 
   .form-group
     = f.label :duration
@@ -25,10 +25,6 @@
   .form-group
     = f.label :content_ids
     = f.collection_select :content_ids, all_contents, :id, :title, {include_hidden: false}, {multiple: true, class: "form-control"}
-
-  .form-group
-    = f.label :publish_days
-    = f.collection_select :publish_days, days, :to_s, :to_s, {include_hidden: false}, {multiple: true, class: "form-control"}
 
   .col-sm-12.nested-content-media
     = f.hidden_field :id

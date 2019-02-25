@@ -6,14 +6,14 @@
       tr
         th =t("activerecord.attributes.event.title")
         th =t("activerecord.attributes.event.description")
-        th =t("activerecord.attributes.event.publish_days")
+        th =t("activerecord.attributes.event.user_level")
         th =t("views.events.action")
     tbody
     -events.each do |q|
       tr
         td = q.title
         td = q.description
-        td = q.publish_days.join(" - ")
+        td = q.user_level
         td = link_to t("views.events.show"), admin_event_path(q)
 
   .pull-right
