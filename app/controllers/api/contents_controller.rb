@@ -11,7 +11,7 @@ module Api
         user: current_user,
         completed: false,
         expired: false
-      ).first
+      ).last
     }
 
     respond_to :json

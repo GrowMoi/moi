@@ -59,13 +59,10 @@ module Api
       ]
     }
     def today
-      current_day = Time.now.strftime("%A")
-      events = Event.where("'#{current_day}' = ANY (publish_days)")
-      events = events.where(active: true)
+      events = get_events_availables[:events]
+      today = get_first_week(events)
       respond_with(
-        events,
-        each_serializer: Api::EventSerializer,
-        scope: current_user
+        today
       )
     end
 
@@ -115,24 +112,8 @@ module Api
       ]
     }
     def week
-      date = Date.today
-      start_week = date.at_beginning_of_week.strftime
-      end_week = date.at_end_of_week.strftime
-
-      events_ids = Event.where(active: true)
-                  .where("user_level <= ?", current_user.level)
-                  .order(created_at: :asc)
-                  .map(&:id)
-
-      user_events_ids = current_user.user_events
-                        .where("completed = ? AND updated_at < ?", true, date.at_end_of_week)
-                        .map(&:event_id)
-      events_availables = events_ids - user_events_ids
-      events = Event.where(id: events_availables)
-      events_by_week = events_week(events_ids, user_events_ids);
-
       respond_with(
-        events_by_week
+        events_week
       )
     end
 
@@ -170,50 +151,69 @@ module Api
 
     private
 
-    def events_week(events_ids, user_events_ids)
-      events_availables = events_ids - user_events_ids
-      events = Event.where(id: events_availables).order(created_at: :asc)
-      events_by_week = {}
+    def get_events_availables
+      date = Date.today
+      all_events_ids = Event.where(active: true)
+                  .where("user_level <= ?", current_user.level)
+                  .order(created_at: :asc)
+                  .map(&:id)
 
+      outdate_user_events_ids = current_user
+                                .user_events
+                                .where("created_at <= ?",
+                                  date.at_beginning_of_week
+                                ).map(&:event_id)
+
+      events_availables = all_events_ids - outdate_user_events_ids
+      events = Event.where(id: events_availables).order(created_at: :asc)
+      result = {
+        events: events || [],
+        all_events_ids: all_events_ids || [],
+        outdate_user_events_ids: outdate_user_events_ids || []
+      }
+    end
+
+    def events_week()
       date = Date.today
       start_week = date.at_beginning_of_week.strftime
       end_week = date.at_end_of_week.strftime
+      events = get_events_availables[:events]
+      all_events_ids = get_events_availables[:all_events_ids]
+      events_by_week = {}
 
-      if events_availables.size == events_ids.size #any event taken
+      if events.size == all_events_ids.size #any event taken
         first_week = "#{start_week} - #{end_week}"
-        events_to_serialize = [events[0],events[1],events[2]].reject { |c| c.nil? }
-        serialized = ActiveModel::ArraySerializer.new(
-          events_to_serialize,
-          each_serializer: Api::EventSerializer,
-          scope: current_user
-        )
-        events_by_week[first_week] = serialized
+        events_by_week[first_week] = get_first_week(events)
       else
         first_week = "#{start_week} - #{end_week}"
-        events_to_serialize_1 = [events[0],events[1],events[2]].reject { |c| c.nil? }
-        serialized_first_week = ActiveModel::ArraySerializer.new(
-          events_to_serialize_1,
-          each_serializer: Api::EventSerializer,
-          scope: current_user
-        )
-        events_by_week[first_week] = serialized_first_week
+        events_by_week[first_week] = get_first_week(events)
 
-        start_week = date.at_beginning_of_week -  7 #days
-        start_week = start_week.at_beginning_of_week.strftime
-        end_week = date.at_end_of_week -  7 #day
-        end_week = end_week.at_end_of_week.strftime
+        start_week = (date.at_beginning_of_week -  7).at_beginning_of_week.strftime
+        end_week = (date.at_end_of_week -  7).at_end_of_week.strftime
         second_week = "#{start_week} - #{end_week}"
-        events_to_serialize_2 = [events[3],events[4],events[5]].reject { |c| c.nil? }
-        serialized_second_week = ActiveModel::ArraySerializer.new(
-          events_to_serialize_2,
-          each_serializer: Api::EventSerializer,
-          scope: current_user
-        )
-        events_by_week[second_week] = serialized_second_week
+        events_by_week[second_week] = get_second_week(events)
       end
       events_by_week
     end
 
 
+    def get_first_week(events)
+      events_to_serialize = [events[0],events[1],events[2]].reject { |c| c.nil? }
+      serializeEvents(events_to_serialize)
+    end
+
+    def get_second_week(events)
+      events_to_serialize = [events[3],events[4],events[5]].reject { |c| c.nil? }
+      serializeEvents(events_to_serialize)
+    end
+
+    def serializeEvents(events)
+      serialized = ActiveModel::ArraySerializer.new(
+        events,
+        each_serializer: Api::EventSerializer,
+        scope: current_user
+      )
+      serialized
+    end
   end
 end
