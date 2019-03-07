@@ -26,6 +26,10 @@ module Api
       my_recommendations.where(status: "in_progress").includes(:tutor_recommendation)
     }
 
+    expose(:total_approved_contents) {
+      Neuron.approved_public_contents.count
+    }
+
     api :POST,
         "/learn",
         "answer a test and learn contents"
@@ -74,6 +78,10 @@ needs to be a JSON-encoded string having the following format:
         event: {
           completed: event_is_completed,
           info: event_completed
+        },
+        meta: {
+          current_learnt_contents: current_user.content_learnings.count,
+          total_approved_contents: total_approved_contents
         }
       }
     end
