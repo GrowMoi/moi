@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190218160121) do
+ActiveRecord::Schema.define(version: 20190307031834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,16 @@ ActiveRecord::Schema.define(version: 20190218160121) do
   end
 
   add_index "content_importings", ["user_id"], name: "index_content_importings_on_user_id", using: :btree
+
+  create_table "content_learning_events", force: :cascade do |t|
+    t.integer  "user_event_id", null: false
+    t.integer  "content_id",    null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "content_learning_events", ["content_id"], name: "index_content_learning_events_on_content_id", using: :btree
+  add_index "content_learning_events", ["user_event_id"], name: "index_content_learning_events_on_user_event_id", using: :btree
 
   create_table "content_learning_final_tests", force: :cascade do |t|
     t.integer  "user_id",                    null: false
@@ -258,17 +268,16 @@ ActiveRecord::Schema.define(version: 20190218160121) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "events", force: :cascade do |t|
-    t.string   "title",                       null: false
+    t.string   "title",                      null: false
     t.string   "description"
     t.string   "image"
-    t.text     "content_ids",  default: [],                array: true
-    t.text     "publish_days", default: [],                array: true
-    t.integer  "duration",                    null: false
+    t.text     "content_ids", default: [],                array: true
+    t.integer  "duration",                   null: false
     t.string   "kind"
-    t.integer  "user_level",   default: 1
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.boolean  "active",       default: true
+    t.integer  "user_level",  default: 1
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "active",      default: true
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -573,14 +582,13 @@ ActiveRecord::Schema.define(version: 20190218160121) do
   add_index "user_content_preferences", ["user_id"], name: "index_user_content_preferences_on_user_id", using: :btree
 
   create_table "user_events", force: :cascade do |t|
-    t.integer  "user_id",                           null: false
-    t.integer  "event_id",                          null: false
-    t.boolean  "completed",         default: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.json     "contents",          default: [],                 array: true
-    t.json     "contents_learning", default: [],                 array: true
-    t.boolean  "expired",           default: false
+    t.integer  "user_id",                    null: false
+    t.integer  "event_id",                   null: false
+    t.boolean  "completed",  default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.json     "contents",   default: [],                 array: true
+    t.boolean  "expired",    default: false
   end
 
   add_index "user_events", ["event_id"], name: "index_user_events_on_event_id", using: :btree
@@ -673,6 +681,7 @@ ActiveRecord::Schema.define(version: 20190218160121) do
   add_foreign_key "client_notifications", "users", column: "client_id"
   add_foreign_key "client_tutor_recommendations", "users", column: "client_id"
   add_foreign_key "content_importings", "users"
+  add_foreign_key "content_learning_events", "user_events"
   add_foreign_key "content_learning_final_tests", "users"
   add_foreign_key "content_learning_quizzes", "players"
   add_foreign_key "content_learning_tests", "users"
