@@ -18,13 +18,6 @@ h3.text-center = event.title
   = label_tag t("activerecord.attributes.event.user_level")
   p = event.user_level
 
-.form-group
-  = label_tag t("activerecord.attributes.event.publish_days")
-  ul
-    -event.publish_days.each do |p|
-      li
-        span = p
-
   .form-group
     = label_tag t("activerecord.attributes.event.image")
     br

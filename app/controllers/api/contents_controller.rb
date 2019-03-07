@@ -286,8 +286,17 @@ module Api
     def event_completed?
       event_completed = false
       if content_belong_any_event? && !event_expired?
-        update_event
-        event_completed = true
+        newContentLearningEvent = ContentLearningEvent.new(
+          user_event_id: user_event.id,
+          content_id: content.id
+        )
+        newContentLearningEvent.save
+        #check if completed
+        if is_successful_event?
+          user_event.completed = true
+          user_event.save
+          event_completed = true
+        end
       end
       event_completed
     end
@@ -310,23 +319,10 @@ module Api
       content_belong
     end
 
-    def update_event
-      new_user_event = user_event;
-      contents_learning = new_user_event.contents_learning.map do |content_event|
-        if (content_event["content_id"]).to_i == content.id
-          content_event["learnt"] = true
-        end
-        content_event
-      end
-      new_user_event.contents_learning = contents_learning
-      if is_successful_event?(new_user_event)
-        new_user_event.completed = true;
-      end
-      new_user_event.save;
-    end
-
-    def is_successful_event?(event)
-      !event.contents_learning.any? { |content| content['learnt'] == false }
+    def is_successful_event?
+      totalContents = user_event.contents.count;
+      totalLearnt = ContentLearningEvent.where(content: content).count
+      totalContents == totalLearnt
     end
   end
 end
