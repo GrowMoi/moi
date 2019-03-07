@@ -292,7 +292,9 @@ module Api
         )
         newContentLearningEvent.save
         #check if completed
-        if is_successful_event?
+        totalContents = user_event.contents.count
+        totalLearnt = user_event.content_learning_events.count
+        if totalContents == totalLearnt
           user_event.completed = true
           user_event.save
           event_completed = true
@@ -317,12 +319,6 @@ module Api
         content_belong = user_event.event.content_ids.include? (content.id.to_s)
       end
       content_belong
-    end
-
-    def is_successful_event?
-      totalContents = user_event.contents.count;
-      totalLearnt = ContentLearningEvent.where(content: content).count
-      totalContents == totalLearnt
     end
   end
 end
