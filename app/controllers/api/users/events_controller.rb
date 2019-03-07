@@ -34,6 +34,20 @@ module Api
         render json: response,
                status: response[:status]
       end
+
+      api :GET,
+          "/users/events/my_events",
+          "get events taken"
+          
+      def my_events
+        events = UserEvent.where(user: user)
+        response = {
+          status: :created,
+          events: events
+        }
+        render json: response,
+               status: response[:status]
+      end
     end
   end
 end
