@@ -132,17 +132,7 @@ module Api
           }
         end
       else
-        if event_completed?
-          response = {
-            completed: user_event.completed,
-            event: user_event.event
-          }
-        else
-          response = {
-            status: :created,
-            user_event: user_event
-          }
-        end
+        response = { status: :unprocessable_entity }
       end
       render json: response,
              status: response[:status]
@@ -293,11 +283,16 @@ module Api
         newContentLearningEvent.save
         #check if completed
         totalContents = user_event.contents.count
-        totalLearnt = user_event.content_learning_events.count
-        if totalContents == totalLearnt
-          user_event.completed = true
-          user_event.save
-          event_completed = true
+        contentsLearnt = user_event.content_learning_events
+
+        if totalContents == contentsLearnt.count
+          contentsLearntIds = contentsLearnt.map(&:id)
+          contentsLearntByTest = ContentLearning.where(id: contentsLearntIds).count
+          if totalContentLearnt == contentsLearntByTest
+            user_event.completed = true
+            user_event.save
+            event_completed = true
+          end
         end
       end
       event_completed

@@ -160,11 +160,16 @@ module Api
 
       outdate_user_events_ids = current_user
                                 .user_events
-                                .where("created_at <= ?",
+                                .where("updated_at < ?",
                                   date.at_beginning_of_week
                                 ).map(&:event_id)
 
-      events_availables = all_events_ids - outdate_user_events_ids
+      completed_user_events_ids = current_user
+                                .user_events
+                                .where(completed: true)
+                                .map(&:event_id)
+
+      events_availables = all_events_ids - outdate_user_events_ids - completed_user_events_ids
       events = Event.where(id: events_availables).order(created_at: :asc)
       result = {
         events: events || [],
