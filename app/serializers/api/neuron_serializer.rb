@@ -22,6 +22,12 @@ module Api
 
     def contents
       object.approved_contents.map do |content|
+        title = content.title
+        lang = current_user.preferred_lang
+        unless lang == ApplicationController::DEFAULT_LANGUAGE
+          resp = TranslatedAttribute.where(translatable_id: content.id, name: "title").last
+          title = resp ? resp.content : title
+        end
         {
           id: content.id,
           neuron_id: content.neuron_id,
@@ -30,11 +36,12 @@ module Api
           level: content.level,
           read: current_user.already_read?(content),
           learnt: current_user.already_learnt?(content),
-          title: content.title,
+          title: title,
           favorite: is_favorite?(content)
         }
       end
     end
+
 
     def neuron_can_read
       visible_neurons = TreeService::PublicScopeFetcher.new(@scope).neurons

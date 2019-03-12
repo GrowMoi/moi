@@ -3,6 +3,7 @@ module TreeService
     def initialize(options)
       @user = options.fetch :user
       @contents = options.fetch :contents
+      @language = @user.preferred_lang
     end
 
     def user_test
@@ -19,12 +20,19 @@ module TreeService
     private
 
     def questions
-      puts @contents.size
       @contents.map do |content|
-        puts content.title
+        title = content.title
+        unless @language == ApplicationController::DEFAULT_LANGUAGE
+          resp = TranslatedAttribute.where(
+                                            translatable_id: content.id,
+                                            name: "title",
+                                            language: @language
+                                          ).first
+          title = resp ? resp.content : title
+        end
         {
           content_id: content.id,
-          title: content.title,
+          title: title,
           media_url: image_for(content),
           possible_answers: possible_answers_for(content)
         }
@@ -39,11 +47,20 @@ module TreeService
 
     def possible_answers_for(content)
       content.possible_answers.map do |possible_answer|
-        possible_answer.attributes.slice(
-          "id",
-          "text",
-          "correct"
-        )
+        text = possible_answer["text"]
+        unless @language == ApplicationController::DEFAULT_LANGUAGE
+          resp = TranslatedAttribute.where(
+                                            translatable_type: "PossibleAnswer",
+                                            translatable_id: possible_answer["id"],
+                                            language: @language
+                                          ).first
+          text = resp ? resp.content : text
+        end
+        {
+          id: possible_answer["id"],
+          text: text,
+          correct: possible_answer["correct"]
+        }
       end
     end
   end
