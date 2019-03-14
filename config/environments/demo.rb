@@ -91,7 +91,9 @@ Rails.application.configure do
       origins "http://moi.haedus.cl",
               "https://moi.haedus.cl",
               "http://moi-demo.shiriculapo.com",
-              "https://moi-demo.shiriculapo.com"
+              "https://moi-demo.shiriculapo.com",
+              "http://www.moi.haedus.cl",
+              "https://www.moi.haedus.cl"
 
       resource "/api/*",
                headers: :any,
@@ -107,7 +109,9 @@ Rails.application.configure do
               "http://moi-demo.shiriculapo.com",
               "https://moi-demo.shiriculapo.com",
               "http://moi-demo-backend.shiriculapo.com",
-              "https://moi-demo-backend.shiriculapo.com"
+              "https://moi-demo-backend.shiriculapo.com",
+              "http://www.moi.backend.haedus.cl",
+              "https://www.moi.backend.haedus.cl"
 
       resource '/assets/*'
     end
