@@ -56,7 +56,10 @@ module Api
 
     expose(:all_tasks) {
       results = current_user.all_tasks
-      Kaminari.paginate_array(results)
+      ids = current_user.user_events.last.event.content_ids
+      ev_contents = Content.where(id: ids)
+      total = results + ev_contents
+      Kaminari.paginate_array(total)
         .page(params[:page])
         .per(4)
     }
