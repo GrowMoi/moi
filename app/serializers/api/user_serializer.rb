@@ -42,7 +42,8 @@ module Api
                :tree_image,
                :username,
                :achievements,
-               :image
+               :image,
+               :language
 
     has_many :content_preferences
 
@@ -70,6 +71,10 @@ module Api
 
     def image
       object.image ? object.image.url : ''
+    end
+
+    def language
+      object.preferred_lang
     end
   end
 end
