@@ -288,7 +288,7 @@ module Api
         if totalContents == contentsLearnt.count
           contentsLearntIds = contentsLearnt.map(&:id)
           contentsLearntByTest = ContentLearning.where(id: contentsLearntIds).count
-          if totalContentLearnt == contentsLearntByTest
+          if contentsLearnt == contentsLearntByTest
             user_event.completed = true
             user_event.save
             event_completed = true
