@@ -164,17 +164,15 @@ module Api
                                   date.at_beginning_of_week
                                 ).map(&:event_id)
 
-      completed_user_events_ids = current_user
-                                .user_events
-                                .where(completed: true)
-                                .map(&:event_id)
+      events_ids_taken_by_user = current_user.user_events.map(&:event_id)
 
-      events_availables = all_events_ids - outdate_user_events_ids - completed_user_events_ids
+      events_availables = all_events_ids - outdate_user_events_ids - events_ids_taken_by_user
       events = Event.where(id: events_availables).order(created_at: :asc)
       result = {
         events: events || [],
         all_events_ids: all_events_ids || [],
-        outdate_user_events_ids: outdate_user_events_ids || []
+        outdate_user_events_ids: outdate_user_events_ids || [],
+        user_events: current_user.user_events
       }
     end
 
@@ -182,11 +180,12 @@ module Api
       date = Date.today
       start_week = date.at_beginning_of_week.strftime
       end_week = date.at_end_of_week.strftime
-      events = get_events_availables[:events]
-      all_events_ids = get_events_availables[:all_events_ids]
+      events_availables = get_events_availables
+      events = events_availables[:events]
+      all_events_ids = events_availables[:all_events_ids]
       events_by_week = {}
 
-      if events.size == all_events_ids.size #any event taken
+      if (events.size == all_events_ids.size) && ()#any event taken
         first_week = "#{start_week} - #{end_week}"
         events_by_week[first_week] = get_first_week(events)
       else
@@ -200,7 +199,6 @@ module Api
       end
       events_by_week
     end
-
 
     def get_first_week(events)
       events_to_serialize = [events[0],events[1],events[2]].reject { |c| c.nil? }
