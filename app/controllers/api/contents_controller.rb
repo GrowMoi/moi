@@ -132,7 +132,7 @@ module Api
           check_event
           response = {
             status: :created,
-            perform_test: nil,
+            perform_test: false,
             test: nil
           }
         else

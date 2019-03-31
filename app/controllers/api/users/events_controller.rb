@@ -11,17 +11,9 @@ module Api
         Event.find(params[:id])
       }
 
-      expose(:last_user_event_completed) {
+      expose(:last_user_event) {
         UserEvent.where(
           user: current_user,
-          completed: true
-        ).last
-      }
-
-      expose(:last_user_event_expired) {
-        UserEvent.where(
-          user: current_user,
-          expired: true
         ).last
       }
 
@@ -77,12 +69,13 @@ module Api
       private
 
       def user_can_take_event?
-        can_take_event = true
-        if last_user_event_completed
-          can_take_event = last_user_event_completed.completed
-        end
-        if last_user_event_expired
-          can_take_event = last_user_event_expired.expired
+        can_take_event = false
+        if last_user_event
+          if last_user_event.completed || last_user_event.expired
+            can_take_event = true
+          end
+        else
+          can_take_event = true
         end
         can_take_event
       end
