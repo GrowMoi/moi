@@ -11,14 +11,6 @@ module Api
         Event.find(params[:id])
       }
 
-      expose(:in_progress_event) {
-        UserEvent.where(
-          user: user,
-          completed: false,
-          expired: false
-        ).last
-      }
-
       respond_to :json
 
       api :POST,
@@ -52,20 +44,6 @@ module Api
         response = {
           status: :created,
           events: events
-        }
-        render json: response,
-               status: response[:status]
-      end
-
-      api :GET,
-          "/users/events/active_event",
-          "get last event in progress"
-
-      def active_event
-        event = in_progress_event
-        response = {
-          status: :created,
-          event: event
         }
         render json: response,
                status: response[:status]

@@ -122,7 +122,6 @@ Moi::Application.routes.draw do
       resources :events, only: [:index,:update, :show] do
         member do
           post :take
-          get :active_event
         end
         collection do
           get :my_events
@@ -135,6 +134,7 @@ Moi::Application.routes.draw do
     match "users/content_notes" => 'users#content_notes', via: :get
     match "users/content_favorites" => 'users#content_favorites', via: :get
     match "users/shared_contents" => 'users#shared_contents', via: :post
+    match "users/event_in_progress" => 'users#event_in_progress', via: :get
 
     resources :users,
               only: [] do
