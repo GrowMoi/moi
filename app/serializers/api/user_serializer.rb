@@ -43,7 +43,8 @@ module Api
                :username,
                :achievements,
                :image,
-               :level
+               :level,
+               :language
 
     has_many :content_preferences
 
@@ -71,6 +72,10 @@ module Api
 
     def image
       object.image ? object.image.url : ''
+    end
+
+    def language
+      object.preferred_lang
     end
   end
 end
