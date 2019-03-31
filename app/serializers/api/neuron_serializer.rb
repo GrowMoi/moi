@@ -51,10 +51,15 @@ module Api
 
     def belongs_to_event?(content)
       belongs = false
-      any_active_event = current_user.user_events.where(completed: false).last
-      if any_active_event
-        elm = { 'content_id'=> content.id.to_s, 'neuron'=> content.neuron.title }
-        belongs = any_active_event.contents.include? (elm)
+      user_event = current_user.user_events.where(completed: false, expired: false).last
+
+      if user_event
+        ids = user_event.content_learning_events.map(&:content_id)
+        content_event_was_read = ids.include? (content.id)
+        unless content_event_was_read
+          elm = { 'content_id'=> content.id.to_s, 'neuron'=> content.neuron.title }
+          belongs = user_event.contents.include? (elm)
+        end
       end
       belongs
     end

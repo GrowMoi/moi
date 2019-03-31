@@ -10,6 +10,14 @@ module Api
                   .find(params[:test_id])
     }
 
+    expose(:user_event) {
+      UserEvent.where(
+        user: current_user,
+        completed: false,
+        expired: false
+      ).last
+    }
+
     expose(:my_recommendations) {
       ClientTutorRecommendation.where(client: current_user)
     }
@@ -36,6 +44,8 @@ needs to be a JSON-encoded string having the following format:
     def create
       answerer_result = answerer.result
       serialized_recommendations = []
+      event_completed = {}
+
       if is_client?(current_user)
         update_user_leaderboard
         serialized_recommendations = ActiveModel::ArraySerializer.new(
@@ -49,12 +59,18 @@ needs to be a JSON-encoded string having the following format:
           scope: current_user,
           each_serializer: Api::UserAchievementSerializer
         )
-
       end
+
+      if user_completed_any_event?
+        binding.pry
+        event_completed = user_event.event
+      end
+
       render json: {
         result: answerer_result,
         recommendations: serialized_recommendations,
-        achievements: serialized_achievements
+        achievements: serialized_achievements,
+        event: event_completed
       }
     end
 
@@ -162,6 +178,27 @@ needs to be a JSON-encoded string having the following format:
       end
     end
 
+    def user_completed_any_event?
+      event_completed = false
+      #check if completed
+      totalContents = user_event.contents.count
+      contentsLearnt = user_event.content_learning_events
+
+      if totalContents == contentsLearnt.count
+        contentsLearntIds = contentsLearnt.map(&:content_id)
+        contentsLearntByTest = ContentLearning.where(
+                                content_id: contentsLearntIds,
+                                user: current_user
+                              )
+        if contentsLearnt.count == contentsLearntByTest.count
+          user_event.completed = true
+          user_event.save
+          event_completed = true
+        end
+      end
+
+      event_completed
+    end
 
   end
 end

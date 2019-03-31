@@ -118,25 +118,30 @@ module Api
         }
       }
     }
+
     def read
-      if current_user.read(content)
-        response = {
-          status: :created,
-          perform_test: test_fetcher.perform_test?,
-          test: test_fetcher.user_test_for_api
-        }
-        if event_completed?
-          response["event"] = {
-            completed: user_event.completed,
-            event: user_event.event
+     if current_user.read(content)
+       check_event
+       response = {
+         status: :created,
+         perform_test: test_fetcher.perform_test?,
+         test: test_fetcher.user_test_for_api
+       }
+     else
+        if content_belong_any_event?
+          check_event
+          response = {
+            status: :created,
+            perform_test: nil,
+            test: nil
           }
+        else
+          response = { status: :unprocessable_entity }
         end
-      else
-        response = { status: :unprocessable_entity }
-      end
-      render json: response,
-             status: response[:status]
-    end
+     end
+     render json: response,
+            status: response[:status]
+   end
 
     api :POST,
         "/neurons/:neuron_id/contents/:content_id/notes",
@@ -273,7 +278,7 @@ module Api
       )
     end
 
-    def event_completed?
+    def check_event
       event_completed = false
       if content_belong_any_event? && !event_expired?
         newContentLearningEvent = ContentLearningEvent.new(
@@ -281,19 +286,6 @@ module Api
           content_id: content.id
         )
         newContentLearningEvent.save
-        #check if completed
-        totalContents = user_event.contents.count
-        contentsLearnt = user_event.content_learning_events
-
-        if totalContents == contentsLearnt.count
-          contentsLearntIds = contentsLearnt.map(&:id)
-          contentsLearntByTest = ContentLearning.where(id: contentsLearntIds).count
-          if contentsLearnt == contentsLearntByTest
-            user_event.completed = true
-            user_event.save
-            event_completed = true
-          end
-        end
       end
       event_completed
     end
