@@ -44,7 +44,8 @@ needs to be a JSON-encoded string having the following format:
     def create
       answerer_result = answerer.result
       serialized_recommendations = []
-      event_completed = {}
+      event_completed = nil
+      event_is_completed = false
 
       if is_client?(current_user)
         update_user_leaderboard
@@ -62,15 +63,18 @@ needs to be a JSON-encoded string having the following format:
       end
 
       if user_completed_any_event?
-        binding.pry
         event_completed = user_event.event
+        event_is_completed = true
       end
 
       render json: {
         result: answerer_result,
         recommendations: serialized_recommendations,
         achievements: serialized_achievements,
-        event: event_completed
+        event: {
+          completed: event_completed,
+          info: event_completed
+        }
       }
     end
 
