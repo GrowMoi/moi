@@ -154,7 +154,9 @@ module Api
 
     def event_in_progress
       if last_user_event
-        ids = last_user_event.event.content_ids
+        ids_content_event = last_user_event.event.content_ids.map(&:to_i)
+        ids_content_reading_event = last_user_event.content_learning_events.map(&:content_id)
+        ids = ids_content_event - ids_content_reading_event
         contents = Content.where(id: ids)
         contents_serialized = ActiveModel::ArraySerializer.new(
           contents,
@@ -166,8 +168,10 @@ module Api
           contents: contents_serialized
         )
       else
-        render nothing: true,
-               status: :accepted
+        respond_with(
+          event: nil,
+          contents: []
+        )
       end
     end
   end

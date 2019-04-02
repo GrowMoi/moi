@@ -72,7 +72,7 @@ needs to be a JSON-encoded string having the following format:
         recommendations: serialized_recommendations,
         achievements: serialized_achievements,
         event: {
-          completed: event_completed,
+          completed: event_is_completed,
           info: event_completed
         }
       }
