@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190307031834) do
+ActiveRecord::Schema.define(version: 20190412215435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,6 +180,17 @@ ActiveRecord::Schema.define(version: 20190307031834) do
 
   add_index "content_notes", ["content_id"], name: "index_content_notes_on_content_id", using: :btree
   add_index "content_notes", ["user_id"], name: "index_content_notes_on_user_id", using: :btree
+
+  create_table "content_reading_events", force: :cascade do |t|
+    t.integer  "user_event_id",                null: false
+    t.integer  "content_id",                   null: false
+    t.boolean  "read",          default: true, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "content_reading_events", ["content_id"], name: "index_content_reading_events_on_content_id", using: :btree
+  add_index "content_reading_events", ["user_event_id"], name: "index_content_reading_events_on_user_event_id", using: :btree
 
   create_table "content_reading_times", force: :cascade do |t|
     t.integer  "content_id", null: false
@@ -692,6 +703,7 @@ ActiveRecord::Schema.define(version: 20190307031834) do
   add_foreign_key "content_media", "contents"
   add_foreign_key "content_notes", "contents"
   add_foreign_key "content_notes", "users"
+  add_foreign_key "content_reading_events", "user_events"
   add_foreign_key "content_reading_times", "contents"
   add_foreign_key "content_reading_times", "users"
   add_foreign_key "content_readings", "contents"
