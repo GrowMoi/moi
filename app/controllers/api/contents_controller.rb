@@ -281,11 +281,11 @@ module Api
     def check_event
       event_completed = false
       if content_belong_any_event? && !event_expired?
-        newContentLearningEvent = ContentLearningEvent.new(
+        newContentReadingEvent = ContentReadingEvent.new(
           user_event_id: user_event.id,
           content_id: content.id
         )
-        newContentLearningEvent.save
+        newContentReadingEvent.save
       end
       event_completed
     end
