@@ -5,6 +5,7 @@ module TreeService
     def initialize(options)
       @answers = options.fetch(:answers)
       @user_test = options.fetch(:user_test)
+      @active_events = options.fetch(:active_events)
     end
 
     def process!
@@ -17,8 +18,10 @@ module TreeService
         correct_answer = correct_answer?(answer)
         if correct_answer
           learn!(answer)
+          learn_content_event!(answer)
         else
           unread!(answer)
+          unread_content_event!(answer)
         end
         {
           correct: !!correct_answer,
@@ -39,12 +42,45 @@ module TreeService
       )
     end
 
+    def learn_content_event!(answer)
+      if @active_events.any?
+        @active_events.map do |event|
+          create_content_learning_event(event, answer["content_id"])
+        end
+      end
+    end
+
     def unread!(answer)
       content_reading = ContentReading.where(
         user: user_test.user,
         content_id: answer["content_id"]
       ).first
       content_reading.destroy if content_reading
+    end
+
+    def unread_content_event!(answer)
+      if @active_events.any?
+        @active_events.map do |event|
+          constent_reading_event = ContentReadingEvent.where(
+            user_event: event,
+            content_id: answer["content_id"]
+          ).first
+          constent_reading_event.destroy if constent_reading_event
+        end
+      end
+    end
+
+    def create_content_learning_event(event, content_id)
+      content_reading_event = ContentReadingEvent.where(
+        user_event: event,
+        content_id: content_id
+      ).first
+      if content_reading_event
+        ContentLearningEvent.create!(
+          user_event: event,
+          content_id: content_id
+        )
+      end
     end
 
     def correct_answer?(answer)

@@ -10,12 +10,16 @@ module Api
                   .find(params[:test_id])
     }
 
-    expose(:user_event) {
+    expose(:active_events) {
       UserEvent.where(
         user: current_user,
         completed: false,
         expired: false
-      ).last
+      )
+    }
+
+    expose(:user_event) {
+      active_events.last
     }
 
     expose(:my_recommendations) {
@@ -91,7 +95,8 @@ needs to be a JSON-encoded string having the following format:
     def answerer
       TreeService::AnswerLearningTest.new(
         user_test: user_test,
-        answers: JSON.parse(params[:answers])
+        answers: JSON.parse(params[:answers]),
+        active_events: active_events
       ).process!
     end
 

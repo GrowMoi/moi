@@ -155,7 +155,7 @@ module Api
     def event_in_progress
       if last_user_event
         ids_content_event = last_user_event.event.content_ids.map(&:to_i)
-        ids_content_reading_event = last_user_event.content_learning_events.map(&:content_id)
+        ids_content_reading_event = last_user_event.content_reading_events.map(&:content_id)
         ids = ids_content_event - ids_content_reading_event
         contents = Content.where(id: ids)
         contents_serialized = ActiveModel::ArraySerializer.new(
