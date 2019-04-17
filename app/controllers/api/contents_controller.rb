@@ -121,12 +121,12 @@ module Api
 
     def read
      if current_user.read(content)
-       check_event
-       response = {
-         status: :created,
-         perform_test: test_fetcher.perform_test?,
-         test: test_fetcher.user_test_for_api
-       }
+        check_event
+        response = {
+          status: :created,
+          perform_test: test_fetcher.perform_test?,
+          test: test_fetcher.user_test_for_api
+        }
      else
         if content_belong_any_event?
           check_event
@@ -286,6 +286,7 @@ module Api
           content_id: content.id
         )
         newContentReadingEvent.save
+        validate_content_was_already_learned(content.id)
       end
       event_completed
     end
@@ -306,6 +307,14 @@ module Api
         content_belong = user_event.event.content_ids.include? (content.id.to_s)
       end
       content_belong
+    end
+
+    def validate_content_was_already_learned(content_id)
+      content_already_learned = ContentLearning.where(
+        user: current_user,
+        content_id: content.id
+      ).first
+      content_already_learned.destroy if content_already_learned
     end
   end
 end
