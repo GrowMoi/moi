@@ -41,7 +41,7 @@ module Api
         {
           content_id: id,
           neuron: neuron.title,
-          color: TreeService::NeuronsFetcher.new(neuron).neuron_color(branches_neurons_ids)
+          neuron_color: TreeService::NeuronsFetcher.new(neuron).neuron_color(branches_neurons_ids)
         }
       end
     end
