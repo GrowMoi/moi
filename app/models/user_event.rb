@@ -17,7 +17,8 @@ class UserEvent < ActiveRecord::Base
   belongs_to :event
   has_many :content_learning_events,
            dependent: :destroy
-
+  has_many :content_reading_events,
+          dependent: :destroy
   before_save :add_contents!
 
   private

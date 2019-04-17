@@ -11,4 +11,6 @@
 #
 
 class ContentReadingEvent < ActiveRecord::Base
+  belongs_to :user_event
+  belongs_to :content
 end
