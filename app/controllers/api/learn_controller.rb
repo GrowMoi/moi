@@ -198,22 +198,22 @@ needs to be a JSON-encoded string having the following format:
     def user_completed_any_event?
       event_completed = false
       #check if completed
-      totalContents = user_event.contents.count
-      contentsLearnt = user_event.content_learning_events
-
-      if totalContents == contentsLearnt.count
-        contentsLearntIds = contentsLearnt.map(&:content_id)
-        contentsLearntByTest = ContentLearning.where(
-                                content_id: contentsLearntIds,
-                                user: current_user
-                              )
-        if contentsLearnt.count == contentsLearntByTest.count
-          user_event.completed = true
-          user_event.save
-          event_completed = true
+      if user_event
+        totalContents = user_event.contents.count
+        contentsLearnt = user_event.content_learning_events
+        if totalContents == contentsLearnt.count
+          contentsLearntIds = contentsLearnt.map(&:content_id)
+          contentsLearntByTest = ContentLearning.where(
+                                  content_id: contentsLearntIds,
+                                  user: current_user
+                                )
+          if contentsLearnt.count == contentsLearntByTest.count
+            user_event.completed = true
+            user_event.save
+            event_completed = true
+          end
         end
       end
-
       event_completed
     end
 
