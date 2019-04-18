@@ -12,9 +12,7 @@ module Api
       }
 
       expose(:last_user_event) {
-        UserEvent.where(
-          user: current_user,
-        ).last
+        current_user.user_events.last
       }
 
       respond_to :json
@@ -69,15 +67,15 @@ module Api
       private
 
       def user_can_take_event?
-        can_take_event = false
-        if last_user_event
+        unless last_user_event.nil?
           if last_user_event.completed || last_user_event.expired
-            can_take_event = true
+            return true
+          else
+            return false
           end
         else
-          can_take_event = true
+          return true
         end
-        can_take_event
       end
     end
   end
