@@ -14,6 +14,7 @@ module TreeService
     end
 
     def result
+      branches_neurons_ids = TreeService::NeuronsFetcher.new(nil).neurons_ids_by_branch
       answers_result = @answers.map do |answer|
         correct_answer = correct_answer?(answer)
         if correct_answer
@@ -23,9 +24,11 @@ module TreeService
           unread!(answer)
           unread_content_event!(answer)
         end
+        content = Content.find(answer["content_id"])
         {
           correct: !!correct_answer,
-          content_id: answer["content_id"]
+          content_id: answer["content_id"],
+          neuron_color: TreeService::NeuronsFetcher.new(content.neuron).neuron_color(branches_neurons_ids)
         }
       end
       @user_test.answers = answers_result

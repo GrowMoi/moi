@@ -34,11 +34,14 @@ module Api
 
     def contents
       ids = object.content_ids.map.reject { |id| id.empty? }
+      branches_neurons_ids = TreeService::NeuronsFetcher.new(nil).neurons_ids_by_branch
       ids.map do |id|
         content = Content.find(id)
+        neuron = content.neuron
         {
           content_id: id,
-          neuron: content.neuron.title
+          neuron: neuron.title,
+          neuron_color: TreeService::NeuronsFetcher.new(neuron).neuron_color(branches_neurons_ids)
         }
       end
     end
