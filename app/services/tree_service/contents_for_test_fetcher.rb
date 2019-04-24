@@ -7,15 +7,18 @@ module TreeService
     end
 
     def contents
-      content_ids = [
-        grouped_content_reading_ids_for_test,
-        flourished_neurons_content_reading_ids_for_test
-      ].flatten.compact
-      Content.where(
-        id: content_ids
-      ).where.not(
-        id: learnings.pluck(:content_id)
-      )
+      readings = readings.map(&:content_id)
+      learnings = learnings.map(&:content_id)
+      readings - learnings
+      # content_ids = [
+      #   grouped_content_reading_ids_for_test,
+      #   flourished_neurons_content_reading_ids_for_test
+      # ].flatten.compact
+      # Content.where(
+      #   id: content_ids
+      # ).where.not(
+      #   id: learnings.pluck(:content_id)
+      # )
     end
 
     private
