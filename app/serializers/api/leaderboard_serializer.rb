@@ -6,7 +6,8 @@ module Api
         :username,
         :email,
         :user_id,
-        :user_image
+        :user_image,
+        :content_summary
 
     def username
       object.user ? object.user.username : 'unknow'
@@ -22,6 +23,15 @@ module Api
 
     def user_image
       object.user ? object.user.image.url : nil
+    end
+
+    def content_summary
+      if object.user
+        {
+          current_learnt_contents: object.user.content_learnings.count,
+          total_approved_contents: Neuron.approved_public_contents.count
+        }
+      end
     end
   end
 end

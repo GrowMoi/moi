@@ -4,7 +4,7 @@ module Api
 
     def users
       result = select_only(User)
-      serialize_with(UserSerializer, result)
+      serialize_with(UserSearchSerializer, result)
     end
 
     def serialize_with(serializer_type, result)
