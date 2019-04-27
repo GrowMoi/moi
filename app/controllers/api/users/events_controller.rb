@@ -55,10 +55,13 @@ module Api
           "get events taken"
 
       def my_events
-        events = UserEvent.where(user: user)
+        events = UserEvent.where(
+                            user: user,
+                            completed: true
+                          ).order("updated_at DESC")
         response = {
-          status: :created,
-          events: events
+          status: :accepted,
+          events: events_serialize(events)
         }
         render json: response,
                status: response[:status]
@@ -76,6 +79,14 @@ module Api
         else
           return true
         end
+      end
+
+      def events_serialize(events)
+        serialized = ActiveModel::ArraySerializer.new(
+          events,
+          each_serializer: Api::EventCompleteSerializer
+        )
+        serialized
       end
     end
   end
