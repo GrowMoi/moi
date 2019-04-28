@@ -61,7 +61,13 @@ module Api
                           ).order("updated_at DESC")
         response = {
           status: :accepted,
-          events: events_serialize(events)
+          events: events_serialize(events),
+          meta: {
+            total_events: Event.where(active: true)
+                          .where("user_level <= ?", current_user.level)
+                          .count,
+            events_completed: events.count
+          }
         }
         render json: response,
                status: response[:status]
