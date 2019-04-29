@@ -29,6 +29,7 @@
 #  authorization_key      :string
 #  age                    :integer
 #  image                  :string
+#  level                  :integer          default(1)
 #
 
 class User < ActiveRecord::Base
@@ -140,6 +141,8 @@ class User < ActiveRecord::Base
              dependent: :destroy
     has_many :social_sharings, dependent: :destroy
     has_many :content_importings
+    has_many :user_events,
+             dependent: :destroy
   end
 
 

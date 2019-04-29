@@ -33,6 +33,7 @@
       notifications: Notificaciones
       achievements: Logros
       quiz: Tests
+      events: Eventos
     users:
       new: "Nuevo Usuario"
       edit: "Editar Usuario"
@@ -248,6 +249,12 @@
         available: Tickets Disponibles
         spend: Tickets Utilizados
         bought: Tickets Adquiridos
+    events:
+      new: "Nuevo Evento"
+      edit: "Editar Evento"
+      created: "Evento creado"
+      updated: "Evento actualizado"
+      show: "Mostrar Evento"
     tutor:
       moi:
         analyze: "Enviar solicitud"
@@ -674,6 +681,7 @@
       admin_achievement: Logro
       content_importing: Importar contenidos
       payment: Pagos
+      event: Eventos
     attributes:
       user:
         username: "Nombre de usuario"
@@ -752,6 +760,16 @@
         user: Usuario
         date: Fecha
         product: Producto
+      event:
+        title: Titulo
+        description: Descripción
+        content_ids: Contenidos
+        publish_days: Publicar los dias
+        user_level: Nivel de usuario
+        kind: Tipo
+        duration: Duración (horas)
+        image: Imagen premio
+        active: Activo
     errors:
       messages:
         <<: *errors_messages

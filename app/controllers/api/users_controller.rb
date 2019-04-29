@@ -6,6 +6,14 @@ module Api
 
     expose(:user)
 
+    expose(:last_user_event) {
+      UserEvent.where(
+        user: current_user,
+        completed: false,
+        expired: false
+      ).last
+    }
+
     api :GET,
         "/users/:id/profile",
         "user's profile"
@@ -140,5 +148,31 @@ module Api
       end
     end
 
+    api :GET,
+        "/users/event_in_progress",
+        "return last event in progres"
+
+    def event_in_progress
+      if last_user_event
+        ids_content_event = last_user_event.event.content_ids.map(&:to_i)
+        ids_content_reading_event = last_user_event.content_reading_events.map(&:content_id)
+        ids = ids_content_event - ids_content_reading_event
+        contents = Content.where(id: ids)
+        contents_serialized = ActiveModel::ArraySerializer.new(
+          contents,
+          each_serializer: Api::ContentEventSerializer,
+          scope: current_user
+        )
+        respond_with(
+          event: last_user_event.event,
+          contents: contents_serialized
+        )
+      else
+        respond_with(
+          event: nil,
+          contents: []
+        )
+      end
+    end
   end
 end

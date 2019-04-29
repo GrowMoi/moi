@@ -10,12 +10,28 @@ module Api
                   .find(params[:test_id])
     }
 
+    expose(:active_events) {
+      UserEvent.where(
+        user: current_user,
+        completed: false,
+        expired: false
+      )
+    }
+
+    expose(:user_event) {
+      active_events.last
+    }
+
     expose(:my_recommendations) {
       ClientTutorRecommendation.where(client: current_user)
     }
 
     expose(:my_recommendations_in_progress) {
       my_recommendations.where(status: "in_progress").includes(:tutor_recommendation)
+    }
+
+    expose(:total_approved_contents) {
+      Neuron.approved_public_contents.count
     }
 
     api :POST,
@@ -36,6 +52,9 @@ needs to be a JSON-encoded string having the following format:
     def create
       answerer_result = answerer.result
       serialized_recommendations = []
+      event_completed = nil
+      event_is_completed = false
+
       if is_client?(current_user)
         update_user_leaderboard
         serialized_recommendations = ActiveModel::ArraySerializer.new(
@@ -49,12 +68,25 @@ needs to be a JSON-encoded string having the following format:
           scope: current_user,
           each_serializer: Api::UserAchievementSerializer
         )
-
       end
+
+      if user_completed_any_event?
+        event_completed = user_event.event
+        event_is_completed = true
+      end
+
       render json: {
         result: answerer_result,
         recommendations: serialized_recommendations,
-        achievements: serialized_achievements
+        achievements: serialized_achievements,
+        event: {
+          completed: event_is_completed,
+          info: event_completed
+        },
+        meta: {
+          current_learnt_contents: current_user.content_learnings.count,
+          total_approved_contents: total_approved_contents
+        }
       }
     end
 
@@ -63,7 +95,8 @@ needs to be a JSON-encoded string having the following format:
     def answerer
       TreeService::AnswerLearningTest.new(
         user_test: user_test,
-        answers: JSON.parse(params[:answers])
+        answers: JSON.parse(params[:answers]),
+        active_events: active_events
       ).process!
     end
 
@@ -162,6 +195,27 @@ needs to be a JSON-encoded string having the following format:
       end
     end
 
+    def user_completed_any_event?
+      event_completed = false
+      #check if completed
+      if user_event
+        totalContents = user_event.contents.count
+        contentsLearnt = user_event.content_learning_events
+        if totalContents == contentsLearnt.count
+          contentsLearntIds = contentsLearnt.map(&:content_id)
+          contentsLearntByTest = ContentLearning.where(
+                                  content_id: contentsLearntIds,
+                                  user: current_user
+                                )
+          if contentsLearnt.count == contentsLearntByTest.count
+            user_event.completed = true
+            user_event.save
+            event_completed = true
+          end
+        end
+      end
+      event_completed
+    end
 
   end
 end

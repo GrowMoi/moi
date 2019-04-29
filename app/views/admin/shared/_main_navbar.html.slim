@@ -14,12 +14,26 @@ nav.navbar.navbar-default.navbar-static-top.main-navbar
           = nav_item "settings", admin_settings_path
         - if can? :manage, Profile
           = nav_item "profiles", admin_profiles_path
-        - if can? :manage, Notification
-          = nav_item "notifications", admin_notifications_path
-        - if can? :manage, AdminAchievement
-          = nav_item "achievements", admin_admin_achievements_path
-        - if can? :manage, Quiz
-          = nav_item "quiz", admin_quizzes_path
+      ul.nav.navbar-nav
+        li.dropdown
+          = link_to "#", data: {toggle: "dropdown"} do
+            .text Features ▼
+          ul.dropdown-menu role="menu"
+            li
+              = nav_item "events", admin_events_path
+            li.divider
+            li
+            - if can? :manage, Quiz
+              = nav_item "quiz", admin_quizzes_path
+            li.divider
+            li
+            - if can? :manage, AdminAchievement
+              = nav_item "achievements", admin_admin_achievements_path
+            li.divider
+            li
+            - if can? :manage, Notification
+              = nav_item "notifications", admin_notifications_path
+
       ul.nav.navbar-nav.navbar-right
         li.dropdown.current-user-dropdown
           = link_to "#", data: {toggle: "dropdown"} do

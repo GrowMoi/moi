@@ -80,6 +80,13 @@ Moi::Application.routes.draw do
       end
     end
 
+    resources :events, only: [:show] do
+      collection do
+        get :today
+        get :week
+      end
+    end
+
     namespace :users do
       resource :account,
                 only: [:update]
@@ -112,6 +119,14 @@ Moi::Application.routes.draw do
         end
       end
       resources :certificates, except: [:update, :edit]
+      resources :events, only: [:index,:update, :show] do
+        member do
+          post :take
+        end
+        collection do
+          get :my_events
+        end
+      end
     end
 
     match "users/search" => 'users#search', via: :get
@@ -119,6 +134,7 @@ Moi::Application.routes.draw do
     match "users/content_notes" => 'users#content_notes', via: :get
     match "users/content_favorites" => 'users#content_favorites', via: :get
     match "users/shared_contents" => 'users#shared_contents', via: :post
+    match "users/event_in_progress" => 'users#event_in_progress', via: :get
 
     resources :users,
               only: [] do
@@ -154,6 +170,7 @@ Moi::Application.routes.draw do
     resources :achievements, except: [:create, :destroy]
     resources :admin_achievements, except: [:create, :destroy]
     resources :payments
+    resources :events
 
     match "payments/user/:user_id/tutor_assign_tickets" => 'payments#tutor_assign_tickets', as: :tutor_assign_tickets, via: :get
     match "payments/create_tutor_assign_tickets" => 'payments#create_tutor_assign_tickets', as: :create_tutor_assign_tickets, via: :post

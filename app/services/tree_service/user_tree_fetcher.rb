@@ -24,6 +24,9 @@ module TreeService
       @depth_calculator = NeuronDepthCalculator.new
       @desired_neuron_path = desired_neuron_path
       @root = serialize(RootFetcher.root_neuron)
+      #update level user
+      @user.level = @depth
+      @user.save
     end
 
     private

@@ -33,7 +33,8 @@ module Api
                :user_notes,
                :content_tasks,
                :neuron_can_read,
-               :favorite
+               :favorite,
+               :belongs_to_event
 
     translates :title, :description, :source
 
@@ -76,6 +77,21 @@ module Api
         object.content_videos.with_language(current_user.preferred_lang),
         each_serializer: ContentVideoSerializer
       )
+    end
+
+    def belongs_to_event
+      belongs = false
+      user_event = current_user.user_events.where(completed: false, expired: false).last
+
+      if user_event
+        ids = user_event.content_reading_events.map(&:content_id)
+        content_event_was_read = ids.include? (object.id)
+        unless content_event_was_read
+          elm = { 'content_id'=> object.id.to_s, 'neuron'=> object.neuron.title }
+          belongs = user_event.contents.include? (elm)
+        end
+      end
+      belongs
     end
 
     alias_method :current_user, :scope

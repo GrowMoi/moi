@@ -1,0 +1,55 @@
+= form_for [:admin, event] do |f|
+  = render "admin/shared/form_errors",
+           resource: event
+
+  .form-group
+    = f.label :title
+    = f.text_field :title,
+                   class: "form-control",
+                   required: true
+
+  .form-group
+   = f.label :description
+   = f.text_field :description,
+                  class: "form-control"
+
+  .form-group
+    = f.label :user_level
+    = f.number_field :user_level, class: "form-control", min: 1, max: 9, step: :any
+
+  .form-group
+    = f.label :duration
+    = f.number_field :duration,
+                   class: "form-control"
+
+  .form-group
+    = f.label :content_ids
+    = f.collection_select :content_ids, all_contents, :id, :title, {include_hidden: false}, {multiple: true, class: "form-control"}
+
+  .col-sm-12.nested-content-media
+    = f.hidden_field :id
+
+    .form-group
+      / media
+      = tooltip t("views.contents.attach_media"),
+                place: "left",
+                class: "btn btn-xs btn-default content-media-uploader" do
+        .glyphicon.glyphicon-cloud-upload
+
+      .hidden
+        = f.file_field :image
+        = f.hidden_field :image_cache
+
+      span.content-media-name-on-form
+        - if f.object.image?
+          = decorate(f.object).link_for_form
+  br
+  .form-group
+    .checkbox
+      label
+        = f.check_box :active
+        = f.label :active
+
+  .actions
+    = f.submit class: "btn btn-primary",
+               data: { disable_with: t("views.submitting") }

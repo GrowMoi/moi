@@ -43,6 +43,7 @@ module Api
                :username,
                :achievements,
                :image,
+               :level,
                :language
 
     has_many :content_preferences

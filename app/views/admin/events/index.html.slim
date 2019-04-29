@@ -1,0 +1,22 @@
+.level-quizzes-page
+  - content_for :title, t("activerecord.models.event").pluralize
+
+  table.table.table-striped
+    thead
+      tr
+        th =t("activerecord.attributes.event.title")
+        th =t("activerecord.attributes.event.description")
+        th =t("activerecord.attributes.event.user_level")
+        th =t("views.events.action")
+    tbody
+    -events.each do |q|
+      tr
+        td = q.title
+        td = q.description
+        td = q.user_level
+        td = link_to t("views.events.show"), admin_event_path(q)
+
+  .pull-right
+    = link_to t("views.events.new"),
+              new_admin_event_path,
+              class: "btn btn-sm btn-default"

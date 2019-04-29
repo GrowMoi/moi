@@ -6,6 +6,14 @@ module Api
       neuron.contents.find(params[:id])
     }
 
+    expose(:user_event) {
+      UserEvent.where(
+        user: current_user,
+        completed: false,
+        expired: false
+      ).last
+    }
+
     respond_to :json
 
     api :POST,
@@ -110,19 +118,30 @@ module Api
         }
       }
     }
+
     def read
-      if current_user.read(content)
+     if current_user.read(content)
+        check_event
         response = {
           status: :created,
           perform_test: test_fetcher.perform_test?,
           test: test_fetcher.user_test_for_api
         }
-      else
-        response = { status: :unprocessable_entity }
-      end
-      render json: response,
-             status: response[:status]
-    end
+     else
+        if content_belong_any_event?
+          check_event
+          response = {
+            status: :created,
+            perform_test: false,
+            test: nil
+          }
+        else
+          response = { status: :unprocessable_entity }
+        end
+     end
+     render json: response,
+            status: response[:status]
+   end
 
     api :POST,
         "/neurons/:neuron_id/contents/:content_id/notes",
@@ -257,6 +276,45 @@ module Api
       @test_fetcher ||= TreeService::ReadingTestFetcher.new(
         current_user
       )
+    end
+
+    def check_event
+      event_completed = false
+      if content_belong_any_event? && !event_expired?
+        newContentReadingEvent = ContentReadingEvent.new(
+          user_event_id: user_event.id,
+          content_id: content.id
+        )
+        newContentReadingEvent.save
+        validate_content_was_already_learned(content.id)
+      end
+      event_completed
+    end
+
+    def event_expired?
+      exprired_date = user_event.created_at + (user_event.event.duration * 60 * 60)
+      expired = exprired_date <= Time.now
+      if expired
+        user_event.expired = true;
+        user_event.save
+      end
+      expired
+    end
+
+    def content_belong_any_event?
+      content_belong = false
+      if user_event
+        content_belong = user_event.event.content_ids.include? (content.id.to_s)
+      end
+      content_belong
+    end
+
+    def validate_content_was_already_learned(content_id)
+      content_already_learned = ContentLearning.where(
+        user: current_user,
+        content_id: content.id
+      ).first
+      content_already_learned.destroy if content_already_learned
     end
   end
 end
