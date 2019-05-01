@@ -18,7 +18,7 @@ module TreeService
       @contents.map do |content|
         {
           content_id: content.id,
-          title: content.title,
+          title: title_translate(content),
           media_url: image_for(content),
           possible_answers: possible_answers_for(content)
         }
@@ -55,6 +55,20 @@ module TreeService
          :text,
          @user.preferred_lang
        ).presence || possible_answer.text
+    end
+
+    def title_translate(content)
+      lang = @user.preferred_lang
+      if lang == ApplicationController::DEFAULT_LANGUAGE
+        content.title
+      else
+        resp = TranslatedAttribute.where(translatable_id: content.id,
+                                  language: lang,
+                                  name: 'title',
+                                  translatable_type: "Content")
+                                  .first
+        resp ? resp.content : content.title
+      end
     end
   end
 end
