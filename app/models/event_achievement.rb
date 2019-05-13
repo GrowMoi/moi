@@ -17,4 +17,11 @@
 class EventAchievement < ActiveRecord::Base
 
   mount_uploader :image, ContentMediaUploader
+
+
+  begin :relationships
+    has_many :user_event_achievements,
+              dependent: :destroy
+  end
+
 end
