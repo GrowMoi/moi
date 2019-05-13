@@ -280,7 +280,7 @@ ActiveRecord::Schema.define(version: 20190510162153) do
 
   create_table "event_achievements", force: :cascade do |t|
     t.integer  "user_achievement_ids", default: [],                array: true
-    t.string   "name",                                null: false
+    t.string   "title",                               null: false
     t.datetime "start_date",                          null: false
     t.datetime "end_date",                            null: false
     t.string   "image"

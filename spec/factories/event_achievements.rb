@@ -4,7 +4,7 @@
 #
 #  id                   :integer          not null, primary key
 #  user_achievement_ids :integer          default([]), is an Array
-#  name                 :string           not null
+#  title                :string           not null
 #  start_date           :datetime         not null
 #  end_date             :datetime         not null
 #  image                :string
