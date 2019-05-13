@@ -37,7 +37,15 @@ module Api
                            .where('created_at > ?', current_user.created_at)
     }
 
+    expose(:user_notifications_count) {
+      admin_notifications.count +
+      tutor_requests.count +
+      my_notifications.count +
+      tutor_notifications.count
+    }
+
     expose(:total_user_notifications) {
+      #binding.pry
       serialized_admin = serialize_notifications(
                             admin_notifications,
                             Api::GenericNotificationSerializer
@@ -56,6 +64,7 @@ module Api
                         tutor_notifications,
                         Api::GenericNotificationSerializer
                       ).as_json
+      #binding.pry
 
       serialized_my_notifications +
       serialized_tutor_requests +
@@ -144,6 +153,7 @@ module Api
       }
     }
     def index
+      #binding.pry
       notification_items = paginate_notifications(total_user_notifications)
       render json: {
         notifications: notification_items,
@@ -151,6 +161,19 @@ module Api
           total_count: notification_items.total_count,
           total_pages: notification_items.total_pages
         }
+      }
+    end
+
+
+    api :GET,
+    "/notifications/details"
+    def details
+
+      pending_recommendations = TutorService::RecommendationsHandler.new(current_user).get_available
+
+      render json: {
+        notifications: user_notifications_count,
+        recommendations: pending_recommendations.count
       }
     end
 

@@ -22,14 +22,6 @@ module Api
       active_events.last
     }
 
-    expose(:my_recommendations) {
-      ClientTutorRecommendation.where(client: current_user)
-    }
-
-    expose(:my_recommendations_in_progress) {
-      my_recommendations.where(status: "in_progress").includes(:tutor_recommendation)
-    }
-
     expose(:total_approved_contents) {
       Neuron.approved_public_contents.count
     }
@@ -133,6 +125,11 @@ needs to be a JSON-encoded string having the following format:
 
     def update_recommendations
       recommendation_updated = []
+
+      my_recommendations_in_progress = TutorService::RecommendationsHandler.new(
+        current_user
+      ).get_in_progress
+
       my_recommendations_in_progress.find_each do |client_tutor_recommendation|
         content_ids = client_tutor_recommendation.tutor_recommendation
                                                  .content_tutor_recommendations
