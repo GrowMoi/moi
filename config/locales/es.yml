@@ -780,7 +780,7 @@
         active: Activo
       event_achievement:
         title: Titulo
-        message: Mensage (Instrucciones)
+        message: Mensaje (Instrucciones)
         user_achievement_ids: Logros
         start_date: Fecha de inicio
         end_date: Fecha de culminación
