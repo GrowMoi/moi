@@ -122,6 +122,7 @@ Moi::Application.routes.draw do
       resources :events, only: [:index,:update, :show] do
         member do
           post :take
+          post :take_super_event
         end
         collection do
           get :my_events

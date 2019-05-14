@@ -24,6 +24,7 @@ class UserEventAchievement < ActiveRecord::Base
   end
 
   begin :validations
+    validates_uniqueness_of :user_id, :scope => :event_achievement_id
     validates :status, presence: true,
                     inclusion: {in: STATUS}
   end
