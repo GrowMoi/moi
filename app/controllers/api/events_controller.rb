@@ -4,8 +4,15 @@ module Api
     before_action :authenticate_user!
 
     expose(:super_event_available) {
-      if EventAchievement.last && EventAchievement.last.end_date > Time.now
-        EventAchievement.last
+      super_event = EventAchievement.last
+      if super_event && super_event.end_date > Time.now
+        taken = UserEventAchievement.where(
+                  user: current_user,
+                  event_achievement: super_event
+                )
+        if taken.empty?
+          super_event
+        end
       end
     }
 
