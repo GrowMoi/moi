@@ -12,6 +12,7 @@
 #  new_users            :boolean          default(TRUE)
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
+#  description          :string           not null
 #
 
 module Api
@@ -22,7 +23,8 @@ module Api
                :end_date,
                :achievements,
                :message,
-               :image
+               :image,
+               :description
 
     def image
       image = object.image

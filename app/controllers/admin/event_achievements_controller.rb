@@ -44,6 +44,7 @@ module Admin
     def permitted_attributes
       allowed = [ :id,
                   :title,
+                  :description,
                   :start_date,
                   :end_date,
                   :image,

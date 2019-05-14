@@ -11,6 +11,10 @@ h3.text-center = event.title
         span = p.name
 
 .form-group
+  = label_tag t("activerecord.attributes.event_achievement.description")
+  p = event.description
+
+.form-group
   = label_tag t("activerecord.attributes.event_achievement.start_date")
   p = l(event.start_date, :format => :short)
 
