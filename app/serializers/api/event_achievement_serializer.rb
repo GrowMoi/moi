@@ -21,7 +21,8 @@ module Api
                :start_date,
                :end_date,
                :achievements,
-               :message
+               :message,
+               :image
 
     def image
       image = object.image
