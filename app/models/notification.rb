@@ -77,6 +77,7 @@ class Notification < ActiveRecord::Base
   def send_pusher_notification!
     formated = format_notification(self)
     user_channel_general = "usernotifications.general"
+    formated[:label] = NotificationService::NOTIFICATION_KEY
     begin
       Pusher.trigger(user_channel_general, 'new-notification', formated)
     rescue Exception => e

@@ -179,12 +179,12 @@ module Api
     def details
 
       pending_recommendations = TutorService::RecommendationsHandler.new(current_user).get_available
-
-      render json: {
-        notifications: user_notifications_count,
+      response_json = {
         recommendations: pending_recommendations.count,
         events: get_event_contents_count
       }
+      response_json[NotificationService::NOTIFICATION_KEY] = user_notifications_count
+      render json: response_json
     end
 
     api :GET,
