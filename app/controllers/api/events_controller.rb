@@ -3,6 +3,19 @@ module Api
 
     before_action :authenticate_user!
 
+    expose(:super_event_available) {
+      super_event = EventAchievement.last
+      if super_event && super_event.end_date > Time.now
+        taken = UserEventAchievement.where(
+                  user: current_user,
+                  event_achievement: super_event
+                )
+        if taken.empty?
+          super_event
+        end
+      end
+    }
+
     expose(:event) {
       Event.find(params[:id])
     }
@@ -185,6 +198,10 @@ module Api
       all_events_ids = events_availables[:all_events_ids]
       events_by_week = {}
 
+      if super_event_available
+        events_by_week[:super_event] = serializeSuperEvent([super_event_available])
+      end
+
       if (events.size == all_events_ids.size) && ()#any event taken
         first_week = "#{start_week} - #{end_week}"
         events_by_week[first_week] = get_first_week(events)
@@ -214,6 +231,15 @@ module Api
       serialized = ActiveModel::ArraySerializer.new(
         events,
         each_serializer: Api::EventSerializer,
+        scope: current_user
+      )
+      serialized
+    end
+
+    def serializeSuperEvent(events)
+      serialized = ActiveModel::ArraySerializer.new(
+        events,
+        each_serializer: Api::EventAchievementSerializer,
         scope: current_user
       )
       serialized

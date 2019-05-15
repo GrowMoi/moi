@@ -143,6 +143,8 @@ class User < ActiveRecord::Base
     has_many :content_importings
     has_many :user_events,
              dependent: :destroy
+    has_many :user_event_achievements,
+             dependent: :destroy
   end
 
 

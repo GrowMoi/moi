@@ -34,6 +34,7 @@
       achievements: Logros
       quiz: Tests
       events: Eventos
+      event_achievements: Super Eventos
     users:
       new: "Nuevo Usuario"
       edit: "Editar Usuario"
@@ -255,6 +256,12 @@
       created: "Evento creado"
       updated: "Evento actualizado"
       show: "Mostrar Evento"
+    event_achievements:
+      new: "Nuevo Super Evento"
+      edit: "Editar Super Evento"
+      created: "Super Evento creado"
+      updated: "Super Evento actualizado"
+      show: "Mostrar Super Evento"
     tutor:
       moi:
         analyze: "Enviar solicitud"
@@ -682,6 +689,7 @@
       content_importing: Importar contenidos
       payment: Pagos
       event: Eventos
+      event_achievement: Super Eventos
     attributes:
       user:
         username: "Nombre de usuario"
@@ -770,6 +778,15 @@
         duration: Duración (horas)
         image: Imagen premio
         active: Activo
+      event_achievement:
+        title: Titulo
+        description: Descripción
+        message: Mensaje (Instrucciones)
+        user_achievement_ids: Logros
+        start_date: Fecha de inicio
+        end_date: Fecha de culminación
+        image: Imagen premio
+        new_users: Solo para nuevos usuarios
     errors:
       messages:
         <<: *errors_messages

@@ -11,6 +11,10 @@ module Api
         Event.find(params[:id])
       }
 
+      expose(:super_event) {
+        EventAchievement.find(params[:id])
+      }
+
       expose(:last_user_event) {
         current_user.user_events.last
       }
@@ -44,6 +48,30 @@ module Api
         else
           response = {
             status: 404
+          }
+        end
+        render json: response,
+               status: response[:status]
+      end
+
+      api :POST,
+          "/users/events/:id/take_super_event",
+          "take an super event"
+      param :id, String, required: true
+      def take_super_event
+        if super_event
+          user_event = UserEventAchievement.new(
+            user: current_user,
+            event_achievement: super_event
+          )
+          user_event.save
+          response = {
+            status: :created,
+            super_event: super_event
+          }
+        else
+          response = {
+            status: :not_found
           }
         end
         render json: response,

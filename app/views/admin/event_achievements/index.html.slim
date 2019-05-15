@@ -1,0 +1,22 @@
+.level-quizzes-page
+  - content_for :title, t("activerecord.models.event_achievement").pluralize
+
+  table.table.table-striped
+    thead
+      tr
+        th =t("activerecord.attributes.event_achievement.title")
+        th =t("activerecord.attributes.event_achievement.start_date")
+        th =t("activerecord.attributes.event_achievement.end_date")
+        th =t("views.events.action")
+    tbody
+    -events.each do |q|
+      tr
+        td = q.title
+        td = l(q.start_date, :format => :short)
+        td = l(q.end_date, :format => :short)
+        td = link_to t("views.events.show"), admin_event_achievement_path(q)
+
+  .pull-right
+    = link_to t("views.events.new"),
+              new_admin_event_achievement_path,
+              class: "btn btn-sm btn-default"

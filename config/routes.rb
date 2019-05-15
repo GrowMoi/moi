@@ -123,6 +123,7 @@ Moi::Application.routes.draw do
       resources :events, only: [:index,:update, :show] do
         member do
           post :take
+          post :take_super_event
         end
         collection do
           get :my_events
@@ -172,6 +173,7 @@ Moi::Application.routes.draw do
     resources :admin_achievements, except: [:create, :destroy]
     resources :payments
     resources :events
+    resources :event_achievements
 
     match "payments/user/:user_id/tutor_assign_tickets" => 'payments#tutor_assign_tickets', as: :tutor_assign_tickets, via: :get
     match "payments/create_tutor_assign_tickets" => 'payments#create_tutor_assign_tickets', as: :create_tutor_assign_tickets, via: :post
