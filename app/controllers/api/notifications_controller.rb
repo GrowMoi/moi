@@ -166,14 +166,24 @@ module Api
 
 
     api :GET,
-    "/notifications/details"
+        "/notifications/details",
+        "Get total counter tasks"
+    example %q{
+      {
+        "notifications": 10,
+        "recommendations": 7,
+        "events": 4
+      }
+    }
+
     def details
 
       pending_recommendations = TutorService::RecommendationsHandler.new(current_user).get_available
 
       render json: {
         notifications: user_notifications_count,
-        recommendations: pending_recommendations.count
+        recommendations: pending_recommendations.count,
+        events: get_event_contents_count
       }
     end
 
@@ -268,6 +278,11 @@ module Api
           puts "PUSHER: #{notification_data}"
         end
       end
+    end
+
+    def get_event_contents_count
+      last_event = current_user.user_events.where(completed:false, expired:false).last
+      last_event.nil? ? 0 : last_event.contents.count
     end
 
   end
