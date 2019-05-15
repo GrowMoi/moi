@@ -282,7 +282,7 @@ module Api
 
     def get_event_contents_count
       last_event = current_user.user_events.where(completed:false, expired:false).last
-      last_event.nil? ? 0 : last_event.contents.count
+      last_event.nil? ? 0 : last_event.contents.count - last_event.content_reading_events.count
     end
 
   end
