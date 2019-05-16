@@ -165,22 +165,12 @@ module Api
     private
 
     def get_events_availables
-      date = Date.today
-      all_events_ids = Event.where(active: true)
-                  .where("user_level <= ?", current_user.level)
-                  .order(created_at: :asc)
-                  .map(&:id)
-
-      outdate_user_events_ids = current_user
-                                .user_events
-                                .where("updated_at < ?",
-                                  date.at_beginning_of_week
-                                ).map(&:event_id)
-
-      events_ids_taken_by_user = current_user.user_events.map(&:event_id)
-
-      events_availables = all_events_ids - outdate_user_events_ids - events_ids_taken_by_user
+      events_handler = EventService.new(current_user)
+      all_events_ids = events_handler.get_all_events_ids()
+      outdate_user_events_ids = events_handler.get_outdate_user_events_ids()
+      events_availables = events_handler.get_available_events()
       events = Event.where(id: events_availables).order(created_at: :asc)
+
       result = {
         events: events || [],
         all_events_ids: all_events_ids || [],

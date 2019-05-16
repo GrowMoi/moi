@@ -45,7 +45,6 @@ module Api
     }
 
     expose(:total_user_notifications) {
-      #binding.pry
       serialized_admin = serialize_notifications(
                             admin_notifications,
                             Api::GenericNotificationSerializer
@@ -64,7 +63,6 @@ module Api
                         tutor_notifications,
                         Api::GenericNotificationSerializer
                       ).as_json
-      #binding.pry
 
       serialized_my_notifications +
       serialized_tutor_requests +
@@ -153,7 +151,6 @@ module Api
       }
     }
     def index
-      #binding.pry
       notification_items = paginate_notifications(total_user_notifications)
       render json: {
         notifications: notification_items,
@@ -177,13 +174,19 @@ module Api
     }
 
     def details
-
-      pending_recommendations = TutorService::RecommendationsHandler.new(current_user).get_available
+      pending_recommendations = TutorService::RecommendationsHandler.new(current_user).get_available()
       response_json = {
         recommendations: pending_recommendations.count,
-        events: get_event_contents_count
+        events: get_event_contents_count()
       }
-      response_json[NotificationService::NOTIFICATION_KEY] = user_notifications_count
+
+      available_events = EventService.new(
+        current_user
+      ).get_available_events() || []
+      available_events_count = available_events.count
+      notifications_count = available_events_count + user_notifications_count
+      response_json[NotificationService::NOTIFICATION_KEY] = notifications_count
+
       render json: response_json
     end
 
