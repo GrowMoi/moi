@@ -18,12 +18,19 @@ h3.text-center = event.title
   = label_tag t("activerecord.attributes.event.user_level")
   p = event.user_level
 
-  .form-group
-    = label_tag t("activerecord.attributes.event.image")
-    br
-    span.content-media-name-on-form
-      - if event.image?
-        img src=event.image.url
+.form-group
+  = label_tag t("activerecord.attributes.event.image")
+  br
+  span.content-media-name-on-form
+    - if event.image?
+      img src=event.image.url
+
+.form-group
+  = label_tag t("activerecord.attributes.event.inactive_image")
+  br
+  span.content-media-name-on-form
+    - if event.inactive_image?
+      img src=event.inactive_image.url
 
 .form-group
   = label_tag t("activerecord.attributes.event.active")

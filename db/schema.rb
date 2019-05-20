@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190412215435) do
+ActiveRecord::Schema.define(version: 20190520212420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -278,17 +278,31 @@ ActiveRecord::Schema.define(version: 20190412215435) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  create_table "event_achievements", force: :cascade do |t|
+    t.integer  "user_achievement_ids", default: [],                array: true
+    t.string   "title",                               null: false
+    t.datetime "start_date",                          null: false
+    t.datetime "end_date",                            null: false
+    t.string   "image"
+    t.text     "message"
+    t.boolean  "new_users",            default: true
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "description"
+  end
+
   create_table "events", force: :cascade do |t|
-    t.string   "title",                      null: false
+    t.string   "title",                         null: false
     t.string   "description"
     t.string   "image"
-    t.text     "content_ids", default: [],                array: true
-    t.integer  "duration",                   null: false
+    t.text     "content_ids",    default: [],                array: true
+    t.integer  "duration",                      null: false
     t.string   "kind"
-    t.integer  "user_level",  default: 1
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "active",      default: true
+    t.integer  "user_level",     default: 1
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.boolean  "active",         default: true
+    t.string   "inactive_image"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -592,6 +606,17 @@ ActiveRecord::Schema.define(version: 20190412215435) do
 
   add_index "user_content_preferences", ["user_id"], name: "index_user_content_preferences_on_user_id", using: :btree
 
+  create_table "user_event_achievements", force: :cascade do |t|
+    t.integer  "user_id",                                null: false
+    t.integer  "event_achievement_id",                   null: false
+    t.string   "status",               default: "taken"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "user_event_achievements", ["event_achievement_id"], name: "index_user_event_achievements_on_event_achievement_id", using: :btree
+  add_index "user_event_achievements", ["user_id"], name: "index_user_event_achievements_on_user_id", using: :btree
+
   create_table "user_events", force: :cascade do |t|
     t.integer  "user_id",                    null: false
     t.integer  "event_id",                   null: false
@@ -725,6 +750,7 @@ ActiveRecord::Schema.define(version: 20190412215435) do
   add_foreign_key "tutor_achievements", "users", column: "tutor_id"
   add_foreign_key "tutor_recommendations", "users", column: "tutor_id"
   add_foreign_key "user_content_preferences", "users"
+  add_foreign_key "user_event_achievements", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"
   add_foreign_key "versions", "users", column: "owner_id"
