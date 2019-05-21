@@ -7,7 +7,17 @@ class EventDecorator < LittleDecorator
       link_to record.image_url,
               class: "",
               target: "_blank" do
-        render(include_filename: true)
+        render(include_filename: true, img_path: record.image_url)
+      end
+    end
+  end
+
+  def link_for_form_inactive
+    if record.inactive_image?
+      link_to record.inactive_image_url,
+              class: "",
+              target: "_blank" do
+        render(include_filename: true, img_path: record.inactive_image_url)
       end
     end
   end
@@ -25,7 +35,7 @@ class EventDecorator < LittleDecorator
 
     rendered = case file_extension
                when *IMAGE_EXTENSIONS
-                 image_tag(record.image_url)
+                 image_tag(options[:img_path])
                else
                  glyphicon
                end

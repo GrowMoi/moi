@@ -769,7 +769,8 @@
         user_level: Nivel de usuario
         kind: Tipo
         duration: Duración (horas)
-        image: Imagen premio
+        image: Imagen premio - Activada
+        inactive_image: 'Imagen premio - Desactivada'
         active: Activo
     errors:
       messages:

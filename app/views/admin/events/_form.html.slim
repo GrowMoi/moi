@@ -26,11 +26,11 @@
     = f.label :content_ids
     = f.collection_select :content_ids, all_contents, :id, :title, {include_hidden: false}, {multiple: true, class: "form-control"}
 
-  .col-sm-12.nested-content-media
+  .nested-content-media
     = f.hidden_field :id
+    = f.label :image
 
     .form-group
-      / media
       = tooltip t("views.contents.attach_media"),
                 place: "left",
                 class: "btn btn-xs btn-default content-media-uploader" do
@@ -43,6 +43,24 @@
       span.content-media-name-on-form
         - if f.object.image?
           = decorate(f.object).link_for_form
+
+  .nested-content-media
+    = f.hidden_field :id
+    = f.label :inactive_image
+
+    .form-group
+      = tooltip t("views.contents.attach_media"),
+                place: "left",
+                class: "btn btn-xs btn-default content-media-uploader" do
+        .glyphicon.glyphicon-cloud-upload
+
+      .hidden
+        = f.file_field :inactive_image
+        = f.hidden_field :inactive_image_cache
+
+      span.content-media-name-on-form
+        - if f.object.inactive_image?
+          = decorate(f.object).link_for_form_inactive
   br
   .form-group
     .checkbox
