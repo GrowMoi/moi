@@ -19,6 +19,7 @@ table.table.table-striped
       th = t("views.content_importings.status")
       th = t("views.content_importings.user")
       th = t("views.content_importings.file")
+      th = t("views.content_importings.kind")
       th = t("views.content_importings.imported_contents")
   tbody
     - @content_importings.each do |content_importing|
@@ -31,6 +32,7 @@ table.table.table-striped
         td
           = link_to content_importing.filename,
                     content_importing.file_url
+        td = content_importing.kind
         td
           = link_to admin_content_importing_path(content_importing) do
             = content_importing.imported_contents_ids.count

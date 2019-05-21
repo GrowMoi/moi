@@ -230,6 +230,7 @@
       user: Creado por
       status: Estado
       file: Archivo
+      kind: Tipo
       imported_contents: Contenidos importados
       new: Subir archivo para importar contenidos
       new_translate_import: Subir archivo para importar traduccion de contenidos
