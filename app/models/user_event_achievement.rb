@@ -28,4 +28,9 @@ class UserEventAchievement < ActiveRecord::Base
     validates :status, presence: true,
                     inclusion: {in: STATUS}
   end
+
+  def super_event_is_valid_yet
+    !self.event_achievement.is_expired && self.event_achievement.status == "taken"
+  end
+  
 end
