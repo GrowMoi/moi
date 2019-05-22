@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
         if achievement.user_win_achievement?(self)
           new_achievements << UserAdminAchievement.create!(user_id: self.id, admin_achievement_id: achievement.id)
           notify_tutors(self, new_achievements)
+          if self.super_event_completed?
+            notify_super_event_completed
+          end
         end
       end
       new_achievements
@@ -59,6 +62,13 @@ class User < ActiveRecord::Base
     def get_tutor_ids(client)
       UserTutor.where(user: client, status: :accepted)
                .pluck(:tutor_id)
+    end
+
+    def notify_super_event_completed
+      super_event = self.active_super_event
+      super_event.status = "completed"
+      super_event.save
+      SuperEventUserMailer.send_message(self, super_event).deliver_now
     end
   end
 end

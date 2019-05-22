@@ -826,6 +826,8 @@
       subject: "Cambio de permisos"
     shared_content:
       subject: "Moi - Social Learning"
+    super_event:
+      subject: "Super evento"
   tutor_mailer:
     achievement_notification:
       subject: "Contenidos completados"

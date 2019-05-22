@@ -147,6 +147,20 @@ class User < ActiveRecord::Base
              dependent: :destroy
   end
 
+  def active_super_event
+    event = self.user_event_achievements.last
+    event && event.super_event_is_valid_yet ? event : nil
+  end
+
+  def super_event_completed?
+    completed = false
+    if active_super_event
+      ids_super_event = active_super_event.user_achievement_ids
+      ids_user_achievements = self.user_admin_achievements.map(&:id)
+      result = ids_achievements - ids_super_event #give a [] is not pending achievements
+      completed = result.empty?
+    end
+  end
 
   def to_s
     username
