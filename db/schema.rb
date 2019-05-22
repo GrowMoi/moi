@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190514192853) do
+ActiveRecord::Schema.define(version: 20190522193958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -323,6 +323,7 @@ ActiveRecord::Schema.define(version: 20190514192853) do
     t.integer  "contents_learnt",           default: 0
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.integer  "achievements",              default: 0
   end
 
   add_index "leaderboards", ["user_id"], name: "index_leaderboards_on_user_id", using: :btree

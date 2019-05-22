@@ -21,6 +21,11 @@ module Api
                 .order(contents_learnt: :desc, time_elapsed: :asc)
     }
 
+    expose(:all_achievement_leaders) {
+      Leaderboard.includes(:user)
+                .order(achievements: :desc, contents_learnt: :asc, time_elapsed: :asc)
+    }
+
     api :GET,
         "/leaderboard",
         "Get leaderboard"
@@ -31,6 +36,7 @@ module Api
           "email": "usuario1@test.com",
           "name": "usuario1",
           "contents_learnt": 68,
+          "achievements": 7,
           "time_elapsed": 9409558493,
           "user_id": 10
         },
@@ -39,6 +45,7 @@ module Api
           "email": "usuario3@test.com",
           "name": "usuario3",
           "contents_learnt": 14,
+          "achievements": 5,
           "time_elapsed": 3067483,
           "user_id": 12
         },
@@ -47,6 +54,7 @@ module Api
           "email": "usuario2@test.com",
           "name": "usuario2",
           "contents_learnt": 9,
+          "achievements": 4,
           "time_elapsed": 3992873,
           "user_id": 22
         }
@@ -60,6 +68,7 @@ module Api
           "email": "usuario1@test.com",
           "name": "usuario1",
           "contents_learnt": 68,
+          "achievements": 7,
           "time_elapsed": 9409558493,
           "user_id": 10,
           "position": 1
@@ -67,21 +76,23 @@ module Api
       }
     }
     param :user_id, Integer
+    param :event_id, Integer
 
     def index
       user_selected = get_user_selected
+      leaderboard = {}
       if is_client?(user_selected)
-        leaders =  all_leaders.page(params[:page] || PAGE).per(params[:per_page] || PER_PAGE)
-        if exists_relation(user_selected)
-          user_index = all_leaders.pluck(:user_id).index(user_selected.id)
-          user_info = all_leaders.find_by_user_id(user_selected.id)
-          serialized_data = Api::LeaderboardSerializer.new(user_info).as_json
-          user_data = serialized_data["leaderboard"]
-          user_data[:position] = user_index + 1
+        if from_event?
+          leaderboard = get_event_leaders(user_selected)
+        else
+          leaderboard = get_all_leaders(user_selected)
         end
-        leaderboard = serialize_leaderboard(leaders)
+
+        user_data = leaderboard[:user_data]
+        leaders = leaderboard[:leaders]
+        serialized_leaders = leaderboard[:serialized_leaders]
         render json: {
-          leaders: leaderboard,
+          leaders: serialized_leaders,
           meta: {
             total_count: leaders.total_count,
             total_pages: leaders.total_pages,
@@ -100,10 +111,10 @@ module Api
 
     private
 
-    def serialize_leaderboard(leaders)
+    def serialize_leaders(leaders, serializer)
       serialized = ActiveModel::ArraySerializer.new(
         leaders,
-        each_serializer: Api::LeaderboardSerializer
+        each_serializer: serializer
       )
       serialized
     end
@@ -124,6 +135,70 @@ module Api
 
     def is_client?(user)
       user.present? && user.cliente?
+    end
+
+    def from_event?
+      params[:event_id].present?
+    end
+
+    def get_event_leaders(user_selected)
+      event_id = params[:event_id]
+
+      user_ids_by_event = UserEventAchievement.includes(:user)
+        .where(event_achievement_id: event_id)
+        .pluck(:user_id)
+
+      achievement_leaders = all_achievement_leaders.where(user_id: user_ids_by_event)
+      leaders = achievement_leaders.page(params[:page] || PAGE).per(params[:per_page] || PER_PAGE)
+      user_data = {}
+
+      if exists_relation(user_selected)
+        user_index = achievement_leaders.pluck(:user_id).index(user_selected.id)
+        user_info = achievement_leaders.find_by_user_id(user_selected.id)
+        serialized_data = Api::LeaderboardSerializer.new(user_info).as_json
+        user_data = serialized_data["leaderboard"]
+        user_data[:position] = user_index + 1
+      else
+        serialized_data = Api::LeaderboardSerializer.new(Leaderboard.new(
+          user_id: user_selected.id,
+          contents_learnt: 0,
+          time_elapsed: 0
+        )).as_json
+        user_data = serialized_data["leaderboard"]
+        user_data[:position] = achievement_leaders.count + 1
+      end
+
+      return {
+        leaders: leaders,
+        serialized_leaders: serialize_leaders(leaders, Api::LeaderboardSerializer),
+        user_data: user_data
+      }
+    end
+
+    def get_all_leaders(user_selected)
+      leaders =  all_leaders.page(params[:page] || PAGE).per(params[:per_page] || PER_PAGE)
+      user_data = {}
+      if exists_relation(user_selected)
+        user_index = all_leaders.pluck(:user_id).index(user_selected.id)
+        user_info = all_leaders.find_by_user_id(user_selected.id)
+        serialized_data = Api::LeaderboardSerializer.new(user_info).as_json
+        user_data = serialized_data["leaderboard"]
+        user_data[:position] = user_index + 1
+      else
+        serialized_data = Api::LeaderboardSerializer.new(Leaderboard.new(
+          user_id: user_selected.id,
+          contents_learnt: 0,
+          time_elapsed: 0
+        )).as_json
+        user_data = serialized_data["leaderboard"]
+        user_data[:position] = achievement_leaders.count + 1
+      end
+
+      return {
+        leaders: leaders,
+        serialized_leaders: serialize_leaders(leaders, Api::LeaderboardSerializer),
+        user_data: user_data
+      }
     end
 
   end
