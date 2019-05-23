@@ -148,16 +148,16 @@ class User < ActiveRecord::Base
   end
 
   def active_super_event
-    event = self.user_event_achievements.last
-    event && event.super_event_is_valid_yet ? event : nil
+    user_event = self.user_event_achievements.last
+    user_event && user_event.super_event_is_valid_yet ? user_event.event_achievement : nil
   end
 
   def super_event_completed?
     completed = false
     if active_super_event
       ids_super_event = active_super_event.user_achievement_ids
-      ids_user_achievements = self.user_admin_achievements.map(&:id)
-      result = ids_achievements - ids_super_event #give a [] is not pending achievements
+      ids_user_achievements = self.user_admin_achievements.map(&:admin_achievement_id)
+      result = ids_user_achievements - ids_super_event #give a [] is not pending achievements
       completed = result.empty?
     end
   end

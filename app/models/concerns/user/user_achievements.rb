@@ -65,10 +65,13 @@ class User < ActiveRecord::Base
     end
 
     def notify_super_event_completed
-      super_event = self.active_super_event
-      super_event.status = "completed"
-      super_event.save
-      SuperEventUserMailer.send_message(self, super_event).deliver_now
+      user_event_achievement = self.user_event_achievements.last
+      user_event_achievement.status = "completed"
+      user_event_achievement.save
+      SuperEventMailer.notify_admin(
+                            self,
+                            user_event_achievement.event_achievement
+                          ).deliver_now
     end
   end
 end

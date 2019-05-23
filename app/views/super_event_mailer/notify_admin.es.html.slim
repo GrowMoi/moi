@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    title moi
+  body
+    h1 Hola Administrador
+    p
+      | El usuario: #{ @user.name || @user.username}
+      br
+      strong con email: #{@user.email}
+      br Acaba de completar el evento:
+      strong #{@event.title}
