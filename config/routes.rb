@@ -80,7 +80,7 @@ Moi::Application.routes.draw do
       end
     end
 
-    resources :events, only: [:show] do
+    resources :events, only: [:show, :index] do
       collection do
         get :today
         get :week

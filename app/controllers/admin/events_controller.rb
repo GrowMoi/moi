@@ -52,6 +52,7 @@ module Admin
                   :kind,
                   :user_level,
                   :image,
+                  :inactive_image,
                   :active,
                   content_ids: [],
                   publish_days: []

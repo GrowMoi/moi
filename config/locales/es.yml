@@ -231,6 +231,7 @@
       user: Creado por
       status: Estado
       file: Archivo
+      kind: Tipo
       imported_contents: Contenidos importados
       new: Subir archivo para importar contenidos
       new_translate_import: Subir archivo para importar traduccion de contenidos
@@ -776,7 +777,8 @@
         user_level: Nivel de usuario
         kind: Tipo
         duration: Duración (horas)
-        image: Imagen premio
+        image: Imagen premio - Activada
+        inactive_image: 'Imagen premio - Desactivada'
         active: Activo
       event_achievement:
         title: Titulo
