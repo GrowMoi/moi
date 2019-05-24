@@ -9,7 +9,7 @@ class GenerateUsersTask
   def run!
     out_uri = "generate_users_task-#{Time.now.to_s.parameterize}.csv"
     @csv_out = CSV.open(Rails.root.join("public", out_uri), "wb")
-    @csv_out << ["username", "authorization_key", "name", "email"]
+    @csv_out << ["username", "authorization_key", "name", "email", "authorization_key_es"]
     users_list.each do |user_names|
       user = User.new(
         name: user_names,
@@ -26,8 +26,10 @@ class GenerateUsersTask
       user.email = email
       user.username = username
       user.save!
-      @csv_out << [user.username, user.authorization_key, user.name, user.email]
-      puts [user.username, user.authorization_key, user.name, user.email]
+      key_pass = user.authorization_key
+      key_pass_es = UserAuthorizationKeys::KEYS_ES[key_pass.to_sym]
+      @csv_out << [user.username, key_pass, user.name, user.email, key_pass_es]
+      puts [user.username, key_pass, user.name, user.email, key_pass_es]
     end
     puts "done! open at #{out_uri}"
   end
