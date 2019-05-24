@@ -35,6 +35,7 @@ class GenerateUsersTask
   private
 
   def generate_username(user_names, count)
+    user_names = user_names.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').downcase.to_s
     split_names = user_names.split(" ")
     last_name = split_names[0]
     first_name = split_names[2]
