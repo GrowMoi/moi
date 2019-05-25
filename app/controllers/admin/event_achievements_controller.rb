@@ -48,6 +48,7 @@ module Admin
                   :start_date,
                   :end_date,
                   :image,
+                  :inactive_image,
                   :message,
                   :new_users,
                   user_achievement_ids: []

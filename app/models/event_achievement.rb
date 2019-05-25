@@ -13,12 +13,13 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  description          :string
+#  inactive_image       :string
 #
 
 class EventAchievement < ActiveRecord::Base
 
   mount_uploader :image, ContentMediaUploader
-
+  mount_uploader :inactive_image, ContentMediaUploader
 
   begin :relationships
     has_many :user_event_achievements,

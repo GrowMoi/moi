@@ -778,7 +778,7 @@
         kind: Tipo
         duration: Duración (horas)
         image: Imagen premio - Activada
-        inactive_image: 'Imagen premio - Desactivada'
+        inactive_image: Imagen premio - Desactivada
         active: Activo
       event_achievement:
         title: Titulo
@@ -788,6 +788,7 @@
         start_date: Fecha de inicio
         end_date: Fecha de culminación
         image: Imagen premio
+        inactive_image: Imagen premio - Desactivada
         new_users: Solo para nuevos usuarios
     errors:
       messages:
