@@ -24,12 +24,18 @@ module Api
                :achievements,
                :message,
                :image,
+               :inactive_image,
                :description,
                :taken,
                :completed
 
     def image
       image = object.image
+      image ? image.url : ''
+    end
+
+    def inactive_image
+      image = object.inactive_image
       image ? image.url : ''
     end
 
