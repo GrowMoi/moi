@@ -269,7 +269,7 @@
       users:
         name: "Nombre o username"
         join_date: "Se unió en:"
-        end_date: "Culmino en:"
+        end_date: "Culminó en:"
         state: "Estado"
         status:
           taken: "En progreso..."
