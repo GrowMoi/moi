@@ -79,7 +79,7 @@ needs to be a JSON-encoded string having the following format:
         event_is_completed = true
       end
 
-      unless current_user.my_super_events.empty? #W.I.P
+      unless current_user.reach_super_event.nil?
         super_event = current_user.my_super_events.last
         serialized_super_event = EventAchievementSerializer.new(
           super_event,

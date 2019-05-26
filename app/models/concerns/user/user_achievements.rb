@@ -10,12 +10,15 @@ class User < ActiveRecord::Base
         if achievement.user_win_achievement?(self)
           new_achievements << UserAdminAchievement.create!(user_id: self.id, admin_achievement_id: achievement.id)
           notify_tutors(self, new_achievements)
-          if self.super_event_completed?
-            notify_super_event_completed
-          end
         end
       end
       new_achievements
+    end
+
+    def reach_super_event
+      if self.super_event_completed?
+        notify_super_event_completed
+      end
     end
 
     def notify_client_got_item_to_tutors(notification_data)
