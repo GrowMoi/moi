@@ -14,6 +14,7 @@
 #  updated_at           :datetime         not null
 #  description          :string
 #  inactive_image       :string
+#  email_notify         :string
 #
 
 require 'rails_helper'

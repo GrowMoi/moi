@@ -51,6 +51,7 @@ module Admin
                   :inactive_image,
                   :message,
                   :new_users,
+                  :email_notify,
                   user_achievement_ids: []
                 ]
     end

@@ -36,6 +36,12 @@
     = f.label :user_achievement_ids
     = f.collection_select :user_achievement_ids, all_achievements, :id, :name, {include_hidden: false}, {multiple: true, class: "form-control"}
 
+  .form-group
+    = f.label :email_notify
+    = f.email_field :email_notify,
+                class: "form-control",
+                required: true
+
   .nested-content-media
     = f.hidden_field :id
     = f.label :image

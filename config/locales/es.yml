@@ -790,6 +790,7 @@
         image: Imagen premio
         inactive_image: Imagen premio - Desactivada
         new_users: Solo para nuevos usuarios
+        email_notify: Correo (Recibir notificationes)
     errors:
       messages:
         <<: *errors_messages

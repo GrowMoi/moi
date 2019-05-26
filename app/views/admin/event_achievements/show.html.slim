@@ -26,6 +26,10 @@ h3.text-center = event.title
   = label_tag t("activerecord.attributes.event_achievement.message")
   p = simple_format(event.message)
 
+.form-group
+  = label_tag t("activerecord.attributes.event_achievement.email_notify")
+  p = simple_format(event.email_notify)
+
   .form-group
     = label_tag t("activerecord.attributes.event_achievement.image")
     br
