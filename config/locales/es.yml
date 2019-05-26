@@ -262,7 +262,19 @@
       edit: "Editar Super Evento"
       created: "Super Evento creado"
       updated: "Super Evento actualizado"
-      show: "Mostrar Super Evento"
+      show: "Mostrar Evento"
+      links: "Acciones"
+      results: "Resultados"
+      participants: "Participantes"
+      users:
+        name: "Nombre o username"
+        join_date: "Se unió en:"
+        end_date: "Culmino en:"
+        state: "Estado"
+        status:
+          taken: "En progreso..."
+          completed: "Completado"
+          expired: "Expirado"
     tutor:
       moi:
         analyze: "Enviar solicitud"

@@ -6,7 +6,7 @@ module Admin
 
     authorize_resource
 
-    expose(:event, attributes: :event_achievements_params)
+    expose(:event_achievement, attributes: :event_achievements_params)
     expose(:events) {
       EventAchievement.order(created_at: :desc)
     }
@@ -15,24 +15,32 @@ module Admin
       AdminAchievement.all
     }
 
+    expose(:users_participants) {
+      UserEventAchievement.where(event_achievement: event_achievement)
+    }
+
     expose(:achievements) {
-      AdminAchievement.where(id: event.user_achievement_ids)
+      AdminAchievement.where(id: event_achievement.user_achievement_ids)
     }
 
     def create
-      if event.save
-        redirect_to admin_event_achievement_path(event), notice: I18n.t("views.events.created")
+      if event_achievement.save
+        redirect_to admin_event_achievement_path(event_achievement), notice: I18n.t("views.events.created")
       else
         render :new
       end
     end
 
     def update
-      if event.save
-        redirect_to admin_event_achievement_path(event), notice: I18n.t("views.events.updated")
+      if event_achievement.save
+        redirect_to admin_event_achievement_path(event_achievement), notice: I18n.t("views.events.updated")
       else
         render :edit
       end
+    end
+
+    def participants
+      users_participants
     end
 
     private
@@ -57,7 +65,7 @@ module Admin
     end
 
     def resource
-      @resource ||= event.id
+      @resource ||= event_achievement.id
     end
 
   end

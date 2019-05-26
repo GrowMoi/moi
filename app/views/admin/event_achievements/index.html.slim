@@ -7,16 +7,18 @@
         th =t("activerecord.attributes.event_achievement.title")
         th =t("activerecord.attributes.event_achievement.start_date")
         th =t("activerecord.attributes.event_achievement.end_date")
-        th =t("views.events.action")
+        th =t("views.event_achievements.links")
+        th =t("views.event_achievements.results")
     tbody
     -events.each do |q|
       tr
         td = q.title
         td = l(q.start_date, :format => :short)
         td = l(q.end_date, :format => :short)
-        td = link_to t("views.events.show"), admin_event_achievement_path(q)
+        td = link_to t("views.event_achievements.show"), admin_event_achievement_path(q)
+        td = link_to t("views.event_achievements.participants"), participants_admin_event_achievement_path(q)
 
   .pull-right
-    = link_to t("views.events.new"),
+    = link_to t("views.event_achievements.new"),
               new_admin_event_achievement_path,
               class: "btn btn-sm btn-default"
