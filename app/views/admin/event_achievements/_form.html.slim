@@ -1,6 +1,6 @@
-= form_for [:admin, event] do |f|
+= form_for [:admin, event_achievement] do |f|
   = render "admin/shared/form_errors",
-           resource: event
+           resource: event_achievement
 
   .form-group
     = f.label :title
@@ -30,7 +30,8 @@
    = f.label :message
    = f.text_area :message,
                   rows: 5,
-                  class: "form-control"
+                  class: "form-control",
+                  required: true
 
   .form-group
     = f.label :user_achievement_ids
@@ -57,8 +58,8 @@
         = f.hidden_field :image_cache
 
       span.content-media-name-on-form
-        - if event.image?
-          img src=event.image.url
+        - if event_achievement.image?
+          img src=event_achievement.image.url
 
   .nested-content-media
     = f.hidden_field :id
@@ -75,8 +76,8 @@
         = f.hidden_field :inactive_image_cache
 
       span.content-media-name-on-form
-        - if event.inactive_image?
-          img src=event.inactive_image.url
+        - if event_achievement.inactive_image?
+          img src=event_achievement.inactive_image.url
 
   .actions
     = f.submit class: "btn btn-primary",

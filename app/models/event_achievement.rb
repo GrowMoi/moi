@@ -27,6 +27,14 @@ class EventAchievement < ActiveRecord::Base
               dependent: :destroy
   end
 
+  begin :validations
+    validates :start_date,
+              :end_date,
+              :email_notify,
+              :title,
+              :message,
+              presence: true
+  end
 
   def is_expired
     self.start_date > Time.now && self.end_date < Time.now
