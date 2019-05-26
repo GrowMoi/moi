@@ -52,8 +52,12 @@ needs to be a JSON-encoded string having the following format:
     def create
       answerer_result = answerer.result
       serialized_recommendations = []
+      serialized_achievements = []
       event_completed = nil
       event_is_completed = false
+      # super event
+      serialized_super_event = nil
+      super_event_completed = false
 
       if is_client?(current_user)
         update_user_leaderboard
@@ -75,6 +79,15 @@ needs to be a JSON-encoded string having the following format:
         event_is_completed = true
       end
 
+      unless current_user.my_super_events.empty? #W.I.P
+        super_event = current_user.my_super_events.last
+        serialized_super_event = EventAchievementSerializer.new(
+          super_event,
+          scope: current_user
+        )
+        super_event_completed = true
+      end
+
       render json: {
         result: answerer_result,
         recommendations: serialized_recommendations,
@@ -82,6 +95,10 @@ needs to be a JSON-encoded string having the following format:
         event: {
           completed: event_is_completed,
           info: event_completed
+        },
+        super_event: {
+          completed: super_event_completed,
+          info: serialized_super_event
         },
         meta: {
           current_learnt_contents: current_user.content_learnings.count,
