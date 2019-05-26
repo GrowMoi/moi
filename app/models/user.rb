@@ -143,6 +143,9 @@ class User < ActiveRecord::Base
     has_many :content_importings
     has_many :user_events,
              dependent: :destroy
+    has_many :my_super_events,
+             source: :event_achievement,
+             through: :user_event_achievements
     has_many :user_event_achievements,
              dependent: :destroy
   end
@@ -157,8 +160,7 @@ class User < ActiveRecord::Base
     if active_super_event
       ids_super_event = active_super_event.user_achievement_ids
       ids_user_achievements = self.user_admin_achievements.map(&:admin_achievement_id)
-      result = ids_user_achievements - ids_super_event #give a [] is not pending achievements
-      completed = result.empty?
+      (ids_super_event & ids_user_achievements).size == ids_super_event.size
     end
   end
 

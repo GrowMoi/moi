@@ -5,13 +5,17 @@ module Api
 
     expose(:super_event_available) {
       super_event = EventAchievement.last
-      if super_event && super_event.end_date > Time.now
-        taken = UserEventAchievement.where(
-                  user: current_user,
-                  event_achievement: super_event
-                )
-        if taken.empty?
-          super_event
+      unless super_event.is_expired
+        if current_user.my_super_events.empty?
+          super_event #no events user
+        else
+          if current_user.my_super_events.find(super_event.id).nil?
+            super_event
+          else
+            unless current_user.super_event_completed?
+              super_event
+            end
+          end
         end
       end
     }
