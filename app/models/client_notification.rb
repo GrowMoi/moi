@@ -22,7 +22,8 @@ class ClientNotification < ActiveRecord::Base
     'client_test_completed',
     'client_message_open',
     'client_recommended_contents_completed',
-    'client_got_diploma'
+    'client_got_diploma',
+    'client_completed_super_event'
   ].freeze
 
   begin :enumerables
