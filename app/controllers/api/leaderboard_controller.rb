@@ -77,6 +77,14 @@ module Api
       user_selected = get_user_selected
       leaderboard = {}
       if is_client?(user_selected)
+        current_leader_item = Leaderboard.includes(:user).find_by_user_id(user_selected.id)
+        unless current_leader_item
+          Leaderboard.create!(
+            user_id: user_selected.id,
+            contents_learnt: 0,
+            time_elapsed: 0
+          )
+        end
         if from_event?
           leaderboard = get_event_leaders(user_selected)
         else
