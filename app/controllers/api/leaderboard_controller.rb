@@ -79,10 +79,7 @@ module Api
       if is_client?(user_selected)
         current_leader_item = Leaderboard.includes(:user).find_by_user_id(user_selected.id)
         unless current_leader_item
-          current_leader_item = Leaderboard.create!(
-            user_id: user_selected.id,
-            contents_learnt: user_selected.content_learnings.count
-          )
+          current_leader_item = create_leader_item(user_selected)
         end
         if from_event?
           leaderboard = get_event_leaders(user_selected, current_leader_item)
@@ -94,6 +91,7 @@ module Api
         leaders = leaderboard[:leaders]
         serialized_leaders = leaderboard[:serialized_leaders]
         last_super_event = user_selected.my_super_events.last
+        total_super_event_achievements = last_super_event ? last_super_event.user_achievement_ids.count : 0
 
         render json: {
           leaders: serialized_leaders,
@@ -102,7 +100,7 @@ module Api
             total_pages: leaders.total_pages,
             user_data: user_data,
             total_contents: total_content_available,
-            total_super_event_achievements:  last_super_event ? last_super_event.user_achievement_ids.count : 0
+            total_super_event_achievements: total_super_event_achievements
           }
         }
       else
@@ -220,6 +218,15 @@ module Api
         (achieved_achievements_count1 <=> achieved_achievements_count2)
       end
       sorted_leaders.reverse
+    end
+
+    def create_leader_item(user_selected)
+      time_elapsed = UtilService.new(user_selected).generate_elapsed_time()
+      Leaderboard.create!(
+        user_id: user_selected.id,
+        contents_learnt: user_selected.content_learnings.count,
+        time_elapsed: time_elapsed
+      )
     end
 
   end
