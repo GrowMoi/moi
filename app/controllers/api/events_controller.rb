@@ -60,8 +60,11 @@ module Api
       ]
     }
     def index
+      events_serialized = serializeEvents(Event.all).object
+      events_achievement_serialized = serializeSuperEvent(EventAchievement.all)
       respond_with(
-        serializeEvents(Event.all)
+        events: events_serialized,
+        superevents: events_achievement_serialized
       )
     end
 
