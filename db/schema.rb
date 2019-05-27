@@ -326,7 +326,6 @@ ActiveRecord::Schema.define(version: 20190526220052) do
     t.integer  "contents_learnt",           default: 0
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
-    t.integer  "achievements",              default: 0
   end
 
   add_index "leaderboards", ["user_id"], name: "index_leaderboards_on_user_id", using: :btree

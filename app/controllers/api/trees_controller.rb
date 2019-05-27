@@ -75,10 +75,7 @@ module Api
         my_achievements = user.user_admin_achievements.map(&:admin_achievement_id)
         has_achievements = my_achievements.include? achievement.id
         unless has_achievements
-          AchievementsService.new(
-            user,
-            achievement
-          ).create_and_update_leaderboard()
+          UserAdminAchievement.create!(user_id: user.id, admin_achievement_id: achievement.id)
         end
       end
     end
