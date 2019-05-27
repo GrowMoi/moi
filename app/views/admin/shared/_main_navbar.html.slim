@@ -23,6 +23,9 @@ nav.navbar.navbar-default.navbar-static-top.main-navbar
               = nav_item "events", admin_events_path
             li.divider
             li
+              = nav_item "event_achievements", admin_event_achievements_path
+            li.divider
+            li
             - if can? :manage, Quiz
               = nav_item "quiz", admin_quizzes_path
             li.divider

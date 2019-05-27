@@ -34,6 +34,7 @@
       achievements: Logros
       quiz: Tests
       events: Eventos
+      event_achievements: Super Eventos
     users:
       new: "Nuevo Usuario"
       edit: "Editar Usuario"
@@ -256,6 +257,24 @@
       created: "Evento creado"
       updated: "Evento actualizado"
       show: "Mostrar Evento"
+    event_achievements:
+      new: "Nuevo Super Evento"
+      edit: "Editar Super Evento"
+      created: "Super Evento creado"
+      updated: "Super Evento actualizado"
+      show: "Mostrar Evento"
+      links: "Acciones"
+      results: "Resultados"
+      participants: "Participantes"
+      users:
+        name: "Nombre o username"
+        join_date: "Se unió en:"
+        end_date: "Culminó en:"
+        state: "Estado"
+        status:
+          taken: "En progreso..."
+          completed: "Completado"
+          expired: "Expirado"
     tutor:
       moi:
         analyze: "Enviar solicitud"
@@ -683,6 +702,7 @@
       content_importing: Importar contenidos
       payment: Pagos
       event: Eventos
+      event_achievement: Super Eventos
     attributes:
       user:
         username: "Nombre de usuario"
@@ -770,8 +790,19 @@
         kind: Tipo
         duration: Duración (horas)
         image: Imagen premio - Activada
-        inactive_image: 'Imagen premio - Desactivada'
+        inactive_image: Imagen premio - Desactivada
         active: Activo
+      event_achievement:
+        title: Titulo
+        description: Descripción
+        message: Mensaje (Instrucciones)
+        user_achievement_ids: Logros
+        start_date: Fecha de inicio
+        end_date: Fecha de culminación
+        image: Imagen premio
+        inactive_image: Imagen premio - Desactivada
+        new_users: Solo para nuevos usuarios
+        email_notify: Correo (Recibir notificationes)
     errors:
       messages:
         <<: *errors_messages
@@ -811,6 +842,8 @@
       subject: "Cambio de permisos"
     shared_content:
       subject: "Moi - Social Learning"
+    super_event:
+      subject: "Super evento"
   tutor_mailer:
     achievement_notification:
       subject: "Contenidos completados"

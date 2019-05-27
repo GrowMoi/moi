@@ -3,6 +3,25 @@ module Api
 
     before_action :authenticate_user!
 
+    expose(:super_event_available) {
+      super_event = EventAchievement.last
+      unless super_event.is_expired
+        if super_event.new_users && (current_user.created_at > super_event.start_date)
+          if current_user.my_super_events.empty?
+            super_event #no events user
+          else
+            if current_user.my_super_events.find(super_event.id).nil?
+              super_event
+            else
+              unless current_user.super_event_completed?
+                super_event
+              end
+            end
+          end
+        end
+      end
+    }
+
     expose(:event) {
       Event.find(params[:id])
     }
@@ -41,8 +60,11 @@ module Api
       ]
     }
     def index
+      events_serialized = serializeEvents(Event.all).object
+      events_achievement_serialized = serializeSuperEvent(EventAchievement.all)
       respond_with(
-        serializeEvents(Event.all)
+        events: events_serialized,
+        superevents: events_achievement_serialized
       )
     end
 
@@ -96,8 +118,10 @@ module Api
     def today
       events = get_events_availables[:events]
       today = get_first_week(events)
+      event_achievement = super_event_available ? serializeSuperEvent([super_event_available]) : []
       respond_with(
-        today
+        events: today,
+        superevent: event_achievement
       )
     end
 
@@ -223,6 +247,10 @@ module Api
       all_events_ids = events_availables[:all_events_ids]
       events_by_week = {}
 
+      if super_event_available
+        events_by_week[:super_event] = serializeSuperEvent([super_event_available])
+      end
+
       if (events.size == all_events_ids.size) && ()#any event taken
         first_week = "#{start_week} - #{end_week}"
         events_by_week[first_week] = get_first_week(events)
@@ -252,6 +280,15 @@ module Api
       serialized = ActiveModel::ArraySerializer.new(
         events,
         each_serializer: Api::EventSerializer,
+        scope: current_user
+      )
+      serialized
+    end
+
+    def serializeSuperEvent(events)
+      serialized = ActiveModel::ArraySerializer.new(
+        events,
+        each_serializer: Api::EventAchievementSerializer,
         scope: current_user
       )
       serialized

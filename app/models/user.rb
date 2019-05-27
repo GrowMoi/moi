@@ -143,8 +143,26 @@ class User < ActiveRecord::Base
     has_many :content_importings
     has_many :user_events,
              dependent: :destroy
+    has_many :my_super_events,
+             source: :event_achievement,
+             through: :user_event_achievements
+    has_many :user_event_achievements,
+             dependent: :destroy
   end
 
+  def active_super_event
+    user_event = self.user_event_achievements.last
+    user_event && user_event.super_event_is_valid_yet ? user_event.event_achievement : nil
+  end
+
+  def super_event_completed?
+    completed = false
+    if active_super_event
+      ids_super_event = active_super_event.user_achievement_ids
+      ids_user_achievements = self.user_admin_achievements.map(&:admin_achievement_id)
+      (ids_super_event & ids_user_achievements).size == ids_super_event.size
+    end
+  end
 
   def to_s
     username
