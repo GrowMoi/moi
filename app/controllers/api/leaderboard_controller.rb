@@ -180,6 +180,7 @@ module Api
         user_data = serialized_data["leaderboard"]
         user_data[:position] = user_index + 1
       else
+        achievement_leaders = all_leaders.where(user_id: user_ids_by_event)
         serialized_data = Api::LeaderboardSerializer.new(Leaderboard.new(
           user_id: user_selected.id,
           contents_learnt: 0,
