@@ -79,14 +79,13 @@ module Api
       if is_client?(user_selected)
         current_leader_item = Leaderboard.includes(:user).find_by_user_id(user_selected.id)
         unless current_leader_item
-          Leaderboard.create!(
+          current_leader_item = Leaderboard.create!(
             user_id: user_selected.id,
-            contents_learnt: 0,
-            time_elapsed: 0
+            contents_learnt: user_selected.content_learnings.count
           )
         end
         if from_event?
-          leaderboard = get_event_leaders(user_selected)
+          leaderboard = get_event_leaders(user_selected, current_leader_item)
         else
           leaderboard = get_all_leaders(user_selected)
         end
@@ -94,13 +93,16 @@ module Api
         user_data = leaderboard[:user_data]
         leaders = leaderboard[:leaders]
         serialized_leaders = leaderboard[:serialized_leaders]
+        last_super_event = user_selected.my_super_events.last
+
         render json: {
           leaders: serialized_leaders,
           meta: {
             total_count: leaders.total_count,
             total_pages: leaders.total_pages,
             user_data: user_data,
-            total_contents: total_content_available
+            total_contents: total_content_available,
+            total_achievements:  last_super_event ? last_super_event.user_achievement_ids.count : 0
           }
         }
       else
@@ -144,7 +146,7 @@ module Api
       params[:event_id].present?
     end
 
-    def get_event_leaders(user_selected)
+    def get_event_leaders(user_selected, current_leader_item)
       event_id = params[:event_id]
       sorted_leaders = []
       user_data = {}
@@ -156,8 +158,6 @@ module Api
           .pluck(:user_id)
 
         achievement_leaders = all_leaders.where(user_id: user_ids_by_event)
-        current_leader_item = Leaderboard.includes(:user)
-          .find_by_user_id(user_selected.id)
 
         event_achievement_ids = user_event_achievement.event_achievement.user_achievement_ids
         sorted_leaders =  sort_leaders(achievement_leaders, event_achievement_ids)

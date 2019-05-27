@@ -19,7 +19,7 @@ module Api
     end
 
     def user_id
-      object.user ? object.user.username : nil
+      object.user ? object.user.id : nil
     end
 
     def user_image
