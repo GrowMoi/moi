@@ -118,8 +118,10 @@ module Api
     def today
       events = get_events_availables[:events]
       today = get_first_week(events)
+      event_achievement = super_event_available ? serializeSuperEvent([super_event_available]) : []
       respond_with(
-        today
+        events: today,
+        superevent: event_achievement
       )
     end
 
