@@ -231,6 +231,7 @@
       user: Creado por
       status: Estado
       file: Archivo
+      kind: Tipo
       imported_contents: Contenidos importados
       new: Subir archivo para importar contenidos
       new_translate_import: Subir archivo para importar traduccion de contenidos
@@ -261,7 +262,19 @@
       edit: "Editar Super Evento"
       created: "Super Evento creado"
       updated: "Super Evento actualizado"
-      show: "Mostrar Super Evento"
+      show: "Mostrar Evento"
+      links: "Acciones"
+      results: "Resultados"
+      participants: "Participantes"
+      users:
+        name: "Nombre o username"
+        join_date: "Se unió en:"
+        end_date: "Culminó en:"
+        state: "Estado"
+        status:
+          taken: "En progreso..."
+          completed: "Completado"
+          expired: "Expirado"
     tutor:
       moi:
         analyze: "Enviar solicitud"
@@ -776,7 +789,8 @@
         user_level: Nivel de usuario
         kind: Tipo
         duration: Duración (horas)
-        image: Imagen premio
+        image: Imagen premio - Activada
+        inactive_image: Imagen premio - Desactivada
         active: Activo
       event_achievement:
         title: Titulo
@@ -786,7 +800,9 @@
         start_date: Fecha de inicio
         end_date: Fecha de culminación
         image: Imagen premio
+        inactive_image: Imagen premio - Desactivada
         new_users: Solo para nuevos usuarios
+        email_notify: Correo (Recibir notificationes)
     errors:
       messages:
         <<: *errors_messages

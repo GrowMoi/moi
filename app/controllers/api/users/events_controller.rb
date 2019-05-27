@@ -64,11 +64,17 @@ module Api
             user: current_user,
             event_achievement: super_event
           )
-          user_event.save
-          response = {
-            status: :created,
-            super_event: super_event
-          }
+          if user_event.save
+            response = {
+              status: :created,
+              super_event: super_event
+            }
+          else
+            response = {
+              status: :unprocessable_entity,
+              errors: user_event.errors
+            }
+          end
         else
           response = {
             status: :not_found

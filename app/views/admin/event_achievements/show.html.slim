@@ -1,6 +1,6 @@
 - content_for :title, t("activerecord.models.event_achievement")
 
-h3.text-center = event.title
+h3.text-center = event_achievement.title
 
 .form-group
   = label_tag t("activerecord.attributes.event_achievement.user_achievement_ids")
@@ -12,27 +12,37 @@ h3.text-center = event.title
 
 .form-group
   = label_tag t("activerecord.attributes.event_achievement.description")
-  p = event.description
+  p = event_achievement.description
 
 .form-group
   = label_tag t("activerecord.attributes.event_achievement.start_date")
-  p = l(event.start_date, :format => :short)
+  p = l(event_achievement.start_date, :format => :short)
 
 .form-group
   = label_tag t("activerecord.attributes.event_achievement.end_date")
-  p = l(event.end_date, :format => :short)
+  p = l(event_achievement.end_date, :format => :short)
 
 .form-group
   = label_tag t("activerecord.attributes.event_achievement.message")
-  p = simple_format(event.message)
+  p = simple_format(event_achievement.message)
+
+.form-group
+  = label_tag t("activerecord.attributes.event_achievement.email_notify")
+  p = simple_format(event_achievement.email_notify)
 
   .form-group
     = label_tag t("activerecord.attributes.event_achievement.image")
     br
     span.content-media-name-on-form
-      - if event.image?
-        img src=event.image.url
+      - if event_achievement.image?
+        img src=event_achievement.image.url
 
+  .form-group
+    = label_tag t("activerecord.attributes.event_achievement.image")
+    br
+    span.content-media-name-on-form
+      - if event_achievement.inactive_image?
+        img src=event_achievement.inactive_image.url
 hr
 .pull-right
-  = link_to "Editar", edit_admin_event_achievement_path(event), class: "btn btn-link"
+  = link_to "Editar", edit_admin_event_achievement_path(event_achievement), class: "btn btn-link"

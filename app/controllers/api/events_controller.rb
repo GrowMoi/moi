@@ -5,13 +5,19 @@ module Api
 
     expose(:super_event_available) {
       super_event = EventAchievement.last
-      if super_event && super_event.end_date > Time.now
-        taken = UserEventAchievement.where(
-                  user: current_user,
-                  event_achievement: super_event
-                )
-        if taken.empty?
-          super_event
+      unless super_event.is_expired
+        if super_event.new_users && (current_user.created_at > super_event.start_date)
+          if current_user.my_super_events.empty?
+            super_event #no events user
+          else
+            if current_user.my_super_events.find(super_event.id).nil?
+              super_event
+            else
+              unless current_user.super_event_completed?
+                super_event
+              end
+            end
+          end
         end
       end
     }
@@ -27,6 +33,39 @@ module Api
     respond_to :json
 
     api :GET,
+        "/events",
+        "Returns all events"
+    example %q{
+      "events": [
+        {
+          "title": "Evento mind blow",
+          "description": "Completa todos estos contenidos y se un master",
+          "id: 12,
+          "image": "https://cdn4.iconfinder.com/data/icons/badges-and-votes-1/128/Badges_Votes_star-512.png",
+          "inactive_image": "https://cdn4.iconfinder.com/data/icons/badges-and-votes-1/128/Badges_Votes_star-512.png",
+          "duration": 120,
+          "user_level": 2,
+          "kind": "public",
+          "contents": [
+            {
+              content_id: 123,
+              neuron: Jugar
+            },
+            {
+              content_id: 125,
+              neuron: Matematica
+            }
+          ]
+        }
+      ]
+    }
+    def index
+      respond_with(
+        serializeEvents(Event.all)
+      )
+    end
+
+    api :GET,
         "/events/today",
         "Get events by day."
     example %q{
@@ -36,6 +75,7 @@ module Api
           "description": "Completa todos estos contenidos y se un master",
           "id: 12,
           "image": "https://cdn4.iconfinder.com/data/icons/badges-and-votes-1/128/Badges_Votes_star-512.png",
+          "inactive_image": "https://cdn4.iconfinder.com/data/icons/badges-and-votes-1/128/Badges_Votes_star-512.png",
           "duration": 120,
           "user_level": 2,
           "kind": "public",
@@ -55,6 +95,7 @@ module Api
           "description": "Completa todos estos contenidos y haz crecer tu arbol",
           "id: 32,
           "image": "https://cdn4.iconfinder.com/data/icons/badges-and-votes-1/128/Badges_Votes_star-512.png",
+          "inactive_image": "https://cdn4.iconfinder.com/data/icons/badges-and-votes-1/128/Badges_Votes_star-512.png",
           "duration": 120,
           "user_level": 5,
           "kind": "public",
@@ -89,6 +130,7 @@ module Api
           "description": "Completa todos estos contenidos y se un master",
           "id: 12,
           "image": "https://cdn4.iconfinder.com/data/icons/badges-and-votes-1/128/Badges_Votes_star-512.png",
+          "inactive_image": "https://cdn4.iconfinder.com/data/icons/badges-and-votes-1/128/Badges_Votes_star-512.png",
           "duration": 120,
           "user_level": 2,
           "kind": "public",
@@ -108,6 +150,7 @@ module Api
           "description": "Completa todos estos contenidos y haz crecer tu arbol",
           "id: 32,
           "image": "https://cdn4.iconfinder.com/data/icons/badges-and-votes-1/128/Badges_Votes_star-512.png",
+          "inactive_image": "https://cdn4.iconfinder.com/data/icons/badges-and-votes-1/128/Badges_Votes_star-512.png",
           "duration": 120,
           "user_level": 5,
           "kind": "public",
@@ -139,6 +182,7 @@ module Api
         "description": "Completa todos estos contenidos y haz crecer tu arbol",
         "id": 32,
         "image": "https://cdn4.iconfinder.com/data/icons/badges-and-votes-1/128/Badges_Votes_star-512.png",
+        "inactive_image": "https://cdn4.iconfinder.com/data/icons/badges-and-votes-1/128/Badges_Votes_star-512.png",
         "duration": 120,
         "user_level": 5,
         "kind": "public",

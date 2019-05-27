@@ -2,17 +2,18 @@
 #
 # Table name: events
 #
-#  id           :integer          not null, primary key
-#  title        :string           not null
-#  description  :string
-#  image        :string
-#  content_ids  :text             default([]), is an Array
-#  publish_days :text             default([]), is an Array
-#  duration     :integer          not null
-#  kind         :string
-#  user_level   :integer          default(1)
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id             :integer          not null, primary key
+#  title          :string           not null
+#  description    :string
+#  image          :string
+#  inactive_image :string
+#  content_ids    :text             default([]), is an Array
+#  publish_days   :text             default([]), is an Array
+#  duration       :integer          not null
+#  kind           :string
+#  user_level     :integer          default(1)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
 #
 module Api
   class EventSerializer < ActiveModel::Serializer
@@ -20,6 +21,7 @@ module Api
                :title,
                :description,
                :image,
+               :inactive_image,
                :contents,
                :duration,
                :kind,
@@ -30,6 +32,11 @@ module Api
     def image
       image = object.image
       image ? image.url : ''
+    end
+
+    def inactive_image
+      inactive_image = object.inactive_image
+      inactive_image ? inactive_image.url : ''
     end
 
     def contents

@@ -13,21 +13,31 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  description          :string
+#  inactive_image       :string
+#  email_notify         :string
 #
 
 class EventAchievement < ActiveRecord::Base
 
   mount_uploader :image, ContentMediaUploader
-
+  mount_uploader :inactive_image, ContentMediaUploader
 
   begin :relationships
     has_many :user_event_achievements,
               dependent: :destroy
   end
 
+  begin :validations
+    validates :start_date,
+              :end_date,
+              :email_notify,
+              :title,
+              :message,
+              presence: true
+  end
 
   def is_expired
-    self.start_date < Time.now && self.end_date > Time.now
+    self.start_date > Time.now && self.end_date < Time.now
   end
 
 end

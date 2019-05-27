@@ -69,7 +69,8 @@ class ContentImportingWorker
       end
 
       def translate_possible_answers!
-        @content.possible_answers.each_with_index do |possible_answer, index|
+        contents = @content.possible_answers.sort_by { |a| a.correct ? 0 : 1 }
+        contents.each_with_index do |possible_answer, index|
           attr = possible_answers_attributes[index]
           if attr
             possible_answer.text = attr[:text]

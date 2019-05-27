@@ -1,6 +1,6 @@
-= form_for [:admin, event] do |f|
+= form_for [:admin, event_achievement] do |f|
   = render "admin/shared/form_errors",
-           resource: event
+           resource: event_achievement
 
   .form-group
     = f.label :title
@@ -18,31 +18,36 @@
     = f.label :start_date
     = f.date_field :start_date,
                 class: "form-control",
-                min: Date.today,
                 required: true
 
   .form-group
     = f.label :end_date
     = f.date_field :end_date,
                 class: "form-control",
-                min: Date.today,
                 required: true
 
   .form-group
    = f.label :message
    = f.text_area :message,
                   rows: 5,
-                  class: "form-control"
+                  class: "form-control",
+                  required: true
 
   .form-group
     = f.label :user_achievement_ids
     = f.collection_select :user_achievement_ids, all_achievements, :id, :name, {include_hidden: false}, {multiple: true, class: "form-control"}
 
-  .col-sm-12.nested-content-media
+  .form-group
+    = f.label :email_notify
+    = f.email_field :email_notify,
+                class: "form-control",
+                required: true
+
+  .nested-content-media
     = f.hidden_field :id
+    = f.label :image
 
     .form-group
-      / media
       = tooltip t("views.contents.attach_media"),
                 place: "left",
                 class: "btn btn-xs btn-default content-media-uploader" do
@@ -53,8 +58,26 @@
         = f.hidden_field :image_cache
 
       span.content-media-name-on-form
-        - if f.object.image?
-          = decorate(f.object).link_for_form
+        - if event_achievement.image?
+          img src=event_achievement.image.url
+
+  .nested-content-media
+    = f.hidden_field :id
+    = f.label :inactive_image
+
+    .form-group
+      = tooltip t("views.contents.attach_media"),
+                place: "left",
+                class: "btn btn-xs btn-default content-media-uploader" do
+        .glyphicon.glyphicon-cloud-upload
+
+      .hidden
+        = f.file_field :inactive_image
+        = f.hidden_field :inactive_image_cache
+
+      span.content-media-name-on-form
+        - if event_achievement.inactive_image?
+          img src=event_achievement.inactive_image.url
 
   .actions
     = f.submit class: "btn btn-primary",

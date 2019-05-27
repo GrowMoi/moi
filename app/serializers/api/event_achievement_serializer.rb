@@ -24,10 +24,18 @@ module Api
                :achievements,
                :message,
                :image,
-               :description
+               :inactive_image,
+               :description,
+               :taken,
+               :completed
 
     def image
       image = object.image
+      image ? image.url : ''
+    end
+
+    def inactive_image
+      image = object.inactive_image
       image ? image.url : ''
     end
 
@@ -49,6 +57,23 @@ module Api
 
     def end_date
       (object.end_date.to_f * 1000).to_i
+    end
+
+    def taken
+      unless current_user.my_super_events.empty?
+        !current_user.my_super_events.find(object.id).nil?
+      else
+        false
+      end
+    end
+
+    def completed
+      if current_user.user_event_achievements
+        super_event = current_user.user_event_achievements.find_by_event_achievement_id(object.id)
+        super_event ? super_event.status == "completed" : false
+      else
+        false
+      end
     end
 
     alias_method :current_user, :scope

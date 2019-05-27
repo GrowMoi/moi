@@ -14,12 +14,15 @@ class User < ActiveRecord::Base
           ).create_and_update_leaderboard()
 
           notify_tutors(self, new_achievements)
-          if self.super_event_completed?
-            notify_super_event_completed
-          end
         end
       end
       new_achievements
+    end
+
+    def reach_super_event
+      if self.super_event_completed?
+        notify_super_event_completed
+      end
     end
 
     def notify_client_got_item_to_tutors(notification_data)
@@ -69,10 +72,13 @@ class User < ActiveRecord::Base
     end
 
     def notify_super_event_completed
-      super_event = self.active_super_event
-      super_event.status = "completed"
-      super_event.save
-      SuperEventUserMailer.send_message(self, super_event).deliver_now
+      user_event_achievement = self.user_event_achievements.last
+      user_event_achievement.status = "completed"
+      user_event_achievement.save
+      SuperEventMailer.notify_admin(
+                            self,
+                            user_event_achievement.event_achievement
+                          ).deliver_now
     end
   end
 end
