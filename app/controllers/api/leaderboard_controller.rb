@@ -102,7 +102,7 @@ module Api
             total_pages: leaders.total_pages,
             user_data: user_data,
             total_contents: total_content_available,
-            total_achievements:  last_super_event ? last_super_event.user_achievement_ids.count : 0
+            total_super_event_achievements:  last_super_event ? last_super_event.user_achievement_ids.count : 0
           }
         }
       else
