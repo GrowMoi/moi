@@ -21,11 +21,6 @@ module Api
                 .order(contents_learnt: :desc, time_elapsed: :asc)
     }
 
-    expose(:all_achievement_leaders) {
-      Leaderboard.includes(:user)
-                .order(achievements: :desc, contents_learnt: :asc, time_elapsed: :asc)
-    }
-
     api :GET,
         "/leaderboard",
         "Get leaderboard"
@@ -148,25 +143,36 @@ module Api
         .where(event_achievement_id: event_id)
         .pluck(:user_id)
 
-      achievement_leaders = all_achievement_leaders.where(user_id: user_ids_by_event)
-      leaders = achievement_leaders.page(params[:page] || PAGE).per(params[:per_page] || PER_PAGE)
+      achievement_leaders = all_leaders.where(user_id: user_ids_by_event)
+      current_leader_item = Leaderboard.includes(:user).find_by_user_id(user_selected.id)
+      event_achievement_ids = UserEventAchievement.where(event_achievement_id: event_id, user_id: user_selected.id).last.event_achievement.user_achievement_ids
+
+      sorted_leaders = achievement_leaders.sort do |achievement_leader1, achievement_leader2|
+        user_achievement_ids1 = achievement_leader1.user.my_achievements.pluck(:id)
+        intersection1 = user_achievement_ids1 & event_achievement_ids
+        achieved_achievements_count1 = intersection1.count
+
+        user_achievement_ids2 = achievement_leader2.user.my_achievements.pluck(:id)
+        intersection2 = user_achievement_ids2 & event_achievement_ids
+        achieved_achievements_count2 = intersection2.count
+
+        (achieved_achievements_count1 <=> achieved_achievements_count2) == 0 ?
+        (achievement_leader1.contents_learnt <=> achievement_leader2.contents_learnt) :
+        (achieved_achievements_count1 <=> achieved_achievements_count2)
+      end
+
+      sorted_leaders = sorted_leaders.reverse
+
+      leaders = Kaminari.paginate_array(sorted_leaders)
+                        .page(params[:page] || PAGE)
+                        .per(params[:per_page] || PER_PAGE)
+
       user_data = {}
 
-      if exists_relation(user_selected)
-        user_index = achievement_leaders.pluck(:user_id).index(user_selected.id)
-        user_info = achievement_leaders.find_by_user_id(user_selected.id)
-        serialized_data = Api::LeaderboardSerializer.new(user_info).as_json
-        user_data = serialized_data["leaderboard"]
-        user_data[:position] = user_index + 1
-      else
-        serialized_data = Api::LeaderboardSerializer.new(Leaderboard.new(
-          user_id: user_selected.id,
-          contents_learnt: 0,
-          time_elapsed: 0
-        )).as_json
-        user_data = serialized_data["leaderboard"]
-        user_data[:position] = achievement_leaders.count + 1
-      end
+      user_index = sorted_leaders.index(current_leader_item)
+      serialized_data = Api::LeaderboardSerializer.new(current_leader_item).as_json
+      user_data = serialized_data["leaderboard"]
+      user_data[:position] = user_index + 1
 
       return {
         leaders: leaders,
