@@ -12,6 +12,19 @@ class UserAuthorizationKeys
     :plants
   ].freeze
 
+  KEYS_ES = {
+    animals: "animal",
+    places:"globo",
+    sports:"pelota",
+    comunication:"mensaje",
+    stories:"libro",
+    art:"arte",
+    emotions:"mascara",
+    space:"planeta",
+    numbers:"numero",
+    plants:"planta",
+  }
+
   class << self
     ##
     # @return [Hash] for keys -> img path
