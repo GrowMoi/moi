@@ -15,12 +15,16 @@
 #  description          :string
 #  inactive_image       :string
 #  email_notify         :string
+#  title_message        :string
+#  image_message        :string
+#  video_message        :string
 #
 
 class EventAchievement < ActiveRecord::Base
 
   mount_uploader :image, ContentMediaUploader
   mount_uploader :inactive_image, ContentMediaUploader
+  mount_uploader :image_message, ContentMediaUploader
 
   begin :relationships
     has_many :user_event_achievements,

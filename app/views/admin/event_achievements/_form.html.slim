@@ -27,13 +27,6 @@
                 required: true
 
   .form-group
-   = f.label :message
-   = f.text_area :message,
-                  rows: 5,
-                  class: "form-control",
-                  required: true
-
-  .form-group
     = f.label :user_achievement_ids
     = f.collection_select :user_achievement_ids, all_achievements, :id, :name, {include_hidden: false}, {multiple: true, class: "form-control"}
 
@@ -79,6 +72,42 @@
         - if event_achievement.inactive_image?
           img src=event_achievement.inactive_image.url
 
+  .form-group
+    = f.label :title_message
+    = f.text_field :title_message,
+                   class: "form-control",
+                   required: true
+
+  .form-group
+    = f.label :message
+    = f.text_area :message,
+                    rows: 5,
+                    class: "form-control",
+                    required: true
+
+  .form-group
+    = f.label :video_message
+    = f.text_field :video_message,
+                    class: "form-control",
+                    required: true
+
+  .nested-content-media
+    = f.hidden_field :id
+    = f.label :image_message
+
+    .form-group
+      = tooltip t("views.contents.attach_media"),
+                place: "left",
+                class: "btn btn-xs btn-default content-media-uploader" do
+        .glyphicon.glyphicon-cloud-upload
+
+      .hidden
+        = f.file_field :image_message
+        = f.hidden_field :image_message_cache
+
+      span.content-media-name-on-form
+        - if event_achievement.image_message?
+          img src=event_achievement.image_message.url
   .actions
     = f.submit class: "btn btn-primary",
                data: { disable_with: t("views.submitting") }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190526220052) do
+ActiveRecord::Schema.define(version: 20190528220201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -291,6 +291,9 @@ ActiveRecord::Schema.define(version: 20190526220052) do
     t.string   "description"
     t.string   "inactive_image"
     t.string   "email_notify"
+    t.string   "title_message"
+    t.string   "image_message"
+    t.string   "video_message"
   end
 
   create_table "events", force: :cascade do |t|
@@ -326,6 +329,7 @@ ActiveRecord::Schema.define(version: 20190526220052) do
     t.integer  "contents_learnt",           default: 0
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.integer  "achievements",              default: 0
   end
 
   add_index "leaderboards", ["user_id"], name: "index_leaderboards_on_user_id", using: :btree
