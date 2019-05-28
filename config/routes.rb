@@ -23,7 +23,7 @@ Moi::Application.routes.draw do
         get :details
       end
       member do
-        post :read_notifications
+        get :read_notifications
         get :open
       end
     end

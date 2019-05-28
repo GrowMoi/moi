@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
                                                 "client_completed_super_event"
                                               )
       if notification
-        notification_serialized = Api::ClientNotificationSerializer.new(
+        notification_serialized = Api::EventCompletedNotificationSerializer.new(
           notification,
           root: false
         )
