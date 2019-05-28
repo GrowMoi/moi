@@ -20,9 +20,10 @@ Moi::Application.routes.draw do
     resources :notifications, only: [] do
       collection do
         get :index
+        get :details
       end
       member do
-        post :read_notifications
+        get :read_notifications
         get :open
       end
     end

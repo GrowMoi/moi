@@ -49,7 +49,8 @@ class UserTutor < ActiveRecord::Base
       description: I18n.t(
         "views.tutor.moi.user_notification",
         tutor_name: tutor.name
-      )
+      ),
+      label: NotificationService::NOTIFICATION_KEY
     }
     begin
       Pusher.trigger(user_channel, 'new-notification', data)

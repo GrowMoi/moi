@@ -37,6 +37,17 @@ module Api
                            .where('created_at > ?', current_user.created_at)
     }
 
+    expose(:user_notifications_count) {
+      admin_notifications.count +
+      tutor_requests.count +
+      my_notifications.count +
+      tutor_notifications.count
+    }
+
+    expose(:super_event_notification) {
+      ClientNotification.where(client: current_user.id, deleted: false, data_type: 5).order(created_at: :desc)
+    }
+
     expose(:total_user_notifications) {
       serialized_admin = serialize_notifications(
                             admin_notifications,
@@ -57,6 +68,12 @@ module Api
                         Api::GenericNotificationSerializer
                       ).as_json
 
+      serialize_superevent_notifications = serialize_notifications(
+                        super_event_notification,
+                        Api::EventCompletedNotificationSerializer
+                      ).as_json
+
+      serialize_superevent_notifications +
       serialized_my_notifications +
       serialized_tutor_requests +
       serialized_admin +
@@ -67,17 +84,28 @@ module Api
         "/notifications/:id/read_notifications",
         "To deleted a notification of a user."
     param :id, Integer, required: true
-    def read_notifications
-      init_read_notification = current_user.create_read_notification(params[:id])
+    param :data_type, String, required: false
 
-      unless init_read_notification.nil?
-        response = { deleted: init_read_notification }
-        render json: response,
-            status: :ok
+    def read_notifications
+      if params[:data_type] &&  params[:data_type] == "client_completed_super_event"
+        current_notification_event = ClientNotification.find_by_id(params[:id])
+        notification_event_deleted = current_notification_event.update(deleted: true)
+        if notification_event_deleted
+          render json: { deleted: notification_event_deleted },
+              status: :ok
+        else
+          render json: { status: :unprocessable_entity },
+              status: response[:status]
+        end
       else
-        response = { status: :unprocessable_entity }
-        render json: response,
-            status: response[:status]
+        init_read_notification = current_user.create_read_notification(params[:id])
+        unless init_read_notification.nil?
+          render json: { deleted: init_read_notification },
+              status: :ok
+        else
+          render json: { status: :unprocessable_entity },
+              status: response[:status]
+        end
       end
     end
 
@@ -152,6 +180,36 @@ module Api
           total_pages: notification_items.total_pages
         }
       }
+    end
+
+
+    api :GET,
+        "/notifications/details",
+        "Get total counter tasks"
+    example %q{
+      {
+        "notifications": 10,
+        "recommendations": 7,
+        "events": 4
+      }
+    }
+
+    def details
+      pending_recommendations = TutorService::RecommendationsHandler.new(current_user).get_available()
+      response_json = {
+        recommendations: pending_recommendations.count,
+        events: get_event_contents_count()
+      }
+
+      available_events_count = EventService.new(
+        current_user
+      ).get_notification_events_count() || 0
+
+      super_events_completed_count = super_event_notification.count
+      notifications_count = available_events_count + user_notifications_count + super_events_completed_count
+      response_json[NotificationService::NOTIFICATION_KEY] = notifications_count
+
+      render json: response_json
     end
 
     api :GET,
@@ -245,6 +303,11 @@ module Api
           puts "PUSHER: #{notification_data}"
         end
       end
+    end
+
+    def get_event_contents_count
+      last_event = current_user.user_events.where(completed:false, expired:false).last
+      last_event.nil? ? 0 : last_event.contents.count - last_event.content_reading_events.count
     end
 
   end

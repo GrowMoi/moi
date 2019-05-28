@@ -7,18 +7,6 @@ module Api
     PAGE = 1
     PER_PAGE = 4
 
-    expose(:my_recommendations) {
-      ClientTutorRecommendation.where(client: current_user)
-    }
-
-    expose(:my_recommendations_in_progress) {
-      my_recommendations.where(status: "in_progress").includes(:tutor_recommendation)
-    }
-
-    expose(:my_recommendations_reached) {
-      my_recommendations.where(status: "reached").includes(:tutor_recommendation)
-    }
-
     def recommendations
       if data_format == "contents"
         build_contents
@@ -28,13 +16,18 @@ module Api
     end
 
     def details
+      recommendations_handler = TutorService::RecommendationsHandler.new(current_user)
+      total_recommendations = recommendations_handler.get_all
+      recommendations_in_progress = recommendations_handler.get_in_progress
+      recommendations_reached = recommendations_handler.get_reached
+      recommendation_contents_pending = recommendations_handler.get_available
 
       render json: {
         details: {
-          total_recommendations: my_recommendations.size,
-          recommendations_in_progress: my_recommendations_in_progress.size,
-          recommendations_reached: my_recommendations_reached.size,
-          recommendation_contents_pending: recommended_contents.size
+          total_recommendations: total_recommendations.size,
+          recommendations_in_progress: recommendations_in_progress.size,
+          recommendations_reached: recommendations_reached.size,
+          recommendation_contents_pending: recommendation_contents_pending.size
 
         }
       },
@@ -44,6 +37,10 @@ module Api
     private
 
     def build_contents
+      recommended_contents = TutorService::RecommendationsHandler.new(
+        current_user
+      ).get_available
+
       serialized_contents = ActiveModel::ArraySerializer.new(
         recommended_contents,
         scope: current_user,
@@ -57,6 +54,11 @@ module Api
     end
 
     def build_recommendations
+      recommendations_handler = TutorService::RecommendationsHandler.new(current_user)
+      my_recommendations = recommendations_handler.get_all
+      my_recommendations_in_progress = recommendations_handler.get_in_progress
+      my_recommendations_reached = recommendations_handler.get_reached
+
       serialized_recommendations = ActiveModel::ArraySerializer.new(
         my_recommendations,
         scope: current_user,
@@ -81,17 +83,6 @@ module Api
       resp[:meta][:total_pages] = data.total_pages
       render json: resp,
       status: :accepted
-    end
-
-    def recommended_contents
-      user_contents = []
-      my_recommendations_in_progress.find_each do |r|
-        array_contents = ContentTutorRecommendation.includes(:content)
-                                                   .where(tutor_recommendation: r.tutor_recommendation)
-                                                   .map(&:content)
-        user_contents.concat array_contents
-      end
-      user_contents.uniq.delete_if{|e|current_user.already_learnt?(e) || current_user.already_read?(e)}.reverse
     end
 
     def paginate_array(items)

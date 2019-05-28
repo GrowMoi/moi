@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
       no_achievements.each do |achievement|
         if achievement.user_win_achievement?(self)
           new_achievements << UserAdminAchievement.create!(user_id: self.id, admin_achievement_id: achievement.id)
+
           notify_tutors(self, new_achievements)
         end
       end
@@ -82,7 +83,7 @@ class User < ActiveRecord::Base
                                                 "client_completed_super_event"
                                               )
       if notification
-        notification_serialized = Api::ClientNotificationSerializer.new(
+        notification_serialized = Api::EventCompletedNotificationSerializer.new(
           notification,
           root: false
         )

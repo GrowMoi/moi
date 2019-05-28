@@ -18,6 +18,20 @@ RSpec.describe Api::LearnController,
 
   before { create :achievement }
 
+  before {
+    create :neuron,
+    title: "Lenguaje"
+
+    create :neuron,
+    title: "Artes"
+
+    create :neuron,
+    title: "Aprender"
+
+    create :neuron,
+    title: "Naturaleza"
+  }
+
   let(:json_response) {
     JSON.parse response.body
   }

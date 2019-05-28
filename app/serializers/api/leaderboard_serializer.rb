@@ -7,7 +7,8 @@ module Api
         :email,
         :user_id,
         :user_image,
-        :content_summary
+        :content_summary,
+        :achievements
 
     def username
       object.user ? object.user.username : 'unknow'
@@ -18,7 +19,7 @@ module Api
     end
 
     def user_id
-      object.user ? object.user.username : nil
+      object.user ? object.user.id : nil
     end
 
     def user_image
@@ -32,6 +33,10 @@ module Api
           total_approved_contents: Neuron.approved_public_contents.count
         }
       end
+    end
+
+    def achievements
+      object.user ? object.user.my_achievements.count : 0
     end
   end
 end
