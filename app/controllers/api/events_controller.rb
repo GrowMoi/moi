@@ -241,7 +241,7 @@ module Api
         events_by_week[:super_event] = serializeSuperEvent([super_event_available])
       end
 
-      if (events.size == all_events_ids.size) && ()#any event taken
+      if (events.size == all_events_ids.size)
         first_week = "#{start_week} - #{end_week}"
         events_by_week[first_week] = get_first_week(events)
       else

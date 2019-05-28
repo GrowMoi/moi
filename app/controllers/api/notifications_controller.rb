@@ -44,19 +44,6 @@ module Api
       tutor_notifications.count
     }
 
-    expose(:super_event_available) {
-      super_event = EventAchievement.last
-      if super_event && super_event.end_date > Time.now
-        taken = UserEventAchievement.where(
-                  user: current_user,
-                  event_achievement: super_event
-                )
-        if taken.empty?
-          super_event
-        end
-      end
-    }
-
     expose(:total_user_notifications) {
       serialized_admin = serialize_notifications(
                             admin_notifications,
@@ -193,14 +180,11 @@ module Api
         events: get_event_contents_count()
       }
 
-      available_events = EventService.new(
+      available_events_count = EventService.new(
         current_user
-      ).get_available_events() || []
-      available_events_count = available_events.count
-      notifications_count = available_events_count + user_notifications_count
-      #TODO: Improve count
-      notifications_count = super_event_available ? notifications_count + 1 : notifications_count
+      ).get_notification_events_count() || 0
 
+      notifications_count = available_events_count + user_notifications_count
       response_json[NotificationService::NOTIFICATION_KEY] = notifications_count
 
       render json: response_json
