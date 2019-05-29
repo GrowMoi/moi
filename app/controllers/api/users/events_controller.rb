@@ -59,7 +59,7 @@ module Api
           "take an super event"
       param :id, String, required: true
       def take_super_event
-        if super_event
+        if current_user.can_take_super_event(super_event)
           user_event = UserEventAchievement.new(
             user: current_user,
             event_achievement: super_event

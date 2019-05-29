@@ -12,10 +12,17 @@ class EventService
 
   def get_outdate_user_events_ids
     date = Date.today
-    @client.user_events
+    events = @client.user_events
       .where("updated_at < ?",
         date.at_beginning_of_week
-      ).map(&:event_id)
+      )
+    events.each do |event|
+      unless event.expired
+        event.expired = true
+        event.save
+      end
+    end
+    ids = events.map(&:event_id)
   end
 
   def get_events_ids_taken_by_user
@@ -57,20 +64,8 @@ class EventService
 
   def super_event_available
     super_event = EventAchievement.last
-    unless super_event.is_expired
-      if super_event.new_users && (@client.created_at > super_event.start_date)
-        if @client.my_super_events.empty?
-          super_event #no events user
-        else
-          if @client.my_super_events.find(super_event.id).nil?
-            super_event
-          else
-            unless @client.super_event_completed?
-              super_event
-            end
-          end
-        end
-      end
+    if !super_event.is_expired && @client.can_take_super_event(super_event)
+      super_event
     end
   end
 

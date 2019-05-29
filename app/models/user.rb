@@ -150,9 +150,19 @@ class User < ActiveRecord::Base
              dependent: :destroy
   end
 
-  def active_super_event
+  def update_status_super_event
     user_event = self.user_event_achievements.last
-    user_event && user_event.super_event_is_valid_yet ? user_event.event_achievement : nil
+    if user_event
+      user_event.super_event_is_valid_yet
+    end
+  end
+
+  def can_take_super_event(super_event)
+    if super_event.new_users
+      self.created_at > super_event.start_date
+    else
+      true
+    end
   end
 
   def super_event_completed?
@@ -250,5 +260,10 @@ class User < ActiveRecord::Base
     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
       where(conditions.to_hash).first
     end
+  end
+
+  def active_super_event
+    user_event = self.user_event_achievements.last
+    user_event && user_event.super_event_is_valid_yet ? user_event.event_achievement : nil
   end
 end

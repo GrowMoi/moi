@@ -41,7 +41,7 @@ class EventAchievement < ActiveRecord::Base
   end
 
   def is_expired
-    self.start_date > Time.now && self.end_date < Time.now
+    self.end_date.end_of_day < Time.now
   end
 
 end
