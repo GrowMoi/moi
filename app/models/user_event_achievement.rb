@@ -31,7 +31,13 @@ class UserEventAchievement < ActiveRecord::Base
   end
 
   def super_event_is_valid_yet
-    !self.event_achievement.is_expired && self.status == "taken"
+    expired = self.event_achievement.is_expired
+    taken = self.status == "taken"
+    if expired && taken
+      self.status = "expired"
+      self.save
+    end
+    !expired && taken
   end
 
   private
