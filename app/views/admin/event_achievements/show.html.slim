@@ -51,7 +51,7 @@ h3.text-center = event_achievement.title
 .form-group
   = label_tag t("activerecord.attributes.event_achievement.video_message")
   br
-  iframe src=event_achievement.video_message width="560" height="315"
+  = decorate(event_achievement).video_preview
 
 .form-group
     = label_tag t("activerecord.attributes.event_achievement.image_message")

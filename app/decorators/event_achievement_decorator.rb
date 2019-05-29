@@ -22,6 +22,22 @@ class EventAchievementDecorator < LittleDecorator
     end
   end
 
+  def video_preview
+    if record.video_message.present?
+      regex = /youtube.com.*(?:\/|v=)([^&$]+)/
+      video_code = record.video_message.match(regex)[1]
+      content_tag(
+        :iframe,
+        nil,
+        src: "//www.youtube.com/embed/#{video_code}",
+        width: 560,
+        height: 315,
+        frameborder: 0,
+        allowfullscreen: :allowfullscreen
+      )
+    end
+  end
+
   private
 
   ##
