@@ -5,6 +5,10 @@ module Tutor
       current_user.tutor_requests_sent.accepted.map(&:user)
     }
 
+    expose(:allowed_category_indices_for_tutor) {
+      [0..4]
+    }
+
     expose(:player) {
       player_id = (client_notification.data.any? && client_notification.data["player_id"]) ?
                   client_notification.data["player_id"] : nil
@@ -25,7 +29,7 @@ module Tutor
     }
 
     expose(:client_notifications) {
-      ClientNotification.where(client: student_ids, deleted: false).order(created_at: :desc)
+      ClientNotification.where(client: student_ids, deleted: false, data_type: allowed_category_indices_for_tutor).order(created_at: :desc)
     }
 
     expose(:client_notification) {
