@@ -60,6 +60,9 @@ module Admin
                   :message,
                   :new_users,
                   :email_notify,
+                  :title_message,
+                  :image_message,
+                  :video_message,
                   user_achievement_ids: []
                 ]
     end

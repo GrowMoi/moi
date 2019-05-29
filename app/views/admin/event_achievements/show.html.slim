@@ -23,10 +23,6 @@ h3.text-center = event_achievement.title
   p = l(event_achievement.end_date, :format => :short)
 
 .form-group
-  = label_tag t("activerecord.attributes.event_achievement.message")
-  p = simple_format(event_achievement.message)
-
-.form-group
   = label_tag t("activerecord.attributes.event_achievement.email_notify")
   p = simple_format(event_achievement.email_notify)
 
@@ -43,6 +39,26 @@ h3.text-center = event_achievement.title
     span.content-media-name-on-form
       - if event_achievement.inactive_image?
         img src=event_achievement.inactive_image.url
+
+.form-group
+  = label_tag t("activerecord.attributes.event_achievement.title_message")
+  p = simple_format(event_achievement.title_message)
+
+.form-group
+  = label_tag t("activerecord.attributes.event_achievement.message")
+  p = simple_format(event_achievement.message)
+
+.form-group
+  = label_tag t("activerecord.attributes.event_achievement.video_message")
+  br
+  = decorate(event_achievement).video_preview
+
+.form-group
+    = label_tag t("activerecord.attributes.event_achievement.image_message")
+    br
+    span.content-media-name-on-form
+      - if event_achievement.image_message?
+        img src=event_achievement.image_message.url
 hr
 .pull-right
   = link_to "Editar", edit_admin_event_achievement_path(event_achievement), class: "btn btn-link"

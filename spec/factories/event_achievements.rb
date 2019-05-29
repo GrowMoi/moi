@@ -15,6 +15,9 @@
 #  description          :string
 #  inactive_image       :string
 #  email_notify         :string
+#  title_message        :string
+#  image_message        :string
+#  video_message        :string
 #
 
 FactoryGirl.define do

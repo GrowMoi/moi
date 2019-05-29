@@ -795,7 +795,10 @@
       event_achievement:
         title: Titulo
         description: Descripción
-        message: Mensaje (Instrucciones)
+        title_message: Mensaje (Título)
+        message: Mensaje (Descripción)
+        image_message: Mensaje (Imagen)
+        video_message: Mensaje (Video)
         user_achievement_ids: Logros
         start_date: Fecha de inicio
         end_date: Fecha de culminación

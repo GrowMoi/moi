@@ -5,6 +5,8 @@ module Api
         :description,
         :type,
         :label,
+        :media,
+        :videos,
         :data_type,
         :created_at
 
@@ -13,11 +15,19 @@ module Api
     end
 
     def description
-      object.data['message']
+      object.data['description']
     end
 
     def created_at
       object.created_at
+    end
+
+    def media
+      object.data['media']
+    end
+
+    def videos
+      object.data['videos']
     end
 
     def type

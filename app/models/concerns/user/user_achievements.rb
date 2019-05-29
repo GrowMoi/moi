@@ -73,10 +73,10 @@ class User < ActiveRecord::Base
 
     def notify_user_super_event_completed(event)
       data = {
-        user_event_achievement_id: event.id,
-        title: event.event_achievement.title,
-        description: event.event_achievement.description,
-        message: event.event_achievement.message
+        title: event.event_achievement.title_message,
+        description: event.event_achievement.message,
+        media:  [event.event_achievement.image_message.url],
+        videos: [event.event_achievement.video_message]
       }
       notification = create_client_notification(self,
                                                 data,
