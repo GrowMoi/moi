@@ -12,10 +12,17 @@ class EventService
 
   def get_outdate_user_events_ids
     date = Date.today
-    @client.user_events
+    events = @client.user_events
       .where("updated_at < ?",
         date.at_beginning_of_week
-      ).map(&:event_id)
+      )
+    events.each do |event|
+      unless event.expired
+        event.expired = true
+        event.save
+      end
+    end
+    ids = events.map(&:event_id)
   end
 
   def get_events_ids_taken_by_user
