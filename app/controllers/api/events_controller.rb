@@ -5,12 +5,14 @@ module Api
 
     expose(:super_event_available) {
       super_event = EventAchievement.last
-      expired = super_event.is_expired
-      if expired
-        current_user.update_status_super_event
-      end
-      if !expired && current_user.can_take_super_event(super_event)
-        super_event
+      unless super_event.nil?
+        expired = super_event.is_expired
+        if expired
+          current_user.update_status_super_event
+        end
+        if !expired && current_user.can_take_super_event(super_event)
+          super_event
+        end
       end
     }
 
