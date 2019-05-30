@@ -64,8 +64,10 @@ class EventService
 
   def super_event_available
     super_event = EventAchievement.last
-    if !super_event.is_expired && @client.can_take_super_event(super_event)
-      super_event
+    unless super_event.nil?
+      if !super_event.is_expired && @client.can_take_super_event(super_event)
+        super_event
+      end
     end
   end
 
