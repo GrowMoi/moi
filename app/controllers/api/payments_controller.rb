@@ -24,6 +24,7 @@ module Api
                         email: params[:email],
                         username: generate_username,
                         password: generate_password,
+                        authorization_key: UserAuthorizationKeys::KEYS.sample
                         role: "tutor_familiar")
         if user.save
           #account and 1 student free
@@ -50,7 +51,14 @@ module Api
             }
           ]
           payment_products.map {|payment| Payment.new(payment).save }
-          TutorMailer.payment_account(user.name, user.password, user.email).deliver_now
+          key_pass = user.authorization_key
+          key_pass_es = UserAuthorizationKeys::KEYS_ES[key_pass.to_sym]
+          TutorMailer.payment_account(
+                        user.name,
+                        user.password,
+                        user.email,
+                        key_pass_es
+                      ).deliver_now
           render text: "Valid payment",
                  status: :accepted
         else
