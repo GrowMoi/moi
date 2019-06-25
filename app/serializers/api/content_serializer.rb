@@ -34,7 +34,8 @@ module Api
                :content_tasks,
                :neuron_can_read,
                :favorite,
-               :belongs_to_event
+               :belongs_to_event,
+               :total_contents_read
 
     translates :title, :description, :source
 
@@ -92,6 +93,12 @@ module Api
         end
       end
       belongs
+    end
+
+    def total_contents_read
+      TreeService::ContentsForTestFetcher.new(
+        current_user
+      ).contents.count
     end
 
     alias_method :current_user, :scope

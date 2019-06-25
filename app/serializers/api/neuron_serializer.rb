@@ -16,7 +16,8 @@ module Api
     root false
     attributes :id,
                :title,
-               :neuron_can_read
+               :neuron_can_read,
+               :total_contents_read
 
     has_many :contents
 
@@ -71,6 +72,12 @@ module Api
         user: current_user,
         content: content
       ).exists?
+    end
+
+    def total_contents_read
+      TreeService::ContentsForTestFetcher.new(
+        current_user
+      ).contents.count
     end
   end
 end
