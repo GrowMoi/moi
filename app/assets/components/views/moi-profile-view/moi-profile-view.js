@@ -13,13 +13,16 @@ Polymer({
     this.userInfo = {
       name: '',
       username: '',
-      email: ''
+      email: '',
+      authorization_key: null
     };
     this.passwordData = {
       currentPassword: '',
       password: ''
     };
     this.passwordConfirmation = '';
+    this.images = [];
+
     $.ajax({
       url: profileApi,
       type: 'GET',
@@ -38,7 +41,9 @@ Polymer({
 
   },
   onGetProfileApiSuccess: function(res) {
-    this.userInfo = this.mergeObjectsWithSpecificProps(this.userInfo, res);
+    this.userInfo = this.mergeObjectsWithSpecificProps(this.userInfo, res.user);
+    this.authorization_key = res.authorization_key;
+    this.images = this._toArray(res.images, this.authorization_key);
   },
   onGetProfileApiError: function(res) {
     this.$['flash-message'].error(res.message);
@@ -104,5 +109,27 @@ Polymer({
   onNotificationReceived: function(notification) {
     this.notificationCounter++;
     NotificationBehavior.applyBadgetEffect(this.$.moiBadge);
+  },
+  _toArray: function(obj, authorization_key) {
+    return Object.keys(obj).map(function(key) {
+      return {
+        name: key,
+        value: obj[key],
+        match: key == authorization_key
+      };
+    });
+  },
+  check: function(key) {
+    return key == this.authorization_key;
+  },
+  selectKey: function (e){
+    var item = e.model.item,
+        newImages = this.images.map(function(image){
+          image.match = (image.name === item.name);
+          return image;
+        });
+    var newArray = JSON.parse(JSON.stringify(newImages));
+    this.images = newArray;
+    this.userInfo.authorization_key = item.name;
   }
 });
