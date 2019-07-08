@@ -24,7 +24,7 @@ module Api
                         email: params[:email],
                         username: generate_username,
                         password: generate_password,
-                        authorization_key: UserAuthorizationKeys::KEYS.sample
+                        authorization_key: UserAuthorizationKeys::KEYS.sample,
                         role: "tutor_familiar")
         if user.save
           #account and 1 student free
