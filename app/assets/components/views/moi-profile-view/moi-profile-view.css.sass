@@ -1,6 +1,16 @@
 @import ../../styles/common
 \:host
   .form-group
-    width: 50%
+    width: 60%
+
+  .images-wrapper
+    img
+      cursor: pointer
+      filter: grayscale(100%)
+      -webkit-filter: grayscale(100%)
+      &.selected
+        filter: none
+        -webkit-filter: none
+
   .password-form
     margin-top: 5rem

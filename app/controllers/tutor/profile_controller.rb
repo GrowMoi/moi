@@ -6,8 +6,13 @@ module Tutor
     end
 
     def info
-      render  json: current_user,
-              serializer: Api::UserProfileSerializer
+      render  json: {
+        user: Api::UserProfileSerializer.new(
+          current_user
+        ),
+        images: UserAuthorizationKeys.interests,
+        authorization_key: current_user.authorization_key
+      }
     end
 
     def update
@@ -56,7 +61,7 @@ module Tutor
 
     def tutor_params
       params.require(:tutor)
-            .permit(:name, :username, :email)
+            .permit(:name, :username, :email, :authorization_key)
     end
 
   end
