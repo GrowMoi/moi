@@ -30,6 +30,7 @@
 #  age                    :integer
 #  image                  :string
 #  level                  :integer          default(1)
+#  tree_image_app         :string
 #
 
 require 'rails_helper'

@@ -30,6 +30,7 @@
 #  age                    :integer
 #  image                  :string
 #  level                  :integer          default(1)
+#  tree_image_app         :string
 #
 
 class User < ActiveRecord::Base
@@ -48,6 +49,7 @@ class User < ActiveRecord::Base
   include UserStorage
 
   mount_base64_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
+  mount_base64_uploader :tree_image_app, ContentMediaUploader, file_name: -> { 'tree_app' }
   mount_base64_uploader :image, ContentMediaUploader, file_name: -> { DateTime.now.strftime('%s') + 'user_image' }
 
   # Include default devise modules. Others available are:
