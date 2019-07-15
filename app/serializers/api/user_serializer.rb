@@ -40,6 +40,7 @@ module Api
                :age,
                :city,
                :tree_image,
+               :tree_image_app,
                :username,
                :achievements,
                :image,
@@ -68,6 +69,10 @@ module Api
 
     def tree_image
       object.tree_image.url
+    end
+
+    def tree_image_app
+      object.tree_image_app.url
     end
 
     def image
