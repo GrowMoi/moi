@@ -39,6 +39,7 @@ module Api
                :city,
                :last_contents_learnt,
                :tree_image,
+               :tree_image_app,
                :successful_tests,
                :content_summary,
                :image,
@@ -57,7 +58,11 @@ module Api
     end
 
     def tree_image
-      object.image ? object.tree_image.url : ''
+      object.tree_image ? object.tree_image.url : ''
+    end
+
+    def tree_image_app
+      object.tree_image_app ? object.tree_image_app.url : ''
     end
 
     def successful_tests

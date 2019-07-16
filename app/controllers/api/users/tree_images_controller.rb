@@ -11,9 +11,16 @@ module Api
           "/users/tree_image",
           "create user tree"
       param :image, String
+      param :image_app, String
 
       def update
-        if params[:image] && user.update_attribute("tree_image", params[:image])
+        if(params[:image_app])
+          user.tree_image_app = params[:image_app]
+        else
+          user.tree_image = params[:image]
+        end
+
+        if user.save()
           response = {
             status: :accepted,
             user: user
