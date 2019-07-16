@@ -137,6 +137,7 @@ Moi::Application.routes.draw do
     match "users/content_favorites" => 'users#content_favorites', via: :get
     match "users/shared_contents" => 'users#shared_contents', via: :post
     match "users/event_in_progress" => 'users#event_in_progress', via: :get
+    match "users/contents_to_approve" => 'users#contents_to_approve', via: :get
 
     resources :users,
               only: [] do
