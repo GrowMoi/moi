@@ -6,16 +6,6 @@ class TranslatableEvent < GenericTranslatableResource
     @target_lang = target_lang
   end
 
-  def save
-    case @target_lang
-    when ApplicationController::DEFAULT_LANGUAGE
-      @resource.save
-    when "en"
-      translate!
-      @resource.reload
-    end
-  end
-
   def translate!
     @resource
     translate_attributes!

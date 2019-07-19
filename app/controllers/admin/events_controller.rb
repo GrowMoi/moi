@@ -35,12 +35,12 @@ module Admin
     end
 
     def update
-      event_translated = TranslatableEvent.new(
+      event_translated = TranslatableEditionEventService.new(
         event: event,
-        target_lang: 'es'
+        params: params
       )
       if event_translated.save
-        redirect_to admin_event_path(event, lang: 'es'), notice: I18n.t("views.events.updated")
+        redirect_to admin_event_path(event, lang: params[:land]), notice: I18n.t("views.events.updated")
       else
         render :edit
       end

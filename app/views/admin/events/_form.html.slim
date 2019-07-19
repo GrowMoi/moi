@@ -1,6 +1,7 @@
 = form_for [:admin, event] do |f|
   = render "admin/shared/form_errors",
            resource: event
+  = hidden_field_tag :lang, current_language
   .pull-right.btn-group
     = render "admin/shared/language_switcher", disabled: true
 
