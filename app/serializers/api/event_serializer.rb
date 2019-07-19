@@ -29,6 +29,24 @@ module Api
                :is_available,
                :completed
 
+    def title
+      lang = current_user.preferred_lang
+      unless lang == ApplicationController::DEFAULT_LANGUAGE
+        resp = TranslatedAttribute.where(translatable_id: object.id, name: "title").last
+        return title = resp ? resp.content : object.title
+      end
+      title = object.title
+    end
+
+    def description
+      lang = current_user.preferred_lang
+      unless lang == ApplicationController::DEFAULT_LANGUAGE
+        resp = TranslatedAttribute.where(translatable_id: object.id, name: "description").last
+        return description = resp ? resp.content : object.description
+      end
+      description = object.description
+    end
+
     def image
       image = object.image
       image ? image.url : ''
@@ -45,9 +63,15 @@ module Api
       ids.map do |id|
         content = Content.find(id)
         neuron = content.neuron
+        title = neuron.title
+        lang = current_user.preferred_lang
+        unless lang == ApplicationController::DEFAULT_LANGUAGE
+          resp = TranslatedAttribute.where(translatable_id: neuron.id, name: "title").last
+          title = resp ? resp.content : title
+        end
         {
           content_id: id,
-          neuron: neuron.title,
+          neuron: title,
           neuron_color: TreeService::NeuronsFetcher.new(neuron).neuron_color(branches_neurons_ids)
         }
       end
