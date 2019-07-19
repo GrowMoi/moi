@@ -21,16 +21,25 @@ module Api
                :completed_at
 
     def title
-      name = object.event ? object.event.title : ''
+      if object.is_a?(UserEvent)
+        return object.event.title || ''
+      else
+        return object.title || ''
+      end
     end
 
     def image
-      image = object.event.image
-      image ? image.url : ''
+      if object.is_a?(UserEvent)
+        return object.event.image ? object.event.image.url : ''
+      else
+        return object.image ? object.image.url : ''
+      end
     end
 
     def completed_at
-      (object.updated_at.to_f * 1000).to_i
+      if object.is_a?(UserEvent)
+        return (object.updated_at.to_f * 1000).to_i
+      end
     end
 
     alias_method :current_user, :scope
