@@ -30,21 +30,11 @@ module Api
                :completed
 
     def title
-      lang = current_user.preferred_lang
-      unless lang == ApplicationController::DEFAULT_LANGUAGE
-        resp = TranslatedAttribute.where(translatable_id: object.id, name: "title").last
-        return title = resp ? resp.content : object.title
-      end
-      title = object.title
+      title = get_translation("title")
     end
 
     def description
-      lang = current_user.preferred_lang
-      unless lang == ApplicationController::DEFAULT_LANGUAGE
-        resp = TranslatedAttribute.where(translatable_id: object.id, name: "description").last
-        return description = resp ? resp.content : object.description
-      end
-      description = object.description
+      description = get_translation("description")
     end
 
     def image
@@ -87,5 +77,18 @@ module Api
     end
 
     alias_method :current_user, :scope
+
+    private
+
+    def get_translation(attribute)
+      lang = current_user.preferred_lang
+
+      unless lang == ApplicationController::DEFAULT_LANGUAGE
+        resp = TranslatedAttribute.where(translatable_id: object.id, name: attribute, translatable_type:"Event").last
+        return title = resp ? resp.content : object.title
+      end
+
+      return object[attribute]
+    end
   end
 end
