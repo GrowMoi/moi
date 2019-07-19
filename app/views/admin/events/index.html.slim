@@ -14,10 +14,10 @@
     tbody
     -events.each do |q|
       tr
-        td = translate_attribute(q, :title)
-        td = translate_attribute(q, :description)
+        td = decorate(q).translated(:title)
+        td = decorate(q).translated(:description)
         td = q.user_level
-        td = link_to t("views.events.show"), admin_event_path(q)
+        td = link_to t("views.events.show"), admin_event_path(q, lang: params[:lang])
 
   .pull-right
     = link_to t("views.events.new"),

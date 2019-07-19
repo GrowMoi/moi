@@ -2,18 +2,20 @@
   = render "admin/shared/form_errors",
            resource: event
   .pull-right.btn-group
-    = render "admin/shared/language_switcher"
+    = render "admin/shared/language_switcher", disabled: true
 
   .form-group
     = f.label :title
     = f.text_field :title,
                    class: "form-control",
-                   required: true
+                   required: true,
+                   value: translate_attribute(f.object, :title)
 
   .form-group
    = f.label :description
    = f.text_field :description,
-                  class: "form-control"
+                  class: "form-control",
+                  value: translate_attribute(f.object, :description)
 
   .form-group
     = f.label :user_level
