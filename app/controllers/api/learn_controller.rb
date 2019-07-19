@@ -69,6 +69,11 @@ needs to be a JSON-encoded string having the following format:
       if user_completed_any_event?
         event_completed = user_event.event
         event_is_completed = true
+        serialized_event = EventCompleteSerializer.new(
+          event_completed,
+          scope: current_user,
+          root: false
+        )
       end
 
       unless current_user.reach_super_event.nil?
@@ -86,7 +91,7 @@ needs to be a JSON-encoded string having the following format:
         achievements: serialized_achievements,
         event: {
           completed: event_is_completed,
-          info: event_completed
+          info: serialized_event
         },
         super_event: {
           completed: super_event_completed,
