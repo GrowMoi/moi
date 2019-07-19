@@ -1,6 +1,9 @@
 .level-quizzes-page
   - content_for :title, t("activerecord.models.event_achievement").pluralize
 
+  .pull-right.btn-group
+    = render "admin/shared/language_switcher"
+
   table.table.table-striped
     thead
       tr
@@ -12,10 +15,10 @@
     tbody
     -events.each do |q|
       tr
-        td = q.title
+        td = decorate(q).translated(:title)
         td = l(q.start_date, :format => :short)
         td = l(q.end_date, :format => :short)
-        td = link_to t("views.event_achievements.show"), admin_event_achievement_path(q)
+        td = link_to t("views.event_achievements.show"), admin_event_achievement_path(q, lang: params[:lang])
         td = link_to t("views.event_achievements.participants"), participants_admin_event_achievement_path(q)
 
   .pull-right
