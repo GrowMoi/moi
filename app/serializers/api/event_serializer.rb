@@ -63,15 +63,15 @@ module Api
       ids.map do |id|
         content = Content.find(id)
         neuron = content.neuron
-        title = neuron.title
+        neuron_title = neuron.title
         lang = current_user.preferred_lang
         unless lang == ApplicationController::DEFAULT_LANGUAGE
-          resp = TranslatedAttribute.where(translatable_id: neuron.id, name: "title").last
-          title = resp ? resp.content : title
+          resp = TranslatedAttribute.where(translatable_id: neuron.id, name: "title", translatable_type: "Neuron").last
+          neuron_title = resp ? resp.content : neuron_title
         end
         {
           content_id: id,
-          neuron: title,
+          neuron: neuron_title,
           neuron_color: TreeService::NeuronsFetcher.new(neuron).neuron_color(branches_neurons_ids)
         }
       end
