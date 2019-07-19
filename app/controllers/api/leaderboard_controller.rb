@@ -81,8 +81,13 @@ module Api
         unless current_leader_item
           current_leader_item = create_leader_item(user_selected)
         end
+
+        last_super_event = user_selected.my_super_events.last
+        user_achievement_ids = last_super_event ? last_super_event.user_achievement_ids : []
+        total_super_event_achievements = user_achievement_ids.count
+
         if from_event?
-          leaderboard = get_event_leaders(user_selected, current_leader_item)
+          leaderboard = get_event_leaders(user_selected, current_leader_item, user_achievement_ids)
         else
           leaderboard = get_all_leaders(user_selected)
         end
@@ -90,8 +95,6 @@ module Api
         user_data = leaderboard[:user_data]
         leaders = leaderboard[:leaders]
         serialized_leaders = leaderboard[:serialized_leaders]
-        last_super_event = user_selected.my_super_events.last
-        total_super_event_achievements = last_super_event ? last_super_event.user_achievement_ids.count : 0
 
         render json: {
           leaders: serialized_leaders,
@@ -114,10 +117,11 @@ module Api
 
     private
 
-    def serialize_leaders(leaders, serializer)
+    def serialize_leaders(leaders, serializer, user_achievement_ids=[])
       serialized = ActiveModel::ArraySerializer.new(
         leaders,
-        each_serializer: serializer
+        each_serializer: serializer,
+        scope: user_achievement_ids
       )
       serialized
     end
@@ -144,7 +148,7 @@ module Api
       params[:event_id].present?
     end
 
-    def get_event_leaders(user_selected, current_leader_item)
+    def get_event_leaders(user_selected, current_leader_item, user_achievement_ids)
       event_id = params[:event_id]
       sorted_leaders = []
       user_data = {}
@@ -171,7 +175,7 @@ module Api
 
       return {
         leaders: leaders,
-        serialized_leaders: serialize_leaders(leaders, Api::LeaderboardSerializer),
+        serialized_leaders: serialize_leaders(leaders, Api::LeaderboardSerializer, user_achievement_ids),
         user_data: user_data
       }
     end
