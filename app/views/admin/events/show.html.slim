@@ -1,6 +1,9 @@
 - content_for :title, t("activerecord.models.event")
 
-h3.text-center = event.title
+h3.text-center = translate_attribute(event, :title)
+
+.pull-right.btn-group
+  = render "admin/shared/language_switcher"
 
 .form-group
   = label_tag t("activerecord.attributes.event.content_ids")

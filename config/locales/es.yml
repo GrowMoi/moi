@@ -701,7 +701,7 @@
       admin_achievement: Logro
       content_importing: Importar contenidos
       payment: Pagos
-      event: Eventos
+      event: Evento
       event_achievement: Super Eventos
     attributes:
       user:

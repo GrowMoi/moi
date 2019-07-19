@@ -17,9 +17,13 @@
 #
 
 class Event < ActiveRecord::Base
+  include TranslatableAttrs
+
   has_many :user_events,
            dependent: :destroy
 
   mount_uploader :image, ContentMediaUploader
   mount_uploader :inactive_image, ContentMediaUploader
+
+  translates :title, :description
 end
