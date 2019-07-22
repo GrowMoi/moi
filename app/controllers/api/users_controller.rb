@@ -176,10 +176,10 @@ module Api
     end
 
     api :GET,
-        "/users/contents_to_approve",
+        "/users/contents_to_learn",
         "returns the recommended contents and the event contents"
 
-    def contents_to_approve
+    def contents_to_learn
       content_event_ids = []
       content_recommendation_ids = []
       if last_user_event
