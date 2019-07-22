@@ -124,7 +124,8 @@ module Api
       def events_serialize(events)
         serialized = ActiveModel::ArraySerializer.new(
           events,
-          each_serializer: Api::EventCompleteSerializer
+          each_serializer: Api::EventCompleteSerializer,
+          scope: current_user
         )
         serialized
       end

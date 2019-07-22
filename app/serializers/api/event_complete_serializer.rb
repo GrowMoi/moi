@@ -22,9 +22,9 @@ module Api
 
     def title
       if object.is_a?(UserEvent)
-        return object.event.title || ''
+        title = get_translation(object.event, "title") || ''
       else
-        return object.title || ''
+        title = get_translation(object, "title") || ''
       end
     end
 
@@ -43,5 +43,19 @@ module Api
     end
 
     alias_method :current_user, :scope
+
+    private
+
+    def get_translation(event, attribute)
+
+      lang = current_user.preferred_lang
+
+      unless lang == ApplicationController::DEFAULT_LANGUAGE
+        resp = TranslatedAttribute.where(translatable_id: event.id, name: attribute, translatable_type:"Event").last
+        return title = resp ? resp.content : event.title
+      end
+
+      return event[attribute]
+    end
   end
 end
