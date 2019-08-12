@@ -8,7 +8,8 @@ module Api
         :user_id,
         :user_image,
         :content_summary,
-        :achievements
+        :achievements,
+        :super_event_achievements_count
 
     def username
       object.user ? object.user.username : 'unknow'
@@ -37,6 +38,13 @@ module Api
 
     def achievements
       object.user ? object.user.my_achievements.count : 0
+    end
+
+    def super_event_achievements_count
+      all_super_event_achievements_ids = scope || []
+      my_achievement_ids = object.user ? object.user.my_achievements.map(&:id) : []
+      user_super_event_achievement_ids = my_achievement_ids & all_super_event_achievements_ids
+      user_super_event_achievement_ids.count
     end
   end
 end
