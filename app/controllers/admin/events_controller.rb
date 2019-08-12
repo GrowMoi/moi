@@ -10,6 +10,9 @@ module Admin
     expose(:events) {
       Event.order(created_at: :desc)
     }
+    expose(:decorated_event) {
+      decorate event
+    }
 
     expose(:all_contents) {
       Neuron.approved_public_contents
@@ -32,8 +35,12 @@ module Admin
     end
 
     def update
-      if event.save
-        redirect_to admin_event_path(event), notice: I18n.t("views.events.updated")
+      event_translated = TranslatableEditionEventService.new(
+        event: event,
+        params: params
+      )
+      if event_translated.save
+        redirect_to admin_event_path(event, lang: params[:lang]), notice: I18n.t("views.events.updated")
       else
         render :edit
       end

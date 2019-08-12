@@ -11,6 +11,10 @@ module Admin
       EventAchievement.order(created_at: :desc)
     }
 
+    expose(:decorated_event_achievement) {
+      decorate event_achievement
+    }
+
     expose(:all_achievements) {
       AdminAchievement.all
     }
@@ -32,8 +36,12 @@ module Admin
     end
 
     def update
-      if event_achievement.save
-        redirect_to admin_event_achievement_path(event_achievement), notice: I18n.t("views.events.updated")
+      event_achievement_translated = TranslatableEditionEventAchievementService.new(
+        event_achievement: event_achievement,
+        params: params
+      )
+      if event_achievement_translated.save
+        redirect_to admin_event_achievement_path(event_achievement, lang: params[:lang]), notice: I18n.t("views.events.updated")
       else
         render :edit
       end

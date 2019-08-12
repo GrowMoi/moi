@@ -1,6 +1,9 @@
 .level-quizzes-page
   - content_for :title, t("activerecord.models.event").pluralize
 
+  .pull-right.btn-group
+    = render "admin/shared/language_switcher"
+
   table.table.table-striped
     thead
       tr
@@ -11,10 +14,10 @@
     tbody
     -events.each do |q|
       tr
-        td = q.title
-        td = q.description
+        td = decorate(q).translated(:title)
+        td = decorate(q).translated(:description)
         td = q.user_level
-        td = link_to t("views.events.show"), admin_event_path(q)
+        td = link_to t("views.events.show"), admin_event_path(q, lang: params[:lang])
 
   .pull-right
     = link_to t("views.events.new"),

@@ -21,10 +21,13 @@
 #
 
 class EventAchievement < ActiveRecord::Base
+  include TranslatableAttrs
 
   mount_uploader :image, ContentMediaUploader
   mount_uploader :inactive_image, ContentMediaUploader
   mount_uploader :image_message, ContentMediaUploader
+
+  translates :title, :title_message, :description, :message
 
   begin :relationships
     has_many :user_event_achievements,

@@ -1,4 +1,4 @@
-class EventAchievementDecorator < LittleDecorator
+class EventAchievementDecorator < ResourceDecorator
 
   IMAGE_EXTENSIONS = %w(jpg jpeg gif png).freeze
 

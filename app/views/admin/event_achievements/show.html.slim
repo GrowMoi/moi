@@ -1,6 +1,9 @@
 - content_for :title, t("activerecord.models.event_achievement")
 
-h3.text-center = event_achievement.title
+h3.text-center = decorated_event_achievement.translated(:title)
+
+.pull-right.btn-group
+  = render "admin/shared/language_switcher"
 
 .form-group
   = label_tag t("activerecord.attributes.event_achievement.user_achievement_ids")
@@ -12,7 +15,7 @@ h3.text-center = event_achievement.title
 
 .form-group
   = label_tag t("activerecord.attributes.event_achievement.description")
-  p = event_achievement.description
+  p = decorated_event_achievement.translated(:description)
 
 .form-group
   = label_tag t("activerecord.attributes.event_achievement.start_date")
@@ -42,11 +45,11 @@ h3.text-center = event_achievement.title
 
 .form-group
   = label_tag t("activerecord.attributes.event_achievement.title_message")
-  p = simple_format(event_achievement.title_message)
+  p = decorated_event_achievement.translated(:title_message)
 
 .form-group
   = label_tag t("activerecord.attributes.event_achievement.message")
-  p = simple_format(event_achievement.message)
+  p = decorated_event_achievement.translated(:message)
 
 .form-group
   = label_tag t("activerecord.attributes.event_achievement.video_message")
@@ -61,4 +64,4 @@ h3.text-center = event_achievement.title
         img src=event_achievement.image_message.url
 hr
 .pull-right
-  = link_to "Editar", edit_admin_event_achievement_path(event_achievement), class: "btn btn-link"
+  = link_to "Editar", edit_admin_event_achievement_path(event_achievement, lang: params[:lang]), class: "btn btn-link"

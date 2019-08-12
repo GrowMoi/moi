@@ -1,6 +1,9 @@
 - content_for :title, t("activerecord.models.event")
 
-h3.text-center = event.title
+h3.text-center = decorated_event.translated(:title)
+
+.pull-right.btn-group
+  = render "admin/shared/language_switcher"
 
 .form-group
   = label_tag t("activerecord.attributes.event.content_ids")
@@ -12,7 +15,7 @@ h3.text-center = event.title
 
 .form-group
   = label_tag t("activerecord.attributes.event.description")
-  p = event.description
+  p = decorated_event.translated(:description)
 
 .form-group
   = label_tag t("activerecord.attributes.event.user_level")
@@ -38,4 +41,4 @@ h3.text-center = event.title
 
 hr
 .pull-right
-  = link_to "Editar", edit_admin_event_path(event), class: "btn btn-link"
+  = link_to "Editar", edit_admin_event_path(event, lang: params[:lang]), class: "btn btn-link"
