@@ -195,10 +195,12 @@ module Api
     }
 
     def details
-      pending_recommendations = TutorService::RecommendationsHandler.new(current_user).get_available()
+      recommended_content_ids = TutorService::RecommendationsHandler.new(current_user).get_recommended_content_ids()
+      event_content_ids = get_event_content_ids()
+      content_ids = (recommended_content_ids + event_content_ids).uniq
+
       response_json = {
-        recommendations: pending_recommendations.count,
-        events: get_event_contents_count()
+        contents_to_learn: content_ids.count
       }
 
       available_events_count = EventService.new(
@@ -305,9 +307,15 @@ module Api
       end
     end
 
-    def get_event_contents_count
+    def get_event_content_ids
       last_event = current_user.user_events.where(completed:false, expired:false).last
-      last_event.nil? ? 0 : last_event.contents.count - last_event.content_reading_events.count
+      event_content_ids = []
+      unless last_event.nil?
+        content_ids = last_event.contents.map { |item| item["content_id"].to_i }
+        content_readings_ids = last_event.content_reading_events.map(&:content_id)
+        event_content_ids = content_ids - content_readings_ids
+      end
+      event_content_ids
     end
 
   end

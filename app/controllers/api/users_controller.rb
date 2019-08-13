@@ -174,5 +174,55 @@ module Api
         )
       end
     end
+
+    api :GET,
+        "/users/contents_to_learn",
+        "returns the recommended contents and the event contents"
+
+    def contents_to_learn
+      content_event_ids = []
+      content_recommendation_ids = []
+      if last_user_event
+        ids_content_event = last_user_event.event.content_ids.map(&:to_i)
+        ids_content_reading_event = last_user_event.content_reading_events.map(&:content_id)
+        content_event_ids = ids_content_event - ids_content_reading_event
+      end
+
+      content_recommendation_ids = TutorService::RecommendationsHandler.new(
+          current_user
+        ).get_recommended_content_ids()
+
+      content_ids = content_event_ids + content_recommendation_ids
+      content_ids = content_ids.uniq
+      contents = Content.where(id: content_ids)
+
+      contents_serialized = ActiveModel::ArraySerializer.new(
+        contents,
+        each_serializer: Api::ContentSerializer,
+        scope: current_user
+      )
+
+      paged_contents = paginate_contents(contents_serialized)
+
+      resp = {
+        contents: paged_contents,
+        meta: {
+          total_items: paged_contents.total_count,
+          total_pages: paged_contents.total_pages
+        }
+      }
+
+      render json: resp,
+      status: :accepted
+    end
+
+    def paginate_contents(contents)
+      array_contents = JSON.parse(contents.to_json)
+      Kaminari.paginate_array(array_contents)
+              .page(params[:page] || 1)
+              .per(params[:per_page] || 4)
+
+    end
+
   end
 end

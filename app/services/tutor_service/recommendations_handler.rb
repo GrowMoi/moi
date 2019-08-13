@@ -28,5 +28,9 @@ module TutorService
       user_contents.uniq.delete_if{|e|@client.already_learnt?(e) || @client.already_read?(e)}.reverse
     end
 
+    def get_recommended_content_ids
+      get_available().map(&:id)
+    end
+
   end
 end
