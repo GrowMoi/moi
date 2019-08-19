@@ -39,6 +39,7 @@ class EventService
   def get_notification_events_count
     events_availables = get_available_events()
     events = Event.where(id: events_availables).order(created_at: :asc)
+    events = @client.user_events.where(completed: false, expired: false).count === 1 ? [] : events
     count = 0
     all_events_ids = get_all_events_ids()
 
