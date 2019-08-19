@@ -215,7 +215,7 @@ module Api
       events = Event.where(id: events_availables).order(created_at: :asc)
 
       result = {
-        events: current_user.user_events.where(completed: false).count === 1 ? [] : events,
+        events: current_user.user_events.where(completed: false, expired: false).count === 1 ? [] : events,
         all_events_ids: all_events_ids || [],
         outdate_user_events_ids: outdate_user_events_ids || [],
         user_events: current_user.user_events
