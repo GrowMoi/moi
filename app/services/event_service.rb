@@ -39,8 +39,8 @@ class EventService
     all_events_ids = get_all_events_ids()
     outdate_user_events_ids = get_outdate_user_events_ids()
     events_ids_taken_by_user = get_events_ids_taken_by_user()
-    all_events_was_taken = (all_events_ids - events_ids_taken_by_user).empty?
-    if all_events_was_taken && not_event_in_progress
+    all_events_were_taken = (all_events_ids - events_ids_taken_by_user).empty?
+    if all_events_were_taken && not_event_in_progress
       @client.user_events.where(expired: true).destroy_all
       events_ids_taken_by_user = get_events_ids_taken_by_user()
     end
