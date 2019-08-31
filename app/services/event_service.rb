@@ -25,6 +25,12 @@ class EventService
     ids = events.map(&:event_id)
   end
 
+  def not_event_in_progress
+    @client.user_events
+          .where(expired: false, completed: false)
+          .count == 0
+  end
+
   def get_events_ids_taken_by_user
     @client.user_events.map(&:event_id)
   end
@@ -33,6 +39,11 @@ class EventService
     all_events_ids = get_all_events_ids()
     outdate_user_events_ids = get_outdate_user_events_ids()
     events_ids_taken_by_user = get_events_ids_taken_by_user()
+    all_events_were_taken = (all_events_ids - events_ids_taken_by_user).empty?
+    if all_events_were_taken && not_event_in_progress
+      @client.user_events.where(expired: true).destroy_all
+      events_ids_taken_by_user = get_events_ids_taken_by_user()
+    end
     all_events_ids - outdate_user_events_ids - events_ids_taken_by_user
   end
 
