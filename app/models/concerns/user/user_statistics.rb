@@ -202,8 +202,8 @@ class User < ActiveRecord::Base
             }
           }
           if test[:answers].present?
-            answer = test[:answers].detect {|a| a["content_id"] == question["content_id"]}
-            data[:question][:correct_answer] = answer && answer["correct"] ? answer["correct"] : false
+            answer = test[:answers].detect {|a| a["content_id"] == question["content_id"]} || {}
+            data[:question][:correct_answer] = !!answer["correct"]
           end
           learning_tests.push data
         end
