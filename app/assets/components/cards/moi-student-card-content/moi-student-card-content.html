@@ -61,6 +61,8 @@
           ids="{{ studentsSelected }}">
         </moi-download-button>
 
+        <button class="btn-action" id="btn-open-dialog-report-settings" on-tap="openReportDialog">{{ t('views.tutor.dashboard.card_students.export_xls') }}</button>
+
         <moi-download-button href="/tutor/dashboard/download_tutor_analytics.xls"
           text="[[ t('views.tutor.dashboard.card_students.export_xls') ]]"
           title$="[[ t('views.tutor.dashboard.card_students.export_xls_title') ]]"
@@ -80,6 +82,46 @@
             <span>[[ t('views.tutor.dashboard.card_students.dialog.confirm.buttons.remove') ]]</span>
           </paper-button>
         </div>
+      </moi-dialog>
+
+      <moi-dialog title="Opciones para el reporte" width="700" id="dialog-build-report" theme="green">
+        <template is="dom-if" if="{{ reportOption.firstStep.visible }}" restamp>
+          <div>
+            <p>Selecciona el tipo de reporte que deseas</p>
+            <div>
+              <button on-tap="selectReportOption" id="basic">
+                <span>Básico</span>
+              </button>
+            </div>
+            <div>
+              <button on-tap="selectReportOption" id="questions">
+                <span>Preguntas respondidas</span>
+              </button>
+            </div>
+          </div>
+        </template>
+
+        <template is="dom-if" if="{{ reportOption.secondStep.basic.visible }}" restamp>
+          <div>
+            <button on-tap="backSelectReportOption">
+              <span>< Atras</span>
+            </button>
+            <div>
+              opcion 1 seleccionada
+            </div>
+          </div>
+        </template>
+
+        <template is="dom-if" if="{{ reportOption.secondStep.questions.visible }}" restamp>
+          <div>
+            <button on-tap="backSelectReportOption">
+              <span>< Atras</span>
+            </button>
+            <div>
+              opcion 2 seleccionada
+            </div>
+          </div>
+        </template>
       </moi-dialog>
 
     </template>
