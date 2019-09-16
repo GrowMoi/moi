@@ -25,6 +25,26 @@ Polymer({
     this.emitters = {};
     this.loading = true;
     this.userRemove = null;
+    this.reportItems = [
+      {
+        id: "uno",
+        text: "uno",
+      }
+    ]
+    this.reportOption = {
+      firstStep: {
+        visible: true
+      },
+      secondStep: {
+        basic: {
+          visible: false
+        },
+        questions: {
+          visible: false
+        }
+      }
+    };
+
     $.ajax({
       url: studentsApi,
       type: 'GET',
@@ -111,6 +131,28 @@ Polymer({
         $(this.$['dialog-confirm']).hide();
       }.bind(this)
     });
+  },
+  openReportDialog: function(ev) {
+    ev.stopPropagation();
+    this.backSelectReportOption()
+    $(this.$['dialog-build-report']).show();
+  },
+  restoreReportOptionsVisibility: function() {
+    this.set('reportOption.firstStep.visible', false);
+    this.set('reportOption.secondStep.basic.visible', false);
+    this.set('reportOption.secondStep.questions.visible', false);
+  },
+  selectReportOption: function(ev) {
+    var optionSelected = ev.target.id || ev.target.parentElement.id;
+    this.restoreReportOptionsVisibility();
+    this.set('reportOption.secondStep.'+ optionSelected +'.visible', true);
+  },
+  backSelectReportOption: function(ev) {
+    this.restoreReportOptionsVisibility();
+    this.set('reportOption.firstStep.visible', true);
+  },
+  onReportSortItemSelected: function() {
+
   },
   registerLocalApi: function() {
     if (this.options && this.options.onRegisterApi) {
