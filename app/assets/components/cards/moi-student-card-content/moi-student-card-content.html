@@ -103,21 +103,90 @@
 
         <template is="dom-if" if="{{ reportOption.secondStep.basic.visible }}" restamp>
           <div>
-            <button on-tap="backSelectReportOption">
-              <span>< Atras</span>
+            <button on-tap="backSelectReportOption" class="back-button-modal">
+              <div class="glyphicon glyphicon-chevron-left"></div>
             </button>
+            <div class="dialog-build-report-header">
+              <span>Opciones</span>
+            </div>
+            <div class="dialog-build-report-container">
+              <div class="column-left">
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Username</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Nombre</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Email</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Contenidos aprendidos en total</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Contenidos aprendidos en neurona Aprender</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Contenidos aprendidos en neurona Artes</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Contenidos aprendidos en neurona Lenguaje</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Contenidos aprendidos en neurona Naturaleza</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Neuronas aprendidas</paper-checkbox>
+                </div>
+
+              </div>
+
+              <div class="column-right">
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Tiempo de uso</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Tiempo de uso en ms</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Tiempo de lectura promedio</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Tiempo de lectura promedio en ms</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Imagenes abiertas</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Notas agregadas</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Tiempo de lectura promedio en ms</paper-checkbox>
+                </div>
+                <div class="dialog-build-report-option-row">
+                  <paper-checkbox checked>Imagenes abiertas</paper-checkbox>
+                </div>
+              </div>
+            </div>
             <div>
-              opcion 1 seleccionada
+              <span>Ordenar por</span>
+              <moi-select id="" items="{{ reportItems }}"  on-item-selected="onReportSortItemSelected" placeholder="Seleccione un campo"></moi-select>
+            </div>
+            <div>
+              <button>Generar reporte</button>
             </div>
           </div>
         </template>
 
         <template is="dom-if" if="{{ reportOption.secondStep.questions.visible }}" restamp>
           <div>
-            <button on-tap="backSelectReportOption">
-              <span>< Atras</span>
+            <button on-tap="backSelectReportOption" class="back-button-modal">
+              <div class="glyphicon glyphicon-chevron-left"></div>
             </button>
-            <div>
+            <div class="dialog-build-report-header">
+                <span>Opciones</span>
+            </div>
+            <div >
               opcion 2 seleccionada
             </div>
           </div>
