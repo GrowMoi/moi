@@ -26,11 +26,31 @@ Polymer({
     this.loading = true;
     this.userRemove = null;
     this.reportItems = [
-      {
-        id: "uno",
-        text: "uno",
-      }
+      { id: 'username', text: 'Nombre de usuario'},
+      { id: 'name', text: 'Nombre real'},
+      { id: 'email', text: 'Email'},
+      { id: 'images_opened_in_count', text: 'Imagenes abiertas'},
+      { id: 'total_neurons_learnt', text: 'Neuronas aprendidas'},
+      { id: 'average_reading_time', text: 'Tiempo de lectura promedio'},
+      { id: 'average_reading_time_ms', text: 'Tiempo de lectura promedio en ms'},
+      { id: 'used_time', text: 'Tiempo de uso'},
+      { id: 'used_time_ms', text: 'Tiempo de uso en ms'},
+      { id: 'total_contents_learnt', text: 'Contenidos aprendidos en total'},
+      { id: 'contents_learnt_branch_aprender', text: 'Contenidos aprendidos en neurona Aprender'},
+      { id: 'contents_learnt_branch_artes', text: 'Contenidos aprendidos en neurona Artes'},
+      { id: 'contents_learnt_branch_lenguaje', text: 'Contenidos aprendidos en neurona Lenguaje'},
+      { id: 'contents_learnt_branch_naturaleza', text: 'Contenidos aprendidos en neurona Naturaleza'},
+      // { id: 'user_tests', text: ''},
+      // { id: 'total_content_readings', text: ''},
+      // { id: 'content_readings_by_branch', text: ''},
+      // { id: 'total_right_questions', text: ''},
+      //{ id: 'user_test_answers', text: ''},
+      //{ id: 'user_sign_in_count', text: ''},
     ]
+
+    var HALF = Math.round(this.reportItems.length / 2);
+    this.reportItemsLeft = this.reportItems.slice(0, HALF);
+    this.reportItemsRight = this.reportItems.slice(HALF, this.reportItems.length);
     this.reportOption = {
       firstStep: {
         visible: true
