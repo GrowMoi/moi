@@ -78,54 +78,6 @@
           <Cell><Data ss:Type="String"></Data></Cell>
         <% end %>
       </Row>
-
-      <% @exists_items = (@user_test_answers.kind_of?(Array) && @user_test_answers.size >= 2) || (@content_reading_times.kind_of?(Array) && @content_reading_times.size >= 2) %>
-
-      <% if @exists_items %>
-
-        <% @size = @user_test_answers.size > @content_reading_times.size ? @user_test_answers.size - 1 : @content_reading_times.size - 1 %>
-
-        <% (1..@size).each do |index| %>
-          <Row>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-            <Cell><Data ss:Type="String"></Data></Cell>
-
-            <% if @user_test_answers[index][:question][:question].present?%>
-              <Cell><Data ss:Type="String"><%= @user_test_answers[index][:question][:question] %></Data></Cell>
-              <Cell><Data ss:Type="String"><%= if @user_test_answers[index][:question][:correct_answer] == true then "correcto" else "incorrecto" end %></Data></Cell>
-            <% else %>
-              <Cell><Data ss:Type="String"></Data></Cell>
-              <Cell><Data ss:Type="String"></Data></Cell>
-            <% end %>
-
-
-            <% if @content_reading_times[index].present?%>
-              <Cell><Data ss:Type="String"><%= @content_reading_times[index][:content][:title] %></Data></Cell>
-              <Cell><Data ss:Type="String"><%= humanize_ms @content_reading_times[index][:time_reading] %></Data></Cell>
-              <Cell><Data ss:Type="Number"><%= @content_reading_times[index][:time_reading] %></Data></Cell>
-            <% else %>
-              <Cell><Data ss:Type="String"></Data></Cell>
-              <Cell><Data ss:Type="String"></Data></Cell>
-              <Cell><Data ss:Type="String"></Data></Cell>
-            <% end %>
-
-          </Row>
-        <% end %>
-      <% end %>
-
     <% end %>
     </Table>
   </Worksheet>
