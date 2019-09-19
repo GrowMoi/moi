@@ -199,5 +199,15 @@ Polymer({
   },
   onStudentRemoved: function(callback) {
     this.emitters.onStudentRemoved = callback;
+  },
+  onCheckboxChangeLeft: function(ev) {
+    this.checkboxChange(ev, this.reportItemsLeft);
+  },
+  onCheckboxChangeRight: function(ev) {
+    this.checkboxChange(ev, this.reportItemsRight);
+  },
+  checkboxChange: function(ev, items) {
+    var index = ev.target.id;
+    items[index].checked = ev.target.checked;
   }
 });
