@@ -209,5 +209,25 @@ Polymer({
   checkboxChange: function(ev, items) {
     var index = ev.target.id;
     items[index].checked = ev.target.checked;
+  },
+  onSubmitReportParams: function (ev) {
+    ev.preventDefault();
+    var items = this.reportItems.filter(function(item) {return item.checked}).map(function(item){return item.id}) || [];
+    var sortItem = this.reportItems.find(function(item) {return item.sort}) || this.reportItems[0]
+    var sort_by = sortItem.id;
+    $.ajax({
+      url: '/tutor/user_tutors/test1',
+      type: 'GET',
+      data: {
+        items: items,
+        sort_by: sort_by
+      },
+      success: function (res) {
+
+      }.bind(this),
+      error: function(res) {
+
+      }.bind(this)
+    });
   }
 });
