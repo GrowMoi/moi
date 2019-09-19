@@ -26,20 +26,20 @@ Polymer({
     this.loading = true;
     this.userRemove = null;
     this.reportItems = [
-      { id: 'username', text: 'Nombre de usuario'},
-      { id: 'name', text: 'Nombre real'},
-      { id: 'email', text: 'Email'},
-      { id: 'images_opened_in_count', text: 'Imagenes abiertas'},
-      { id: 'total_neurons_learnt', text: 'Neuronas aprendidas'},
-      { id: 'average_reading_time', text: 'Tiempo de lectura promedio'},
-      { id: 'average_reading_time_ms', text: 'Tiempo de lectura promedio en ms'},
-      { id: 'used_time', text: 'Tiempo de uso'},
-      { id: 'used_time_ms', text: 'Tiempo de uso en ms'},
-      { id: 'total_contents_learnt', text: 'Contenidos aprendidos en total'},
-      { id: 'contents_learnt_branch_aprender', text: 'Contenidos aprendidos en neurona Aprender'},
-      { id: 'contents_learnt_branch_artes', text: 'Contenidos aprendidos en neurona Artes'},
-      { id: 'contents_learnt_branch_lenguaje', text: 'Contenidos aprendidos en neurona Lenguaje'},
-      { id: 'contents_learnt_branch_naturaleza', text: 'Contenidos aprendidos en neurona Naturaleza'},
+      { id: 'username', text: 'Nombre de usuario', checked: true, sort: false},
+      { id: 'name', text: 'Nombre real', checked: true, sort: false},
+      { id: 'email', text: 'Email', checked: true, sort: false},
+      { id: 'images_opened_in_count', text: 'Imagenes abiertas', checked: true, sort: false},
+      { id: 'total_neurons_learnt', text: 'Neuronas aprendidas', checked: true, sort: false},
+      { id: 'average_reading_time', text: 'Tiempo de lectura promedio', checked: true, sort: false},
+      //{ id: 'average_reading_time_ms', text: 'Tiempo de lectura promedio en ms', checked: false},
+      { id: 'used_time', text: 'Tiempo de uso', checked: true, sort: false},
+      //{ id: 'used_time_ms', text: 'Tiempo de uso en ms', checked: false},
+      { id: 'total_contents_learnt', text: 'Contenidos aprendidos en total', checked: true, sort: false},
+      { id: 'contents_learnt_branch_aprender', text: 'Contenidos aprendidos en neurona Aprender', checked: true, sort: false},
+      { id: 'contents_learnt_branch_artes', text: 'Contenidos aprendidos en neurona Artes', checked: true, sort: false},
+      { id: 'contents_learnt_branch_lenguaje', text: 'Contenidos aprendidos en neurona Lenguaje', checked: true, sort: false},
+      { id: 'contents_learnt_branch_naturaleza', text: 'Contenidos aprendidos en neurona Naturaleza', checked: true, sort: false},
       // { id: 'user_tests', text: ''},
       // { id: 'total_content_readings', text: ''},
       // { id: 'content_readings_by_branch', text: ''},
@@ -171,8 +171,14 @@ Polymer({
     this.restoreReportOptionsVisibility();
     this.set('reportOption.firstStep.visible', true);
   },
-  onReportSortItemSelected: function() {
-
+  onReportSortItemSelected: function(e, val) {
+    for(var i = 0; i < this.reportItems.length; i ++) {
+      this.reportItems[i].sort = false;
+    }
+    var index = this.reportItems.findIndex(function(item) {return item.id === val});
+    if (index >= 0) {
+      this.reportItems[index].sort = true;
+    }
   },
   registerLocalApi: function() {
     if (this.options && this.options.onRegisterApi) {
