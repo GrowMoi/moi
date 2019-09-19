@@ -106,33 +106,35 @@
             <button on-tap="backSelectReportOption" class="back-button-modal">
               <div class="glyphicon glyphicon-chevron-left"></div>
             </button>
-            <div class="dialog-build-report-header">
-              <span>Campos disponibles</span>
-            </div>
-            <div class="dialog-build-report-container">
-              <div class="column-left">
-                <template is="dom-repeat" items="{{ reportItemsLeft }}">
-                  <div class="dialog-build-report-option-row">
-                    <paper-checkbox checked>[[ item.text ]]</paper-checkbox>
-                  </div>
-                </template>
+            <form on-submit="onSubmitReportParams">
+              <div class="dialog-build-report-header">
+                <span>Campos disponibles</span>
               </div>
+              <div class="dialog-build-report-container">
+                <div class="column-left">
+                  <template is="dom-repeat" items="{{ reportItemsLeft }}">
+                    <div class="dialog-build-report-option-row">
+                      <paper-checkbox on-change="onCheckboxChangeLeft" id$="{{index}}" checked$="{{item.checked}}">[[ item.text ]]</paper-checkbox>
+                    </div>
+                  </template>
+                </div>
 
-              <div class="column-right">
-                <template is="dom-repeat" items="{{ reportItemsRight }}">
-                  <div class="dialog-build-report-option-row">
-                    <paper-checkbox checked>[[ item.text ]]</paper-checkbox>
-                  </div>
-                </template>
+                <div class="column-right">
+                  <template is="dom-repeat" items="{{ reportItemsRight }}">
+                    <div class="dialog-build-report-option-row">
+                      <paper-checkbox on-change="onCheckboxChangeRight" id$="{{index}}" checked$="{{item.checked}}">[[ item.text ]]</paper-checkbox>
+                    </div>
+                  </template>
+                </div>
               </div>
-            </div>
-            <div>
-              <span>Ordenar por</span>
-              <moi-select id="" items="{{ reportItems }}"  on-item-selected="onReportSortItemSelected" placeholder="Seleccione un campo"></moi-select>
-            </div>
-            <div>
-              <button>Generar reporte</button>
-            </div>
+              <div>
+                <span>Ordenar por</span>
+                <moi-select id="" items="{{ reportItems }}"  on-item-selected="onReportSortItemSelected" placeholder="Seleccione un campo"></moi-select>
+              </div>
+              <div>
+                <button>Generar reporte</button>
+              </div>
+            </form>
           </div>
         </template>
 
