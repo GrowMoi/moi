@@ -246,6 +246,7 @@ module Tutor
 
     def download_tutor_analytics
       @statistics_by_user = []
+      @columns = params[:columns] || ["username", "total_neurons_learnt", "total_contents_learnt"]
       tutor_students.each do |student|
           statistics = student.generate_statistics(
             [

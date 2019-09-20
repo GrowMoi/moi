@@ -29,17 +29,19 @@ Polymer({
       { id: 'username', text: 'Nombre de usuario', checked: true, sort: false},
       { id: 'name', text: 'Nombre real', checked: true, sort: false},
       { id: 'email', text: 'Email', checked: true, sort: false},
-      { id: 'images_opened_in_count', text: 'Imagenes abiertas', checked: true, sort: false},
-      { id: 'total_neurons_learnt', text: 'Neuronas aprendidas', checked: true, sort: false},
-      { id: 'average_reading_time', text: 'Tiempo de lectura promedio', checked: true, sort: false},
-      //{ id: 'average_reading_time_ms', text: 'Tiempo de lectura promedio en ms', checked: false},
-      { id: 'used_time', text: 'Tiempo de uso', checked: true, sort: false},
-      //{ id: 'used_time_ms', text: 'Tiempo de uso en ms', checked: false},
       { id: 'total_contents_learnt', text: 'Contenidos aprendidos en total', checked: true, sort: false},
       { id: 'contents_learnt_branch_aprender', text: 'Contenidos aprendidos en neurona Aprender', checked: true, sort: false},
       { id: 'contents_learnt_branch_artes', text: 'Contenidos aprendidos en neurona Artes', checked: true, sort: false},
       { id: 'contents_learnt_branch_lenguaje', text: 'Contenidos aprendidos en neurona Lenguaje', checked: true, sort: false},
       { id: 'contents_learnt_branch_naturaleza', text: 'Contenidos aprendidos en neurona Naturaleza', checked: true, sort: false},
+      { id: 'total_neurons_learnt', text: 'Neuronas aprendidas', checked: true, sort: false},
+      { id: 'used_time', text: 'Tiempo de uso', checked: true, sort: false},
+      { id: 'average_reading_time', text: 'Tiempo de lectura promedio', checked: true, sort: false},
+      { id: 'images_opened_in_count', text: 'Imagenes abiertas', checked: true, sort: false},
+      { id: 'total_notes', text: 'Notas agregadas', checked: true, sort: false},
+      //{ id: 'average_reading_time_ms', text: 'Tiempo de lectura promedio en ms', checked: false},
+      //{ id: 'used_time_ms', text: 'Tiempo de uso en ms', checked: false},
+
       // { id: 'user_tests', text: ''},
       // { id: 'total_content_readings', text: ''},
       // { id: 'content_readings_by_branch', text: ''},
@@ -212,17 +214,29 @@ Polymer({
   },
   onSubmitReportParams: function (ev) {
     ev.preventDefault();
-    var items = this.reportItems.filter(function(item) {return item.checked}).map(function(item){return item.id}) || [];
+    var columns = this.reportItems.filter(function(item) {return item.checked}).map(function(item){return item.id}) || [];
     var sortItem = this.reportItems.find(function(item) {return item.sort}) || this.reportItems[0]
     var sort_by = sortItem.id;
+    this.buttonDownloadReport = this.$$('#download-new-report-button');
+    $(this.buttonDownloadReport).addClass('disabled');
     $.ajax({
-      url: '/tutor/user_tutors/test1',
+      url: '/tutor/dashboard/download_tutor_analytics.xls',
       type: 'GET',
       data: {
-        items: items,
+        columns: columns,
         sort_by: sort_by
       },
       success: function (res) {
+        var downloadLink, file;
+        file = new Blob([res], {
+          type: 'application/xls'
+        });
+        downloadLink = document.createElement('a');
+        downloadLink.download = this.downloadBtnFilename;
+        downloadLink.href = window.URL.createObjectURL(file);
+        downloadLink.style.display = 'none';
+        downloadLink.click();
+        $(this.buttonDownloadReport).removeClass('disabled');
 
       }.bind(this),
       error: function(res) {
