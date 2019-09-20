@@ -7,76 +7,115 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
-        <Cell><Data ss:Type="String">Username</Data></Cell>
-        <Cell><Data ss:Type="String">Nombre</Data></Cell>
-        <Cell><Data ss:Type="String">Email</Data></Cell>
-        <Cell><Data ss:Type="String">Contenidos aprendidos en total</Data></Cell>
-        <Cell><Data ss:Type="String"><%= @statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title] %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= @statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title] %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= @statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title] %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= @statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title] %></Data></Cell>
-        <Cell><Data ss:Type="String">Neuronas aprendidas</Data></Cell>
+        <% if @columns.include?("username") %>
+          <Cell><Data ss:Type="String">Username</Data></Cell>
+        <% end %>
 
-        <Cell><Data ss:Type="String">Tiempo de uso</Data></Cell>
-        <Cell><Data ss:Type="String">Tiempo de uso en ms</Data></Cell>
+        <% if @columns.include?("name") %>
+          <Cell><Data ss:Type="String">Nombre</Data></Cell>
+        <% end %>
 
-        <Cell><Data ss:Type="String">Tiempo de lectura promedio</Data></Cell>
-        <Cell><Data ss:Type="String">Tiempo de lectura promedio en ms</Data></Cell>
+        <% if @columns.include?("email") %>
+          <Cell><Data ss:Type="String">Email</Data></Cell>
+        <% end %>
 
-        <Cell><Data ss:Type="String">Imagenes abiertas</Data></Cell>
-        <Cell><Data ss:Type="String">Notas agregadas</Data></Cell>
+        <% if @columns.include?("total_contents_learnt") %>
+          <Cell><Data ss:Type="String">Contenidos aprendidos en total</Data></Cell>
+        <% end %>
 
-        <Cell><Data ss:Type="String">Preguntas respondidas</Data></Cell>
-        <Cell><Data ss:Type="String">Resultado para cada pregunta</Data></Cell>
-        <Cell><Data ss:Type="String">Contenidos aprendidos</Data></Cell>
-        <Cell><Data ss:Type="String">Tiempo de lectura por contenido</Data></Cell>
-        <Cell><Data ss:Type="String">Tiempo de lectura por contenido en ms</Data></Cell>
+        <% if @columns.include?("contents_learnt_branch_aprender") %>
+          <Cell><Data ss:Type="String"><%= @statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title] %></Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("contents_learnt_branch_artes") %>
+          <Cell><Data ss:Type="String"><%= @statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title] %></Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("contents_learnt_branch_lenguaje") %>
+          <Cell><Data ss:Type="String"><%= @statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title] %></Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("contents_learnt_branch_naturaleza") %>
+          <Cell><Data ss:Type="String"><%= @statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title] %></Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("total_neurons_learnt") %>
+          <Cell><Data ss:Type="String">Neuronas aprendidas</Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("used_time") %>
+          <Cell><Data ss:Type="String">Tiempo de uso</Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("average_reading_time") %>
+          <Cell><Data ss:Type="String">Tiempo de lectura promedio</Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("images_opened_in_count") %>
+          <Cell><Data ss:Type="String">Imagenes abiertas</Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("total_notes") %>
+          <Cell><Data ss:Type="String">Notas agregadas</Data></Cell>
+        <% end %>
+
+
       </Row>
     <% @statistics_by_user.each do |statistics| %>
-
-      <% @user_test_answers = statistics[:statistics]["user_test_answers"][:value] %>
-      <% @content_reading_times = statistics[:statistics]["content_learnings_with_reading_times"][:value]%>
-
       <Row>
-        <Cell><Data ss:Type="String"><%= statistics[:student].username %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= statistics[:student].name %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= statistics[:student].email %></Data></Cell>
-        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["total_contents_learnt"][:value]%></Data></Cell>
-        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["contents_learnt_by_branch"][:value][0][:total_contents_learnt]%></Data></Cell>
-        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["contents_learnt_by_branch"][:value][1][:total_contents_learnt]%></Data></Cell>
-        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["contents_learnt_by_branch"][:value][2][:total_contents_learnt]%></Data></Cell>
-        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["contents_learnt_by_branch"][:value][3][:total_contents_learnt]%></Data></Cell>
-        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["total_neurons_learnt"][:value]%></Data></Cell>
 
-        <Cell><Data ss:Type="String"><%= statistics[:statistics]["used_time"][:meta][:value_humanized] %></Data></Cell>
-        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["used_time"][:value] %></Data></Cell>
-
-        <Cell><Data ss:Type="String"><%= statistics[:statistics]["average_used_time_by_content"][:meta][:value_humanized] %></Data></Cell>
-        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["average_used_time_by_content"][:value] %></Data></Cell>
-
-        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["images_opened_in_count"][:value] %></Data></Cell>
-        <Cell><Data ss:Type="Number"><%= statistics[:statistics]["total_notes"][:value] %></Data></Cell>
-
-        <% if @user_test_answers[0].present? %>
-          <Cell><Data ss:Type="String"><%= @user_test_answers[0][:question][:question] %></Data></Cell>
-          <Cell><Data ss:Type="String"><%= if @user_test_answers[0][:question][:correct_answer] == true then "correcto" else "incorrecto" end  %></Data></Cell>
+        <% if @columns.include?("username") %>
+          <Cell><Data ss:Type="String"><%= statistics[:student].username %></Data></Cell>
         <% end %>
 
-        <% if !@user_test_answers[0].present? %>
-          <Cell><Data ss:Type="String"></Data></Cell>
-          <Cell><Data ss:Type="String"></Data></Cell>
+        <% if @columns.include?("name") %>
+          <Cell><Data ss:Type="String"><%= statistics[:student].name %></Data></Cell>
         <% end %>
 
-        <% if @content_reading_times[0].present? %>
-          <Cell><Data ss:Type="String"><%= @content_reading_times[0][:content][:title] %></Data></Cell>
-          <Cell><Data ss:Type="String"><%= humanize_ms @content_reading_times[0][:time_reading] %></Data></Cell>
-          <Cell><Data ss:Type="Number"><%= @content_reading_times[0][:time_reading] %></Data></Cell>
+        <% if @columns.include?("email") %>
+          <Cell><Data ss:Type="String"><%= statistics[:student].email %></Data></Cell>
         <% end %>
-        <% if !@content_reading_times[0].present? %>
-          <Cell><Data ss:Type="String"></Data></Cell>
-          <Cell><Data ss:Type="String"></Data></Cell>
-          <Cell><Data ss:Type="String"></Data></Cell>
+
+        <% if @columns.include?("total_contents_learnt") %>
+          <Cell><Data ss:Type="Number"><%= statistics[:statistics]["total_contents_learnt"][:value]%></Data></Cell>
         <% end %>
+
+        <% if @columns.include?("contents_learnt_branch_aprender") %>
+          <Cell><Data ss:Type="Number"><%= statistics[:statistics]["contents_learnt_by_branch"][:value][0][:total_contents_learnt]%></Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("contents_learnt_branch_artes") %>
+          <Cell><Data ss:Type="Number"><%= statistics[:statistics]["contents_learnt_by_branch"][:value][1][:total_contents_learnt]%></Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("contents_learnt_branch_lenguaje") %>
+          <Cell><Data ss:Type="Number"><%= statistics[:statistics]["contents_learnt_by_branch"][:value][2][:total_contents_learnt]%></Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("contents_learnt_branch_naturaleza") %>
+          <Cell><Data ss:Type="Number"><%= statistics[:statistics]["contents_learnt_by_branch"][:value][3][:total_contents_learnt]%></Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("total_neurons_learnt") %>
+          <Cell><Data ss:Type="Number"><%= statistics[:statistics]["total_neurons_learnt"][:value]%></Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("used_time") %>
+          <Cell><Data ss:Type="String"><%= statistics[:statistics]["used_time"][:meta][:value_humanized] %></Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("average_reading_time") %>
+          <Cell><Data ss:Type="String"><%= statistics[:statistics]["average_used_time_by_content"][:meta][:value_humanized] %></Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("images_opened_in_count") %>
+          <Cell><Data ss:Type="Number"><%= statistics[:statistics]["images_opened_in_count"][:value] %></Data></Cell>
+        <% end %>
+
+        <% if @columns.include?("total_notes") %>
+          <Cell><Data ss:Type="Number"><%= statistics[:statistics]["total_notes"][:value] %></Data></Cell>
+        <% end %>
+
       </Row>
     <% end %>
     </Table>
