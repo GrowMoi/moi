@@ -1,6 +1,6 @@
 Polymer({
   is: 'moi-student-card-content',
-  behaviors: [TranslateBehavior, AssetBehavior],
+  behaviors: [TranslateBehavior, AssetBehavior, UtilsBehavior],
   properties: {
     options: {
       type: Object,
@@ -15,6 +15,9 @@ Polymer({
   },
   init: function () {
     var studentsApi = '/tutor/dashboard/students';
+
+    var currentUser =  UtilsBehavior.getCurrentUser() || {};
+    this.isAdmin = currentUser.role === 'admin';
     this.students = [];
     this.studentsSelected = [];
     this.rowImgActive = this.assetPath('client_avatar_green.png');

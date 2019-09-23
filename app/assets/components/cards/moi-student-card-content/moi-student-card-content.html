@@ -69,7 +69,9 @@
           mime-type="application/xls">
         </moi-download-button>
 
-        <button class="btn-action" id="btn-open-dialog-report-settings" on-tap="openReportDialog">Personalizado</button>
+        <template is="dom-if" if="{{ isAdmin }}" restamp>
+          <button class="btn-action" id="btn-open-dialog-report-settings" on-tap="openReportDialog">Personalizado</button>
+        </template>
 
       </moi-actions-row>
 

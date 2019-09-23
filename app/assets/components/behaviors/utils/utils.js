@@ -85,6 +85,10 @@ UtilsBehavior.convertKeysFromCamelToSnakeCase = function(data, depth) {
   }
 };
 
+UtilsBehavior.getCurrentUser = function() {
+  return window.currentUser;
+}
+
 function snakelize(key) {
   var separator = '_';
   var split = /(?=[A-Z])/;
