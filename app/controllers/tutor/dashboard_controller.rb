@@ -244,9 +244,42 @@ module Tutor
       redirect_to :back
     end
 
+    def download_tutor_analytics_v2
+      @statistics_by_user = []
+      @columns = params[:columns] || [
+        "username",
+        "total_neurons_learnt",
+        "total_contents_learnt"
+      ]
+      tutor_students.each do |student|
+          statistics = student.generate_statistics(
+            [
+              "total_neurons_learnt",
+              "total_contents_learnt",
+              "contents_learnt_by_branch",
+              "used_time",
+              "average_used_time_by_content",
+              "images_opened_in_count",
+              "total_notes",
+              "user_test_answers",
+              "content_learnings_with_reading_times"
+            ]
+          )
+
+          @statistics_by_user.push({
+            student: student,
+            statistics: statistics
+          })
+      end
+
+      respond_to do |format|
+        format.html
+        format.xls
+      end
+    end
+
     def download_tutor_analytics
       @statistics_by_user = []
-      @columns = params[:columns] || ["username", "total_neurons_learnt", "total_contents_learnt"]
       tutor_students.each do |student|
           statistics = student.generate_statistics(
             [

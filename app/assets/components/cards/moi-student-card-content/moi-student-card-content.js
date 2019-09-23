@@ -228,7 +228,7 @@ Polymer({
     this.buttonDownloadReport = this.$$('#download-new-report-button');
     $(this.buttonDownloadReport).addClass('disabled');
     $.ajax({
-      url: '/tutor/dashboard/download_tutor_analytics.xls',
+      url: '/tutor/dashboard/download_tutor_analytics_v2.xls',
       type: 'GET',
       data: {
         columns: columns,

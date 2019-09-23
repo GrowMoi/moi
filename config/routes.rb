@@ -258,6 +258,7 @@ Moi::Application.routes.draw do
         get :students
         get :get_clients
         get :download_tutor_analytics
+        get :download_tutor_analytics_v2
         get :get_contents
         post :level
         post :send_notification
