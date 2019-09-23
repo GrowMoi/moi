@@ -129,7 +129,7 @@
               </div>
               <div>
                 <span>Ordenar por</span>
-                <moi-select id="" items="{{ reportItems }}"  on-item-selected="onReportSortItemSelected" placeholder="Seleccione un campo"></moi-select>
+                <moi-select id="" items="{{ availableSortItems }}"  on-item-selected="onReportSortItemSelected" on-items-loaded="onReportSortItemLoaded"></moi-select>
               </div>
               <div>
                 <button id="download-new-report-button">Generar reporte</button>

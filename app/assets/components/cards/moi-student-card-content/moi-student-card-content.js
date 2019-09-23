@@ -49,6 +49,7 @@ Polymer({
       //{ id: 'user_test_answers', text: ''},
       //{ id: 'user_sign_in_count', text: ''},
     ]
+    this.availableSortItems = JSON.parse(JSON.stringify(this.reportItems.filter(function(item) {return item.checked})));
 
     var HALF = Math.round(this.reportItems.length / 2);
     this.reportItemsLeft = this.reportItems.slice(0, HALF);
@@ -174,13 +175,19 @@ Polymer({
     this.set('reportOption.firstStep.visible', true);
   },
   onReportSortItemSelected: function(e, val) {
-    for(var i = 0; i < this.reportItems.length; i ++) {
-      this.reportItems[i].sort = false;
+    for(var i = 0; i < this.availableSortItems.length; i ++) {
+      this.availableSortItems[i].sort = false;
     }
-    var index = this.reportItems.findIndex(function(item) {return item.id === val});
+    var index = this.availableSortItems.findIndex(function(item) {return item.id === val});
     if (index >= 0) {
-      this.reportItems[index].sort = true;
+      this.availableSortItems[index].sort = true;
     }
+  },
+  onReportSortItemLoaded: function(e) {
+    for(var i = 0; i < this.availableSortItems.length; i ++) {
+      this.availableSortItems[i].sort = false;
+    }
+    this.availableSortItems[0].sort = true;
   },
   registerLocalApi: function() {
     if (this.options && this.options.onRegisterApi) {
@@ -211,11 +218,12 @@ Polymer({
   checkboxChange: function(ev, items) {
     var index = ev.target.id;
     items[index].checked = ev.target.checked;
+    this.availableSortItems = JSON.parse(JSON.stringify(this.reportItems.filter(function(item) {return item.checked})));
   },
   onSubmitReportParams: function (ev) {
     ev.preventDefault();
     var columns = this.reportItems.filter(function(item) {return item.checked}).map(function(item){return item.id}) || [];
-    var sortItem = this.reportItems.find(function(item) {return item.sort}) || this.reportItems[0]
+    var sortItem = this.availableSortItems.find(function(item) {return item.sort}) || this.reportItems[0];
     var sort_by = sortItem.id;
     this.buttonDownloadReport = this.$$('#download-new-report-button');
     $(this.buttonDownloadReport).addClass('disabled');
