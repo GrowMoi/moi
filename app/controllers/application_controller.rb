@@ -29,8 +29,8 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     added_attrs = [:username, :email, :password, :password_confirmation, :remember_me]
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(*added_attrs) }
-    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(*added_attrs) }
+    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(*added_attrs) }
+    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(*added_attrs) }
   end
 
   def current_language
