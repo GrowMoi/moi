@@ -41,6 +41,8 @@ set :rbenv_ruby, '2.6.1'
 
 set :passenger_restart_with_touch, true
 
+set :bundle_without, %w{development test staging integration}.join(' ')
+
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
