@@ -102,8 +102,8 @@ Rails.application.configure do
     allow do
       origins "http://moi.growmoi.com",
               "https://moi.growmoi.com",
-              "http://moi-backend.growmoi.com",
-              "https://moi-backend.growmoi.com",
+              "http://abi.shiriculapo.com",
+              "https://abi.shiriculapo.com",
               "http://moi-frontend.herokuapp.com",
               "https://moi-frontend.herokuapp.com"
 
