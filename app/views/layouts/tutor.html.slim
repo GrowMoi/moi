@@ -9,6 +9,7 @@ html
     = csrf_meta_tags
     = analytics_init if GoogleAnalytics.valid_tracker?
     javascript:
+      I18n = I18n || {};
       I18n.defaultLocale = "#{I18n.default_locale}";
       I18n.locale = "#{I18n.locale}";
       ENV = {};
