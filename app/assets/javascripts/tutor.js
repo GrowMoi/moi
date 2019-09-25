@@ -8,7 +8,6 @@
 //= require pusher
 //= require i18n.js
 //= require i18n/translations
-//= require read-excel-file.min
 //= require chosen.jquery.min
 //= require jquery.infinite-pages
 //= require webcomponentsjs/webcomponents-lite

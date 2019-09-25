@@ -262,7 +262,7 @@ Polymer({
     });
   },
   parseStudentsExcelFile: function(ev) {
-    readXlsxFile(ev.target.files[0]).then(function(rows) {
+    UtilsBehavior.readXlsxFile(ev.target.files[0]).then(function(rows) {
       $(this.buttonDownloadReport).removeClass('disabled');
       var usernames = rows.map(function(item) { return item[0]});
       var firstValue = usernames[0].toLowerCase();

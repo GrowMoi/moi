@@ -89,6 +89,10 @@ UtilsBehavior.getCurrentUser = function() {
   return window.currentUser;
 }
 
+UtilsBehavior.readXlsxFile = function (file) {
+  return window.readXlsxFile(file);
+}
+
 function snakelize(key) {
   var separator = '_';
   var split = /(?=[A-Z])/;
@@ -120,4 +124,6 @@ function processKeys(obj, processer, depth) {
 
   return result;
 }
+
+
 
