@@ -89,7 +89,9 @@ Rails.application.configure do
   config.middleware.insert_before 0, "Rack::Cors" do
     allow do
       origins "http://moi.growmoi.com",
-              "https://moi.growmoi.com"
+              "https://moi.growmoi.com",
+              "http://moi-frontend.herokuapp.com",
+              "https://moi-frontend.herokuapp.com"
 
       resource "/api/*",
                headers: :any,
@@ -101,7 +103,9 @@ Rails.application.configure do
       origins "http://moi.growmoi.com",
               "https://moi.growmoi.com",
               "http://moi-backend.growmoi.com",
-              "https://moi-backend.growmoi.com"
+              "https://moi-backend.growmoi.com",
+              "http://moi-frontend.herokuapp.com",
+              "https://moi-frontend.herokuapp.com"
 
       resource '/assets/*'
     end
