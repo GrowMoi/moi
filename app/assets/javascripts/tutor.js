@@ -13,4 +13,3 @@
 //= require webcomponentsjs/webcomponents-lite
 //= require_tree ./tutor
 //= require ./admin/contents_form/media_uploader_helper.js
-//= require read-excel-file.min

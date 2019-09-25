@@ -262,17 +262,30 @@ Polymer({
     });
   },
   parseStudentsExcelFile: function(ev) {
-    debugger
-    UtilsBehavior.readXlsxFile(ev.target.files[0]).then(function(rows) {
+    this.getUsernames(ev.target.files[0], function onSuccess(usernames) {
       $(this.buttonDownloadReport).removeClass('disabled');
-      var usernames = rows.map(function(item) { return item[0]});
-      var firstValue = usernames[0].toLowerCase();
-
-      if (firstValue === 'usuario' || firstValue === 'username') {
-        usernames.splice(0,1);
-      }
-
       this.usernames = usernames;
     }.bind(this))
+  },
+  getUsernames: function(file, cb) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var data = e.target.result;
+        var workbook = XLSX.read(data, {
+          type: 'binary'
+        });
+        workbook.SheetNames.forEach(function(sheetName) {
+          var usernames = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName])
+                    .map(function(item){ return item['Usuario'] });
+          debugger
+          cb(usernames)
+        })
+      };
+
+      reader.onerror = function(ex) {
+        console.log(ex);
+      };
+
+      reader.readAsBinaryString(file);
   }
 });
