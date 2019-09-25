@@ -4,22 +4,22 @@ module TreeService
     ROOT_NEURON_COLOR = 'yellow'
     BRANCHES = {
       language: {
-        name: 'Lenguaje',
+        name: 'El origen del Dinero',
         color: 'yellow',
         ids: []
       },
-      art: {
-        name: 'Artes',
-        color: 'red',
-        ids: []
-      },
+      # art: {
+      #   name: 'El verdadero valor del ahorro',
+      #   color: 'yellow',
+      #   ids: []
+      # },
       learn: {
-        name: 'Aprender',
+        name: 'La importancia del presupuesto',
         color: 'blue',
         ids: []
       },
       nature: {
-        name: 'Naturaleza',
+        name: 'El verdadero valor del ahorro',
         color: 'green',
         ids: []
       }
@@ -53,9 +53,9 @@ module TreeService
       unless (branches_neurons_ids[:language][:ids] & [@neuron.id]).empty?
         return branches_neurons_ids[:language][:color]
       end
-      unless (branches_neurons_ids[:art][:ids] & [@neuron.id]).empty?
-        return branches_neurons_ids[:art][:color]
-      end
+      # unless (branches_neurons_ids[:art][:ids] & [@neuron.id]).empty?
+      #   return branches_neurons_ids[:art][:color]
+      # end
       unless (branches_neurons_ids[:learn][:ids] & [@neuron.id]).empty?
         return branches_neurons_ids[:learn][:color]
       end
