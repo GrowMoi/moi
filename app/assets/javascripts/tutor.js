@@ -6,6 +6,7 @@
 //= require jquery-ui/widgets/selectable
 //= require bootstrap
 //= require pusher
+//= require read-excel-file.min
 //= require chosen.jquery.min
 //= require jquery.infinite-pages
 //= require i18n.js

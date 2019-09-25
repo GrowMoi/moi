@@ -251,7 +251,9 @@ module Tutor
         "total_neurons_learnt",
         "total_contents_learnt"
       ]
-      tutor_students.each do |student|
+      usernames = params[:usernames] || []
+
+      User.where(username: usernames).each do |student|
           statistics = student.generate_statistics(
             [
               "total_neurons_learnt",

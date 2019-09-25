@@ -28,6 +28,7 @@ Polymer({
     this.emitters = {};
     this.loading = true;
     this.userRemove = null;
+    this.usernames = [];
     this.reportItems = [
       { id: 'username', text: 'Nombre de usuario', checked: true, sort: false},
       { id: 'name', text: 'Nombre real', checked: true, sort: false},
@@ -172,6 +173,10 @@ Polymer({
     var optionSelected = ev.target.id || ev.target.parentElement.id;
     this.restoreReportOptionsVisibility();
     this.set('reportOption.secondStep.'+ optionSelected +'.visible', true);
+    this.async(() => {
+      this.buttonDownloadReport = this.$$('#download-new-report-button');
+      $(this.buttonDownloadReport).addClass('disabled');
+    });
   },
   backSelectReportOption: function(ev) {
     this.restoreReportOptionsVisibility();
@@ -235,7 +240,8 @@ Polymer({
       type: 'GET',
       data: {
         columns: columns,
-        sort_by: sort_by
+        sort_by: sort_by,
+        usernames: this.usernames
       },
       success: function (res) {
         var downloadLink, file;
@@ -254,5 +260,18 @@ Polymer({
 
       }.bind(this)
     });
+  },
+  parseStudentsExcelFile: function(ev, par2, par3) {
+    readXlsxFile(ev.target.files[0]).then((rows) => {
+      $(this.buttonDownloadReport).removeClass('disabled');
+      const usernames = rows.map((item) => item[0]);
+      const firstValue = usernames[0].toLowerCase();
+
+      if (firstValue === 'usuario' || firstValue === 'username') {
+        usernames.splice(0,1);
+      }
+
+      this.usernames = usernames;
+    })
   }
 });

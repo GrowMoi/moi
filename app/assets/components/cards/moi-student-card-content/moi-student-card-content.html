@@ -110,7 +110,17 @@
               <div class="glyphicon glyphicon-chevron-left"></div>
             </button>
             <form on-submit="onSubmitReportParams">
-              <div class="dialog-build-report-header">
+              <div class="first-row">
+                <div>
+                  Subir lista de alumnos en formato excel (xlsx)
+                </div>
+                <div>
+                  <input type="file" name="studentsFile" accept=".xlsx" on-change="parseStudentsExcelFile">
+                </div>
+
+              </div>
+
+              <div>
                 <span>Campos disponibles</span>
               </div>
               <div class="dialog-build-report-container">
