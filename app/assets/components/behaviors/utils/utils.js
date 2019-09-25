@@ -90,6 +90,7 @@ UtilsBehavior.getCurrentUser = function() {
 }
 
 UtilsBehavior.readXlsxFile = function (file) {
+  debugger
   return window.readXlsxFile(file);
 }
 
