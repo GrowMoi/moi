@@ -23,7 +23,7 @@ Polymer({
     this.rowImgActive = this.assetPath('client_avatar_green.png');
     this.rowImgInactive = this.assetPath('client_avatar_inactive.png');
     this.rowImgCheck = this.assetPath('check_green.png');
-    this.downloadBtnFilename = 'reporte_' + Date.now() + '.xls';
+    this.downloadBtnFilename = 'reporte_' + Date.now() + '.xlsx';
     $(this.$.btnSelectiveDownload).addClass('disabled');
     this.emitters = {};
     this.loading = true;
@@ -235,31 +235,26 @@ Polymer({
     var sort_by = sortItem.id;
     this.buttonDownloadReport = this.$$('#download-new-report-button');
     $(this.buttonDownloadReport).addClass('disabled');
-    $.ajax({
-      url: '/tutor/dashboard/download_tutor_analytics_v2.xls',
-      type: 'GET',
-      data: {
+    var req = new XMLHttpRequest();
+    var mainUrl =
+      "/tutor/dashboard/download_tutor_analytics_v3.xlsx?" +
+      $.param({
         columns: columns,
         sort_by: sort_by,
         usernames: this.usernames
-      },
-      success: function (res) {
-        var downloadLink, file;
-        file = new Blob([res], {
-          type: 'application/xls'
-        });
-        downloadLink = document.createElement('a');
-        downloadLink.download = this.downloadBtnFilename;
-        downloadLink.href = window.URL.createObjectURL(file);
-        downloadLink.style.display = 'none';
-        downloadLink.click();
-        $(this.buttonDownloadReport).removeClass('disabled');
+      });
+    req.open("GET", mainUrl, true);
+    req.responseType = "blob";
+    req.onload = function(event) {
+      var blob = req.response;
+      var link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = this.downloadBtnFilename;
+      link.click();
+      $(this.buttonDownloadReport).removeClass("disabled");
+    }.bind(this);
 
-      }.bind(this),
-      error: function(res) {
-
-      }.bind(this)
-    });
+    req.send();
   },
   parseStudentsExcelFile: function(ev) {
     this.getUsernames(ev.target.files[0], function onSuccess(usernames) {
@@ -277,7 +272,7 @@ Polymer({
         workbook.SheetNames.forEach(function(sheetName) {
           var usernames = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName])
                     .map(function(item){ return item['Usuario'] });
-          debugger
+
           cb(usernames)
         })
       };

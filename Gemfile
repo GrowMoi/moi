@@ -80,6 +80,8 @@ gem 'delayed_job_web'
 gem 'daemons' # to manage background processing (delayed_job)
 gem 'polymer-rails', '~> 1.0.0'
 gem 'polymer-paper-elements-rails', github: 'JhymerMartinez/paper-elements'
+gem 'rubyzip', '>= 1.2.1' # axlsx dep
+gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: '776037c0fc799bb09da8c9ea47980bd3bf296874'
 
 group :doc do
   gem 'yard'
