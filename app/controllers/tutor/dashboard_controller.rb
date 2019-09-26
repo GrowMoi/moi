@@ -316,8 +316,37 @@ module Tutor
           p = Axlsx::Package.new
           wb = p.workbook
           wb.add_worksheet(name: "Estudiantes") do |sheet|
+            sheet.add_row [
+              "Usuario",
+              "Nombre",
+              "Email",
+              "Contenidos aprendidos en total",
+              "Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title]}",
+              "Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title]}",
+              "Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title]}",
+              "Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title]}",
+              "Neuronas aprendidas",
+              "Tiempo de uso",
+              "Tiempo de lectura promedio",
+              "Imagenes abiertas",
+              "Notas agregadas"
+            ]
             @statistics_by_user.each do |statistics|
-              sheet.add_row [statistics[:student].username, statistics[:student].name]
+              sheet.add_row [
+                statistics[:student].username,
+                statistics[:student].name,
+                statistics[:student].email,
+                statistics[:statistics]["total_contents_learnt"][:value],
+                statistics[:statistics]["contents_learnt_by_branch"][:value][0][:total_contents_learnt],
+                statistics[:statistics]["contents_learnt_by_branch"][:value][1][:total_contents_learnt],
+                statistics[:statistics]["contents_learnt_by_branch"][:value][2][:total_contents_learnt],
+                statistics[:statistics]["contents_learnt_by_branch"][:value][3][:total_contents_learnt],
+                statistics[:statistics]["total_neurons_learnt"][:value],
+                statistics[:statistics]["used_time"][:meta][:value_humanized],
+                statistics[:statistics]["average_used_time_by_content"][:meta][:value_humanized],
+                statistics[:statistics]["images_opened_in_count"][:value],
+                statistics[:statistics]["total_notes"][:value]
+              ]
             end
           end
           send_data p.to_stream.read, type: "application/xlsx"
