@@ -1,22 +1,22 @@
-ruby "2.1.4"
+ruby "2.6.1"
 
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.7.1'
+gem 'rails', '4.2.8'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
 
 gem 'sass', github: 'JhymerMartinez/sass', branch: '3.2.19-var-fix'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails', '~> 4.0.5'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.2.2'
 
 gem 'time_diff', '~> 0.3.0'
 
@@ -42,7 +42,7 @@ gem 'google-analytics-rails', '~> 1.1.1'
 
 gem 'slim'
 gem 'devise'
-gem 'devise_token_auth', github: "lynndylanhurley/devise_token_auth"
+gem 'devise_token_auth', '~> 0.1.43'
 gem 'decent_exposure'
 gem 'kaminari'
 gem 'lograge'
@@ -129,10 +129,8 @@ end
 group :staging, :integration do
   gem 'rails_12factor'
   gem 'cloudinary'
+  gem 'puma'
 end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
-
-# Use puma as the app server
-gem 'puma'

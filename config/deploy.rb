@@ -37,9 +37,11 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
-set :rbenv_ruby, '2.1.4'
+set :rbenv_ruby, '2.6.1'
 
 set :passenger_restart_with_touch, true
+
+set :bundle_without, %w{development test staging integration}.join(' ')
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5

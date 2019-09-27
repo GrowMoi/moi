@@ -1,6 +1,6 @@
 machine:
   ruby:
-    version: 2.1.4
+    version: 2.6.1
   environment:
     CAPYBARA_SERVER_PORT: 5000
 test:
