@@ -316,37 +316,9 @@ module Tutor
           p = Axlsx::Package.new
           wb = p.workbook
           wb.add_worksheet(name: "Estudiantes") do |sheet|
-            sheet.add_row [
-              "Usuario",
-              "Nombre",
-              "Email",
-              "Contenidos aprendidos en total",
-              "Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title]}",
-              "Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title]}",
-              "Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title]}",
-              "Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title]}",
-              "Neuronas aprendidas",
-              "Tiempo de uso",
-              "Tiempo de lectura promedio",
-              "Imagenes abiertas",
-              "Notas agregadas"
-            ]
+            sheet.add_row report_labels
             @statistics_by_user.each do |statistics|
-              sheet.add_row [
-                statistics[:student].username,
-                statistics[:student].name,
-                statistics[:student].email,
-                statistics[:statistics]["total_contents_learnt"][:value],
-                statistics[:statistics]["contents_learnt_by_branch"][:value][0][:total_contents_learnt],
-                statistics[:statistics]["contents_learnt_by_branch"][:value][1][:total_contents_learnt],
-                statistics[:statistics]["contents_learnt_by_branch"][:value][2][:total_contents_learnt],
-                statistics[:statistics]["contents_learnt_by_branch"][:value][3][:total_contents_learnt],
-                statistics[:statistics]["total_neurons_learnt"][:value],
-                statistics[:statistics]["used_time"][:meta][:value_humanized],
-                statistics[:statistics]["average_used_time_by_content"][:meta][:value_humanized],
-                statistics[:statistics]["images_opened_in_count"][:value],
-                statistics[:statistics]["total_notes"][:value]
-              ]
+              sheet.add_row report_fields(statistics)
             end
           end
           send_data p.to_stream.read, type: "application/xlsx"
@@ -436,6 +408,122 @@ module Tutor
         :description,
         content_ids: []
       ]
+    end
+
+    def report_labels
+      result = []
+
+      if @columns.include?("username")
+        result.push("Usuario")
+      end
+
+      if @columns.include?("name")
+        result.push("Nombre")
+      end
+
+      if @columns.include?("email")
+        result.push("Email")
+      end
+
+      if @columns.include?("total_contents_learnt")
+        result.push("Contenidos aprendidos en total")
+      end
+
+      if @columns.include?("contents_learnt_branch_aprender")
+        result.push("Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title]}")
+      end
+
+      if @columns.include?("contents_learnt_branch_artes")
+        result.push("Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title]}")
+      end
+
+      if @columns.include?("contents_learnt_branch_lenguaje")
+        result.push("Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title]}")
+      end
+
+      if @columns.include?("contents_learnt_branch_naturaleza")
+        result.push("Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title]}")
+      end
+
+      if @columns.include?("total_neurons_learnt")
+        result.push("Neuronas aprendidas")
+      end
+
+      if @columns.include?("used_time")
+        result.push("Tiempo de uso")
+      end
+
+      if @columns.include?("average_reading_time")
+        result.push("Tiempo de lectura promedio")
+      end
+
+      if @columns.include?("images_opened_in_count")
+        result.push("Imagenes abiertas")
+      end
+
+      if @columns.include?("total_notes")
+        result.push("Notas agregadas")
+      end
+
+      result
+    end
+
+    def report_fields(statistics)
+      result = []
+
+      if @columns.include?("username")
+        result.push(statistics[:student].username)
+      end
+
+      if @columns.include?("name")
+        result.push(statistics[:student].name)
+      end
+
+      if @columns.include?("email")
+        result.push(statistics[:student].email)
+      end
+
+      if @columns.include?("total_contents_learnt")
+        result.push(statistics[:statistics]["total_contents_learnt"][:value])
+      end
+
+      if @columns.include?("contents_learnt_branch_aprender")
+        result.push(statistics[:statistics]["contents_learnt_by_branch"][:value][0][:total_contents_learnt])
+      end
+
+      if @columns.include?("contents_learnt_branch_artes")
+        result.push(statistics[:statistics]["contents_learnt_by_branch"][:value][1][:total_contents_learnt])
+      end
+
+      if @columns.include?("contents_learnt_branch_lenguaje")
+        result.push(statistics[:statistics]["contents_learnt_by_branch"][:value][2][:total_contents_learnt])
+      end
+
+      if @columns.include?("contents_learnt_branch_naturaleza")
+        result.push(statistics[:statistics]["contents_learnt_by_branch"][:value][3][:total_contents_learnt])
+      end
+
+      if @columns.include?("total_neurons_learnt")
+        result.push(statistics[:statistics]["total_neurons_learnt"][:value])
+      end
+
+      if @columns.include?("used_time")
+        result.push(statistics[:statistics]["used_time"][:meta][:value_humanized])
+      end
+
+      if @columns.include?("average_reading_time")
+        result.push(statistics[:statistics]["average_used_time_by_content"][:meta][:value_humanized])
+      end
+
+      if @columns.include?("images_opened_in_count")
+        result.push(statistics[:statistics]["images_opened_in_count"][:value])
+      end
+
+      if @columns.include?("total_notes")
+        result.push(statistics[:statistics]["total_notes"][:value])
+      end
+
+      result
     end
 
   end
