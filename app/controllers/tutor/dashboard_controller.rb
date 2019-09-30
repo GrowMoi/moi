@@ -310,7 +310,7 @@ module Tutor
           })
       end
 
-      @root_url = /[^:\/?#]+:?\/\/[^\/?#]*/.match(request.url)
+      @root_url = /[^:\/?#]+:?\/\/[^\/?#]*/.match(request.url) || "";
 
       sort_fields = ["username", "name", "email"]
       sort_by = sort_fields.include?(params[:sort_by]) ? params[:sort_by] : "username"
@@ -475,10 +475,6 @@ module Tutor
         result.push("Enlace a vista de analisis")
       end
 
-      # if @columns.include?("link_report")
-      #   result.push("Enlace a vista de reporte")
-      # end
-
       result
     end
 
@@ -540,10 +536,6 @@ module Tutor
       if @columns.include?("link_analysis")
         result.push("#{@root_url}/tutor/analysis?client_id=#{statistics[:student].id}")
       end
-
-      # if @columns.include?("link_report")
-      #   result.push("#{@root_url}/tutor/report?user_id=#{statistics[:student].id}")
-      # end
 
       result
     end
