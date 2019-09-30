@@ -30,7 +30,7 @@ Polymer({
     this.userRemove = null;
     this.usernames = [];
     this.reportItems = [
-      { id: 'username', text: 'Nombre de usuario', checked: true, sort: false},
+      //{ id: 'username', text: 'Nombre de usuario', checked: true, sort: false},
       { id: 'name', text: 'Nombre real', checked: true, sort: false},
       { id: 'email', text: 'Email', checked: true, sort: false},
       { id: 'total_contents_learnt', text: 'Contenidos aprendidos en total', checked: true, sort: false},
@@ -43,6 +43,8 @@ Polymer({
       { id: 'average_reading_time', text: 'Tiempo de lectura promedio', checked: true, sort: false},
       { id: 'images_opened_in_count', text: 'Imagenes abiertas', checked: true, sort: false},
       { id: 'total_notes', text: 'Notas agregadas', checked: true, sort: false},
+      { id: 'link_analysis', text: 'Enlace a vista de análisis', checked: true, sort: false},
+      //{ id: 'link_report', text: 'Enlace a vista de reporte', checked: true, sort: false},
       //{ id: 'average_reading_time_ms', text: 'Tiempo de lectura promedio en ms', checked: false},
       //{ id: 'used_time_ms', text: 'Tiempo de uso en ms', checked: false},
 
