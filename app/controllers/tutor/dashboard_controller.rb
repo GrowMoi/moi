@@ -312,7 +312,7 @@ module Tutor
 
       @root_url = /[^:\/?#]+:?\/\/[^\/?#]*/.match(request.url) || "";
 
-      sort_fields = ["username", "name", "email"]
+      sort_fields = ["username", "email"]
       sort_by = sort_fields.include?(params[:sort_by]) ? params[:sort_by] : "username"
       @statistics_by_user.sort_by!{ |item| item[:student][sort_by].downcase }
 

@@ -57,7 +57,7 @@ Polymer({
     ]
     this.availableSortItems = [
       { id: 'username', text: 'Nombre de usuario', sort: false},
-      { id: 'name', text: 'Nombre real', sort: false},
+      //{ id: 'name', text: 'Nombre real', sort: false},
       { id: 'email', text: 'Email', sort: false},
     ];
 
