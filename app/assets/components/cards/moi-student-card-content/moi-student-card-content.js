@@ -53,7 +53,11 @@ Polymer({
       //{ id: 'user_test_answers', text: ''},
       //{ id: 'user_sign_in_count', text: ''},
     ]
-    this.availableSortItems = JSON.parse(JSON.stringify(this.reportItems.filter(function(item) {return item.checked})));
+    this.availableSortItems = [
+      { id: 'username', text: 'Nombre de usuario', sort: false},
+      { id: 'name', text: 'Nombre real', sort: false},
+      { id: 'email', text: 'Email', sort: false},
+    ];
 
     var HALF = Math.round(this.reportItems.length / 2);
     this.reportItemsLeft = this.reportItems.slice(0, HALF);
@@ -226,7 +230,6 @@ Polymer({
   checkboxChange: function(ev, items) {
     var index = ev.target.id;
     items[index].checked = ev.target.checked;
-    this.availableSortItems = JSON.parse(JSON.stringify(this.reportItems.filter(function(item) {return item.checked})));
   },
   onSubmitReportParams: function (ev) {
     ev.preventDefault();
