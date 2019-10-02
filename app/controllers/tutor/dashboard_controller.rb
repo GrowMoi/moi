@@ -315,10 +315,6 @@ module Tutor
       sort_by = sort_fields.include?(params[:sort_by]) ? params[:sort_by] : "username"
       @statistics_by_user.sort_by!{ |item| item[:student][sort_by].downcase }
 
-
-      binding.pry
-
-
       respond_to do |format|
         format.html
         format.xlsx do
