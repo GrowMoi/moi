@@ -123,13 +123,13 @@
               </div>
 
               <div>
-                <span>Campos disponibles</span>
+                <span>Campos que aparecerán en el reporte</span>
               </div>
               <div class="dialog-build-report-container">
                 <div class="column-left">
                   <template is="dom-repeat" items="{{ reportItemsLeft }}">
                     <div class="dialog-build-report-option-row">
-                      <paper-checkbox on-change="onCheckboxChangeLeft" id$="{{index}}" checked$="{{item.checked}}">[[ item.text ]]</paper-checkbox>
+                      <span>&#10004;&nbsp;</span><span>[[ item.text ]]</span>
                     </div>
                   </template>
                 </div>
@@ -137,7 +137,7 @@
                 <div class="column-right">
                   <template is="dom-repeat" items="{{ reportItemsRight }}">
                     <div class="dialog-build-report-option-row">
-                      <paper-checkbox on-change="onCheckboxChangeRight" id$="{{index}}" checked$="{{item.checked}}">[[ item.text ]]</paper-checkbox>
+                      <span>&#10004;&nbsp;</span><span>[[ item.text ]]</span>
                     </div>
                   </template>
                 </div>

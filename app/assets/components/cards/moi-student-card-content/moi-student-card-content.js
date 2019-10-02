@@ -30,7 +30,7 @@ Polymer({
     this.userRemove = null;
     this.usernames = [];
     this.reportItems = [
-      //{ id: 'username', text: 'Nombre de usuario', checked: true, sort: false},
+      { id: 'username', text: 'Nombre de usuario', checked: true, sort: false},
       { id: 'name', text: 'Nombre real', checked: true, sort: false},
       { id: 'email', text: 'Email', checked: true, sort: false},
       { id: 'total_contents_learnt', text: 'Contenidos aprendidos en total', checked: true, sort: false},
@@ -40,13 +40,13 @@ Polymer({
       { id: 'contents_learnt_branch_naturaleza', text: 'Contenidos aprendidos en neurona Naturaleza', checked: true, sort: false},
       { id: 'total_neurons_learnt', text: 'Neuronas aprendidas', checked: true, sort: false},
       { id: 'used_time', text: 'Tiempo de uso', checked: true, sort: false},
+      { id: 'used_time_ms', text: 'Tiempo de uso en milisegundos', checked: true, sort: false},
       { id: 'average_reading_time', text: 'Tiempo de lectura promedio', checked: true, sort: false},
+      { id: 'average_reading_time_ms', text: 'Tiempo de lectura promedio en milisegundos', checked: true, sort: false},
       { id: 'images_opened_in_count', text: 'Imagenes abiertas', checked: true, sort: false},
       { id: 'total_notes', text: 'Notas agregadas', checked: true, sort: false},
       { id: 'link_analysis', text: 'Enlace a vista de análisis', checked: true, sort: false},
       //{ id: 'link_report', text: 'Enlace a vista de reporte', checked: true, sort: false},
-      //{ id: 'average_reading_time_ms', text: 'Tiempo de lectura promedio en ms', checked: false},
-      //{ id: 'used_time_ms', text: 'Tiempo de uso en ms', checked: false},
 
       // { id: 'user_tests', text: ''},
       // { id: 'total_content_readings', text: ''},
