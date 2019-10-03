@@ -246,46 +246,6 @@ module Tutor
 
     def download_tutor_analytics_v2
       @statistics_by_user = []
-      @columns = params[:columns] || [
-        "username",
-        "total_neurons_learnt",
-        "total_contents_learnt"
-      ]
-      usernames = params[:usernames] || []
-
-      User.where(username: usernames).each do |student|
-          statistics = student.generate_statistics(
-            [
-              "total_neurons_learnt",
-              "total_contents_learnt",
-              "contents_learnt_by_branch",
-              "used_time",
-              "average_used_time_by_content",
-              "images_opened_in_count",
-              "total_notes",
-              "user_test_answers",
-              "content_learnings_with_reading_times"
-            ]
-          )
-
-          @statistics_by_user.push({
-            student: student,
-            statistics: statistics
-          })
-      end
-
-      respond_to do |format|
-        format.html
-        format.xls
-      end
-    end
-
-    def download_tutor_analytics_v3
-      @statistics_by_user = []
-      @columns = params[:columns] || [
-        "total_neurons_learnt",
-        "total_contents_learnt"
-      ]
       usernames = params[:usernames] || []
 
       User.where(username: usernames).each do |student|
@@ -333,25 +293,25 @@ module Tutor
             sheet.add_chart(Axlsx::Pie3DChart, start_at: "F#{@statistics_by_user.count + 6}", end_at: "I#{@statistics_by_user.count + 26}") do |chart|
               chart.add_series data: sheet["E2:E#{@statistics_by_user.count + 1}"],
                    labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title]}"
+                   title: "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title]}"
             end
 
             sheet.add_chart(Axlsx::Pie3DChart, start_at: "J#{@statistics_by_user.count + 6}", end_at: "M#{@statistics_by_user.count + 26}") do |chart|
               chart.add_series data: sheet["F2:F#{@statistics_by_user.count + 1}"],
                    labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title]}"
+                   title: "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title]}"
             end
 
             sheet.add_chart(Axlsx::Pie3DChart, start_at: "N#{@statistics_by_user.count + 6}", end_at: "R#{@statistics_by_user.count + 26}") do |chart|
               chart.add_series data: sheet["G2:G#{@statistics_by_user.count + 1}"],
                    labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title]}"
+                   title: "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title]}"
             end
 
             sheet.add_chart(Axlsx::Pie3DChart, start_at: "A#{@statistics_by_user.count + 30}", end_at: "E#{@statistics_by_user.count + 50}") do |chart|
               chart.add_series data: sheet["H2:H#{@statistics_by_user.count + 1}"],
                    labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title]}"
+                   title: "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title]}"
             end
 
             sheet.add_chart(Axlsx::Pie3DChart, start_at: "F#{@statistics_by_user.count + 30}", end_at: "I#{@statistics_by_user.count + 50}") do |chart|
@@ -481,139 +441,47 @@ module Tutor
     end
 
     def report_labels
-      result = ["Usuario"]
-
-      if @columns.include?("name")
-        result.push("Nombre")
-      end
-
-      if @columns.include?("email")
-        result.push("Email")
-      end
-
-      if @columns.include?("total_contents_learnt")
-        result.push("Contenidos aprendidos en total")
-      end
-
-      if @columns.include?("contents_learnt_branch_aprender")
-        result.push("Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title]}")
-      end
-
-      if @columns.include?("contents_learnt_branch_artes")
-        result.push("Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title]}")
-      end
-
-      if @columns.include?("contents_learnt_branch_lenguaje")
-        result.push("Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title]}")
-      end
-
-      if @columns.include?("contents_learnt_branch_naturaleza")
-        result.push("Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title]}")
-      end
-
-      if @columns.include?("total_neurons_learnt")
-        result.push("Neuronas aprendidas")
-      end
-
-      if @columns.include?("used_time")
-        result.push("Tiempo de uso")
-      end
-
-      if @columns.include?("used_time_ms")
-        result.push("Tiempo de uso en milisegundos")
-      end
-
-      if @columns.include?("average_reading_time")
-        result.push("Tiempo de lectura promedio")
-      end
-
-      if @columns.include?("average_reading_time_ms")
-        result.push("Tiempo de lectura promedio en milisegundos")
-      end
-
-      if @columns.include?("images_opened_in_count")
-        result.push("Imagenes abiertas")
-      end
-
-      if @columns.include?("total_notes")
-        result.push("Notas agregadas")
-      end
-
-      result.push("Logros alcanzados")
-
-      if @columns.include?("link_analysis")
-        result.push("Enlace a vista de analisis")
-      end
-
-      result
+      [
+        "Usuario",
+        "Nombre",
+        "Email",
+        "Contenidos aprendidos en total",
+        "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title]}",
+        "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title]}",
+        "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title]}",
+        "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title]}",
+        "Neuronas aprendidas",
+        "Tiempo de uso",
+        "Tiempo de uso en milisegundos",
+        "Tiempo de lectura promedio",
+        "Tiempo de lectura promedio en milisegundos",
+        "Imagenes abiertas",
+        "Notas agregadas",
+        "Logros alcanzados",
+        "Enlace a vista de analisis"
+      ]
     end
 
     def report_fields(statistics)
-      result = [statistics[:student].username]
-
-      if @columns.include?("name")
-        result.push(statistics[:student].name)
-      end
-
-      if @columns.include?("email")
-        result.push(statistics[:student].email)
-      end
-
-      if @columns.include?("total_contents_learnt")
-        result.push(statistics[:statistics]["total_contents_learnt"][:value])
-      end
-
-      if @columns.include?("contents_learnt_branch_aprender")
-        result.push(statistics[:statistics]["contents_learnt_by_branch"][:value][0][:total_contents_learnt])
-      end
-
-      if @columns.include?("contents_learnt_branch_artes")
-        result.push(statistics[:statistics]["contents_learnt_by_branch"][:value][1][:total_contents_learnt])
-      end
-
-      if @columns.include?("contents_learnt_branch_lenguaje")
-        result.push(statistics[:statistics]["contents_learnt_by_branch"][:value][2][:total_contents_learnt])
-      end
-
-      if @columns.include?("contents_learnt_branch_naturaleza")
-        result.push(statistics[:statistics]["contents_learnt_by_branch"][:value][3][:total_contents_learnt])
-      end
-
-      if @columns.include?("total_neurons_learnt")
-        result.push(statistics[:statistics]["total_neurons_learnt"][:value])
-      end
-
-      if @columns.include?("used_time")
-        result.push(statistics[:statistics]["used_time"][:meta][:value_humanized])
-      end
-
-      if @columns.include?("used_time_ms")
-        result.push(statistics[:statistics]["used_time"][:value])
-      end
-
-      if @columns.include?("average_reading_time")
-        result.push(statistics[:statistics]["average_used_time_by_content"][:meta][:value_humanized])
-      end
-
-      if @columns.include?("average_reading_time_ms")
-        result.push(statistics[:statistics]["average_used_time_by_content"][:value])
-      end
-
-      if @columns.include?("images_opened_in_count")
-        result.push(statistics[:statistics]["images_opened_in_count"][:value])
-      end
-
-      if @columns.include?("total_notes")
-        result.push(statistics[:statistics]["total_notes"][:value])
-      end
-
-      result.push(statistics[:student].my_achievements.count || 0)
-
-      if @columns.include?("link_analysis")
-        result.push("#{@root_url}/tutor/analysis?client_id=#{statistics[:student].id}")
-      end
-
-      result
+      [
+        statistics[:student].username,
+        statistics[:student].name,
+        statistics[:student].email,
+        statistics[:statistics]["total_contents_learnt"][:value],
+        statistics[:statistics]["contents_learnt_by_branch"][:value][0][:total_contents_learnt],
+        statistics[:statistics]["contents_learnt_by_branch"][:value][1][:total_contents_learnt],
+        statistics[:statistics]["contents_learnt_by_branch"][:value][2][:total_contents_learnt],
+        statistics[:statistics]["contents_learnt_by_branch"][:value][3][:total_contents_learnt],
+        statistics[:statistics]["total_neurons_learnt"][:value],
+        statistics[:statistics]["used_time"][:meta][:value_humanized],
+        statistics[:statistics]["used_time"][:value],
+        statistics[:statistics]["average_used_time_by_content"][:meta][:value_humanized],
+        statistics[:statistics]["average_used_time_by_content"][:value],
+        statistics[:statistics]["images_opened_in_count"][:value],
+        statistics[:statistics]["total_notes"][:value],
+        statistics[:student].my_achievements.count || 0,
+        "#{@root_url}/tutor/analysis?client_id=#{statistics[:student].id}"
+      ]
     end
 
   end

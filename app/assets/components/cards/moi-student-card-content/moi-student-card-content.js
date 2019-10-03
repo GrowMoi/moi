@@ -31,34 +31,26 @@ Polymer({
     this.userRemove = null;
     this.usernames = [];
     this.reportItems = [
-      { id: 'username', text: 'Nombre de usuario', checked: true, sort: false},
-      { id: 'name', text: 'Nombre real', checked: true, sort: false},
-      { id: 'email', text: 'Email', checked: true, sort: false},
-      { id: 'total_contents_learnt', text: 'Contenidos aprendidos en total', checked: true, sort: false},
-      { id: 'contents_learnt_branch_aprender', text: 'Contenidos aprendidos en rama Aprender', checked: true, sort: false},
-      { id: 'contents_learnt_branch_artes', text: 'Contenidos aprendidos en rama Artes', checked: true, sort: false},
-      { id: 'contents_learnt_branch_lenguaje', text: 'Contenidos aprendidos en rama Lenguaje', checked: true, sort: false},
-      { id: 'contents_learnt_branch_naturaleza', text: 'Contenidos aprendidos en rama Naturaleza', checked: true, sort: false},
-      { id: 'total_neurons_learnt', text: 'Neuronas aprendidas', checked: true, sort: false},
-      { id: 'used_time', text: 'Tiempo de uso', checked: true, sort: false},
-      { id: 'used_time_ms', text: 'Tiempo de uso en milisegundos', checked: true, sort: false},
-      { id: 'average_reading_time', text: 'Tiempo de lectura promedio', checked: true, sort: false},
-      { id: 'average_reading_time_ms', text: 'Tiempo de lectura promedio en milisegundos', checked: true, sort: false},
-      { id: 'images_opened_in_count', text: 'Imagenes abiertas', checked: true, sort: false},
-      { id: 'total_notes', text: 'Notas agregadas', checked: true, sort: false},
-      { id: 'link_analysis', text: 'Enlace a vista de análisis', checked: true, sort: false},
-      //{ id: 'link_report', text: 'Enlace a vista de reporte', checked: true, sort: false},
-
-      // { id: 'user_tests', text: ''},
-      // { id: 'total_content_readings', text: ''},
-      // { id: 'content_readings_by_branch', text: ''},
-      // { id: 'total_right_questions', text: ''},
-      //{ id: 'user_test_answers', text: ''},
-      //{ id: 'user_sign_in_count', text: ''},
+      { id: 'username', text: 'Nombre de usuario'},
+      { id: 'name', text: 'Nombre real'},
+      { id: 'email', text: 'Email'},
+      { id: 'total_contents_learnt', text: 'Contenidos aprendidos en total'},
+      { id: 'contents_learnt_branch_aprender', text: 'Contenidos aprendidos en rama Aprender'},
+      { id: 'contents_learnt_branch_artes', text: 'Contenidos aprendidos en rama Artes'},
+      { id: 'contents_learnt_branch_lenguaje', text: 'Contenidos aprendidos en rama Lenguaje'},
+      { id: 'contents_learnt_branch_naturaleza', text: 'Contenidos aprendidos en rama Naturaleza'},
+      { id: 'total_neurons_learnt', text: 'Neuronas aprendidas'},
+      { id: 'used_time', text: 'Tiempo de uso'},
+      { id: 'used_time_ms', text: 'Tiempo de uso en milisegundos'},
+      { id: 'average_reading_time', text: 'Tiempo de lectura promedio'},
+      { id: 'average_reading_time_ms', text: 'Tiempo de lectura promedio en milisegundos'},
+      { id: 'images_opened_in_count', text: 'Imagenes abiertas'},
+      { id: 'total_notes', text: 'Notas agregadas'},
+      { id: 'total_achievements', text: 'Logros alcanzados'},
+      { id: 'link_analysis', text: 'Enlace a vista de análisis'},
     ]
     this.availableSortItems = [
       { id: 'username', text: 'Nombre de usuario', sort: false},
-      //{ id: 'name', text: 'Nombre real', sort: false},
       { id: 'email', text: 'Email', sort: false},
     ];
 
@@ -236,16 +228,14 @@ Polymer({
   },
   onSubmitReportParams: function (ev) {
     ev.preventDefault();
-    var columns = this.reportItems.filter(function(item) {return item.checked}).map(function(item){return item.id}) || [];
-    var sortItem = this.availableSortItems.find(function(item) {return item.sort}) || this.reportItems[0];
+    var sortItem = this.availableSortItems.find(function(item) {return item.sort}) || this.availableSortItems[0];
     var sort_by = sortItem.id;
     this.buttonDownloadReport = this.$$('#download-new-report-button');
     $(this.buttonDownloadReport).addClass('disabled');
     var req = new XMLHttpRequest();
     var mainUrl =
-      "/tutor/dashboard/download_tutor_analytics_v3.xlsx?" +
+      "/tutor/dashboard/download_tutor_analytics_v2.xlsx?" +
       $.param({
-        columns: columns,
         sort_by: sort_by,
         usernames: this.usernames
       });
@@ -269,24 +259,24 @@ Polymer({
     }.bind(this))
   },
   getUsernames: function(file, cb) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        var data = e.target.result;
-        var workbook = XLSX.read(data, {
-          type: 'binary'
-        });
-        workbook.SheetNames.forEach(function(sheetName) {
-          var usernames = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName])
-                    .map(function(item){ return item['Usuario'] });
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var data = e.target.result;
+      var workbook = XLSX.read(data, {
+        type: 'binary'
+      });
+      workbook.SheetNames.forEach(function(sheetName) {
+        var usernames = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName])
+                  .map(function(item){ return item['Usuario'] });
 
-          cb(usernames)
-        })
-      };
+        cb(usernames)
+      })
+    };
 
-      reader.onerror = function(ex) {
-        console.log(ex);
-      };
+    reader.onerror = function(ex) {
+      console.log(ex);
+    };
 
-      reader.readAsBinaryString(file);
+    reader.readAsBinaryString(file);
   }
 });
