@@ -490,19 +490,19 @@ module Tutor
       end
 
       if @columns.include?("contents_learnt_branch_aprender")
-        result.push("Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title]}")
+        result.push("Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title]}")
       end
 
       if @columns.include?("contents_learnt_branch_artes")
-        result.push("Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title]}")
+        result.push("Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title]}")
       end
 
       if @columns.include?("contents_learnt_branch_lenguaje")
-        result.push("Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title]}")
+        result.push("Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title]}")
       end
 
       if @columns.include?("contents_learnt_branch_naturaleza")
-        result.push("Contenidos aprendidos neurona #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title]}")
+        result.push("Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title]}")
       end
 
       if @columns.include?("total_neurons_learnt")
@@ -532,6 +532,8 @@ module Tutor
       if @columns.include?("total_notes")
         result.push("Notas agregadas")
       end
+
+      result.push("Logros alcanzados")
 
       if @columns.include?("link_analysis")
         result.push("Enlace a vista de analisis")
@@ -598,6 +600,8 @@ module Tutor
       if @columns.include?("total_notes")
         result.push(statistics[:statistics]["total_notes"][:value])
       end
+
+      result.push(statistics[:student].my_achievements.count || 0)
 
       if @columns.include?("link_analysis")
         result.push("#{@root_url}/tutor/analysis?client_id=#{statistics[:student].id}")

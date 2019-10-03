@@ -23,7 +23,8 @@ Polymer({
     this.rowImgActive = this.assetPath('client_avatar_green.png');
     this.rowImgInactive = this.assetPath('client_avatar_inactive.png');
     this.rowImgCheck = this.assetPath('check_green.png');
-    this.downloadBtnFilename = 'reporte_' + Date.now() + '.xlsx';
+    this.downloadBtnFilename = 'reporte_' + Date.now() + '.xls';
+    this.downloadBtnFilenameV3 = 'reporte_' + Date.now() + '.xlsx';
     $(this.$.btnSelectiveDownload).addClass('disabled');
     this.emitters = {};
     this.loading = true;
@@ -34,10 +35,10 @@ Polymer({
       { id: 'name', text: 'Nombre real', checked: true, sort: false},
       { id: 'email', text: 'Email', checked: true, sort: false},
       { id: 'total_contents_learnt', text: 'Contenidos aprendidos en total', checked: true, sort: false},
-      { id: 'contents_learnt_branch_aprender', text: 'Contenidos aprendidos en neurona Aprender', checked: true, sort: false},
-      { id: 'contents_learnt_branch_artes', text: 'Contenidos aprendidos en neurona Artes', checked: true, sort: false},
-      { id: 'contents_learnt_branch_lenguaje', text: 'Contenidos aprendidos en neurona Lenguaje', checked: true, sort: false},
-      { id: 'contents_learnt_branch_naturaleza', text: 'Contenidos aprendidos en neurona Naturaleza', checked: true, sort: false},
+      { id: 'contents_learnt_branch_aprender', text: 'Contenidos aprendidos en rama Aprender', checked: true, sort: false},
+      { id: 'contents_learnt_branch_artes', text: 'Contenidos aprendidos en rama Artes', checked: true, sort: false},
+      { id: 'contents_learnt_branch_lenguaje', text: 'Contenidos aprendidos en rama Lenguaje', checked: true, sort: false},
+      { id: 'contents_learnt_branch_naturaleza', text: 'Contenidos aprendidos en rama Naturaleza', checked: true, sort: false},
       { id: 'total_neurons_learnt', text: 'Neuronas aprendidas', checked: true, sort: false},
       { id: 'used_time', text: 'Tiempo de uso', checked: true, sort: false},
       { id: 'used_time_ms', text: 'Tiempo de uso en milisegundos', checked: true, sort: false},
@@ -254,7 +255,7 @@ Polymer({
       var blob = req.response;
       var link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
-      link.download = this.downloadBtnFilename;
+      link.download = this.downloadBtnFilenameV3;
       link.click();
       $(this.buttonDownloadReport).removeClass("disabled");
     }.bind(this);
