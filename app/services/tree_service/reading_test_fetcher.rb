@@ -1,6 +1,6 @@
 module TreeService
   class ReadingTestFetcher
-    MIN_COUNT_FOR_TEST = 4
+    MIN_COUNT_FOR_TEST = 3
 
     def initialize(user)
       @user = user
