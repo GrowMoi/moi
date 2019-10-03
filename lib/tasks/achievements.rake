@@ -10,42 +10,42 @@ achievements_params = [
     number: 1
   },
   {
-    name: "Contenidos aprendidos rama Lenguaje",
-    description: "Han sido aprendidos 20 contenidos de la rama Lenguaje",
+    name: "Contenidos aprendidos rama El origen del Dinero",
+    description: "Han sido aprendidos 20 contenidos de la rama El origen del Dinero",
     category: "branch",
     settings: {
       quantity: 20,
-      branch: "Lenguaje"
+      branch: "El origen del Dinero"
     },
     number: 2
   },
+  # {
+  #   name: "Contenidos aprendidos rama Arte",
+  #   description: "Han sido aprendidos 20 contenidos de la rama Arte",
+  #   category: "branch",
+  #   settings: {
+  #     quantity: 20,
+  #     branch: "Arte"
+  #   },
+  #   number: 3
+  # },
   {
-    name: "Contenidos aprendidos rama Arte",
-    description: "Han sido aprendidos 20 contenidos de la rama Arte",
+    name: "Contenidos aprendidos rama La importancia del presupuesto",
+    description: "Han sido aprendidos 20 contenidos de la rama La importancia del presupuesto",
     category: "branch",
     settings: {
       quantity: 20,
-      branch: "Arte"
-    },
-    number: 3
-  },
-  {
-    name: "Contenidos aprendidos rama Aprender",
-    description: "Han sido aprendidos 20 contenidos de la rama Aprender",
-    category: "branch",
-    settings: {
-      quantity: 20,
-      branch: "Aprender"
+      branch: "La importancia del presupuesto"
     },
     number: 4
   },
   {
-    name: "Contenidos aprendidos rama Naturaleza",
-    description: "Han sido aprendidos 20 contenidos de la rama Naturaleza",
+    name: "Contenidos aprendidos rama El verdadero valor del ahorro",
+    description: "Han sido aprendidos 20 contenidos de la rama El verdadero valor del ahorro",
     category: "branch",
     settings: {
       quantity: 20,
-      branch: "Naturaleza"
+      branch: "El verdadero valor del ahorro"
     },
     number: 5
   },
@@ -81,10 +81,10 @@ achievements_params = [
   },
   {
     name: "Tests desplegados",
-    description: "Han sido desplegados 25 test sin errores",
+    description: "Han sido desplegados 8 test sin errores",
     category: "test",
     settings: {
-      quantity: 25,
+      quantity: 8,
       continuous: false
     },
     number: 9
