@@ -384,6 +384,12 @@ module Tutor
                    title: "Notas agregadas"
             end
 
+            sheet.add_chart(Axlsx::Pie3DChart, start_at: "J#{@statistics_by_user.count + 54}", end_at: "M#{@statistics_by_user.count + 74}") do |chart|
+              chart.add_series data: sheet["P2:P#{@statistics_by_user.count + 1}"],
+                   labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
+                   title: "Logros alcanzados"
+            end
+
           end
           send_data p.to_stream.read, type: "application/xlsx"
         end
