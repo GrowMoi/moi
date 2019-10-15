@@ -81,7 +81,7 @@ achievements_params = [
   },
   {
     name: "Tests desplegados",
-    description: "Han sido desplegados 8 test sin errores",
+    description: "Han sido desplegados 8 test",
     category: "test",
     settings: {
       quantity: 8,
@@ -94,7 +94,7 @@ achievements_params = [
     description: "El usuario ha alcanzado el 9 nivel",
     category: "test",
     settings: {
-      level: 9
+      level: 5
     },
     number: 10
   }
@@ -108,6 +108,17 @@ namespace :achievements do
       unless achievements_db_numbers.include?(task_params[:number])
         AdminAchievement.create!(task_params)
         puts "created: #{task_params[:name]}"
+      end
+    end
+  end
+
+  task update: :environment do
+    achievements_db = AdminAchievement.all.map(&:number)
+    achievements_params.each do |achievement|
+      if achievements_db.include?(achievement[:number])
+        achievement_db = AdminAchievement.find_by_number(achievement[:number])
+        achievement_db.update(achievement)
+        puts "AdminAchievement updated: #{achievement[:name]}"
       end
     end
   end
