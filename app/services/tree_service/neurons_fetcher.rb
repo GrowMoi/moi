@@ -4,8 +4,8 @@ module TreeService
     ROOT_NEURON_COLOR = 'yellow'
     BRANCHES = {
       language: {
-        name: 'El origen del Dinero',
-        color: 'yellow',
+        name: '¿Cuales son tus sueños? 2',
+        color: 'red',
         ids: []
       },
       # art: {
@@ -15,12 +15,12 @@ module TreeService
       # },
       learn: {
         name: 'La importancia del presupuesto',
-        color: 'blue',
+        color: 'yellow',
         ids: []
       },
       nature: {
         name: 'El verdadero valor del ahorro',
-        color: 'green',
+        color: 'blue',
         ids: []
       }
     }

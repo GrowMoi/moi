@@ -10,12 +10,12 @@ achievements_params = [
     number: 1
   },
   {
-    name: "Contenidos aprendidos rama El origen del Dinero",
-    description: "Han sido aprendidos 20 contenidos de la rama El origen del Dinero",
+    name: "Contenidos aprendidos rama El verdadero valor del ahorro",
+    description: "Han sido aprendidos 16 contenidos de la rama El verdadero valor del ahorro",
     category: "branch",
     settings: {
-      quantity: 20,
-      branch: "El origen del Dinero"
+      quantity: 16,
+      branch: "El verdadero valor del ahorro"
     },
     number: 2
   },
@@ -31,21 +31,21 @@ achievements_params = [
   # },
   {
     name: "Contenidos aprendidos rama La importancia del presupuesto",
-    description: "Han sido aprendidos 20 contenidos de la rama La importancia del presupuesto",
+    description: "Han sido aprendidos 16 contenidos de la rama La importancia del presupuesto",
     category: "branch",
     settings: {
-      quantity: 20,
+      quantity: 16,
       branch: "La importancia del presupuesto"
     },
     number: 4
   },
   {
-    name: "Contenidos aprendidos rama El verdadero valor del ahorro",
-    description: "Han sido aprendidos 20 contenidos de la rama El verdadero valor del ahorro",
+    name: "Contenidos aprendidos rama ¿Cuales son tus sueños? 2",
+    description: "Han sido aprendidos 16 contenidos de la rama ¿Cuales son tus sueños? 2",
     category: "branch",
     settings: {
-      quantity: 20,
-      branch: "El verdadero valor del ahorro"
+      quantity: 16,
+      branch: "¿Cuales son tus sueños? 2"
     },
     number: 5
   },
@@ -91,7 +91,7 @@ achievements_params = [
   },
   {
     name: "Final del Juego",
-    description: "El usuario ha alcanzado el 9 nivel",
+    description: "El usuario ha alcanzado el 5 nivel",
     category: "test",
     settings: {
       level: 5
