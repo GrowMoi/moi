@@ -2,8 +2,34 @@ module Api
   module Users
     class PacificoRecoverPasswordsController < BaseController
       api :GET,
-      "/users/pacifico_recover_password/validate",
-      "get 4 contents to validate user"
+        "/users/pacifico_recover_password/validate",
+        "get 4 contents to validate user"
+        param :username, String
+        param :email, String
+        example %q{
+          {
+            "contents": [
+              {
+                  "title": "¿Cuándo surgieron los Bancos?",
+                  "id": 15
+              },
+              {
+                  "title": "¿Qué son los medios necesarios?",
+                  "id": 16
+              },
+              {
+                  "title": "¿Qué más nos ayuda a cumplir nuestros sueños?",
+                  "id": 17
+              },
+              {
+                  "title": "¿Por qué son importantes los sueños?",
+                  "id": 15
+              }
+          ],
+          "user_id": 139,
+          "content_reading_id": 469
+        }
+      }
 
       def validate
         user = User.where(username: params[:username], email: params[:email]).first
@@ -31,8 +57,16 @@ module Api
       end
 
       api :GET,
-          "/users/pacifico_recover_password/validate",
-          "validate password user pacifico"
+          "/users/pacifico_recover_password/recover",
+          "recover password user pacifico"
+      param :user_id, Integer
+      param :content_reading_id, Integer
+      param :content_id, Integer
+      example %q{
+        {
+         "key": "plants"
+        }
+      }
 
       def recover
         if params[:user_id] && params[:content_reading_id] && params[:content_id]
