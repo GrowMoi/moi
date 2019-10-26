@@ -129,6 +129,12 @@ Moi::Application.routes.draw do
           get :my_events
         end
       end
+      resource :pacifico_recover_password, only: [] do
+        member do
+          get :recover
+          get :validate
+        end
+      end
     end
 
     match "users/search" => 'users#search', via: :get
