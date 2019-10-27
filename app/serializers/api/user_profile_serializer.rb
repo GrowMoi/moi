@@ -43,7 +43,8 @@ module Api
                :successful_tests,
                :content_summary,
                :image,
-               :level
+               :level,
+               :avatar
 
     def last_contents_learnt
       object.content_learnings.last(4).map do |content_learnt|

@@ -45,7 +45,8 @@ module Api
                :achievements,
                :image,
                :level,
-               :language
+               :language,
+               :avatar
 
     has_many :content_preferences
 

@@ -37,7 +37,8 @@ module Api
                :school,
                :city,
                :content_summary,
-               :image
+               :image,
+               :avatar
 
     def content_summary
       {
