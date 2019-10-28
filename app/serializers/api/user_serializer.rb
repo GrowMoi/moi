@@ -83,5 +83,10 @@ module Api
     def language
       object.preferred_lang
     end
+
+    def avatar
+      # num = object.avatar || 1
+      # path = "#{host_with_port}/public#{UserAvatars.avatars[:"#{num}"]}"
+    end
   end
 end
