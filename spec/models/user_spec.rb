@@ -32,6 +32,7 @@
 #  level                  :integer          default(1)
 #  tree_image_app         :string
 #  avatar                 :integer
+#  gender                 :string
 #
 
 require 'rails_helper'

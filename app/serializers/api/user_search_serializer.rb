@@ -52,8 +52,9 @@ module Api
     end
 
     def avatar
-      if object.avatar
-        path = "#{Rails.application.secrets.url}#{UserAvatars.avatars[:"#{object.avatar}"]}"
+      if object.avatar && object.gender
+        folder = object.gender === "H" ? "mens" : "women"
+        path = "#{Rails.application.secrets.url}/avatars/#{folder}#{UserAvatars.avatars[:"#{object.avatar}"]}"
       end
     end
   end

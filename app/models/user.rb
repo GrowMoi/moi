@@ -32,6 +32,7 @@
 #  level                  :integer          default(1)
 #  tree_image_app         :string
 #  avatar                 :integer
+#  gender                 :string
 #
 
 class User < ActiveRecord::Base
@@ -52,6 +53,8 @@ class User < ActiveRecord::Base
   mount_base64_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
   mount_base64_uploader :tree_image_app, ContentMediaUploader, file_name: -> { 'tree_app' }
   mount_base64_uploader :image, ContentMediaUploader, file_name: -> { DateTime.now.strftime('%s') + 'user_image' }
+  
+  GENDERS = %w(H M).freeze
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable and :omniauthable
@@ -68,6 +71,7 @@ class User < ActiveRecord::Base
                                      allow_blank: true }
   validates_format_of :username, with: /\A[a-zA-Z0-9_\.\-]*\z/, multiline: true
   validates :authorization_key, presence: true, on: :create, if: "cliente?"
+  validates :gender, inclusion: { in: GENDERS }, allow_blank: true
 
   begin :callbacks
     before_validation :skip_password_for_clients

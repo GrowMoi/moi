@@ -11,7 +11,7 @@ class UserAvatars
     # @return [Hash] for keys -> img path
     def avatars
       AVATARS.inject({}) do |memo, key|
-        memo[key] = "/avatars/avatar-#{key}.png"
+        memo[key] = "/avatar-#{key}.png"
         memo
       end
     end
