@@ -85,8 +85,9 @@ module Api
     end
 
     def avatar
-      # num = object.avatar || 1
-      # path = "#{host_with_port}/public#{UserAvatars.avatars[:"#{num}"]}"
+      if object.avatar
+        path = "#{Rails.application.secrets.url}#{UserAvatars.avatars[:"#{object.avatar}"]}"
+      end
     end
   end
 end

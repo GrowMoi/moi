@@ -50,5 +50,11 @@ module Api
     def image
       object.image ? object.image.url : ''
     end
+
+    def avatar
+      if object.avatar
+        path = "#{Rails.application.secrets.url}#{UserAvatars.avatars[:"#{object.avatar}"]}"
+      end
+    end
   end
 end
