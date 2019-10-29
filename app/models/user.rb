@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   mount_base64_uploader :tree_image_app, ContentMediaUploader, file_name: -> { 'tree_app' }
   mount_base64_uploader :image, ContentMediaUploader, file_name: -> { DateTime.now.strftime('%s') + 'user_image' }
   
-  GENDERS = %w(H M).freeze
+  GENDERS = %w(M F).freeze
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable and :omniauthable

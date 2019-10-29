@@ -38,7 +38,8 @@ module Api
                :city,
                :content_summary,
                :image,
-               :avatar
+               :avatar,
+               :gender
 
     def content_summary
       {
@@ -53,7 +54,7 @@ module Api
 
     def avatar
       if object.avatar && object.gender
-        folder = object.gender === "H" ? "mens" : "women"
+        folder = object.gender === "M" ? "mens" : "women"
         path = "#{Rails.application.secrets.url}/avatars/#{folder}#{UserAvatars.avatars[:"#{object.avatar}"]}"
       end
     end

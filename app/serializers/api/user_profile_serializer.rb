@@ -44,7 +44,8 @@ module Api
                :content_summary,
                :image,
                :level,
-               :avatar
+               :avatar,
+               :gender
 
     def last_contents_learnt
       object.content_learnings.last(4).map do |content_learnt|
@@ -83,7 +84,7 @@ module Api
 
     def avatar
       if object.avatar && object.gender
-        folder = object.gender === "H" ? "mens" : "women"
+        folder = object.gender === "M" ? "mens" : "women"
         path = "#{Rails.application.secrets.url}/avatars/#{folder}#{UserAvatars.avatars[:"#{object.avatar}"]}"
       end
     end

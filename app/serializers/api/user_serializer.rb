@@ -46,7 +46,8 @@ module Api
                :image,
                :level,
                :language,
-               :avatar
+               :avatar,
+               :gender
 
     has_many :content_preferences
 
@@ -86,7 +87,7 @@ module Api
 
     def avatar
       if object.avatar && object.gender
-        folder = object.gender === "H" ? "mens" : "women"
+        folder = object.gender === "M" ? "mens" : "women"
         path = "#{Rails.application.secrets.url}/avatars/#{folder}#{UserAvatars.avatars[:"#{object.avatar}"]}"
       end
     end
