@@ -53,6 +53,10 @@ module Api
         achievements.each do |achievement|
           if achievement.id == params[:id].to_i
             achievement.active = !achievement.active
+            unless achievement.settings['avatar'].nil?
+              current_user.avatar = achievement.settings['avatar']
+              current_user.save
+            end
           else
             achievement.active = false
           end

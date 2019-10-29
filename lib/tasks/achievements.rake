@@ -5,7 +5,8 @@ achievements_params = [
     category: "content",
     settings: {
       quantity: 4,
-      branch: "any"
+      branch: "any",
+      avatar: 1
     },
     number: 1
   },
@@ -15,7 +16,8 @@ achievements_params = [
     category: "branch",
     settings: {
       quantity: 16,
-      branch: "El verdadero valor del ahorro"
+      branch: "El verdadero valor del ahorro",
+      avatar: 2
     },
     number: 2
   },
@@ -35,7 +37,8 @@ achievements_params = [
     category: "branch",
     settings: {
       quantity: 16,
-      branch: "La importancia del presupuesto"
+      branch: "La importancia del presupuesto",
+      avatar: 3
     },
     number: 4
   },
@@ -45,7 +48,8 @@ achievements_params = [
     category: "branch",
     settings: {
       quantity: 16,
-      branch: "¿Cuales son tus sueños? 2"
+      branch: "¿Cuales son tus sueños? 2",
+      avatar: 4
     },
     number: 5
   },
@@ -55,7 +59,8 @@ achievements_params = [
     category: "content",
     settings: {
       quantity: "All",
-      branch: "All"
+      branch: "All",
+      avatar: 5
     },
     number: 6
   },
@@ -65,7 +70,8 @@ achievements_params = [
     category: "content",
     settings: {
       quantity: 1,
-      branch: "All"
+      branch: "All",
+      avatar: 6
     },
     number: 7
   },
@@ -75,7 +81,8 @@ achievements_params = [
     category: "test",
     settings: {
       quantity: 4,
-      continuous: true
+      continuous: true,
+      avatar: 7
     },
     number: 8
   },
@@ -85,7 +92,8 @@ achievements_params = [
     category: "test",
     settings: {
       quantity: 8,
-      continuous: false
+      continuous: false,
+      avatar: 8
     },
     number: 9
   },
