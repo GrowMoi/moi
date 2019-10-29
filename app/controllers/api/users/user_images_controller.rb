@@ -14,6 +14,8 @@ module Api
 
       def update
         if user.update_attribute("image", params[:image])
+          user.avatar = nil
+          user.save
           response = {
             status: :accepted,
             image: user.image.url
