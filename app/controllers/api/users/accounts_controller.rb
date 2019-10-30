@@ -22,7 +22,6 @@ module Api
       param :school, String
       param :email, String
       param :gender, String
-      param :avatar, Integer
       def update
         if user.update(user_params)
           render  nothing:true,
@@ -47,7 +46,6 @@ module Api
           :email,
           :age,
           :authorization_key,
-          :avatar,
           :gender
         )
       end
