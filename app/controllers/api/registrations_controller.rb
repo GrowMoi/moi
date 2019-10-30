@@ -20,6 +20,7 @@ module Api
       param :country, String, required: false
       param :email, String, required: true
       param :school, String, required: true
+      param :gender, String, required: true
     end
 
     private
@@ -32,7 +33,8 @@ module Api
         :city,
         :country,
         :school,
-        :authorization_key
+        :authorization_key,
+        :gender
       ).merge(
         password: Devise.friendly_token
       )
