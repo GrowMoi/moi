@@ -104,6 +104,27 @@ needs to be a JSON-encoded string having the following format:
       }
     end
 
+    api :POST,
+        "/learn/cancel",
+        "cancel a test"
+    param :test_id, Integer, required: true
+
+    def cancel
+      test = ContentLearningTest.find_by_id(params[:test_id])
+      unless test.nil?
+        ids = test.questions.map{|q| q["content_id"]}
+        current_user.content_readings.where(content_id: ids).destroy_all
+        render nothing: true,
+               status: :ok
+      else
+        render json: {
+          message: "Test no encontrado"
+        },
+        status: 404
+      end
+    end
+
+
     private
 
     def answerer
