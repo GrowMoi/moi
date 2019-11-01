@@ -11,12 +11,12 @@ achievements_params = [
     number: 1
   },
   {
-    name: "Contenidos aprendidos rama El verdadero valor del ahorro",
-    description: "Han sido aprendidos 16 contenidos de la rama El verdadero valor del ahorro",
+    name: "Contenidos aprendidos rama ¿Cómo haces para alcanzar tus sueños?",
+    description: "Han sido aprendidos 16 contenidos de la rama ¿Cómo haces para alcanzar tus sueños?",
     category: "branch",
     settings: {
       quantity: 16,
-      branch: "El verdadero valor del ahorro",
+      branch: "¿Cómo haces para alcanzar tus sueños?",
       avatar: 2
     },
     number: 2
@@ -32,23 +32,23 @@ achievements_params = [
   #   number: 3
   # },
   {
-    name: "Contenidos aprendidos rama La importancia del presupuesto",
-    description: "Han sido aprendidos 16 contenidos de la rama La importancia del presupuesto",
+    name: "Contenidos aprendidos rama ¿Qué herramienta te ayuda para cumplir tus sueños?",
+    description: "Han sido aprendidos 16 contenidos de la rama ¿Qué herramienta te ayuda para cumplir tus sueños?",
     category: "branch",
     settings: {
       quantity: 16,
-      branch: "La importancia del presupuesto",
+      branch: "¿Qué herramienta te ayuda para cumplir tus sueños?",
       avatar: 3
     },
     number: 4
   },
   {
-    name: "Contenidos aprendidos rama ¿Cuales son tus sueños? 2",
-    description: "Han sido aprendidos 16 contenidos de la rama ¿Cuales son tus sueños? 2",
+    name: "Contenidos aprendidos rama ¿Qué necesitas para alcanzar tus sueños?",
+    description: "Han sido aprendidos 16 contenidos de la rama ¿Qué necesitas para alcanzar tus sueños?",
     category: "branch",
     settings: {
       quantity: 16,
-      branch: "¿Cuales son tus sueños? 2",
+      branch: "¿Qué necesitas para alcanzar tus sueños?",
       avatar: 4
     },
     number: 5

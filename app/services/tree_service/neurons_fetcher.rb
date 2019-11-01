@@ -4,7 +4,7 @@ module TreeService
     ROOT_NEURON_COLOR = 'yellow'
     BRANCHES = {
       language: {
-        name: '¿Cuales son tus sueños? 2',
+        name: '¿Qué necesitas para alcanzar tus sueños?',
         color: 'red',
         ids: []
       },
@@ -14,12 +14,12 @@ module TreeService
       #   ids: []
       # },
       learn: {
-        name: 'La importancia del presupuesto',
+        name: '¿Qué herramienta te ayuda para cumplir tus sueños?',
         color: 'yellow',
         ids: []
       },
       nature: {
-        name: 'El verdadero valor del ahorro',
+        name: '¿Cómo haces para alcanzar tus sueños?',
         color: 'blue',
         ids: []
       }
