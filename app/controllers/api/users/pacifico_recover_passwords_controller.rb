@@ -31,7 +31,7 @@ module Api
       }
 
       def validate
-        user = User.find_by_username(params[:username])
+        user = User.where(username: params[:username]).first
         unless user.nil?
           content_reading = last_content_reading(user)
           unless content_reading.nil?
