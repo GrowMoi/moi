@@ -33,6 +33,7 @@
 #  tree_image_app         :string
 #  avatar                 :integer
 #  gender                 :string
+#  birth_year             :integer
 #
 
 class User < ActiveRecord::Base
@@ -72,6 +73,11 @@ class User < ActiveRecord::Base
   validates_format_of :username, with: /\A[a-zA-Z0-9_\.\-]*\z/, multiline: true
   validates :authorization_key, presence: true, on: :create, if: "cliente?"
   validates :gender, inclusion: { in: GENDERS }, allow_blank: true
+  validates :birth_year, presence: true, inclusion: { in: 1900..Date.today.year },
+            format: { 
+              with: /(19|20)\d{2}/i, 
+              message: "Año debe contener 4 digitios"
+            }
 
   begin :callbacks
     before_validation :skip_password_for_clients

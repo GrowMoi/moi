@@ -12,7 +12,7 @@ module Api
       api :PUT,
           "/users/account",
           "Update user account"
-      param :age, Integer
+      param :birth_year, Integer
       param :authorization_key, String
       param :username, String
       param :name, String
@@ -44,9 +44,9 @@ module Api
           :country,
           :school,
           :email,
-          :age,
           :authorization_key,
-          :gender
+          :gender,
+          :birth_year
         )
       end
     end

@@ -28,13 +28,13 @@ module Api
     def sign_up_params
       params.permit(
         :username,
-        :age,
         :email,
         :city,
         :country,
         :school,
         :authorization_key,
-        :gender
+        :gender,
+        :birth_year
       ).merge(
         password: Devise.friendly_token
       )

@@ -47,7 +47,8 @@ module Api
                :level,
                :language,
                :avatar,
-               :gender
+               :gender,
+               :birth_year
 
     has_many :content_preferences
 

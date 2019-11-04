@@ -5,6 +5,7 @@ module Api
         "/users/pacifico_recover_password/validate",
         "get 4 contents to validate user"
         param :username, String
+        param :birth_year, Integer
         example %q{
           {
             "contents": [
@@ -31,7 +32,7 @@ module Api
       }
 
       def validate
-        user = User.where(username: params[:username]).first
+        user = User.where(username: params[:username], birth_year: params[:birth_year]).first
         unless user.nil?
           content_reading = last_content_reading(user)
           unless content_reading.nil?

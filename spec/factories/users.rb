@@ -33,6 +33,7 @@
 #  tree_image_app         :string
 #  avatar                 :integer
 #  gender                 :string
+#  birth_year             :integer
 #
 
 FactoryGirl.define do

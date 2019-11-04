@@ -45,7 +45,8 @@ module Api
                :image,
                :level,
                :avatar,
-               :gender
+               :gender,
+               :birth_year
 
     def last_contents_learnt
       object.content_learnings.last(4).map do |content_learnt|
