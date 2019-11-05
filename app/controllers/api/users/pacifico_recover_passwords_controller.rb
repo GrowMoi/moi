@@ -98,8 +98,8 @@ module Api
       end
 
       def get_contents(user)
-        content = user.content_readings.last ? user.content_readings.last.content : nil;
-        contents = Content.last(3);
+        content = user.content_readings.last.content
+        contents = Content.order("RANDOM()").where.not(id: content.id).limit(2);
         contents = contents << content
       end
     end
