@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
   validates_format_of :username, with: /\A[a-zA-Z0-9_\.\-]*\z/, multiline: true
   validates :authorization_key, presence: true, on: :create, if: "cliente?"
   validates :gender, inclusion: { in: GENDERS }, allow_blank: true
-  validates :birth_year, presence: true, inclusion: { in: 1900..Date.today.year },
+  validates :birth_year, allow_blank: true, inclusion: { in: 1900..Date.today.year },
             format: { 
               with: /(19|20)\d{2}/i, 
               message: "Año debe contener 4 digitios"
