@@ -66,6 +66,8 @@ class Content < ActiveRecord::Base
              dependent: :destroy
     has_many :content_tutor_recommendation,
              dependent: :destroy
+    has_many :content_questions,
+             dependent: :destroy
   end
 
   begin :nested_attributes
