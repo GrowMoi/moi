@@ -92,6 +92,11 @@ class Content < ActiveRecord::Base
       reject_if: ->(attributes) {
         attributes["id"].blank? && attributes["url"].blank?
       }
+    
+     accepts_nested_attributes_for :content_questions,
+      reject_if: ->(attributes) {
+        attributes["question"].blank?
+      }
   end
 
   begin :scopes
@@ -139,6 +144,14 @@ class Content < ActiveRecord::Base
     remaining = max - possible_answers.length
     1.upto(remaining).map do
       possible_answers.build
+    end
+  end
+
+  def build_content_questions!
+    max = NUMBER_OF_POSSIBLE_ANSWERS
+    remaining = max - possible_answers.length
+    1.upto(remaining).map do
+      content_questions.build
     end
   end
 

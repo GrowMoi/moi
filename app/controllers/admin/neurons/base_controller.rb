@@ -17,6 +17,7 @@ module Admin
           memo[content.level][content.kind] ||= Array.new
           decorated_content = decorate(content)
           decorated_content.build_possible_answers!
+          decorated_content.build_content_questions!
           memo[content.level][content.kind] << decorated_content
           memo
         end
@@ -45,6 +46,11 @@ module Admin
                         :_destroy,
                         :keyword_list,
                         :source,
+                        :content_questions_attributes => [
+                          :id,
+                          :question,
+                          :_destroy
+                        ],
                         :possible_answers_attributes => [
                           :id,
                           :correct,
