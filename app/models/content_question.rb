@@ -11,6 +11,7 @@
 
 class ContentQuestion < ActiveRecord::Base
 	begin :relationships
-    belongs_to :content
+		belongs_to :content
+		has_many :possible_answers 
 	end
 end
