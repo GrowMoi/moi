@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191113213617) do
+ActiveRecord::Schema.define(version: 20191115042307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -435,7 +435,6 @@ ActiveRecord::Schema.define(version: 20191113213617) do
   add_index "players", ["quiz_id"], name: "index_players_on_quiz_id", using: :btree
 
   create_table "possible_answers", force: :cascade do |t|
-    t.integer  "content_id",                          null: false
     t.string   "text",                                null: false
     t.boolean  "correct",             default: false
     t.datetime "created_at",                          null: false
@@ -443,7 +442,6 @@ ActiveRecord::Schema.define(version: 20191113213617) do
     t.integer  "content_question_id"
   end
 
-  add_index "possible_answers", ["content_id"], name: "index_possible_answers_on_content_id", using: :btree
   add_index "possible_answers", ["content_question_id"], name: "index_possible_answers_on_content_question_id", using: :btree
   add_index "possible_answers", ["correct"], name: "index_possible_answers_on_correct", using: :btree
 
@@ -760,7 +758,6 @@ ActiveRecord::Schema.define(version: 20191113213617) do
   add_foreign_key "notifications", "users", column: "client_id"
   add_foreign_key "players", "quizzes"
   add_foreign_key "players", "users", column: "client_id"
-  add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
   add_foreign_key "quizzes", "level_quizzes"
   add_foreign_key "quizzes", "users", column: "created_by"

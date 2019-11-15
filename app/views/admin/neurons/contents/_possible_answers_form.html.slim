@@ -3,20 +3,18 @@ fieldset
   / label.test-question = f.object.title
   .nested-content-questions
     = f.fields_for :content_questions do |q|
+      = f.hidden_field :id
       .row
         .col-xs-12
           = q.text_field :question,
-                        placeholder: t("activerecord.attributes.possible_answer.text"),
+                        placeholder: "Pregunta",
                         class: "form-control"
       br
       .row
         .col-xs-12
-          = f.fields_for :possible_answers do |answer_form|
+          = q.fields_for :possible_answers do |answer_form|
             = render "admin/neurons/possible_answers/form",
                     f: answer_form
-          = f.link_to_add :possible_answers,
+          = q.link_to_add :possible_answers,
                           class: "hidden add-possible-answer" do
-            span.glyphicon.glyphicon-plus.text-success
-    = f.link_to_add :content_questions,
-                    class: "add-possible-answer" do
             span.glyphicon.glyphicon-plus.text-success

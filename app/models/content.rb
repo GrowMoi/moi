@@ -51,9 +51,9 @@ class Content < ActiveRecord::Base
     has_many :content_tasks
     has_many :content_favorites
 
-    has_many :possible_answers,
-             ->{ order :id },
-             dependent: :destroy
+    # has_many :possible_answers,
+    #          ->{ order :id },
+    #          dependent: :destroy
     has_many :content_links,
              dependent: :destroy
     has_many :content_videos,
@@ -71,10 +71,10 @@ class Content < ActiveRecord::Base
   end
 
   begin :nested_attributes
-    accepts_nested_attributes_for :possible_answers,
-      reject_if: ->(attributes) {
-        attributes["text"].blank?
-      }
+    # accepts_nested_attributes_for :possible_answers,
+    #   reject_if: ->(attributes) {
+    #     attributes["text"].blank?
+    #   }
 
     accepts_nested_attributes_for :content_medium,
       allow_destroy: true,
@@ -139,19 +139,20 @@ class Content < ActiveRecord::Base
     end
   end
 
-  def build_possible_answers!
-    max = NUMBER_OF_POSSIBLE_ANSWERS
-    remaining = max - possible_answers.length
-    1.upto(remaining).map do
-      possible_answers.build
-    end
-  end
+  # def build_possible_answers!
+  #   max = NUMBER_OF_POSSIBLE_ANSWERS
+  #   remaining = max - possible_answers.length
+  #   1.upto(remaining).map do
+  #     possible_answers.build
+  #   end
+  # end
 
   def build_content_questions!
     max = NUMBER_OF_POSSIBLE_ANSWERS
-    remaining = max - possible_answers.length
+    remaining = max - content_questions.length
     1.upto(remaining).map do
-      content_questions.build
+      question = content_questions.build
+      3.times { question.possible_answers.build } 
     end
   end
 

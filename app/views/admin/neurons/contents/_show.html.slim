@@ -18,7 +18,7 @@
     p
       = content.translated_or_spellchecked(:source)
 
-    - if content.possible_answers.any?
+    - if content.content_questions.size > 0
       .possible-answers
         = render "admin/neurons/possible_answers/show",
                 content: content
