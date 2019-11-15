@@ -19,7 +19,7 @@ class PossibleAnswer < ActiveRecord::Base
   translates :text
 
   begin :relationships
-    # belongs_to :content
+    belongs_to :content
     belongs_to :content_question
   end
 
