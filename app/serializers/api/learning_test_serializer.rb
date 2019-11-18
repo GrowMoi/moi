@@ -1,7 +1,8 @@
 module Api
   class LearningTestSerializer < ActiveModel::Serializer
     attributes :id,
-               :questions
+               :questions,
+               :total_contents
 
     def questions
       object.questions.map do |question|
@@ -18,6 +19,10 @@ module Api
       question["possible_answers"].map do |possible_answer|
         possible_answer.slice("id", "text")
       end
+    end
+
+    def total_contents
+      3
     end
   end
 end

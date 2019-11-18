@@ -28,7 +28,8 @@ module TreeService
         {
           correct: !!correct_answer,
           content_id: answer["content_id"],
-          neuron_color: TreeService::NeuronsFetcher.new(content.neuron).neuron_color(branches_neurons_ids)
+          neuron_color: TreeService::NeuronsFetcher.new(content.neuron).neuron_color(branches_neurons_ids),
+          user_answer: answer['answer_text']
         }
       end
       @user_test.answers = answers_result
