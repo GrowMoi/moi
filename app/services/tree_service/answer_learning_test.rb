@@ -88,11 +88,13 @@ module TreeService
     end
 
     def correct_answer?(answer)
-      question = user_test.questions.detect do |question|
-        question["content_id"] == answer["content_id"]
-      end
-      answered = question["possible_answers"].detect do |possible_answer|
-        possible_answer["id"] == answer["answer_id"]
+      answered = {}
+      user_test.questions.detect do |question|
+        if question["content_id"] == answer["content_id"]
+          answered = question["possible_answers"].detect do |possible_answer|
+            possible_answer["id"] == answer["answer_id"]
+          end
+        end
       end
       answered && answered["correct"]
     end
