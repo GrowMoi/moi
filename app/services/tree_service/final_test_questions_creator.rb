@@ -33,7 +33,7 @@ module TreeService
           end
         end
       end
-      questions
+      questions.shuffle[1..21]
     end
 
     def image_for(content)
