@@ -63,8 +63,19 @@ module Api
           end
           achievement.save
         end
-        render nothing: true,
-               status: :ok
+        render json: {
+          avatar: get_avatar,
+          status: :ok
+        }
+      end
+
+      private
+
+      def get_avatar
+        if current_user.avatar && current_user.gender
+          folder = current_user.gender === "M" ? "mens" : "women"
+          path = "#{Rails.application.secrets.url}/avatars/#{folder}#{UserAvatars.avatars[:"#{current_user.avatar}"]}"
+        end
       end
     end
   end
