@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191104135603) do
+ActiveRecord::Schema.define(version: 20191115042307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,6 +180,15 @@ ActiveRecord::Schema.define(version: 20191104135603) do
 
   add_index "content_notes", ["content_id"], name: "index_content_notes_on_content_id", using: :btree
   add_index "content_notes", ["user_id"], name: "index_content_notes_on_user_id", using: :btree
+
+  create_table "content_questions", force: :cascade do |t|
+    t.string   "question"
+    t.integer  "content_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "content_questions", ["content_id"], name: "index_content_questions_on_content_id", using: :btree
 
   create_table "content_reading_events", force: :cascade do |t|
     t.integer  "user_event_id",                null: false
@@ -426,14 +435,14 @@ ActiveRecord::Schema.define(version: 20191104135603) do
   add_index "players", ["quiz_id"], name: "index_players_on_quiz_id", using: :btree
 
   create_table "possible_answers", force: :cascade do |t|
-    t.integer  "content_id",                 null: false
-    t.string   "text",                       null: false
-    t.boolean  "correct",    default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.string   "text",                                null: false
+    t.boolean  "correct",             default: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.integer  "content_question_id"
   end
 
-  add_index "possible_answers", ["content_id"], name: "index_possible_answers_on_content_id", using: :btree
+  add_index "possible_answers", ["content_question_id"], name: "index_possible_answers_on_content_question_id", using: :btree
   add_index "possible_answers", ["correct"], name: "index_possible_answers_on_correct", using: :btree
 
   create_table "products", force: :cascade do |t|
@@ -749,7 +758,6 @@ ActiveRecord::Schema.define(version: 20191104135603) do
   add_foreign_key "notifications", "users", column: "client_id"
   add_foreign_key "players", "quizzes"
   add_foreign_key "players", "users", column: "client_id"
-  add_foreign_key "possible_answers", "contents"
   add_foreign_key "profiles", "users"
   add_foreign_key "quizzes", "level_quizzes"
   add_foreign_key "quizzes", "users", column: "created_by"

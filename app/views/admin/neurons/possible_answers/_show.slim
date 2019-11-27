@@ -1,11 +1,13 @@
-- if content.decorated_possible_answers.any?
+- if content.content_questions.size > 0
   h5 = t("views.contents.test")
-  strong
-    = content.title
+  -  content.content_questions.each do |content_question|
+    - unless content_question.question.nil?
+      strong
+        = content_question.question
 
-  ul
-    - content.decorated_possible_answers.each do |possible_answer|
-      li
-        = possible_answer.correct_label
-        span
-          = possible_answer.translated_or_spellchecked(:text)
+      ul
+        - content_question.possible_answers.each do |possible_answer|
+          li
+            = decorate(possible_answer).correct_label
+            span
+              = decorate(possible_answer).translated_or_spellchecked(:text)

@@ -15,7 +15,7 @@ module TreeService
       # },
       learn: {
         name: '¿Qué herramienta te ayuda para cumplir tus sueños?',
-        color: 'yellow',
+        color: 'green',
         ids: []
       },
       nature: {

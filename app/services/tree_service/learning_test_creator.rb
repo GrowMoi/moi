@@ -15,14 +15,20 @@ module TreeService
     private
 
     def questions
-      @contents.map do |content|
-        {
-          content_id: content.id,
-          title: title_translate(content),
-          media_url: image_for(content),
-          possible_answers: possible_answers_for(content)
-        }
+      questions = []
+      @contents.each do |content|
+        content.content_questions.each do |content_question|
+          if content_question.possible_answers.count > 0
+            questions << {
+              content_id: content_question.content_id,
+              title: content_question.question,
+              media_url: image_for(content),
+              possible_answers: possible_answers_for(content_question)
+            }
+          end
+        end
       end
+      questions
     end
 
     def image_for(content)
@@ -31,8 +37,8 @@ module TreeService
       end
     end
 
-    def possible_answers_for(content)
-      content.possible_answers.map do |possible_answer|
+    def possible_answers_for(content_question)
+      content_question.possible_answers.map do |possible_answer|
         possible_answer_attrs(possible_answer)
       end
     end

@@ -20,23 +20,20 @@ module TreeService
     private
 
     def questions
-      @contents.map do |content|
-        title = content.title
-        unless @language == ApplicationController::DEFAULT_LANGUAGE
-          resp = TranslatedAttribute.where(
-                                            translatable_id: content.id,
-                                            name: "title",
-                                            language: @language
-                                          ).first
-          title = resp ? resp.content : title
+      questions = []
+      @contents.each do |content|
+        content.content_questions.each do |content_question|
+          if content_question.possible_answers.count > 0
+            questions << {
+              content_id: content_question.content_id,
+              title: content_question.question,
+              media_url: image_for(content),
+              possible_answers: possible_answers_for(content_question)
+            }
+          end
         end
-        {
-          content_id: content.id,
-          title: title,
-          media_url: image_for(content),
-          possible_answers: possible_answers_for(content)
-        }
       end
+      questions.shuffle[1..21]
     end
 
     def image_for(content)
@@ -45,23 +42,18 @@ module TreeService
       end
     end
 
-    def possible_answers_for(content)
-      content.possible_answers.map do |possible_answer|
-        text = possible_answer["text"]
-        unless @language == ApplicationController::DEFAULT_LANGUAGE
-          resp = TranslatedAttribute.where(
-                                            translatable_type: "PossibleAnswer",
-                                            translatable_id: possible_answer["id"],
-                                            language: @language
-                                          ).first
-          text = resp ? resp.content : text
-        end
-        {
-          id: possible_answer["id"],
-          text: text,
-          correct: possible_answer["correct"]
-        }
+    def possible_answers_for(content_question)
+      content_question.possible_answers.map do |possible_answer|
+        possible_answer_attrs(possible_answer)
       end
+    end
+
+    def possible_answer_attrs(possible_answer)
+      {
+        "id" => possible_answer.id,
+        "correct" => possible_answer.correct,
+        "text" => possible_answer.text
+      }
     end
   end
 end

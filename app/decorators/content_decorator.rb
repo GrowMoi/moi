@@ -98,12 +98,12 @@ class ContentDecorator < ResourceDecorator
     @approved_options[key.to_s]
   end
 
-  def decorated_possible_answers
-    possible_answers.select(&:persisted?)
-                    .map do |possible_answer|
-                      decorate possible_answer
-                    end
-  end
+  # def decorated_possible_answers
+  #   possible_answers.select(&:persisted?)
+  #                   .map do |possible_answer|
+  #                     decorate possible_answer
+  #                   end
+  # end
 
   def content_videos_for_current_lang
     content_videos.select do |video|

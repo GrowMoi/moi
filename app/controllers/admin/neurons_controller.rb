@@ -12,8 +12,9 @@ module Admin
       else
         scope = Neuron.not_deleted
       end
-      scope.includes(contents: :possible_answers)
-           .order(:position)
+      scope.includes(contents: :content_questions)
+      # scope.includes(contents: :possible_answers)
+      #      .order(:position)
     }
 
     expose(:possible_parents) {
@@ -64,7 +65,7 @@ module Admin
     end
 
     def show
-      neuron.eager_contents!
+      # neuron.eager_contents!
     end
 
     def create

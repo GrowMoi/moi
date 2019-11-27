@@ -12,10 +12,10 @@ achievements_params = [
   },
   {
     name: "Contenidos aprendidos rama ¿Cómo haces para alcanzar tus sueños?",
-    description: "Han sido aprendidos 16 contenidos de la rama ¿Cómo haces para alcanzar tus sueños?",
+    description: "Han sido aprendidos 9 contenidos de la rama ¿Cómo haces para alcanzar tus sueños?",
     category: "branch",
     settings: {
-      quantity: 16,
+      quantity: 9,
       branch: "¿Cómo haces para alcanzar tus sueños?",
       avatar: 2
     },
@@ -33,10 +33,10 @@ achievements_params = [
   # },
   {
     name: "Contenidos aprendidos rama ¿Qué herramienta te ayuda para cumplir tus sueños?",
-    description: "Han sido aprendidos 16 contenidos de la rama ¿Qué herramienta te ayuda para cumplir tus sueños?",
+    description: "Han sido aprendidos 9 contenidos de la rama ¿Qué herramienta te ayuda para cumplir tus sueños?",
     category: "branch",
     settings: {
-      quantity: 16,
+      quantity: 9,
       branch: "¿Qué herramienta te ayuda para cumplir tus sueños?",
       avatar: 3
     },
@@ -44,10 +44,10 @@ achievements_params = [
   },
   {
     name: "Contenidos aprendidos rama ¿Qué necesitas para alcanzar tus sueños?",
-    description: "Han sido aprendidos 16 contenidos de la rama ¿Qué necesitas para alcanzar tus sueños?",
+    description: "Han sido aprendidos 9 contenidos de la rama ¿Qué necesitas para alcanzar tus sueños?",
     category: "branch",
     settings: {
-      quantity: 16,
+      quantity: 9,
       branch: "¿Qué necesitas para alcanzar tus sueños?",
       avatar: 4
     },

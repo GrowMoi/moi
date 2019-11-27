@@ -66,13 +66,15 @@ class Content < ActiveRecord::Base
              dependent: :destroy
     has_many :content_tutor_recommendation,
              dependent: :destroy
+    has_many :content_questions,
+             dependent: :destroy
   end
 
   begin :nested_attributes
-    accepts_nested_attributes_for :possible_answers,
-      reject_if: ->(attributes) {
-        attributes["text"].blank?
-      }
+    # accepts_nested_attributes_for :possible_answers,
+    #   reject_if: ->(attributes) {
+    #     attributes["text"].blank?
+    #   }
 
     accepts_nested_attributes_for :content_medium,
       allow_destroy: true,
@@ -89,6 +91,11 @@ class Content < ActiveRecord::Base
       allow_destroy: true,
       reject_if: ->(attributes) {
         attributes["id"].blank? && attributes["url"].blank?
+      }
+    
+     accepts_nested_attributes_for :content_questions,
+      reject_if: ->(attributes) {
+        attributes["question"].blank?
       }
   end
 
@@ -132,11 +139,20 @@ class Content < ActiveRecord::Base
     end
   end
 
-  def build_possible_answers!
+  # def build_possible_answers!
+  #   max = NUMBER_OF_POSSIBLE_ANSWERS
+  #   remaining = max - possible_answers.length
+  #   1.upto(remaining).map do
+  #     possible_answers.build
+  #   end
+  # end
+
+  def build_content_questions!
     max = NUMBER_OF_POSSIBLE_ANSWERS
-    remaining = max - possible_answers.length
+    remaining = max - content_questions.length
     1.upto(remaining).map do
-      possible_answers.build
+      question = content_questions.build
+      3.times { question.possible_answers.build } 
     end
   end
 
