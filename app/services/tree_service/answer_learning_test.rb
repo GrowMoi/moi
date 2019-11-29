@@ -40,10 +40,14 @@ module TreeService
     private
 
     def learn!(answer)
-      ContentLearning.create!(
-        user: user_test.user,
-        content_id: answer["content_id"]
-      )
+      content = ContentLearning.where(content_id: answer["content_id"], user: user_test.user)
+      unless content.count > 0
+        ContentLearning.create!(
+          user: user_test.user,
+          content_id: answer["content_id"]
+        )
+        read_again_if_was_destroyed!(answer)
+      end
     end
 
     def learn_content_event!(answer)
@@ -54,12 +58,25 @@ module TreeService
       end
     end
 
+    def read_again_if_was_destroyed!(answer)
+      content = ContentReading.where(content_id: answer["content_id"], user: user_test.user)
+      unless content.count > 0
+        ContentReading.create!(
+          user: user_test.user,
+          content_id: answer["content_id"]
+        )
+      end
+    end
+
     def unread!(answer)
-      content_reading = ContentReading.where(
-        user: user_test.user,
-        content_id: answer["content_id"]
-      ).first
-      content_reading.destroy if content_reading
+      content = ContentLearning.where(content_id: answer["content_id"], user: user_test.user)
+      unless content.count > 0
+        content_reading = ContentReading.where(
+          user: user_test.user,
+          content_id: answer["content_id"]
+        ).first
+        content_reading.destroy if content_reading
+      end
     end
 
     def unread_content_event!(answer)
