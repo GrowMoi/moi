@@ -91,7 +91,9 @@ Rails.application.configure do
       origins "http://moi.growmoi.com",
               "https://moi.growmoi.com",
               "http://moi-frontend.herokuapp.com",
-              "https://moi-frontend.herokuapp.com"
+              "https://moi-frontend.herokuapp.com",
+              "http://aula.miaulabdp.com",
+              "https://aula.miaulabdp.com"
 
       resource "/api/*",
                headers: :any,
@@ -105,7 +107,9 @@ Rails.application.configure do
               "http://abi.shiriculapo.com",
               "https://abi.shiriculapo.com",
               "http://moi-frontend.herokuapp.com",
-              "https://moi-frontend.herokuapp.com"
+              "https://moi-frontend.herokuapp.com",
+              "http://aula.miaulabdp.com",
+              "https://aula.miaulabdp.com"
 
       resource '/assets/*'
     end
