@@ -9,6 +9,7 @@
 #  approved   :boolean          default(FALSE)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  kind       :string           default("achievement")
 #
 
 FactoryGirl.define do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191115042307) do
+ActiveRecord::Schema.define(version: 20191209223629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,12 +106,13 @@ ActiveRecord::Schema.define(version: 20191115042307) do
   add_index "content_learning_events", ["user_event_id"], name: "index_content_learning_events_on_user_event_id", using: :btree
 
   create_table "content_learning_final_tests", force: :cascade do |t|
-    t.integer  "user_id",                    null: false
-    t.json     "questions",                  null: false
+    t.integer  "user_id",                            null: false
+    t.json     "questions",                          null: false
     t.json     "answers"
     t.boolean  "approved",   default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "kind",       default: "achievement"
   end
 
   add_index "content_learning_final_tests", ["user_id"], name: "index_content_learning_final_tests_on_user_id", using: :btree

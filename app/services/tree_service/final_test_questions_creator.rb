@@ -3,6 +3,7 @@ module TreeService
     def initialize(options)
       @user = options.fetch :user
       @contents = options.fetch :contents
+      @kind = options.fetch :kind
       @language = @user.preferred_lang
     end
 
@@ -10,7 +11,8 @@ module TreeService
       # unless @user.learning_final_tests
         @user_test ||= ContentLearningFinalTest.create!(
           user: @user,
-          questions: questions
+          questions: questions,
+          kind: @kind
         )
       # else
         # @user.learning_final_tests

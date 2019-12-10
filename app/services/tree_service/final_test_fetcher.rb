@@ -1,12 +1,13 @@
 module TreeService
   class FinalTestFetcher
 
-    def initialize(user)
+    def initialize(user, kind="achievement")
       @user = user
+      @kind = kind
     end
 
     def user_final_test_for_api
-      if validate_achievement
+      if validate_achievement || @kind == "user_completed_all_contents"
         @user_test ||= Api::LearningTestSerializer.new(
           test_creator.user_test,
           root: false
@@ -19,7 +20,8 @@ module TreeService
     def test_creator
       FinalTestQuestionsCreator.new(
         user: @user,
-        contents: contents_for_test
+        contents: contents_for_test,
+        kind: @kind
       )
     end
 
