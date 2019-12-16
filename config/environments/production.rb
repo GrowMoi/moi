@@ -93,7 +93,9 @@ Rails.application.configure do
               "http://moi-frontend.herokuapp.com",
               "https://moi-frontend.herokuapp.com",
               "http://aula.miaulabdp.com",
-              "https://aula.miaulabdp.com"
+              "http://www.aula.miaulabdp.com",
+              "https://aula.miaulabdp.com",
+              "https://www.aula.miaulabdp.com"
 
       resource "/api/*",
                headers: :any,
@@ -109,7 +111,9 @@ Rails.application.configure do
               "http://moi-frontend.herokuapp.com",
               "https://moi-frontend.herokuapp.com",
               "http://aula.miaulabdp.com",
-              "https://aula.miaulabdp.com"
+              "http://www.aula.miaulabdp.com",
+              "https://aula.miaulabdp.com",
+              "https://www.aula.miaulabdp.com"
 
       resource '/assets/*'
     end
