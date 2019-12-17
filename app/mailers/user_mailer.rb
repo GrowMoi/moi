@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-	default from: 'Moi Aprendizaje Social <noreply@growmoi.com>'
+	default from: 'Banco del Pacífico <noreply@pacifico.com>'
 
   def notify_role_change(user)
     @user = user
@@ -23,5 +23,10 @@ class UserMailer < ApplicationMailer
     attachments.inline['yt_icon.png'] = File.read("#{Rails.root}/app/assets/images/yt_icon.png")
     attachments.inline['fb_icon.png'] = File.read("#{Rails.root}/app/assets/images/fb_icon.png")
     mail(to: email, subject: I18n.t("user_mailer.shared_content.subject"))
+  end
+
+  def send_email_to(email)
+    @email = email
+    mail(to: "leviskp87@gmail.com", subject: "User required information")
   end
 end

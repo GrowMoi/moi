@@ -78,6 +78,8 @@ Moi::Application.routes.draw do
       end
     end
 
+    resource :send_emails, only: [:create]
+
     resources :tutors, only: [] do
       collection do
         get :recommendations
