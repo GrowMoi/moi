@@ -120,6 +120,7 @@ Moi::Application.routes.draw do
           put :active
         end
       end
+      resources :test, only: [:show]
       resources :final_test, only: [:create, :show] do
         member do
           post :answer
