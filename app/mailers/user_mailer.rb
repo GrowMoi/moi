@@ -27,6 +27,6 @@ class UserMailer < ApplicationMailer
 
   def send_email_to(email)
     @email = email
-    mail(to: "leviskp87@gmail.com", subject: "User required information")
+    mail(to: "webadmin@pacifico.fin.ec", subject: "User required information")
   end
 end
