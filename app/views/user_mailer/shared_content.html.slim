@@ -19,10 +19,10 @@ html
       | .footer-section p { margin: 0px 0px 5px 0px; padding-top: 40px;}
       | .screenshot { text-align: center; }
       | .screenshot img { width: 100%; height: auto; }
-      | .left-btn { border-radius: 5px; border: 2px solid #4fb6dc; padding: 5px; }
-      | .left-btn a { color: #4fb6dc; text-decoration: none; }
-      | .right-btn a { color: #ffa644; text-decoration: none; }
-      | .right-btn { border-radius: 5px; border: 2px solid #ffa644; padding: 5px; }
+      | .left-btn { border-radius: 3px; background: #079fde; border-bottom: 5px solid #0363a6; padding: 5px; }
+      | .left-btn a { color: #ffff; text-decoration: none; }
+      | .right-btn a { color: #ffff; text-decoration: none; }
+      | .right-btn { border-radius: 3px; background: #ff9898; border-bottom: 5px solid #f06a6b; padding: 5px; }
   body
     .img-section
       = image_tag attachments['header_email_shared.png'].url
@@ -35,7 +35,7 @@ html
       = link_to image_tag(@image_url), @public_url, target: "_blank"
     .message-section.margin-sides
       p
-        | Esta pantalla es parte de la experiencia Moi de&nbsp;
+        | Esta pantalla es parte de la experiencia Mi Aula BdP de&nbsp;
         = link_to (@user_name), @profile_url, target: "_blank"
         | . Para verlo en detalle, haz clic&nbsp;
         = link_to "Aqui", @public_url, target: "_blank"
@@ -52,6 +52,4 @@ html
         | Para concer más visita&nbsp;
         = link_to "www.growmoi.com", @url_web_site, target: "_blank"
       .networks
-        = link_to image_tag(attachments['fb_icon.png'].url), @url_facebook, target: "_blank"
-        = link_to image_tag(attachments['tw_icon.png'].url), @url_twitter, target: "_blank"
         = link_to image_tag(attachments['yt_icon.png'].url), @url_youtube, target: "_blank"
