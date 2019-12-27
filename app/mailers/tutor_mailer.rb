@@ -13,8 +13,8 @@ class TutorMailer < ApplicationMailer
     @tutor_name = name
     @tutor_password = password
     @authorization_key = authorization_key
-    @url_dashboard = "http://moi-backend.growmoi.com/tutor"
-    @url_sign_in = "http://moi-backend.growmoi.com/users/sign_in"
+    @url_dashboard = "http://backend.miaulabdp.com/tutor"
+    @url_sign_in = "http://backend.miaulabdp.com/users/sign_in"
     @url_web_site = "http://growmoi.com/"
     @url_facebook = "http://facebook.com/growmoi"
     @url_youtube = "https://www.youtube.com/user/growmoi"
@@ -32,8 +32,8 @@ class TutorMailer < ApplicationMailer
   def payment_add_student(name, email, total_tickets)
     @total_tickets = total_tickets
     @tutor_name = name
-    @url_dashboard = "http://moi-backend.growmoi.com/tutor"
-    @url_sign_in = "http://moi-backend.growmoi.com/users/sign_in"
+    @url_dashboard = "http://backend.miaulabdp.com/tutor"
+    @url_sign_in = "http://backend.miaulabdp.com/users/sign_in"
     @url_web_site = "http://growmoi.com/"
     @url_facebook = "http://facebook.com/growmoi"
     @url_youtube = "https://www.youtube.com/user/growmoi"
