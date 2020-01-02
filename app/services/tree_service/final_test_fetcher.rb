@@ -26,7 +26,12 @@ module TreeService
     end
 
     def contents_for_test
-      Neuron.approved_public_contents.shuffle[1..21]
+      if @kind === "user_completed_atleast_one_public_content"
+        ids = @user.content_learnings.map(&:content_id).uniq.shuffle[1..21]
+        contents = Content.where(id: ids)
+      else
+        Neuron.approved_public_contents.shuffle[1..21]
+      end
     end
 
     def validate_achievement
