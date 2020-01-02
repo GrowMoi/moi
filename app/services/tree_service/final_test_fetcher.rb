@@ -7,7 +7,7 @@ module TreeService
     end
 
     def user_final_test_for_api
-      if validate_achievement || @kind == "user_completed_all_contents"
+      if validate_achievement || @kind == "user_completed_atleast_one_public_content"
         @user_test ||= Api::LearningTestSerializer.new(
           test_creator.user_test,
           root: false

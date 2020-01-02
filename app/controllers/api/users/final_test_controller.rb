@@ -18,10 +18,11 @@ module Api
           "create a test with 21 questions"
 
       def create
+        kind = params[:kind] == 'atleast_one_content' ? 'user_completed_atleast_one_public_content' : nil
         if user
           response = {
             status: :created,
-            questions: final_test_fetcher.user_final_test_for_api,
+            questions: final_test_fetcher(kind).user_final_test_for_api,
           }
         else
           response = { status: :unprocessable_entity }
@@ -158,9 +159,10 @@ module Api
       end
 
 
-      def final_test_fetcher
+      def final_test_fetcher(kind)
         @final_test_fetcher ||= TreeService::FinalTestFetcher.new(
-          user
+          user,
+          kind
         )
       end
     end

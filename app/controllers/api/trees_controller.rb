@@ -86,23 +86,25 @@ module Api
     end
 
     def create_final_test?
-      completed_all_contents = current_user.content_learnings.count === total_approved_contents
+      # completed_all_contents = current_user.content_learnings.count === total_approved_contents
+      achievement = AdminAchievement.find_by_number(7)
+      has_achievement = UserAdminAchievement.where(user: current_user, admin_achievement: achievement).first
       create_test = false
-      if completed_all_contents
-        final_test = ContentLearningFinalTest.where(user: current_user, kind: "user_completed_all_contents").last
+      if !!has_achievement
+        final_test = ContentLearningFinalTest.where(user: current_user, kind: "user_completed_atleast_one_public_content").last
         if !!final_test
           create_test = !(!!final_test.answers)
         else
           create_test = true
         end
       end
-      completed_all_contents && create_test
+      !!has_achievement && create_test
     end
 
     def final_test_fetcher
       @final_test_fetcher ||= TreeService::FinalTestFetcher.new(
         user,
-        'user_completed_all_contents'
+        'user_completed_atleast_one_public_content'
       )
     end
   end
