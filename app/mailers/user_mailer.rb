@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-	default from: 'Banco del Pacífico <noreply@pacifico.com>'
+	default from: 'Banco del Pacífico <webadmin@pacifico.fin.ec>'
 
   def notify_role_change(user)
     @user = user
@@ -15,7 +15,7 @@ class UserMailer < ApplicationMailer
     @url_sign_in = "http://aula.miaulabdp.com"
     @url_web_site = "http://miaulabdp.com"
     @url_youtube = "https://www.youtube.com/user/BancoPacificoEC"
-    attachments.inline['header_email_shared.png'] = File.read("#{Rails.root}/app/assets/images/header_email_shared.png")
+    attachments.inline['moicartaimg.png'] = File.read("#{Rails.root}/app/assets/images/moicartaimg.png")
     attachments.inline['footer_email_shared.png'] = File.read("#{Rails.root}/app/assets/images/footer_email_shared.png")
     attachments.inline['yt_icon.png'] = File.read("#{Rails.root}/app/assets/images/yt_icon.png")
     mail(to: email, subject: I18n.t("user_mailer.shared_content.subject"))

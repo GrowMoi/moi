@@ -104,7 +104,7 @@
       attach_media: Adjuntar multimedia
       video_placeholder: Video destacado
       remove_media: Eliminar multimedia
-      link_placeholder: http://www.growmoi.com
+      link_placeholder: http://www.miaulabdp.com/
       videos: Vídeos
     quizzes:
       new: Nuevo Test
@@ -194,7 +194,7 @@
       videos: Vídeos
       video_placeholder: Video destacado
       links: Enlaces
-      link_placeholder: http://www.growmoi.com
+      link_placeholder: http://www.miaulabdp.com
       add_link: Agregar enlace
       contents: Contenidos
       levels:
@@ -313,7 +313,7 @@
         total_content_readings: "Contenidos leidos"
         total_right_questions: "Preguntas aprobadas"
       navbar:
-        moi: "MOI"
+        moi: "Mi Aula BdP"
         tree: "Mi Árbol"
         client: "Usuario"
         analisys: "Análisis"
@@ -844,14 +844,14 @@
     change_permission:
       subject: "Cambio de permisos"
     shared_content:
-      subject: "Moi - Social Learning"
+      subject: "Mi Aula BdP"
     super_event:
       subject: "Super evento"
   tutor_mailer:
     achievement_notification:
       subject: "Contenidos completados"
     payment_account:
-      subject: "Cuenta Moi"
+      subject: "Cuenta Mi Aula BdP"
   devise:
     sessions:
       user:

@@ -1,5 +1,5 @@
 class TutorMailer < ApplicationMailer
-  default from: 'Banco del Pacífico <noreply@pacifico.com>'
+  default from: 'Banco del Pacífico <webadmin@pacifico.fin.ec>'
 
   def achievement_notification(tutor, client, achievement)
     @tutor_name = if tutor.name.present? then tutor.name else tutor.username end
