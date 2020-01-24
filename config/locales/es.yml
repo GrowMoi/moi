@@ -325,7 +325,7 @@
         notifications: "Notificaciones"
         change_to_admin: "Cambiar a Administrador"
       report:
-        title: 'Social Learning'
+        title: 'Mi Aula Bdp'
         sub_title: 'Estimado tutor, a continuación el reporte solicitado.'
         average_used_time_by_content: 'Tiempo de lectura promedio'
         donut_chart: 'Contenidos Aprendidos por categoría'
