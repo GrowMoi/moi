@@ -22,6 +22,7 @@ Polymer({
     this.rowImgCheck = this.assetPath('check_green.png');
     this.downloadBtnFilename = 'reporte_' + Date.now() + '.xls';
     $(this.$.btnSelectiveDownload).addClass('disabled');
+    $(this.$.btnAllDownload).addClass('disabled');
     this.emitters = {};
     this.loading = true;
     this.userRemove = null;
@@ -30,7 +31,10 @@ Polymer({
       type: 'GET',
       success: function (res) {
         this.loading = false;
-        this.students = res.data;
+        this.students = res.data || [];
+        if (this.students && (this.students.length > 0)) {
+          $(this.$.btnAllDownload).removeClass('disabled');
+        }
       }.bind(this)
     });
   },
