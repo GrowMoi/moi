@@ -44,10 +44,7 @@ RSpec.describe Tutor::ProfileController, type: :controller do
       }
 
       it {
-        expect(subject).to include({
-          "name" => "Jhon",
-          "email" => "testuser1@test.com"
-        })
+        expect(subject).to include("user")
       }
 
     end

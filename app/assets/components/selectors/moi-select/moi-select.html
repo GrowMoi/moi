@@ -2,7 +2,9 @@
   <link rel="stylesheet" href="moi-select.css" />
   <template>
     <select id="selector" name="{{ name }}">
-      <option value="" disabled selected>[[ placeholder ]]</option>
+      <template is="dom-if" if="{{ placeholder }}" restamp>
+        <option value="" disabled selected>[[ placeholder ]]</option>
+      </template>
       <template is="dom-repeat" items="{{ items }}">
         <option value$="[[ item.id ]]">[[ item.text ]]</option>
       </template>
