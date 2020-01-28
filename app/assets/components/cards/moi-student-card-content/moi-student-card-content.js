@@ -1,6 +1,6 @@
 Polymer({
   is: 'moi-student-card-content',
-  behaviors: [TranslateBehavior, AssetBehavior],
+  behaviors: [TranslateBehavior, AssetBehavior, UtilsBehavior],
   properties: {
     options: {
       type: Object,
@@ -15,22 +15,71 @@ Polymer({
   },
   init: function () {
     var studentsApi = '/tutor/dashboard/students';
+
+    var currentUser =  UtilsBehavior.getCurrentUser() || {};
+    this.isAdmin = currentUser.role === 'admin';
     this.students = [];
     this.studentsSelected = [];
     this.rowImgActive = this.assetPath('client_avatar_green.png');
     this.rowImgInactive = this.assetPath('client_avatar_inactive.png');
     this.rowImgCheck = this.assetPath('check_green.png');
     this.downloadBtnFilename = 'reporte_' + Date.now() + '.xls';
+    this.downloadBtnFilenameV3 = 'reporte_' + Date.now() + '.xlsx';
     $(this.$.btnSelectiveDownload).addClass('disabled');
+    $(this.$.btnAllDownload).addClass('disabled');
     this.emitters = {};
     this.loading = true;
     this.userRemove = null;
+    this.usernames = [];
+    this.reportItems = [
+      { id: 'username', text: 'Nombre de usuario'},
+      { id: 'name', text: 'Nombre real'},
+      { id: 'email', text: 'Email'},
+      { id: 'total_contents_learnt', text: 'Contenidos aprendidos en total'},
+      { id: 'contents_learnt_branch_1', text: 'Contenidos aprendidos en rama: ¿Cómo haces para alcanzar tus sueños?'},
+      { id: 'contents_learnt_branch_2', text: 'Contenidos aprendidos en rama: ¿Qué herramienta te ayuda para cumplir tus sueños?'},
+      { id: 'contents_learnt_branch_3', text: 'Contenidos aprendidos en rama: ¿Qué necesitas para alcanzar tus sueños?'},
+      { id: 'total_neurons_learnt', text: 'Neuronas aprendidas'},
+      { id: 'used_time', text: 'Tiempo de uso'},
+      { id: 'used_time_ms', text: 'Tiempo de uso en milisegundos'},
+      { id: 'average_reading_time', text: 'Tiempo de lectura promedio'},
+      { id: 'average_reading_time_ms', text: 'Tiempo de lectura promedio en milisegundos'},
+      { id: 'images_opened_in_count', text: 'Imagenes abiertas'},
+      { id: 'total_notes', text: 'Notas agregadas'},
+      { id: 'total_achievements', text: 'Logros alcanzados'},
+      { id: 'link_analysis', text: 'Enlace a vista de análisis'},
+    ]
+    this.availableSortItems = [
+      { id: 'username', text: 'Nombre de usuario', sort: false},
+      { id: 'email', text: 'Email', sort: false},
+    ];
+
+    var HALF = Math.round(this.reportItems.length / 2);
+    this.reportItemsLeft = this.reportItems.slice(0, HALF);
+    this.reportItemsRight = this.reportItems.slice(HALF, this.reportItems.length);
+    this.reportOption = {
+      firstStep: {
+        visible: true
+      },
+      secondStep: {
+        basic: {
+          visible: false
+        },
+        questions: {
+          visible: false
+        }
+      }
+    };
+
     $.ajax({
       url: studentsApi,
       type: 'GET',
       success: function (res) {
         this.loading = false;
-        this.students = res.data;
+        this.students = res.data || [];
+        if (this.students && (this.students.length > 0)) {
+          $(this.$.btnAllDownload).removeClass('disabled');
+        }
       }.bind(this)
     });
   },
@@ -112,6 +161,44 @@ Polymer({
       }.bind(this)
     });
   },
+  openReportDialog: function(ev) {
+    ev.stopPropagation();
+    this.backSelectReportOption()
+    $(this.$['dialog-build-report']).show();
+  },
+  restoreReportOptionsVisibility: function() {
+    this.set('reportOption.firstStep.visible', false);
+    this.set('reportOption.secondStep.basic.visible', false);
+    this.set('reportOption.secondStep.questions.visible', false);
+  },
+  selectReportOption: function(ev) {
+    var optionSelected = ev.target.id || ev.target.parentElement.id;
+    this.restoreReportOptionsVisibility();
+    this.set('reportOption.secondStep.'+ optionSelected +'.visible', true);
+    this.async(function() {
+      this.buttonDownloadReport = this.$$('#download-new-report-button');
+      $(this.buttonDownloadReport).addClass('disabled');
+    }.bind(this));
+  },
+  backSelectReportOption: function(ev) {
+    this.restoreReportOptionsVisibility();
+    this.set('reportOption.firstStep.visible', true);
+  },
+  onReportSortItemSelected: function(e, val) {
+    for(var i = 0; i < this.availableSortItems.length; i ++) {
+      this.availableSortItems[i].sort = false;
+    }
+    var index = this.availableSortItems.findIndex(function(item) {return item.id === val});
+    if (index >= 0) {
+      this.availableSortItems[index].sort = true;
+    }
+  },
+  onReportSortItemLoaded: function(e) {
+    for(var i = 0; i < this.availableSortItems.length; i ++) {
+      this.availableSortItems[i].sort = false;
+    }
+    this.availableSortItems[0].sort = true;
+  },
   registerLocalApi: function() {
     if (this.options && this.options.onRegisterApi) {
       var api = this.createPublicApi();
@@ -131,5 +218,68 @@ Polymer({
   },
   onStudentRemoved: function(callback) {
     this.emitters.onStudentRemoved = callback;
+  },
+  onCheckboxChangeLeft: function(ev) {
+    this.checkboxChange(ev, this.reportItemsLeft);
+  },
+  onCheckboxChangeRight: function(ev) {
+    this.checkboxChange(ev, this.reportItemsRight);
+  },
+  checkboxChange: function(ev, items) {
+    var index = ev.target.id;
+    items[index].checked = ev.target.checked;
+  },
+  onSubmitReportParams: function (ev) {
+    ev.preventDefault();
+    var sortItem = this.availableSortItems.find(function(item) {return item.sort}) || this.availableSortItems[0];
+    var sort_by = sortItem.id;
+    this.buttonDownloadReport = this.$$('#download-new-report-button');
+    $(this.buttonDownloadReport).addClass('disabled');
+    var req = new XMLHttpRequest();
+    var mainUrl =
+      "/tutor/dashboard/download_tutor_analytics_v2.xlsx?" +
+      $.param({
+        sort_by: sort_by,
+        usernames: this.usernames
+      });
+    req.open("GET", mainUrl, true);
+    req.responseType = "blob";
+    req.onload = function(event) {
+      var blob = req.response;
+      var link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = this.downloadBtnFilenameV3;
+      link.click();
+      $(this.buttonDownloadReport).removeClass("disabled");
+    }.bind(this);
+
+    req.send();
+  },
+  parseStudentsExcelFile: function(ev) {
+    this.getUsernames(ev.target.files[0], function onSuccess(usernames) {
+      $(this.buttonDownloadReport).removeClass('disabled');
+      this.usernames = usernames;
+    }.bind(this))
+  },
+  getUsernames: function(file, cb) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var data = e.target.result;
+      var workbook = XLSX.read(data, {
+        type: 'binary'
+      });
+      workbook.SheetNames.forEach(function(sheetName) {
+        var usernames = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName])
+                  .map(function(item){ return item['Usuario'] });
+
+        cb(usernames)
+      })
+    };
+
+    reader.onerror = function(ex) {
+      console.log(ex);
+    };
+
+    reader.readAsBinaryString(file);
   }
 });

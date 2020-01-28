@@ -35,6 +35,17 @@ GIT
       railties (>= 3.1)
       sass-rails
 
+GIT
+  remote: https://github.com/randym/axlsx.git
+  revision: 776037c0fc799bb09da8c9ea47980bd3bf296874
+  ref: 776037c0fc799bb09da8c9ea47980bd3bf296874
+  specs:
+    axlsx (2.1.0.pre)
+      htmlentities (~> 4.3.4)
+      mimemagic (~> 0.3)
+      nokogiri (>= 1.6.6)
+      rubyzip (>= 1.2.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -218,6 +229,7 @@ GEM
       retriable (~> 1.4)
       signet (~> 0.6)
     hike (1.2.3)
+    htmlentities (4.3.4)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     httpclient (2.8.3)
@@ -271,6 +283,7 @@ GEM
       railties (>= 3.0.0, < 5.0.0)
     method_source (0.8.2)
     mime-types (2.99.3)
+    mimemagic (0.3.3)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.12.0)
@@ -479,6 +492,7 @@ DEPENDENCIES
   airbrake
   annotate
   apipie-rails
+  axlsx!
   babosa
   better_errors
   binding_of_caller
@@ -544,6 +558,7 @@ DEPENDENCIES
   rspec_junit_formatter
   rubocop
   rubyXL
+  rubyzip (>= 1.2.1)
   sass!
   sass-rails (~> 4.0.5)
   searchlight

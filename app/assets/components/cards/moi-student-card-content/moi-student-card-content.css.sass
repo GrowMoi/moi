@@ -5,6 +5,19 @@
   height: 100%
   position: relative
 
+  .btn-action-excel-admin-report
+    padding: 0.5rem
+    border-radius: 0.3rem
+    text-transform: uppercase
+    background-color: transparent
+    color: var(--moi-download-button-color)
+    border: 1px solid var(--moi-download-button-border-color)
+    margin: 0.5rem
+
+    &:hover
+      background-color: var(--moi-download-button-color)
+      color: $white !important
+
   .options
     display: flex
     align-items: center
@@ -51,6 +64,35 @@
     &:hover
       background-color: $base-color-red
       color: $white
+
+  #dialog-build-report
+    .first-row
+      margin-top: 4rem
+      margin-bottom: 2rem
+
+    .dialog-build-report-header
+      display: flex
+      align-items: center
+      justify-content: center
+      height: 3rem
+
+    .back-button-modal
+      top: 4.5rem
+      font-size: 2rem
+      position: absolute
+      left: 10px
+      background-color: transparent
+      border: none
+
+    .dialog-build-report-option-row
+      margin-bottom: 0.5rem
+
+    .dialog-build-report-container
+      display: flex
+      .column-left
+        flex-basis: 50%
+      .column-right
+        flex-basis: 50%
 
   +var(moi-download-button-color, $base-color-green)
   +var(moi-download-button-border-color, $base-color-green)
