@@ -1,5 +1,7 @@
 <dom-module id="moi-student-card-content">
     <link rel="stylesheet" href="moi-student-card-content.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
     <template>
 
       <paper-toast id="toast-message" duration="5000" text="{{ toastMessage }}"></paper-toast>
@@ -68,6 +70,11 @@
           loading-text="[[ t('views.tutor.dashboard.card_students.loading_report') ]]"
           mime-type="application/xls">
         </moi-download-button>
+
+        <template is="dom-if" if="{{ isAdmin }}" restamp>
+          <button class="btn-action" id="btn-open-dialog-report-settings" on-tap="openReportDialog">Personalizado</button>
+        </template>
+
       </moi-actions-row>
 
       <moi-dialog title="[[ t('views.tutor.dashboard.card_students.remove_user') ]]" width="500" id="dialog-confirm" theme="red">
@@ -80,6 +87,80 @@
             <span>[[ t('views.tutor.dashboard.card_students.dialog.confirm.buttons.remove') ]]</span>
           </paper-button>
         </div>
+      </moi-dialog>
+
+      <moi-dialog title="Opciones para el reporte" width="700" id="dialog-build-report" theme="green">
+        <template is="dom-if" if="{{ reportOption.firstStep.visible }}" restamp>
+          <div>
+            <p>Selecciona el tipo de reporte que deseas</p>
+            <div>
+              <button on-tap="selectReportOption" id="basic">
+                <span>Básico</span>
+              </button>
+            </div>
+          </div>
+        </template>
+
+        <template is="dom-if" if="{{ reportOption.secondStep.basic.visible }}" restamp>
+          <div>
+            <button on-tap="backSelectReportOption" class="back-button-modal">
+              <div class="glyphicon glyphicon-chevron-left"></div>
+            </button>
+            <form on-submit="onSubmitReportParams">
+              <div class="first-row">
+                <div>
+                  Subir lista de alumnos en formato excel (xlsx)
+                </div>
+                <div>
+                  <input type="file" name="studentsFile" accept=".xlsx" on-change="parseStudentsExcelFile">
+                </div>
+
+              </div>
+
+              <div>
+                <span>Campos que aparecerán en el reporte</span>
+              </div>
+              <div class="dialog-build-report-container">
+                <div class="column-left">
+                  <template is="dom-repeat" items="{{ reportItemsLeft }}">
+                    <div class="dialog-build-report-option-row">
+                      <span>&#10004;&nbsp;</span><span>[[ item.text ]]</span>
+                    </div>
+                  </template>
+                </div>
+
+                <div class="column-right">
+                  <template is="dom-repeat" items="{{ reportItemsRight }}">
+                    <div class="dialog-build-report-option-row">
+                      <span>&#10004;&nbsp;</span><span>[[ item.text ]]</span>
+                    </div>
+                  </template>
+                </div>
+              </div>
+              <div>
+                <span>Ordenar por</span>
+                <moi-select id="" items="{{ availableSortItems }}"  on-item-selected="onReportSortItemSelected" on-items-loaded="onReportSortItemLoaded"></moi-select>
+              </div>
+              <div>
+                <button id="download-new-report-button">Generar reporte</button>
+              </div>
+            </form>
+          </div>
+        </template>
+
+        <template is="dom-if" if="{{ reportOption.secondStep.questions.visible }}" restamp>
+          <div>
+            <button on-tap="backSelectReportOption" class="back-button-modal">
+              <div class="glyphicon glyphicon-chevron-left"></div>
+            </button>
+            <div class="dialog-build-report-header">
+                <span>Opciones</span>
+            </div>
+            <div >
+              opcion 2 seleccionada
+            </div>
+          </div>
+        </template>
       </moi-dialog>
 
     </template>
