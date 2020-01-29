@@ -12,7 +12,7 @@ class UserDecorator < LittleDecorator
   # @option options [Integer] :size eg 300
   def gravatar_url(options = {})
     size = options[:size] || GRAVATAR_SIZE
-    "http://www.gravatar.com/avatar/#{email_hexdigest}?d=#{GRAVATAR_DEFAULT}&s=#{size}"
+    "https://www.gravatar.com/avatar/#{email_hexdigest}?d=#{GRAVATAR_DEFAULT}&s=#{size}"
   end
 
   ##
