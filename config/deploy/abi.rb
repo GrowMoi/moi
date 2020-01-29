@@ -8,6 +8,7 @@ server 'abi.shiriculapo.com', user: 'growmoi', roles: %w{app db web}
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
 set :rails_env, 'production'
+set :passenger_restart_with_touch, true
 
 # role-based syntax
 # ==================
