@@ -17,8 +17,10 @@ module Api
     }
 
     expose(:all_leaders) {
-      Leaderboard.includes(:user)
+      # Leaderboard.includes(:user)
                 # .where('users.age' => 10)
+                # .order(contents_learnt: :desc, time_elapsed: :asc)
+      Leaderboard.includes(:user)
                 .order(contents_learnt: :desc, time_elapsed: :asc)
     }
 
