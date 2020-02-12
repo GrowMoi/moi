@@ -108,6 +108,17 @@ module Api
         leaders = leaderboard[:leaders]
         serialized_leaders = leaderboard[:serialized_leaders]
 
+        values = [];
+
+        case params[:sort_by]
+        when "school"
+          values = all_schools
+        when "city"
+          values = all_cities
+        when "age"
+          values = all_ages
+        end
+
         render json: {
           leaders: serialized_leaders,
           meta: {
@@ -115,7 +126,9 @@ module Api
             total_pages: leaders.total_pages,
             user_data: user_data,
             total_contents: total_content_available,
-            total_super_event_achievements: total_super_event_achievements
+            sort_by_options: {
+              values: values
+            }
           }
         }
       else
