@@ -2,12 +2,15 @@ class PublicLeaderboardService
   def initialize(params:)
     @params = params
     set_params_sorting_options!
+    set_params_query_options!
   end
 
   def all_leaders
-    Leaderboard
-      .joins(:user)
-      .order(sorting_options)
+    main_scope = Leaderboard.joins(:user).order(sorting_options)
+    if @params_query_options.present?
+      main_scope = main_scope.where(@params_query_options)
+    end
+    main_scope
   end
 
   private
@@ -21,6 +24,16 @@ class PublicLeaderboardService
       @params_sorting_options << User.arel_table[:city].asc
     when "age"
       @params_sorting_options << User.arel_table[:age].asc
+    end
+  end
+
+  def set_params_query_options!
+    @params_query_options = {}
+    user_query_params_options = [ :school, :city, :age ]
+    user_query_params_options.each do |query_opt|
+      if @params[query_opt].present?
+        @params_query_options[:"users.#{query_opt}"] = @params[query_opt]
+      end
     end
   end
 
