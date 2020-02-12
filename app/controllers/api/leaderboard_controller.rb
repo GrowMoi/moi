@@ -21,6 +21,19 @@ module Api
                 .order(contents_learnt: :desc, time_elapsed: :asc)
     }
 
+    expose(:all_schools) {
+      User.all.map(&:school).uniq.compact
+    }
+
+    expose(:all_ages) {
+      User.all.map(&:age).uniq.compact
+    }
+
+    expose(:all_cities) {
+      User.all.map(&:city).uniq.compact
+    }
+    
+
     api :GET,
         "/leaderboard",
         "Get leaderboard"
