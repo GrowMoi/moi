@@ -7,6 +7,9 @@ module Api
         :email,
         :user_id,
         :user_image,
+        :user_school,
+        :user_city,
+        :user_age,
         :content_summary,
         :achievements,
         :super_event_achievements_count
@@ -17,10 +20,6 @@ module Api
 
     def email
       object.user ? object.user.email : 'unknow'
-    end
-
-    def user_id
-      object.user ? object.user.id : nil
     end
 
     def user_image
