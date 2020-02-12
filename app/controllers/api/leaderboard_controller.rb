@@ -18,6 +18,7 @@ module Api
 
     expose(:all_leaders) {
       Leaderboard.includes(:user)
+                # .where('users.age' => 10)
                 .order(contents_learnt: :desc, time_elapsed: :asc)
     }
 
@@ -201,7 +202,9 @@ module Api
         user_info = all_leaders.find_by_user_id(user_selected.id)
         serialized_data = Api::LeaderboardSerializer.new(user_info).as_json
         user_data = serialized_data["leaderboard"]
-        user_data[:position] = user_index + 1
+        if user_index
+          user_data[:position] = user_index + 1
+        end
       else
         achievement_leaders = all_leaders.where(user_id: user_ids_by_event)
         serialized_data = Api::LeaderboardSerializer.new(Leaderboard.new(
