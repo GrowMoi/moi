@@ -21,15 +21,15 @@ module Api
     }
 
     expose(:all_schools) {
-      User.all.map(&:school).uniq.compact
+      User.all.map(&:school).uniq.compact.map(&:downcase).uniq.map(&:capitalize)
     }
 
     expose(:all_ages) {
-      User.all.map(&:age).uniq.compact
+      User.all.map(&:birth_year).uniq.compact.map{|age| Time.now.year - age}
     }
 
     expose(:all_cities) {
-      User.all.map(&:city).uniq.compact
+      User.all.map(&:city).uniq.compact.map(&:downcase).uniq.map(&:capitalize)
     }
 
 

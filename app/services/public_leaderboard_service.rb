@@ -23,7 +23,7 @@ class PublicLeaderboardService
     when "city"
       @params_sorting_options << User.arel_table[:city].asc
     when "age"
-      @params_sorting_options << User.arel_table[:age].asc
+      @params_sorting_options << User.arel_table[:birth_year].asc
     end
   end
 
@@ -32,7 +32,11 @@ class PublicLeaderboardService
     user_query_params_options = [ :school, :city, :age ]
     user_query_params_options.each do |query_opt|
       if @params[query_opt].present?
-        @params_query_options[:"users.#{query_opt}"] = @params[query_opt]
+        if query_opt == "age".to_sym
+          @params_query_options[:"users.birth_year"] = Time.now.year - @params[query_opt].to_i
+        else
+          @params_query_options[:"users.#{query_opt}"] = @params[query_opt]
+        end
       end
     end
   end
