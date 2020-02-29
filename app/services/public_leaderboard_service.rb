@@ -11,7 +11,7 @@ class PublicLeaderboardService
       main_scope = main_scope.where(@params_query_options)
     end
     if @params_string_q_opts.present?
-      main_scope = main_scope.where(@params_string_q_opts)
+      main_scope = main_scope.where( @params_string_q_opts.join(" AND ") )
     end
     main_scope
   end
@@ -32,16 +32,15 @@ class PublicLeaderboardService
 
   def set_params_query_options!
     @params_query_options = {}
+    @params_string_q_opts = []
 
     user_query_params_options = [ :school, :city, :age ]
     user_query_params_options.each do |query_opt|
       if @params[query_opt].present?
         if query_opt == :age
           @params_query_options[:"users.birth_year"] = Time.now.year - @params[query_opt].to_i
-        elsif query_opt == :school
-          @params_string_q_opts = "LOWER(users.school) = LOWER('#{@params[query_opt]}')"
         else
-          @params_query_options[:"users.#{query_opt}"] = @params[query_opt]
+          @params_string_q_opts << "LOWER(users.#{query_opt}) = LOWER('#{@params[query_opt]}')"
         end
       end
     end
