@@ -24,7 +24,7 @@ module Api
     end
 
     def user_image
-      object.user_image&.url || nil
+      object.user_image&.url
     end
 
     def content_summary
