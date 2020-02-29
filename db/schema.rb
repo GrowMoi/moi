@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191209223629) do
+ActiveRecord::Schema.define(version: 20200229051228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -693,7 +693,6 @@ ActiveRecord::Schema.define(version: 20191209223629) do
     t.string   "school"
     t.string   "username"
     t.string   "authorization_key"
-    t.integer  "age"
     t.string   "image"
     t.integer  "level",                  default: 1
     t.string   "tree_image_app"
