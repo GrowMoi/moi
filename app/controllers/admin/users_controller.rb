@@ -53,6 +53,20 @@ module Admin
       end
     end
 
+    def destroy
+      if current_user.id != user.id
+        begin
+          user.destroy
+        rescue
+          redirect_to admin_users_path, error: "#{user.username}: no ha podido ser eliminado"
+        else
+          redirect_to admin_users_path, notice: "#{user.username}: ha sido eliminado"
+        end
+      else
+        redirect_to admin_users_path, error: "No te puedes eliminar"
+      end
+    end
+
     private
 
     def user_params

@@ -24,7 +24,7 @@ private
         user.record.name,
         user.email,
         user.role,
-        user.link_for(:show) + user.link_for(:edit)
+        user.link_for(:show) + user.link_for(:edit) + user.link_for_destroy(:destroy)
       ]
     end
   end

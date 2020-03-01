@@ -11,6 +11,16 @@ class UserDatatableDecorator < UserDecorator
     )
   end
 
+  def link_for_destroy(action)
+    link_to(
+      t("actions.#{action}"),
+      path_for(action),
+      method: :delete,
+      class: "btn btn-xs btn-link",
+      data: { confirm: 'Estas seguro?' }
+    )
+  end
+
   def avatar_and_name
     link_to avatar + username, path_for(:show)
   end
