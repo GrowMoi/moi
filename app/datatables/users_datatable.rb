@@ -20,13 +20,28 @@ private
     users.map do |raw_user|
       user = UserDatatableDecorator.new(raw_user, self)
       [
+        checkbox_for(user),
         user.avatar_and_name,
         user.record.name,
         user.email,
         user.role,
-        user.link_for(:show) + user.link_for(:edit)
+        action_links_for(user)
       ]
     end
+  end
+
+  def checkbox_for(user)
+    "<input type='checkbox' class='select-single-record' name='select-single-record[]' value='#{user.id}'>"
+  end
+
+  def action_links_for(user)
+    [
+      user.link_for(:show),
+      "<br>",
+      user.link_for(:edit),
+      "<br>",
+      user.link_for_destroy(:destroy)
+    ].join(" ").html_safe
   end
 
   def users
