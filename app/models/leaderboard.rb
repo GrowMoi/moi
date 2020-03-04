@@ -17,6 +17,10 @@ class Leaderboard < ActiveRecord::Base
 
   delegate :age,
            :city,
+           :email,
+           :image,
            :school,
+           :username,
+           :birth_year,
            to: :user, prefix: true
 end

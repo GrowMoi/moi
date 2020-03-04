@@ -178,7 +178,11 @@ Moi::Application.routes.draw do
 
   namespace :admin do
     resource :dashboard, only: :index
-    resources :users
+    resources :users do
+      collection do
+        post :batch_destroy
+      end
+    end
     resources :profiles
     resources :notifications
     resources :quizzes
