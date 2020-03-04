@@ -199,7 +199,9 @@ class User < ActiveRecord::Base
   end
 
   def age
-    Date.today.year - birth_year
+    if birth_year
+      Date.today.year - birth_year
+    end
   end
 
   ##
