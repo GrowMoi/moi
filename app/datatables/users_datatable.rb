@@ -77,7 +77,7 @@ private
   #   doesn't have the requested index.
   #   We can have a `rescue` block
   def sort_column
-    columns = %w[name email role]
+    columns = %w[id username name email role]
     columns[params[:iSortCol_0].to_i]
   end
 
