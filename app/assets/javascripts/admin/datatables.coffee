@@ -1,12 +1,12 @@
 applyDatatables = ->
   $('.datatable').each ->
     columnDefs = []
-    if $(this).data("includesActions")
+    if $(this).data("includes-actions")
       # disable sorting on last column if the datatable
       # intends to display actions
       columnDefs.push { "targets": -1, "orderable": false }
 
-    if $(this).data("includesCheckbox")
+    if $(this).data("includes-checkbox")
       columnDefs.push { "targets": 0, "orderable": false }
 
     table = $(this).dataTable
