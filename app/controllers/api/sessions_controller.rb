@@ -92,13 +92,9 @@ module Api
     end
 
     def render_create_success
-      if @resource.tutor? || @resource.tutor_familiar?
-        render :nothing => true, :status => 403
-      else
-        render json: {
-          data: UserSerializer.new(@resource)
-        }
-      end
+      render json: {
+        data: UserSerializer.new(@resource)
+      }
     end
   end
 end

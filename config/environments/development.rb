@@ -50,9 +50,15 @@ Rails.application.configure do
   config.middleware.insert_before 0, "Rack::Cors" do
     allow do
       origins "http://localhost:8100", # development mobileapp
-              "http://localhost:5001"  # protractor tests
+              "http://localhost:5001",  # protractor tests
+              "http://localhost:3000"  # Tutor Webapp
 
       resource "/api/*",
+               headers: :any,
+               methods: [:get, :post, :delete, :put, :patch, :options, :head],
+               expose:  ["access-token", "expiry", "token-type", "uid", "client"]
+
+      resource "/tutor/*",
                headers: :any,
                methods: [:get, :post, :delete, :put, :patch, :options, :head],
                expose:  ["access-token", "expiry", "token-type", "uid", "client"]

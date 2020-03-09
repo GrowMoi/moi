@@ -1,5 +1,9 @@
 module Tutor
-  class DashboardController < TutorController::Base
+  class DashboardController < BaseController
+
+    before_action :authenticate_user!
+
+    respond_to :json
 
     expose(:tutor_achievements) {
       current_user.tutor_achievements.order(created_at: :desc)

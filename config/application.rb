@@ -6,6 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 Bundler.require(:default, :api)
+Bundler.require(:default, :tutor)
 
 Dotenv::Railtie.load
 
