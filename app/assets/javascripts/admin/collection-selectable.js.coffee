@@ -50,6 +50,7 @@ class CollectionSelectable
       if window.confirm('¿Estás seguro?')
         @$wrapper.submit()
 
-jQuery ->
+# Listen for document.ready and page:load (turbolinks)
+$(document).on "ready page:load", ->
   $(".collection-selectable").each (i, wrapper) ->
     new CollectionSelectable(wrapper)
