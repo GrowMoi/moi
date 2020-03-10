@@ -1,5 +1,5 @@
 module Tutor
-  class RecommendationsController < TutorController::Base
+  class RecommendationsController < BaseController
 
     expose(:contents) {
       Neuron.approved_public_contents

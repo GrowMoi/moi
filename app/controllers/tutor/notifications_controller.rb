@@ -1,5 +1,5 @@
 module Tutor
-  class NotificationsController < TutorController::Base
+  class NotificationsController < BaseController
 
     expose(:tutor_students) {
       current_user.tutor_requests_sent.accepted.map(&:user)

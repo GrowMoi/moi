@@ -1,5 +1,5 @@
 module Tutor
-  class AnalysisController < TutorController::Base
+  class AnalysisController < BaseController
     include ApplicationHelper
     expose(:client_data) {
       User.where(id: params[:client_id], role: :cliente)

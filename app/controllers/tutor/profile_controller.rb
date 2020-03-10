@@ -1,5 +1,5 @@
 module Tutor
-  class ProfileController < TutorController::Base
+  class ProfileController < BaseController
 
     def index
       render

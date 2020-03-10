@@ -1,5 +1,5 @@
 module Tutor
-  class UserTutorsController < TutorController::Base
+  class UserTutorsController < BaseController
     def create
       if current_user.admin?
         add_new_students

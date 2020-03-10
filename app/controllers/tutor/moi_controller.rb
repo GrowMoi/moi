@@ -1,5 +1,5 @@
 module Tutor
-  class MoiController < TutorController::Base
+  class MoiController < BaseController
 
     expose(:all_clients) {
       if params[:search]

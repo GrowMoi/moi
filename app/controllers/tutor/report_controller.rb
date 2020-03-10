@@ -1,5 +1,5 @@
 module Tutor
-  class ReportController < TutorController::Base
+  class ReportController < BaseController
 
     include ApplicationHelper
 

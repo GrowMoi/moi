@@ -1,5 +1,5 @@
 module Tutor
-  class TreeController < TutorController::Base
+  class TreeController < BaseController
     def index
     end
   end

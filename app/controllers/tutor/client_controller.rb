@@ -1,5 +1,5 @@
 module Tutor
-  class ClientController < TutorController::Base
+  class ClientController < BaseController
     expose(:client_data) {
       User.where(id: params[:client_id], role: :cliente)
     }
