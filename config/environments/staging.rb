@@ -105,6 +105,16 @@ Rails.application.configure do
 
       resource '/assets/*'
     end
+
+    allow do
+      origins "http://moi-tutor.herokuapp.com",
+              "https://moi-tutor.herokuapp.com"
+
+      resource "/tutor/*",
+               headers: :any,
+               methods: [:get, :post, :delete, :put, :patch, :options, :head],
+               expose:  ["access-token", "expiry", "token-type", "uid", "client"]
+    end
   end
 
   GA.tracker = ENV["GA_TUTOR_APP_TRACK_ID"]

@@ -58,6 +58,11 @@ Rails.application.configure do
                methods: [:get, :post, :delete, :put, :patch, :options, :head],
                expose:  ["access-token", "expiry", "token-type", "uid", "client"]
 
+    end
+
+    allow do
+      origins "http://localhost:8100" # development tutorapp
+
       resource "/tutor/*",
                headers: :any,
                methods: [:get, :post, :delete, :put, :patch, :options, :head],
