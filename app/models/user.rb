@@ -160,6 +160,7 @@ class User < ActiveRecord::Base
              through: :user_event_achievements
     has_many :user_event_achievements,
              dependent: :destroy
+    has_one :leaderboard 
   end
 
   def update_status_super_event

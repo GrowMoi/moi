@@ -21,17 +21,16 @@ module Api
     }
 
     expose(:all_schools) {
-      User.all.map(&:school).uniq.compact.map(&:downcase).uniq.map(&:capitalize)
+      User.includes("leaderboard").where.not(leaderboards: {id: nil}).map(&:school).uniq.compact.map(&:downcase).uniq.map(&:capitalize)
     }
 
     expose(:all_ages) {
-      User.all.map(&:birth_year).uniq.compact.map{|age| Time.now.year - age}
+      User.includes("leaderboard").where.not(leaderboards: {id: nil}).map(&:birth_year).uniq.compact.map{|age| Time.now.year - age}
     }
 
     expose(:all_cities) {
-      User.all.map(&:city).uniq.compact.map(&:downcase).uniq.map(&:capitalize)
+      User.includes("leaderboard").where.not(leaderboards: {id: nil}).map(&:city).uniq.compact.map(&:downcase).uniq.map(&:capitalize)
     }
-
 
     api :GET,
         "/leaderboard",
