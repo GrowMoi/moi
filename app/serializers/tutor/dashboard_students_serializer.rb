@@ -4,6 +4,7 @@ module Tutor
     attributes :id,
         :name,
         :username,
+        :email,
         :status,
         :created_at
 
