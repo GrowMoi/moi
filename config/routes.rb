@@ -236,6 +236,9 @@ Moi::Application.routes.draw do
       member do
         put :remove_user
       end
+      collection do
+        post :send_request
+      end
     end
     resources :recommendations, only: [:new, :create] do
       collection do

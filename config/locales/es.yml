@@ -289,6 +289,7 @@
           not_created_list: "Ups, al parecer algo salio mal, posiblemente ya existan solicitudes de tutoría activas para los usuarios seleccionados."
           user_added: "Se han agregado nuevos estudiantes a tu lista: %{clients}"
           user_added_error: "Ups, al parecer algo salio mal"
+          missing_ids: "No se enviaron los ids de clientes o son invalidos"
           cant_add_users: "Ups, Solo puedes agregar %{number} usuarios"
           cancel_request_ok: "Tu solicitud ha sido cancelada"
           cancel_request_failed: "Tu solicitud no ha podido ser cancelada"

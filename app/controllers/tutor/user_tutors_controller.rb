@@ -1,5 +1,21 @@
 module Tutor
   class UserTutorsController < BaseController
+
+    def send_request
+      validate_params
+      if current_user.admin?
+        add_new_students
+      end
+
+      if current_user.tutor?
+        sent_new_requests
+      end
+
+      if current_user.tutor_familiar?
+        check_payment_and_sent_new_requests
+      end
+    end
+
     def create
       if current_user.admin?
         add_new_students
@@ -91,11 +107,11 @@ module Tutor
 
     def sent_new_requests
       if params[:user_id]
-        add_one_user
+        return add_one_user
       end
 
       if params[:user_ids]
-        add_many_user
+        return add_many_user
       end
     end
 
@@ -182,6 +198,17 @@ module Tutor
       else
         render json: {
           message: I18n.t("views.tutor.moi.tutor_request.not_created_list")
+        },
+        status: 422
+      end
+    end
+
+    def validate_params
+      if params[:user_id].nil? && params[:user_ids].nil?
+        return render json: {
+          message: I18n.t(
+            "views.tutor.moi.tutor_request.missing_ids"
+          )
         },
         status: 422
       end
