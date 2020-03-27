@@ -51,7 +51,9 @@ Rails.application.configure do
     allow do
       origins "http://localhost:8100", # development mobileapp
               "http://localhost:5001",  # protractor tests
-              "http://localhost:3000"  # Tutor Webapp
+              "http://localhost:3000",  # Tutor Webapp
+              "http://localhost", # Tutor MobileApp Android
+              /capacitor\:\/\/localhost$/ # Tutor MobileApp IOS https://github.com/cyu/rack-cors/issues/17
 
       resource "/api/*",
                headers: :any,
@@ -61,7 +63,9 @@ Rails.application.configure do
     end
 
     allow do
-      origins "http://localhost:8100" # development tutorapp
+      origins "http://localhost:8100", # development tutorapp
+              "http://localhost", # Tutor MobileApp Android
+              /capacitor\:\/\/localhost$/ # Tutor MobileApp IOS https://github.com/cyu/rack-cors/issues/17
 
       resource "/tutor/*",
                headers: :any,
