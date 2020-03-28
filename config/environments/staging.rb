@@ -91,7 +91,9 @@ Rails.application.configure do
       origins "http://moi-frontend.herokuapp.com",
               "https://moi-frontend.herokuapp.com",
               "http://moi-tutor.herokuapp.com",
-              "https://moi-tutor.herokuapp.com"
+              "https://moi-tutor.herokuapp.com",
+              "http://localhost",
+              /capacitor\:\/\/localhost$/
 
       resource "/api/*",
                headers: :any,
@@ -110,7 +112,9 @@ Rails.application.configure do
 
     allow do
       origins "http://moi-tutor.herokuapp.com",
-              "https://moi-tutor.herokuapp.com"
+              "https://moi-tutor.herokuapp.com",
+              "http://localhost",
+              /capacitor\:\/\/localhost$/
 
       resource "/tutor/*",
                headers: :any,
