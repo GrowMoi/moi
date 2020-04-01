@@ -7,7 +7,8 @@ module Api
                :receiver_id,
                :message,
                :created_at,
-               :kind
+               :kind,
+               :sender_user
 
     def kind
       if object.sender_id == current_user.id
@@ -15,6 +16,10 @@ module Api
       else
         :incoming
       end
+    end
+
+    def sender_user
+      UserSerializer.new(object.sender, root: false)
     end
   end
 end
