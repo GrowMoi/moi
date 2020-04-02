@@ -5,7 +5,7 @@ module Api
     respond_to :json
 
     expose(:chat_service) {
-      UserChatService.new(sender: current_user)
+      UsersChatService.new(sender: current_user)
     }
 
     api :POST,

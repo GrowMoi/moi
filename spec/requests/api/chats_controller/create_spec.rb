@@ -40,5 +40,10 @@ RSpec.describe Api::ChatsController, type: :request do
       chat = UserChat.find(chat_id)
       expect(chat.message).to eq(params[:message])
     end
+
+    it "creates notification record in DB" do
+      notification = Notification.where(user: target_user).last
+      expect(notification.client_id).to eq(current_user.id)
+    end
   end
 end
