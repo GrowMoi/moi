@@ -90,8 +90,6 @@ Rails.application.configure do
     allow do
       origins "http://moi.haedus.cl",
               "https://moi.haedus.cl",
-              "http://moi-demo.shiriculapo.com",
-              "https://moi-demo.shiriculapo.com",
               "http://www.moi.haedus.cl",
               "https://www.moi.haedus.cl"
 
@@ -106,10 +104,6 @@ Rails.application.configure do
               "https://moi.haedus.cl",
               "http://moi.backend.haedus.cl",
               "https://moi.backend.haedus.cl",
-              "http://moi-demo.shiriculapo.com",
-              "https://moi-demo.shiriculapo.com",
-              "http://moi-demo-backend.shiriculapo.com",
-              "https://moi-demo-backend.shiriculapo.com",
               "http://www.moi.backend.haedus.cl",
               "https://www.moi.backend.haedus.cl"
 
