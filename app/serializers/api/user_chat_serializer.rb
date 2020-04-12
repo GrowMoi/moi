@@ -19,7 +19,7 @@ module Api
     end
 
     def sender_user
-      UserSerializer.new(object.sender, root: false)
+      UserBasicInformationSerializer.new(object.sender, root: false)
     end
   end
 end

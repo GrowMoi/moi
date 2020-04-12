@@ -8,6 +8,7 @@ module Api
         :media,
         :type,
         :tutor,
+        :chat,
         :created_at
 
     def videos
@@ -29,7 +30,20 @@ module Api
     end
 
     def tutor
-      TutorSerializer.new(object.user, root: false)
+      if type != 'user_chat'
+        TutorSerializer.new(object.user, root: false)
+      end
+    end
+
+    def chat
+      if type == 'user_chat'
+        user_chat = UserChat.where(sender:  object.client, receiver: object.user).last
+        UserChatSerializer.new(
+          @ser_chat,
+          root: false,
+          scope: user_chat.receiver
+        )
+      end
     end
   end
 end
