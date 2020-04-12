@@ -39,7 +39,7 @@ module Api
       if type == 'user_chat'
         user_chat = UserChat.where(sender:  object.client, receiver: object.user).last
         UserChatSerializer.new(
-          @ser_chat,
+          user_chat,
           root: false,
           scope: user_chat.receiver
         )
