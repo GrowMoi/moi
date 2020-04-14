@@ -1,5 +1,7 @@
 module Api
   class GenericNotificationSerializer < ActiveModel::Serializer
+    alias_method :current_user, :scope
+
     attributes :id,
         :title,
         :description,
@@ -8,6 +10,7 @@ module Api
         :media,
         :type,
         :tutor,
+        :chat,
         :created_at
 
     def videos
@@ -29,7 +32,20 @@ module Api
     end
 
     def tutor
-      TutorSerializer.new(object.user, root: false)
+      if type != 'user_chat'
+        TutorSerializer.new(object.user, root: false)
+      end
+    end
+
+    def chat
+      if type == 'user_chat'
+        user_chat = UserChat.where(sender:  object.client, receiver: object.user).last
+        UserChatSerializer.new(
+          user_chat,
+          root: false,
+          scope: current_user
+        )
+      end
     end
   end
 end

@@ -160,7 +160,13 @@ class User < ActiveRecord::Base
              through: :user_event_achievements
     has_many :user_event_achievements,
              dependent: :destroy
-    has_one :leaderboard 
+    has_one :leaderboard
+    has_many :sent_chats,
+             class_name: "UserChat",
+             foreign_key: "sender_id"
+    has_many :received_chats,
+             class_name: "UserChat",
+             foreign_key: "receiver_id"
   end
 
   def update_status_super_event

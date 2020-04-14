@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200229051228) do
+ActiveRecord::Schema.define(version: 20200414024436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -610,6 +610,18 @@ ActiveRecord::Schema.define(version: 20200229051228) do
   add_index "user_admin_achievements", ["admin_achievement_id"], name: "index_user_admin_achievements_on_admin_achievement_id", using: :btree
   add_index "user_admin_achievements", ["user_id"], name: "index_user_admin_achievements_on_user_id", using: :btree
 
+  create_table "user_chats", force: :cascade do |t|
+    t.integer  "sender_id",   null: false
+    t.integer  "receiver_id", null: false
+    t.text     "message",     null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "room_id"
+  end
+
+  add_index "user_chats", ["receiver_id"], name: "index_user_chats_on_receiver_id", using: :btree
+  add_index "user_chats", ["sender_id"], name: "index_user_chats_on_sender_id", using: :btree
+
   create_table "user_content_preferences", force: :cascade do |t|
     t.integer  "user_id",                null: false
     t.string   "kind",                   null: false
@@ -764,6 +776,8 @@ ActiveRecord::Schema.define(version: 20200229051228) do
   add_foreign_key "social_sharings", "users"
   add_foreign_key "tutor_achievements", "users", column: "tutor_id"
   add_foreign_key "tutor_recommendations", "users", column: "tutor_id"
+  add_foreign_key "user_chats", "users", column: "receiver_id"
+  add_foreign_key "user_chats", "users", column: "sender_id"
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_event_achievements", "users"
   add_foreign_key "user_tutors", "users"

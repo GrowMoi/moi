@@ -2,6 +2,11 @@ Moi::Application.routes.draw do
   devise_for :users, :controllers => { :registrations => "api/registrations" }
 
   namespace :api, defaults: { format: :json } do
+    resources :chats, only: [:create] do
+      collection do
+        get "user/:receiver_id", action: :show
+      end
+    end
     resource :tree, only: :show
     resource :learn, controller: :learn, only: :create do
       member do
