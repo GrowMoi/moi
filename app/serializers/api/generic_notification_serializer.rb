@@ -1,5 +1,7 @@
 module Api
   class GenericNotificationSerializer < ActiveModel::Serializer
+    alias_method :current_user, :scope
+
     attributes :id,
         :title,
         :description,
@@ -41,7 +43,7 @@ module Api
         UserChatSerializer.new(
           user_chat,
           root: false,
-          scope: user_chat.receiver
+          scope: current_user
         )
       end
     end

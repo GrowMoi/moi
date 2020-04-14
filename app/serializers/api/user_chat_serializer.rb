@@ -8,7 +8,8 @@ module Api
                :message,
                :created_at,
                :kind,
-               :sender_user
+               :sender_user,
+               :chat_with
 
     def kind
       if object.sender_id == current_user.id
@@ -16,6 +17,11 @@ module Api
       else
         :incoming
       end
+    end
+
+    def  chat_with
+      username = [object.receiver.username, object.sender.username] - [current_user.username]
+      username[0]
     end
 
     def sender_user

@@ -286,7 +286,8 @@ module Api
     def serialize_notifications(notifications_data, serializer)
       serialized = ActiveModel::ArraySerializer.new(
         notifications_data,
-        each_serializer: serializer
+        each_serializer: serializer,
+        scope: current_user
       )
       serialized
     end
