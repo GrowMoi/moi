@@ -8,6 +8,7 @@
 #  message     :text             not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  room_id     :string
 #
 
 FactoryGirl.define do

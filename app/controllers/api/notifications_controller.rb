@@ -27,7 +27,7 @@ module Api
     }
 
     expose(:my_notifications) {
-      pending_notifications.where(client: current_user)
+      pending_notifications.where(client: current_user).where.not(data_type: 'user_chat')
     }
 
     expose(:admin_notifications) {
@@ -38,14 +38,20 @@ module Api
     }
 
     expose(:chat_notifications) {
-      Notification.joins(:user).where(data_type: 'user_chat', user: current_user).select('DISTINCT ON ("client_id") *')
+      Notification.joins(:user).where("data_type='user_chat' AND (user_id = ? OR client_id = ?)", 
+                                      current_user.id, 
+                                      current_user.id
+                                    ).group_by(&:description)
+                                     .map{|key, records| records.last}
+
     }
 
     # expose(:user_notifications_count) {
     #   admin_notifications.count +
     #   tutor_requests.count +
     #   my_notifications.count +
-    #   tutor_notifications.count
+    #   tutor_notifications.count +
+    #   chat_notifications.count
     # }
 
     # expose(:super_event_notification) {
