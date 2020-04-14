@@ -4,6 +4,7 @@ Apipie.configure do |config|
   config.api_base_url            = "/api"
   config.doc_base_url            = "/apipie"
   config.markup                  = Apipie::Markup::Markdown.new
+  config.use_cache               = Rails.env.production?
   config.app_info["1.0"]         = <<-EOS
     ## moi backend api
 
