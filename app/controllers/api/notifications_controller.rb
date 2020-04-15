@@ -38,8 +38,9 @@ module Api
     }
 
     expose(:chat_notifications) {
-      Notification.joins(:user).where("data_type='user_chat' AND (user_id = ?)", 
-                                      current_user
+      Notification.joins(:user).where("data_type='user_chat' AND (user_id = ? OR client_id = ?)", 
+                                      current_user.id, 
+                                      current_user.id
                                     ).group_by(&:description)
                                      .map{|key, records| records.last}
 
