@@ -221,8 +221,10 @@ module Tutor
         if student_ids_params.any?
           student_ids = student_ids_params
         else
-          flash[:error] = I18n.t("views.tutor.common.error")
-          return redirect_to :back
+          return render json: {
+            message: I18n.t("views.tutor.common.error"),
+          },
+          status: 422
         end
       end
 
@@ -238,14 +240,17 @@ module Tutor
 
       result = all_status.uniq
       if result.any? && result.size == 1 && result[0] == true
-        flash[:success] = I18n.t(
-          "views.tutor.dashboard.card_send_notifications.sent"
-        )
+        return render json: {
+          message: I18n.t(
+            "views.tutor.dashboard.card_send_notifications.sent"
+          )
+        }
       else
-        flash[:error] = I18n.t("views.tutor.common.error")
+        return render json: {
+          message: I18n.t("views.tutor.common.error"),
+        },
+        status: 422
       end
-
-      redirect_to :back
     end
 
     def download_tutor_analytics_v2
