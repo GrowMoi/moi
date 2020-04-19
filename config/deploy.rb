@@ -39,7 +39,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 
 set :rbenv_ruby, '2.6.1'
 
-set :passenger_restart_with_touch, true
+# set :passenger_restart_with_touch, true
 
 set :bundle_without, %w{development test staging integration}.join(' ')
 
@@ -50,10 +50,11 @@ namespace :deploy do
 
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'apipie:cache'
+        end
+      end
     end
   end
 
