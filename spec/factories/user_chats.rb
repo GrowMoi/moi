@@ -9,6 +9,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  room_id     :string
+#  kind        :string           default("user"), not null
 #
 
 FactoryGirl.define do

@@ -5,6 +5,7 @@ Moi::Application.routes.draw do
     resources :chats, only: [:create] do
       collection do
         get "user/:receiver_id", action: :show
+        post "start/:receiver_id", action: :start_chat
       end
     end
     resource :tree, only: :show
