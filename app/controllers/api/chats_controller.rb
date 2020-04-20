@@ -32,6 +32,16 @@ module Api
       render json: chat_messages, root: "user_chats"
     end
 
+    api :POST,
+        "/chats/start/:user_id"
+    param :user_id, Integer, required: true
+    def start_chat
+      chat_service.start_chat!(
+        receiver_id: params[:receiver_id]
+      )
+      head :created
+    end
+
     private
 
     def chat_params
