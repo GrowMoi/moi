@@ -28,7 +28,7 @@ module Tutor
     def create
       tutor_recommendation.tutor = current_user
       achievement_id = tutor_recommendation_params[:tutor_achievement]
-      if !achievement_id.empty?
+      if achievement_id.present?
         achievement = TutorAchievement.find(achievement_id)
         tutor_recommendation.tutor_achievement = achievement
       end
@@ -39,14 +39,12 @@ module Tutor
       students_ids = remove_blank(students_ids)
 
       if content_ids.any? && students_ids.any?
-        create_tutor_recommendation(tutor_recommendation, content_ids, students_ids)
+        return create_tutor_recommendation(tutor_recommendation, content_ids, students_ids)
       else
-        flash[:error] = I18n.t("views.tutor.recommendations.recommendation_request.missing_params")
-      end
-      if request.xhr?
-        render :js => "window.location = '#{request.referrer}'"
-      else
-        redirect_to :back
+        return render json: {
+          message: I18n.t("views.tutor.recommendations.recommendation_request.missing_params")
+        },
+        status: 422
       end
     end
 
@@ -157,12 +155,18 @@ module Tutor
       if tutor_recommendation.save
         iterate_and_assign_contents_to_recommendation(content_ids, students_ids)
         names = format_student_names(students_selected)
-        flash[:success] = I18n.t(
-          "views.tutor.recommendations.recommendation_request.created",
-          clients: names
-        )
+
+        return render json: {
+          message: I18n.t(
+            "views.tutor.recommendations.recommendation_request.created",
+            clients: names
+          )
+        }
       else
-        flash[:error] = I18n.t("views.tutor.common.error")
+        return render json: {
+          message: I18n.t("views.tutor.common.error")
+        },
+        status: 422
       end
     end
 
