@@ -16,7 +16,7 @@ class UsersChatService
   def retrieve_messages(receiver_id:)
     UserChat
       .where(
-        "kind!='system' AND ((sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?))",
+        "(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)",
         receiver_id,
         @sender.id,
         @sender.id,
