@@ -19,6 +19,10 @@ module Api
       end
     end
 
+    def message
+      object.kind != 'system' ? object.message : nil
+    end
+
     def  chat_with
       username = [object.receiver.username, object.sender.username] - [current_user.username]
       username[0]
