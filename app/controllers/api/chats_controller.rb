@@ -33,7 +33,7 @@ module Api
     end
 
     api :POST,
-        "/chats/start/:user_id"
+        "/chats/start/:receiver_id"
     param :user_id, Integer, required: true
     def start_chat
       chat_service.start_chat!(
