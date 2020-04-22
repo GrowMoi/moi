@@ -171,7 +171,8 @@ module Tutor
 
       send_to_all = quiz_params[:send_to_all]
       clients = []
-      if send_to_all == "true"
+
+      if !!send_to_all
         clients = tutor_students
       else
         clients = User.where(id: quiz_params[:client_id])
@@ -198,19 +199,22 @@ module Tutor
 
           client_usernames.push(client.username || client.email)
         end
+      end
 
-        if client_usernames.any?
-          flash[:success] = I18n.t(
+      if client_usernames.any?
+        return render json: {
+          message: I18n.t(
             "views.tutor.dashboard.quizzes.created_all",
             client_usernames: client_usernames.join(", ")
           )
-        else
-          flash[:error] = I18n.t("views.tutor.common.error")
-        end
-
+        }
+      else
+        return render json: {
+          message: I18n.t("views.tutor.common.error"),
+        },
+        status: 422
       end
 
-      render js: "window.location = '#{request.referrer}'"
     end
 
     def send_notification
