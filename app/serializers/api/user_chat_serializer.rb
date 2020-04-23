@@ -9,7 +9,8 @@ module Api
                :created_at,
                :kind,
                :sender_user,
-               :chat_with
+               :chat_with,
+               :type
 
     def kind
       if object.sender_id == current_user.id
@@ -17,6 +18,10 @@ module Api
       else
         :incoming
       end
+    end
+
+    def type
+      object.kind
     end
 
     def  chat_with

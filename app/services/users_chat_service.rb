@@ -13,7 +13,6 @@ class UsersChatService
       chat_params: chat_params
     )
   end
-
   def retrieve_messages(receiver_id:)
     UserChat
       .where(
@@ -25,5 +24,12 @@ class UsersChatService
       )
       .order(created_at: :asc)
       .limit(200)
+  end
+
+  def start_chat!(receiver_id:)
+    StartUserChatService.new(
+      sender: @sender,
+      receiver_id: receiver_id
+    ).create!
   end
 end
