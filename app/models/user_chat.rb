@@ -2,14 +2,15 @@
 #
 # Table name: user_chats
 #
-#  id          :integer          not null, primary key
-#  sender_id   :integer          not null
-#  receiver_id :integer          not null
-#  message     :text             not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  room_id     :string
-#  kind        :string           default("user"), not null
+#  id           :integer          not null, primary key
+#  sender_id    :integer          not null
+#  receiver_id  :integer          not null
+#  message      :text             not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  room_id      :string
+#  kind         :string           default("user"), not null
+#  room_chat_id :integer
 #
 
 class UserChat < ActiveRecord::Base
@@ -17,11 +18,13 @@ class UserChat < ActiveRecord::Base
 
   belongs_to :sender, class_name: "User"
   belongs_to :receiver, class_name: "User"
-  before_create :create_room_id
+  belongs_to :room_chat
+  # before_create :create_room_id
 
   validates :sender_id,
             :receiver_id,
             :message,
+            :room_chat_id,
             presence: true
 
   enumerize :kind,

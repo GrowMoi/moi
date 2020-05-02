@@ -19,7 +19,8 @@ class UsersChatService
       @user_chat = UserChat.create(
         sender_id: @sender.id,
         receiver_id: @chat_params[:receiver_id],
-        message: @chat_params[:message]
+        message: @chat_params[:message],
+        room_chat_id: @chat_params[:room_chat_id]
       )
       if @user_chat.persisted?
         NotifyUserChatService.new(@user_chat).notify!
