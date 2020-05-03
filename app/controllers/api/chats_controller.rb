@@ -58,11 +58,10 @@ module Api
       room = RoomChat.find(params[:room_id])
       if (room.sender_id == current_user.id)
         room.sender_leave = true;
-        room.save
       else
         room.receiver_leave = true;
-        room.save
       end
+      room.save
       render json: room
     end
 
