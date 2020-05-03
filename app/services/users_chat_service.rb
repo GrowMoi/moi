@@ -26,10 +26,11 @@ class UsersChatService
       .limit(200)
   end
 
-  def start_chat!(receiver_id:)
+  def start_chat!(receiver_id:, room_id:)
     StartUserChatService.new(
       sender: @sender,
-      receiver_id: receiver_id
+      receiver_id: receiver_id,
+      room_id: room_id
     ).create!
   end
 end

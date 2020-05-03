@@ -15,7 +15,7 @@ class UsersChatService
       Notification.create!(
         user: @user_chat.receiver,
         title: "Nuevo chat",
-        description: "Room Id: #{@user_chat.room_id}",
+        description: "Room Id: #{@user_chat.room_chat_id}",
         data_type: "user_chat",
         client_id: @user_chat.sender_id
       )

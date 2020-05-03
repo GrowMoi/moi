@@ -10,6 +10,7 @@ module Api
                :kind,
                :sender_user,
                :chat_with,
+               :room_chat_id,
                :type
 
     def kind

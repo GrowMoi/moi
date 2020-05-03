@@ -12,6 +12,7 @@ module Api
         "/chats",
         "send a chat message"
     param :receiver_id, Integer, required: true
+    param :room_chat_id, Integer, required: true
     param :message, String, required: true
     def create
       chat_message = chat_service.send_message(chat_params)
@@ -34,18 +35,48 @@ module Api
 
     api :POST,
         "/chats/start/:receiver_id"
-    param :user_id, Integer, required: true
+    param :receiver_id, Integer, required: true
     def start_chat
-      chat_service.start_chat!(
-        receiver_id: params[:receiver_id]
-      )
-      head :created
+      room = RoomChat.where("(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)", 
+              current_user.id, 
+              params[:receiver_id],
+              params[:receiver_id],
+              current_user.id).last
+      if room
+        send_start_message(room)
+      else
+        new_room = RoomChat.new(sender: current_user, receiver_id: params[:receiver_id])
+        new_room.save
+        send_start_message(new_room)
+      end
+    end
+
+    api :PUT,
+        "/chats/leave/:room_id"
+    param :room_id, Integer, required: true
+    def leave_chat
+      room = RoomChat.find(params[:room_id])
+      if (room.sender_id == current_user.id)
+        room.sender_leave = true;
+      else
+        room.receiver_leave = true;
+      end
+      room.save
+      render json: room
     end
 
     private
 
     def chat_params
-      params.permit(:receiver_id, :message)
+      params.permit(:receiver_id, :message, :room_chat_id)
+    end
+
+    def send_start_message(room)
+      chat_service.start_chat!(
+        receiver_id: params[:receiver_id],
+        room_id: room.id
+      )
+      render json: room
     end
   end
 end
