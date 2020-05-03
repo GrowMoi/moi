@@ -1,5 +1,6 @@
 module Api
   class RoomChatSerializer < ActiveModel::Serializer
+    root false
     alias_method :current_user, :scope
 
     attributes :id,

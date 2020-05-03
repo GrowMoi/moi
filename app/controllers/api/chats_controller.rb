@@ -37,15 +37,12 @@ module Api
         "/chats/start/:receiver_id"
     param :receiver_id, Integer, required: true
     def start_chat
-      room = RoomChat.new(sender: current_user, receiver_id: params[:receiver_id])
-      if room.save
-        chat_service.start_chat!(
-          receiver_id: params[:receiver_id],
-          room_id: room.id
-        )
-        render json: room
+      room = RoomChat.where("(sender_id = ? OR receiver_id = ?)", current_user.id, current_user.id).last
+      if room
+        send_start_message(room)
       else
-        head :unprocessable_entity
+        newRoom = RoomChat.new(sender: current_user, receiver_id: params[:receiver_id])
+        send_start_message(new_room)
       end
     end
 
@@ -68,6 +65,14 @@ module Api
 
     def chat_params
       params.permit(:receiver_id, :message, :room_chat_id)
+    end
+
+    def send_start_message(room)
+      chat_service.start_chat!(
+        receiver_id: params[:receiver_id],
+        room_id: room.id
+      )
+      render json: room
     end
   end
 end
