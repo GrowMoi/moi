@@ -47,18 +47,19 @@ module Api
       else
         head :unprocessable_entity
       end
-
     end
 
     api :PUT,
         "/chats/leave/:room_id"
     param :room_id, Integer, required: true
     def leave_chat
-      room = RoomChat.find(id)
+      room = RoomChat.find(params[:room_id])
       if (room.sender_id == current_user.id)
         room.sender_leave = true;
+        room.save
       else
         room.receiver_leave = true;
+        room.save
       end
       render json: room
     end

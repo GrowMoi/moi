@@ -8,7 +8,6 @@
 #  message      :text             not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  room_id      :string
 #  kind         :string           default("user"), not null
 #  room_chat_id :integer
 #

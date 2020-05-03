@@ -38,12 +38,9 @@ module Api
     }
 
     expose(:chat_notifications) {
-      Notification.joins(:user).where("data_type='user_chat' AND (user_id = ? OR client_id = ?)", 
-                                      current_user.id, 
-                                      current_user.id
-                                    ).group_by(&:description)
-                                     .map{|key, records| records.last}
-
+      chatsAsSender = RoomChat.where(sender: current_user, sender_leave: false)
+      chatsAsReceiver = RoomChat.where(receiver: current_user, receiver_leave: false)
+      chatsAsSender + chatsAsReceiver
     }
 
     # expose(:user_notifications_count) {
@@ -85,7 +82,7 @@ module Api
 
       serialize_chat_notifications = serialize_notifications(
                         chat_notifications,
-                        Api::GenericNotificationSerializer
+                        Api::RoomChatSerializer
                       ).as_json
 
       # serialize_superevent_notifications +
