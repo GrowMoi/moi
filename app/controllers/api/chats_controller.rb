@@ -37,11 +37,16 @@ module Api
         "/chats/start/:receiver_id"
     param :receiver_id, Integer, required: true
     def start_chat
-      room = RoomChat.where("(sender_id = ? OR receiver_id = ?)", current_user.id, current_user.id).last
+      room = RoomChat.where("(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)", 
+              current_user.id, 
+              params[:receiver_id],
+              params[:receiver_id],
+              current_user.id).last
       if room
         send_start_message(room)
       else
-        newRoom = RoomChat.new(sender: current_user, receiver_id: params[:receiver_id])
+        new_room = RoomChat.new(sender: current_user, receiver_id: params[:receiver_id])
+        new_room.save
         send_start_message(new_room)
       end
     end
