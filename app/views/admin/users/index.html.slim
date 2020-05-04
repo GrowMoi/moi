@@ -1,14 +1,29 @@
 - content_for :title, t("activerecord.models.user").pluralize
 
-= datatable source: admin_users_path(format: :json) do
-  thead
-    tr
-      th #{t("activerecord.attributes.user.username")}
-      th #{t("activerecord.attributes.user.name")}
-      th #{t("activerecord.attributes.user.email")}
-      th #{t("activerecord.attributes.user.role")}
-      th
-  tbody
+= form_tag batch_destroy_admin_users_path,
+           class: "collection-selectable"
+  .dropdown.dropdown--users-datatable-fix
+    a.btn.btn-default data-toggle="dropdown" href="#" disabled="disabled"
+      span.records-count 0
+      '  usuarios seleccionados
+      span.caret
+    ul.dropdown-menu
+      li
+        a.destroy-action href="#" data-disable-with="Eliminando..."
+          = t "actions.destroy"
+
+  = datatable source: admin_users_path(format: :json),
+              includes_checkbox: true do
+    thead
+      tr
+        th
+          input.select-all type="checkbox"
+        th #{t("activerecord.attributes.user.username")}
+        th #{t("activerecord.attributes.user.name")}
+        th #{t("activerecord.attributes.user.email")}
+        th #{t("activerecord.attributes.user.role")}
+        th
+    tbody
 
 hr
 

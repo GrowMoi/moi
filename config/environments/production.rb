@@ -113,7 +113,9 @@ Rails.application.configure do
               "http://aula.miaulabdp.com",
               "http://www.aula.miaulabdp.com",
               "https://aula.miaulabdp.com",
-              "https://www.aula.miaulabdp.com"
+              "https://www.aula.miaulabdp.com",
+              "http://backend.miaulabdp.com",
+              "https://backend.miaulabdp.com"
 
       resource '/assets/*'
     end

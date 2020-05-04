@@ -14,4 +14,13 @@ class Leaderboard < ActiveRecord::Base
   belongs_to :user
   validates :user_id,
             presence: true
+
+  delegate :age,
+           :city,
+           :email,
+           :image,
+           :school,
+           :username,
+           :birth_year,
+           to: :user, prefix: true
 end

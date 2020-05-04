@@ -53,6 +53,29 @@ module Admin
       end
     end
 
+    def destroy
+      if current_user.id != user.id
+        begin
+          user.destroy
+        rescue
+          redirect_to admin_users_path, error: "#{user.username}: no ha podido ser eliminado"
+        else
+          redirect_to admin_users_path, notice: "#{user.username}: ha sido eliminado"
+        end
+      else
+        redirect_to admin_users_path, error: "No te puedes eliminar"
+      end
+    end
+
+    def batch_destroy
+      to_destroy_ids = params["select-single-record"].map(&:to_i).reject(&:blank?)
+      to_destroy_ids = to_destroy_ids - [ current_user.id ]
+      to_destroy_ids.each do |id|
+        User.find(id).destroy
+      end
+      redirect_to admin_users_path, notice: "#{to_destroy_ids.count} usuarios eliminados"
+    end
+
     private
 
     def user_params

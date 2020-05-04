@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191209223629) do
+ActiveRecord::Schema.define(version: 20200503010323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -486,6 +486,18 @@ ActiveRecord::Schema.define(version: 20191209223629) do
   add_index "read_notifications", ["notifications_id"], name: "index_read_notifications_on_notifications_id", using: :btree
   add_index "read_notifications", ["user_id"], name: "index_read_notifications_on_user_id", using: :btree
 
+  create_table "room_chats", force: :cascade do |t|
+    t.integer  "sender_id",                      null: false
+    t.integer  "receiver_id",                    null: false
+    t.boolean  "sender_leave",   default: false
+    t.boolean  "receiver_leave", default: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "room_chats", ["receiver_id"], name: "index_room_chats_on_receiver_id", using: :btree
+  add_index "room_chats", ["sender_id"], name: "index_room_chats_on_sender_id", using: :btree
+
   create_table "search_engines", force: :cascade do |t|
     t.string   "name",                      null: false
     t.string   "slug",                      null: false
@@ -610,6 +622,20 @@ ActiveRecord::Schema.define(version: 20191209223629) do
   add_index "user_admin_achievements", ["admin_achievement_id"], name: "index_user_admin_achievements_on_admin_achievement_id", using: :btree
   add_index "user_admin_achievements", ["user_id"], name: "index_user_admin_achievements_on_user_id", using: :btree
 
+  create_table "user_chats", force: :cascade do |t|
+    t.integer  "sender_id",                     null: false
+    t.integer  "receiver_id",                   null: false
+    t.text     "message",                       null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "kind",         default: "user", null: false
+    t.integer  "room_chat_id"
+  end
+
+  add_index "user_chats", ["receiver_id"], name: "index_user_chats_on_receiver_id", using: :btree
+  add_index "user_chats", ["room_chat_id"], name: "index_user_chats_on_room_chat_id", using: :btree
+  add_index "user_chats", ["sender_id"], name: "index_user_chats_on_sender_id", using: :btree
+
   create_table "user_content_preferences", force: :cascade do |t|
     t.integer  "user_id",                null: false
     t.string   "kind",                   null: false
@@ -693,7 +719,6 @@ ActiveRecord::Schema.define(version: 20191209223629) do
     t.string   "school"
     t.string   "username"
     t.string   "authorization_key"
-    t.integer  "age"
     t.string   "image"
     t.integer  "level",                  default: 1
     t.string   "tree_image_app"
@@ -765,6 +790,9 @@ ActiveRecord::Schema.define(version: 20191209223629) do
   add_foreign_key "social_sharings", "users"
   add_foreign_key "tutor_achievements", "users", column: "tutor_id"
   add_foreign_key "tutor_recommendations", "users", column: "tutor_id"
+  add_foreign_key "user_chats", "room_chats"
+  add_foreign_key "user_chats", "users", column: "receiver_id"
+  add_foreign_key "user_chats", "users", column: "sender_id"
   add_foreign_key "user_content_preferences", "users"
   add_foreign_key "user_event_achievements", "users"
   add_foreign_key "user_tutors", "users"

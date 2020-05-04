@@ -29,6 +29,7 @@ module ApplicationHelper
   # @option options [Boolean] :includes_actions (true)
   #   Option to make last column not sortable (So you
   #   can add actions in there)
+  # @option options [Boolean] :includes_checkbox
   def datatable(options)
     defaults = { includes_actions: true }
     raise ArgumentError, ":source must be provided" if options[:source].blank?

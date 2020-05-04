@@ -27,7 +27,7 @@ module Api
     }
 
     expose(:my_notifications) {
-      pending_notifications.where(client: current_user)
+      pending_notifications.where(client: current_user).where.not(data_type: 'user_chat')
     }
 
     expose(:admin_notifications) {
@@ -37,16 +37,23 @@ module Api
                            .where('created_at > ?', current_user.created_at)
     }
 
-    expose(:user_notifications_count) {
-      admin_notifications.count +
-      tutor_requests.count +
-      my_notifications.count +
-      tutor_notifications.count
+    expose(:chat_notifications) {
+      chatsAsSender = RoomChat.where(sender: current_user, sender_leave: false)
+      chatsAsReceiver = RoomChat.where(receiver: current_user, receiver_leave: false)
+      chatsAsSender + chatsAsReceiver
     }
 
-    expose(:super_event_notification) {
-      ClientNotification.where(client: current_user.id, deleted: false, data_type: 5).order(created_at: :desc)
-    }
+    # expose(:user_notifications_count) {
+    #   admin_notifications.count +
+    #   tutor_requests.count +
+    #   my_notifications.count +
+    #   tutor_notifications.count +
+    #   chat_notifications.count
+    # }
+
+    # expose(:super_event_notification) {
+    #   ClientNotification.where(client: current_user.id, deleted: false, data_type: 5).order(created_at: :desc)
+    # }
 
     expose(:total_user_notifications) {
       serialized_admin = serialize_notifications(
@@ -68,16 +75,22 @@ module Api
                         Api::GenericNotificationSerializer
                       ).as_json
 
-      serialize_superevent_notifications = serialize_notifications(
-                        super_event_notification,
-                        Api::EventCompletedNotificationSerializer
+      # serialize_superevent_notifications = serialize_notifications(
+      #                   super_event_notification,
+      #                   Api::EventCompletedNotificationSerializer
+      #                 ).as_json
+
+      serialize_chat_notifications = serialize_notifications(
+                        chat_notifications,
+                        Api::RoomChatSerializer
                       ).as_json
 
-      serialize_superevent_notifications +
+      # serialize_superevent_notifications +
       serialized_my_notifications +
       serialized_tutor_requests +
       serialized_admin +
-      serialized_tutor_notifications
+      serialized_tutor_notifications +
+      serialize_chat_notifications
     }
 
     api :POST,
@@ -207,8 +220,9 @@ module Api
         current_user
       ).get_notification_events_count() || 0
 
-      super_events_completed_count = super_event_notification.count
-      notifications_count = available_events_count + user_notifications_count + super_events_completed_count
+      # super_events_completed_count = super_event_notification.count
+      # notifications_count = available_events_count + user_notifications_count + super_events_completed_count
+      notifications_count = available_events_count + total_user_notifications.count
       response_json[NotificationService::NOTIFICATION_KEY] = notifications_count
 
       render json: response_json
@@ -269,7 +283,8 @@ module Api
     def serialize_notifications(notifications_data, serializer)
       serialized = ActiveModel::ArraySerializer.new(
         notifications_data,
-        each_serializer: serializer
+        each_serializer: serializer,
+        scope: current_user
       )
       serialized
     end

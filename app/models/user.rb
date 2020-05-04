@@ -27,7 +27,6 @@
 #  school                 :string
 #  username               :string
 #  authorization_key      :string
-#  age                    :integer
 #  image                  :string
 #  level                  :integer          default(1)
 #  tree_image_app         :string
@@ -54,7 +53,7 @@ class User < ActiveRecord::Base
   mount_base64_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
   mount_base64_uploader :tree_image_app, ContentMediaUploader, file_name: -> { 'tree_app' }
   mount_base64_uploader :image, ContentMediaUploader, file_name: -> { DateTime.now.strftime('%s') + 'user_image' }
-  
+
   GENDERS = %w(M F).freeze
 
   # Include default devise modules. Others available are:
@@ -74,8 +73,8 @@ class User < ActiveRecord::Base
   validates :authorization_key, presence: true, on: :create, if: "cliente?"
   validates :gender, inclusion: { in: GENDERS }, allow_blank: true
   validates :birth_year, allow_blank: true, inclusion: { in: 1900..Date.today.year },
-            format: { 
-              with: /(19|20)\d{2}/i, 
+            format: {
+              with: /(19|20)\d{2}/i,
               message: "Año debe contener 4 digitios"
             }
 
@@ -161,6 +160,13 @@ class User < ActiveRecord::Base
              through: :user_event_achievements
     has_many :user_event_achievements,
              dependent: :destroy
+    has_one :leaderboard
+    has_many :sent_chats,
+             class_name: "UserChat",
+             foreign_key: "sender_id"
+    has_many :received_chats,
+             class_name: "UserChat",
+             foreign_key: "receiver_id"
   end
 
   def update_status_super_event
@@ -197,6 +203,12 @@ class User < ActiveRecord::Base
 
   def confirmation_sent_at
     Time.utc(1999).to_date
+  end
+
+  def age
+    if birth_year
+      Date.today.year - birth_year
+    end
   end
 
   ##

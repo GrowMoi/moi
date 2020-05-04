@@ -26,6 +26,7 @@ Polymer({
     this.downloadBtnFilename = 'reporte_' + Date.now() + '.xls';
     this.downloadBtnFilenameV3 = 'reporte_' + Date.now() + '.xlsx';
     $(this.$.btnSelectiveDownload).addClass('disabled');
+    $(this.$.btnAllDownload).addClass('disabled');
     this.emitters = {};
     this.loading = true;
     this.userRemove = null;
@@ -35,10 +36,9 @@ Polymer({
       { id: 'name', text: 'Nombre real'},
       { id: 'email', text: 'Email'},
       { id: 'total_contents_learnt', text: 'Contenidos aprendidos en total'},
-      { id: 'contents_learnt_branch_aprender', text: 'Contenidos aprendidos en rama Aprender'},
-      { id: 'contents_learnt_branch_artes', text: 'Contenidos aprendidos en rama Artes'},
-      { id: 'contents_learnt_branch_lenguaje', text: 'Contenidos aprendidos en rama Lenguaje'},
-      { id: 'contents_learnt_branch_naturaleza', text: 'Contenidos aprendidos en rama Naturaleza'},
+      { id: 'contents_learnt_branch_1', text: 'Contenidos aprendidos en rama: ¿Cómo haces para alcanzar tus sueños?'},
+      { id: 'contents_learnt_branch_2', text: 'Contenidos aprendidos en rama: ¿Qué herramienta te ayuda para cumplir tus sueños?'},
+      { id: 'contents_learnt_branch_3', text: 'Contenidos aprendidos en rama: ¿Qué necesitas para alcanzar tus sueños?'},
       { id: 'total_neurons_learnt', text: 'Neuronas aprendidas'},
       { id: 'used_time', text: 'Tiempo de uso'},
       { id: 'used_time_ms', text: 'Tiempo de uso en milisegundos'},
@@ -76,7 +76,10 @@ Polymer({
       type: 'GET',
       success: function (res) {
         this.loading = false;
-        this.students = res.data;
+        this.students = res.data || [];
+        if (this.students && (this.students.length > 0)) {
+          $(this.$.btnAllDownload).removeClass('disabled');
+        }
       }.bind(this)
     });
   },

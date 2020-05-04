@@ -17,8 +17,19 @@ module Api
     }
 
     expose(:all_leaders) {
-      Leaderboard.includes(:user)
-                .order(contents_learnt: :desc, time_elapsed: :asc)
+      PublicLeaderboardService.new(params: params).all_leaders
+    }
+
+    expose(:all_schools) {
+      User.includes("leaderboard").where.not(leaderboards: {id: nil}).map(&:school).uniq.compact.map(&:downcase).uniq.map(&:capitalize)
+    }
+
+    expose(:all_ages) {
+      User.includes("leaderboard").where.not(leaderboards: {id: nil}).map(&:birth_year).uniq.compact.map{|age| Time.now.year - age}
+    }
+
+    expose(:all_cities) {
+      User.includes("leaderboard").where.not(leaderboards: {id: nil}).map(&:city).uniq.compact.map(&:downcase).uniq.map(&:capitalize)
     }
 
     api :GET,
@@ -96,6 +107,17 @@ module Api
         leaders = leaderboard[:leaders]
         serialized_leaders = leaderboard[:serialized_leaders]
 
+        values = [];
+
+        case params[:sort_by]
+        when "school"
+          values = all_schools
+        when "city"
+          values = all_cities
+        when "age"
+          values = all_ages
+        end
+
         render json: {
           leaders: serialized_leaders,
           meta: {
@@ -103,7 +125,9 @@ module Api
             total_pages: leaders.total_pages,
             user_data: user_data,
             total_contents: total_content_available,
-            total_super_event_achievements: total_super_event_achievements
+            sort_by_options: {
+              values: values
+            }
           }
         }
       else
@@ -188,7 +212,9 @@ module Api
         user_info = all_leaders.find_by_user_id(user_selected.id)
         serialized_data = Api::LeaderboardSerializer.new(user_info).as_json
         user_data = serialized_data["leaderboard"]
-        user_data[:position] = user_index + 1
+        if user_index
+          user_data[:position] = user_index + 1
+        end
       else
         achievement_leaders = all_leaders.where(user_id: user_ids_by_event)
         serialized_data = Api::LeaderboardSerializer.new(Leaderboard.new(

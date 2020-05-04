@@ -247,8 +247,9 @@ module Tutor
     def download_tutor_analytics_v2
       @statistics_by_user = []
       usernames = params[:usernames] || []
-
+      usernames = usernames.reject { |c| c.empty? }
       User.where(username: usernames).each do |student|
+
           statistics = student.generate_statistics(
             [
               "total_neurons_learnt",
@@ -308,44 +309,38 @@ module Tutor
                    title: "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title]}"
             end
 
-            sheet.add_chart(Axlsx::Pie3DChart, start_at: "A#{@statistics_by_user.count + 30}", end_at: "E#{@statistics_by_user.count + 50}") do |chart|
-              chart.add_series data: sheet["H2:H#{@statistics_by_user.count + 1}"],
-                   labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title]}"
-            end
-
             sheet.add_chart(Axlsx::Pie3DChart, start_at: "F#{@statistics_by_user.count + 30}", end_at: "I#{@statistics_by_user.count + 50}") do |chart|
-              chart.add_series data: sheet["I2:I#{@statistics_by_user.count + 1}"],
+              chart.add_series data: sheet["H2:H#{@statistics_by_user.count + 1}"],
                    labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
                    title: "Neuronas aprendidas"
             end
 
             sheet.add_chart(Axlsx::Pie3DChart, start_at: "J#{@statistics_by_user.count + 30}", end_at: "M#{@statistics_by_user.count + 50}") do |chart|
-              chart.add_series data: sheet["K2:K#{@statistics_by_user.count + 1}"],
+              chart.add_series data: sheet["J2:J#{@statistics_by_user.count + 1}"],
                    labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
                    title: "Tiempo de uso"
             end
 
             sheet.add_chart(Axlsx::Pie3DChart, start_at: "N#{@statistics_by_user.count + 30}", end_at: "R#{@statistics_by_user.count + 50}") do |chart|
-              chart.add_series data: sheet["M2:M#{@statistics_by_user.count + 1}"],
+              chart.add_series data: sheet["L2:L#{@statistics_by_user.count + 1}"],
                    labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
                    title: "Tiempo de lectura promedio"
             end
 
             sheet.add_chart(Axlsx::Pie3DChart, start_at: "A#{@statistics_by_user.count + 54}", end_at: "E#{@statistics_by_user.count + 74}") do |chart|
-              chart.add_series data: sheet["N2:N#{@statistics_by_user.count + 1}"],
+              chart.add_series data: sheet["M2:M#{@statistics_by_user.count + 1}"],
                    labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
                    title: "Imagenes abiertas"
             end
 
             sheet.add_chart(Axlsx::Pie3DChart, start_at: "F#{@statistics_by_user.count + 54}", end_at: "I#{@statistics_by_user.count + 74}") do |chart|
-              chart.add_series data: sheet["O2:O#{@statistics_by_user.count + 1}"],
+              chart.add_series data: sheet["N2:N#{@statistics_by_user.count + 1}"],
                    labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
                    title: "Notas agregadas"
             end
 
             sheet.add_chart(Axlsx::Pie3DChart, start_at: "J#{@statistics_by_user.count + 54}", end_at: "M#{@statistics_by_user.count + 74}") do |chart|
-              chart.add_series data: sheet["P2:P#{@statistics_by_user.count + 1}"],
+              chart.add_series data: sheet["O2:O#{@statistics_by_user.count + 1}"],
                    labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
                    title: "Logros alcanzados"
             end
@@ -449,7 +444,6 @@ module Tutor
         "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title]}",
         "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title]}",
         "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title]}",
-        "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title]}",
         "Neuronas aprendidas",
         "Tiempo de uso",
         "Tiempo de uso en milisegundos",
@@ -471,7 +465,6 @@ module Tutor
         statistics[:statistics]["contents_learnt_by_branch"][:value][0][:total_contents_learnt],
         statistics[:statistics]["contents_learnt_by_branch"][:value][1][:total_contents_learnt],
         statistics[:statistics]["contents_learnt_by_branch"][:value][2][:total_contents_learnt],
-        statistics[:statistics]["contents_learnt_by_branch"][:value][3][:total_contents_learnt],
         statistics[:statistics]["total_neurons_learnt"][:value],
         statistics[:statistics]["used_time"][:meta][:value_humanized],
         statistics[:statistics]["used_time"][:value],

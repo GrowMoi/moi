@@ -25,9 +25,9 @@
                     text=""
                     class="moi-student-report-button">
                   </moi-student-report-button>
-                  <!-- <paper-button on-tap="openDialogConfirm" class="btn-remove" title$="[[ t('views.tutor.dashboard.card_students.remove_user') ]]">
+                  <paper-button on-tap="openDialogConfirm" class="btn-remove" title$="[[ t('views.tutor.dashboard.card_students.remove_user') ]]">
                     <span class="glyphicon glyphicon-remove"></span>
-                  </paper-button> -->
+                  </paper-button>
               </div>
             </moi-selectable-row>
           </template>
@@ -64,6 +64,7 @@
         </moi-download-button>
 
         <moi-download-button href="/tutor/dashboard/download_tutor_analytics.xls"
+          id="btnAllDownload"
           text="[[ t('views.tutor.dashboard.card_students.export_xls') ]]"
           title$="[[ t('views.tutor.dashboard.card_students.export_xls_title') ]]"
           filename="[[ downloadBtnFilename ]]"
@@ -72,7 +73,7 @@
         </moi-download-button>
 
         <template is="dom-if" if="{{ isAdmin }}" restamp>
-          <button class="btn-action" id="btn-open-dialog-report-settings" on-tap="openReportDialog">Personalizado</button>
+          <button class="btn-action btn-action-excel-admin-report" id="btn-open-dialog-report-settings" on-tap="openReportDialog">Personalizado</button>
         </template>
 
       </moi-actions-row>

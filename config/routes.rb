@@ -2,6 +2,13 @@ Moi::Application.routes.draw do
   devise_for :users, :controllers => { :registrations => "api/registrations" }
 
   namespace :api, defaults: { format: :json } do
+    resources :chats, only: [:create] do
+      collection do
+        get "user/:receiver_id", action: :show
+        post "start/:receiver_id", action: :start_chat
+        put "leave/:room_id", action: :leave_chat
+      end
+    end
     resource :tree, only: :show
     resource :learn, controller: :learn, only: :create do
       member do
@@ -178,7 +185,11 @@ Moi::Application.routes.draw do
 
   namespace :admin do
     resource :dashboard, only: :index
-    resources :users
+    resources :users do
+      collection do
+        post :batch_destroy
+      end
+    end
     resources :profiles
     resources :notifications
     resources :quizzes
@@ -308,6 +319,6 @@ Moi::Application.routes.draw do
         anchor: false,
         via: [:get, :post]
 
-  root to: redirect("/apipie")
+  root "home#index"
   apipie
 end

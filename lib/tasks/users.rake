@@ -10,6 +10,16 @@ namespace :users do
     end
   end
 
+  task set_birth_years: :environment do
+    User.where(birth_year: nil).find_each do |user|
+      if user.age.present?
+        birth_year = Date.today.year - user.age
+        user.birth_year = birth_year
+        user.save validate: false
+      end
+    end
+  end
+
   task set_usernames: :environment do
     User.where(username: nil).find_each do |user|
       username = "moi-" + user.email.parameterize + rand(1000).to_s
