@@ -93,7 +93,8 @@ Rails.application.configure do
               "http://aula.miaulabdp.com",
               "http://www.aula.miaulabdp.com",
               "https://aula.miaulabdp.com",
-              "https://www.aula.miaulabdp.com"
+              "https://www.aula.miaulabdp.com",
+              "https://www.miaulabdp.com"
               
 
       resource "/api/*",
@@ -114,7 +115,8 @@ Rails.application.configure do
               "http://abi.shiriculapo.com",
               "https://abi.shiriculapo.com",
               "http://backend.miaulabdp.com",
-              "https://backend.miaulabdp.com"
+              "https://backend.miaulabdp.com",
+              "https://www.miaulabdp.com"
 
       resource '/assets/*'
     end
