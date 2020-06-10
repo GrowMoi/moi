@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-	default from: 'Banco del Pacífico <wwebadminbp@pacifico.fin.ec>'
+	default from: 'Banco del Pacífico <miaulabdp@gmail.com>'
 
   def notify_role_change(user)
     @user = user
