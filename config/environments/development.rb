@@ -50,6 +50,7 @@ Rails.application.configure do
   config.middleware.insert_before 0, "Rack::Cors" do
     allow do
       origins "http://localhost:8100", # development mobileapp
+              "http://localhost:4200", # development landingpage
               "http://localhost:5001"  # protractor tests
 
       resource "/api/*",
