@@ -8,17 +8,15 @@ html
     = html_import_tag "tutor_components", "data-turbolinks-track" => true
     = csrf_meta_tags
     = analytics_init if GoogleAnalytics.valid_tracker?
+
     javascript:
+      currentUser = {}
       I18n = I18n || {};
       I18n.defaultLocale = "#{I18n.default_locale}";
       I18n.locale = "#{I18n.locale}";
       ENV = {};
       ENV.pusherAppKey = "#{Rails.application.secrets.pusher_app_key}";
-      currentUser = {}
-      currentUser.id = "#{current_user.id}"
-      currentUser.email = "#{current_user.email}"
-      currentUser.username = "#{current_user.username}"
-      currentUser.role = "#{current_user.role}"
+
 
       if (window && window.ga) {
         ga('set', 'userId', currentUser.username);
@@ -38,8 +36,16 @@ html
         'bell.svg': "#{asset_path('bell.svg')}"
       };
 
+    - if current_user.present?
+      javascript:
+        currentUser.id = "#{current_user.id}"
+        currentUser.email = "#{current_user.email}"
+        currentUser.username = "#{current_user.username}"
+        currentUser.role = "#{current_user.role}"
+
   body
-    = render "tutor/shared/main_navbar"
+    - if @hide_main_navbar.blank?
+      = render "tutor/shared/main_navbar"
     .container.container-tutor-main
       = render "layouts/flashes"
       = image_tag("tree_background.png", class:"main-image-background")
