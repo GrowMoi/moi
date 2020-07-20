@@ -33,6 +33,9 @@
 #  avatar                 :integer
 #  gender                 :string
 #  birth_year             :integer
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
 #
 
 require 'rails_helper'

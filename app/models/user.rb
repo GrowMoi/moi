@@ -33,6 +33,9 @@
 #  avatar                 :integer
 #  gender                 :string
 #  birth_year             :integer
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
 #
 
 class User < ActiveRecord::Base
@@ -59,7 +62,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :registerable and :omniauthable
   devise :database_authenticatable, :recoverable,
-  :rememberable, :trackable
+  :rememberable, :trackable, :confirmable
 
   attr_accessor :login
 
@@ -195,14 +198,6 @@ class User < ActiveRecord::Base
 
   def to_s
     username
-  end
-
-  def confirmed_at
-    Time.utc(2000).to_date
-  end
-
-  def confirmation_sent_at
-    Time.utc(1999).to_date
   end
 
   def age

@@ -1,13 +1,15 @@
-h2 Resend confirmation instructions
+= devise_error_messages!
+
+hr
+
+h2 Reenviar instrucciones para confirmar cuenta
 
 = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
-  = devise_error_messages!
-
-  .field
+  .form-group
     = f.label :email
-    = f.email_field :email, autofocus: true
+    = f.email_field :email, autofocus: true, class: "form-control"
 
-  .actions
-    = f.submit "Resend confirmation instructions"
+  .actions.text-center
+    = f.submit "Reenviar instrucciones", class: "btn btn-primary"
 
 = render "devise/shared/links"

@@ -1,5 +1,9 @@
 Moi::Application.routes.draw do
-  devise_for :users, :controllers => { :registrations => "api/registrations" }
+  devise_for :users,
+             controllers: {
+               registrations: "api/registrations",
+               confirmations: "users/confirmations"
+              }
 
   namespace :api, defaults: { format: :json } do
     resources :chats, only: [:create] do
@@ -244,6 +248,11 @@ Moi::Application.routes.draw do
   end
 
   namespace :tutor do
+    resource :register, ony: [:new, :create] do
+      member do
+        get :success
+      end
+    end
     resources :moi, only: :index
     resources :client, only: :index do
       collection do

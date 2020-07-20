@@ -200,7 +200,7 @@ GEM
       activesupport (>= 3.2)
     erubi (1.8.0)
     erubis (2.7.0)
-    eventmachine (1.0.4)
+    eventmachine (1.0.9.1)
     execjs (2.7.0)
     extlib (0.9.16)
     factory_girl (4.5.0)
