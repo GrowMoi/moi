@@ -53,9 +53,9 @@ class User < ActiveRecord::Base
   mount_base64_uploader :image, ContentMediaUploader, file_name: -> { DateTime.now.strftime('%s') + 'user_image' }
 
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :registerable and :omniauthable
+  # :confirmable, :lockable, :timeoutable, :registerable
   devise :database_authenticatable, :recoverable,
-  :rememberable, :trackable, :confirmable
+  :rememberable, :trackable, :confirmable, :omniauthable, omniauth_providers: %i[google_oauth2]
 
   attr_accessor :login
 
@@ -180,14 +180,6 @@ class User < ActiveRecord::Base
     username
   end
 
-  def confirmed_at
-    Time.utc(2000).to_date
-  end
-
-  def confirmation_sent_at
-    Time.utc(1999).to_date
-  end
-
   ##
   # return a number successful tests
   def successful_tests
@@ -267,5 +259,21 @@ class User < ActiveRecord::Base
   def active_super_event
     user_event = self.user_event_achievements.last
     user_event && user_event.super_event_is_valid_yet ? user_event.event_achievement : nil
+  end
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      # for now only tutors taking advantage of this
+      user.role = "tutor"
+
+      user.name = auth.info.name
+      user.username = "google_#{user.name.to_s.parameterize}_#{user.uid}"
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+      user.image = auth.info.image # assuming the user model has an image
+      # If you are using confirmable and the provider(s) you use validate emails,
+      # uncomment the line below to skip the confirmation emails.
+      user.skip_confirmation!
+    end
   end
 end

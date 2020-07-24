@@ -2,7 +2,8 @@ Moi::Application.routes.draw do
   devise_for :users,
              controllers: {
                registrations: "api/registrations",
-               confirmations: "users/confirmations"
+               confirmations: "users/confirmations",
+               omniauth_callbacks: "users/omniauth_callbacks"
               }
 
   namespace :api, defaults: { format: :json } do
