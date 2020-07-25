@@ -1,0 +1,47 @@
+h1.text-center Registrarse como tutor
+
+h3 Autentificarse con Google
+
+p
+  = link_to omniauth_authorize_path(:user, :google_oauth2) do
+    = image_tag "/assets/google/btn_google_signin_dark_normal_web@2x.png", style: "height: 45px; width: 190px;"
+
+hr
+
+.row
+  .col-md-8.col-lg-6.col-xs-12
+    h3 Registro manual
+
+    - if @user.errors.any?
+      .alert.alert-danger
+        ul
+          - @user.errors.full_messages.each do |msg|
+            li = msg
+
+    = form_for @user, url: tutor_register_path do |f|
+      .form-group
+        = f.label :username
+        = f.text_field :username,
+                      required: true,
+                      class: "form-control"
+
+      .form-group
+        = f.label :email
+        = f.email_field :email,
+                        required: true,
+                        class: "form-control"
+
+      .form-group
+        = f.label :password
+        = f.password_field :password,
+                          required: true,
+                          class: "form-control"
+
+      .form-group
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation,
+                          required: true,
+                          class: "form-control"
+
+      .form-actions
+        = f.submit "Registrarse", class: "btn btn-primary", data: { disable_with: "Enviando" }

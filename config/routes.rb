@@ -1,5 +1,10 @@
 Moi::Application.routes.draw do
-  devise_for :users, :controllers => { :registrations => "api/registrations" }
+  devise_for :users,
+             controllers: {
+               registrations: "api/registrations",
+               confirmations: "users/confirmations",
+               omniauth_callbacks: "users/omniauth_callbacks"
+              }
 
   namespace :api, defaults: { format: :json } do
     resource :tree, only: :show
@@ -220,6 +225,11 @@ Moi::Application.routes.draw do
   end
 
   namespace :tutor do
+    resource :register, ony: [:new, :create] do
+      member do
+        get :success
+      end
+    end
     resources :moi, only: :index
     resources :client, only: :index do
       collection do
