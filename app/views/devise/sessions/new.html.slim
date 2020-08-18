@@ -21,6 +21,7 @@
 
           .actions
             = f.submit t("devise.login"), data: { disable_with: t("devise.login")}, class: "btn btn-primary btn-send-data"
+            = link_to "Registrarse como tutor", new_tutor_register_path, class: "btn btn-primary btn-send-data btn-register-tutor"
 
         .links-container
           = render "devise/shared/links"
