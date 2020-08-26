@@ -31,6 +31,9 @@
 #  image                  :string
 #  level                  :integer          default(1)
 #  tree_image_app         :string
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
 #
 
 FactoryGirl.define do
