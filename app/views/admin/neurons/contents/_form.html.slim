@@ -39,6 +39,12 @@ fieldset
                     place: "right",
                     class: "btn btn-default knowledge-search-btn" do
             .glyphicon.glyphicon-globe
+        
+  .form-group
+    = f.text_area :instructions,
+                  placeholder: t("activerecord.attributes.content.instructions"),
+                  class: "form-control",
+                  value: translate_attribute(f.object, :instructions)
 
 = render "admin/neurons/contents/videos_form",
          f: f

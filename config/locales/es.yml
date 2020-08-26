@@ -741,6 +741,7 @@
         approved: Aprobado
         title: Título
         media: Multimedia
+        instructions: Instrucciones
       search_engine:
         name: Nombre
         gcse_id: CSE id
