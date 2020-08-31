@@ -162,6 +162,9 @@
             </div>
           </div>
         </template>
+        <template is="dom-if" if="[[ exportHasError ]]" restamp>
+          <span style="color: red;">Ocurrio un error al procesar el archivo.</span>
+        </template>
       </moi-dialog>
 
     </template>

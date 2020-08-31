@@ -275,83 +275,92 @@ module Tutor
       sort_by = sort_fields.include?(params[:sort_by]) ? params[:sort_by] : "username"
       @statistics_by_user.sort_by!{ |item| item[:student][sort_by].downcase }
 
-      respond_to do |format|
-        format.html
-        format.xlsx do
-          p = Axlsx::Package.new
-          wb = p.workbook
-          wb.add_worksheet(name: "Estudiantes") do |sheet|
-            sheet.add_row report_labels
-            @statistics_by_user.each do |statistics|
-              sheet.add_row report_fields(statistics)
-            end
-            sheet.add_chart(Axlsx::Pie3DChart, start_at: "A#{@statistics_by_user.count + 6}", end_at: "E#{@statistics_by_user.count + 26}") do |chart|
-              chart.add_series data: sheet["D2:D#{@statistics_by_user.count + 1}"],
-                   labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Contenidos aprendidos en total"
-            end
-            sheet.add_chart(Axlsx::Pie3DChart, start_at: "F#{@statistics_by_user.count + 6}", end_at: "I#{@statistics_by_user.count + 26}") do |chart|
-              chart.add_series data: sheet["E2:E#{@statistics_by_user.count + 1}"],
-                   labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title]}"
-            end
 
-            sheet.add_chart(Axlsx::Pie3DChart, start_at: "J#{@statistics_by_user.count + 6}", end_at: "M#{@statistics_by_user.count + 26}") do |chart|
-              chart.add_series data: sheet["F2:F#{@statistics_by_user.count + 1}"],
-                   labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title]}"
+      if @statistics_by_user.empty?
+        respond_to do |format|
+          format.html
+          format.xlsx do
+            p = Axlsx::Package.new
+            wb = p.workbook
+            wb.add_worksheet(name: "Estudiantes") do |sheet|
+              sheet.add_row ["No se encontraron estudiantes"]
             end
-
-            sheet.add_chart(Axlsx::Pie3DChart, start_at: "N#{@statistics_by_user.count + 6}", end_at: "R#{@statistics_by_user.count + 26}") do |chart|
-              chart.add_series data: sheet["G2:G#{@statistics_by_user.count + 1}"],
-                   labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title]}"
-            end
-
-            sheet.add_chart(Axlsx::Pie3DChart, start_at: "A#{@statistics_by_user.count + 30}", end_at: "E#{@statistics_by_user.count + 50}") do |chart|
-              chart.add_series data: sheet["H2:H#{@statistics_by_user.count + 1}"],
-                   labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][3][:title]}"
-            end
-
-            sheet.add_chart(Axlsx::Pie3DChart, start_at: "F#{@statistics_by_user.count + 30}", end_at: "I#{@statistics_by_user.count + 50}") do |chart|
-              chart.add_series data: sheet["I2:I#{@statistics_by_user.count + 1}"],
-                   labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Neuronas aprendidas"
-            end
-
-            sheet.add_chart(Axlsx::Pie3DChart, start_at: "J#{@statistics_by_user.count + 30}", end_at: "M#{@statistics_by_user.count + 50}") do |chart|
-              chart.add_series data: sheet["K2:K#{@statistics_by_user.count + 1}"],
-                   labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Tiempo de uso"
-            end
-
-            sheet.add_chart(Axlsx::Pie3DChart, start_at: "N#{@statistics_by_user.count + 30}", end_at: "R#{@statistics_by_user.count + 50}") do |chart|
-              chart.add_series data: sheet["M2:M#{@statistics_by_user.count + 1}"],
-                   labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Tiempo de lectura promedio"
-            end
-
-            sheet.add_chart(Axlsx::Pie3DChart, start_at: "A#{@statistics_by_user.count + 54}", end_at: "E#{@statistics_by_user.count + 74}") do |chart|
-              chart.add_series data: sheet["N2:N#{@statistics_by_user.count + 1}"],
-                   labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Imagenes abiertas"
-            end
-
-            sheet.add_chart(Axlsx::Pie3DChart, start_at: "F#{@statistics_by_user.count + 54}", end_at: "I#{@statistics_by_user.count + 74}") do |chart|
-              chart.add_series data: sheet["O2:O#{@statistics_by_user.count + 1}"],
-                   labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Notas agregadas"
-            end
-
-            sheet.add_chart(Axlsx::Pie3DChart, start_at: "J#{@statistics_by_user.count + 54}", end_at: "M#{@statistics_by_user.count + 74}") do |chart|
-              chart.add_series data: sheet["P2:P#{@statistics_by_user.count + 1}"],
-                   labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
-                   title: "Logros alcanzados"
-            end
-
+            send_data p.to_stream.read, type: "application/xlsx"
           end
-          send_data p.to_stream.read, type: "application/xlsx"
+        end
+      else
+        respond_to do |format|
+          format.html
+          format.xlsx do
+            p = Axlsx::Package.new
+            wb = p.workbook
+            wb.add_worksheet(name: "Estudiantes") do |sheet|
+              sheet.add_row report_labels
+              @statistics_by_user.each do |statistics|
+                sheet.add_row report_fields(statistics)
+              end
+              sheet.add_chart(Axlsx::Pie3DChart, start_at: "A#{@statistics_by_user.count + 6}", end_at: "E#{@statistics_by_user.count + 26}") do |chart|
+                chart.add_series data: sheet["D2:D#{@statistics_by_user.count + 1}"],
+                     labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
+                     title: "Contenidos aprendidos en total"
+              end
+              sheet.add_chart(Axlsx::Pie3DChart, start_at: "F#{@statistics_by_user.count + 6}", end_at: "I#{@statistics_by_user.count + 26}") do |chart|
+                chart.add_series data: sheet["E2:E#{@statistics_by_user.count + 1}"],
+                     labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
+                     title: "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][0][:title]}"
+              end
+
+              sheet.add_chart(Axlsx::Pie3DChart, start_at: "J#{@statistics_by_user.count + 6}", end_at: "M#{@statistics_by_user.count + 26}") do |chart|
+                chart.add_series data: sheet["F2:F#{@statistics_by_user.count + 1}"],
+                     labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
+                     title: "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][1][:title]}"
+              end
+
+              sheet.add_chart(Axlsx::Pie3DChart, start_at: "N#{@statistics_by_user.count + 6}", end_at: "R#{@statistics_by_user.count + 26}") do |chart|
+                chart.add_series data: sheet["G2:G#{@statistics_by_user.count + 1}"],
+                     labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
+                     title: "Contenidos aprendidos en rama #{@statistics_by_user[0][:statistics]["contents_learnt_by_branch"][:value][2][:title]}"
+              end
+
+              sheet.add_chart(Axlsx::Pie3DChart, start_at: "F#{@statistics_by_user.count + 30}", end_at: "I#{@statistics_by_user.count + 50}") do |chart|
+                chart.add_series data: sheet["H2:H#{@statistics_by_user.count + 1}"],
+                     labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
+                     title: "Neuronas aprendidas"
+              end
+
+              sheet.add_chart(Axlsx::Pie3DChart, start_at: "J#{@statistics_by_user.count + 30}", end_at: "M#{@statistics_by_user.count + 50}") do |chart|
+                chart.add_series data: sheet["J2:J#{@statistics_by_user.count + 1}"],
+                     labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
+                     title: "Tiempo de uso"
+              end
+
+              sheet.add_chart(Axlsx::Pie3DChart, start_at: "N#{@statistics_by_user.count + 30}", end_at: "R#{@statistics_by_user.count + 50}") do |chart|
+                chart.add_series data: sheet["L2:L#{@statistics_by_user.count + 1}"],
+                     labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
+                     title: "Tiempo de lectura promedio"
+              end
+
+              sheet.add_chart(Axlsx::Pie3DChart, start_at: "A#{@statistics_by_user.count + 54}", end_at: "E#{@statistics_by_user.count + 74}") do |chart|
+                chart.add_series data: sheet["M2:M#{@statistics_by_user.count + 1}"],
+                     labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
+                     title: "Imagenes abiertas"
+              end
+
+              sheet.add_chart(Axlsx::Pie3DChart, start_at: "F#{@statistics_by_user.count + 54}", end_at: "I#{@statistics_by_user.count + 74}") do |chart|
+                chart.add_series data: sheet["N2:N#{@statistics_by_user.count + 1}"],
+                     labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
+                     title: "Notas agregadas"
+              end
+
+              sheet.add_chart(Axlsx::Pie3DChart, start_at: "J#{@statistics_by_user.count + 54}", end_at: "M#{@statistics_by_user.count + 74}") do |chart|
+                chart.add_series data: sheet["O2:O#{@statistics_by_user.count + 1}"],
+                     labels: sheet["A2:A#{@statistics_by_user.count + 1}"],
+                     title: "Logros alcanzados"
+              end
+
+            end
+            send_data p.to_stream.read, type: "application/xlsx"
+          end
         end
       end
     end
