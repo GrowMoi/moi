@@ -283,8 +283,8 @@ Polymer({
       });
       workbook.SheetNames.forEach(function(sheetName) {
         var usernames = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName])
-                  .map(function(item){ return item ? Object.values(item)[0] : null; })
-                  .filter(function(item) { return !!item });
+                  .filter(function(item) { return !!Object.values(item)[0] })
+                  .map(function(item){ return Object.values(item)[0] });
 
         cb(usernames)
       })
