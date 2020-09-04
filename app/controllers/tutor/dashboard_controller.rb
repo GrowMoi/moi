@@ -467,6 +467,9 @@ module Tutor
         "Imagenes abiertas",
         "Notas agregadas",
         "Logros alcanzados",
+        "Escuela",
+        "Ciudad",
+        "País",
         "Enlace a vista de analisis"
       ]
     end
@@ -489,6 +492,9 @@ module Tutor
         statistics[:statistics]["images_opened_in_count"][:value],
         statistics[:statistics]["total_notes"][:value],
         statistics[:student].my_achievements.count || 0,
+        statistics[:student].school || '',
+        statistics[:student].city || '',
+        statistics[:student].country || '',
         "#{@root_url}/tutor/analysis?client_id=#{statistics[:student].id}"
       ]
     end
