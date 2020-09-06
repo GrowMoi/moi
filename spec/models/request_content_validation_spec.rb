@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: request_content_media_validations
+# Table name: request_content_validations
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer          not null
@@ -10,9 +10,8 @@
 #  updated_at :datetime         not null
 #
 
-FactoryGirl.define do
-  factory :request_content_media_validation do
-    
-  end
+require 'rails_helper'
 
+RSpec.describe RequestContentValidation, :type => :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

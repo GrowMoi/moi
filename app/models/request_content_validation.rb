@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: request_content_media_validations
+# Table name: request_content_validations
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer          not null
@@ -10,8 +10,7 @@
 #  updated_at :datetime         not null
 #
 
-require 'rails_helper'
-
-RSpec.describe RequestContentMediaValidation, :type => :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+class RequestContentValidation < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :content
 end

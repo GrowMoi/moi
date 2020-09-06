@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200906173205) do
+ActiveRecord::Schema.define(version: 20200906175756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,17 @@ ActiveRecord::Schema.define(version: 20200906173205) do
   end
 
   add_index "certificates", ["user_id"], name: "index_certificates_on_user_id", using: :btree
+
+  create_table "check_content_validations", force: :cascade do |t|
+    t.integer  "reviewer_id",                                   null: false
+    t.integer  "request_content_validation_id",                 null: false
+    t.boolean  "approved",                      default: false, null: false
+    t.string   "message"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+  end
+
+  add_index "check_content_validations", ["reviewer_id"], name: "index_check_content_validations_on_reviewer_id", using: :btree
 
   create_table "client_notifications", force: :cascade do |t|
     t.integer  "client_id",                  null: false
@@ -477,7 +488,7 @@ ActiveRecord::Schema.define(version: 20200906173205) do
   add_index "read_notifications", ["notifications_id"], name: "index_read_notifications_on_notifications_id", using: :btree
   add_index "read_notifications", ["user_id"], name: "index_read_notifications_on_user_id", using: :btree
 
-  create_table "request_content_media_validations", force: :cascade do |t|
+  create_table "request_content_validations", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.integer  "content_id", null: false
     t.string   "media",      null: false
@@ -485,8 +496,8 @@ ActiveRecord::Schema.define(version: 20200906173205) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "request_content_media_validations", ["content_id"], name: "index_request_content_media_validations_on_content_id", using: :btree
-  add_index "request_content_media_validations", ["user_id"], name: "index_request_content_media_validations_on_user_id", using: :btree
+  add_index "request_content_validations", ["content_id"], name: "index_request_content_validations_on_content_id", using: :btree
+  add_index "request_content_validations", ["user_id"], name: "index_request_content_validations_on_user_id", using: :btree
 
   create_table "search_engines", force: :cascade do |t|
     t.string   "name",                      null: false

@@ -1,6 +1,6 @@
-class CreateRequestContentMediaValidations < ActiveRecord::Migration
+class CreateRequestContentValidations < ActiveRecord::Migration
   def change
-    create_table :request_content_media_validations do |t|
+    create_table :request_content_validations do |t|
       t.references :user, index: true, null: false
       t.references :content,
       null: false,
