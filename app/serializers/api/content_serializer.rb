@@ -34,7 +34,9 @@ module Api
                :content_tasks,
                :neuron_can_read,
                :favorite,
-               :belongs_to_event
+               :belongs_to_event,
+               :instructions,
+               :approved_by_tutor
 
     translates :title, :description, :source
 
@@ -92,6 +94,10 @@ module Api
         end
       end
       belongs
+    end
+
+    def approved_by_tutor
+      true
     end
 
     alias_method :current_user, :scope
