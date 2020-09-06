@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200906170423) do
+ActiveRecord::Schema.define(version: 20200826020021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,21 +72,6 @@ ActiveRecord::Schema.define(version: 20200906170423) do
   add_index "client_tutor_recommendations", ["client_id"], name: "index_client_tutor_recommendations_on_client_id", using: :btree
   add_index "client_tutor_recommendations", ["status"], name: "index_client_tutor_recommendations_on_status", using: :btree
   add_index "client_tutor_recommendations", ["tutor_recommendation_id"], name: "index_client_tutor_recommendations_on_tutor_recommendation_id", using: :btree
-
-  create_table "content_approved_by_tutors", force: :cascade do |t|
-    t.integer  "tutor_id",                  null: false
-    t.integer  "user_id",                   null: false
-    t.integer  "content_id",                null: false
-    t.boolean  "approved",   default: true, null: false
-    t.string   "message"
-    t.string   "media",                     null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-  end
-
-  add_index "content_approved_by_tutors", ["content_id"], name: "index_content_approved_by_tutors_on_content_id", using: :btree
-  add_index "content_approved_by_tutors", ["tutor_id"], name: "index_content_approved_by_tutors_on_tutor_id", using: :btree
-  add_index "content_approved_by_tutors", ["user_id"], name: "index_content_approved_by_tutors_on_user_id", using: :btree
 
   create_table "content_favorites", force: :cascade do |t|
     t.integer  "user_id",    null: false
