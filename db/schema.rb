@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200826020021) do
+ActiveRecord::Schema.define(version: 20200906173205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -476,6 +476,17 @@ ActiveRecord::Schema.define(version: 20200826020021) do
 
   add_index "read_notifications", ["notifications_id"], name: "index_read_notifications_on_notifications_id", using: :btree
   add_index "read_notifications", ["user_id"], name: "index_read_notifications_on_user_id", using: :btree
+
+  create_table "request_content_media_validations", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "content_id", null: false
+    t.string   "media",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "request_content_media_validations", ["content_id"], name: "index_request_content_media_validations_on_content_id", using: :btree
+  add_index "request_content_media_validations", ["user_id"], name: "index_request_content_media_validations_on_user_id", using: :btree
 
   create_table "search_engines", force: :cascade do |t|
     t.string   "name",                      null: false
