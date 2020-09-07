@@ -3,7 +3,7 @@ module Api
     before_action :authenticate_user!
 
     expose(:content) {
-      Content.find(params[:id])
+      Content.find(params[:content_id])
     }
 
     expose(:request_content) {
@@ -20,18 +20,19 @@ module Api
     param :content_id, String
     param :media, String
 
-    def send
-      request_content = RequestContentValidation.new
-      request_content.user = current_user
-      request_content.content = content
-      request_content.media = params[:media]
-      if request_content.save
+    def send_request
+      new_request_content = RequestContentValidation.new(
+        user: current_user,
+        content: content,
+        media: params[:media]
+      )
+      if new_request_content.save
         # TODO: Notify Tutor a new request
         render nothing: true,
                status: :accepted
       else
         render status: :unprocessable_entity,
-               errors: request_content.errors
+               errors: new_request_content.errors
       end
     end
 
@@ -62,7 +63,7 @@ module Api
         "Send a request to validate img/video upload an specific neuron"
     param :check_request_id, String
     param :message, String
-    param :approved, Boolean
+    # param :approved, Boolean
 
     def checked
       check_request_content.message = params[:message]

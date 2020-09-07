@@ -13,5 +13,5 @@
 class RequestContentValidation < ActiveRecord::Base
   belongs_to :user
   belongs_to :content
-  has_one: check_content_validation
+  has_one :check_content_validation
 end
