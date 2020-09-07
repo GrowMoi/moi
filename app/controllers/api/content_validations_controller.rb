@@ -6,9 +6,14 @@ module Api
       Content.find(params[:id])
     }
 
+    expose(:request_content) {
+      Content.find(params[:request_id])
+    }
+
     api :POST,
-        "/content_validations/:id/send(",
+        "/content_validations/send",
         "Send a request to validate img/video upload an specific neuron"
+    param :content_id, String
     param :media, String
 
     def send
@@ -22,6 +27,27 @@ module Api
       else
         render status: :unprocessable_entity,
                errors: request_content.errors
+      end
+    end
+
+    api :POST,
+        "/content_validations/start_validation",
+        "Send a request to validate img/video upload an specific neuron"
+    param :request_id, String
+    param :media, String
+
+    def start_validation
+      check_content = CheckContentValidation.new(
+        user: current_user,
+        request_content_validation: request_content,
+      )
+      if check_content.save
+        # request_content.accepted = true;
+        render nothing: true,
+               status: :accepted
+      else
+        render status: :unprocessable_entity,
+               errors: check_content.errors
       end
     end
   end
