@@ -136,6 +136,12 @@ Moi::Application.routes.draw do
       end
     end
 
+    resources :content_validations, only: [] do
+      member do
+        post :send
+      end
+    end
+
     match "users/search" => 'users#search', via: :get
     match "users/content_tasks" => 'users#content_tasks', via: :get
     match "users/content_notes" => 'users#content_notes', via: :get
