@@ -140,6 +140,7 @@ Moi::Application.routes.draw do
       member do
         post :send
         post :start_validation
+        put :checked
       end
     end
 
