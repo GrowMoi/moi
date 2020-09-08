@@ -40,7 +40,7 @@ module Api
 
     api :POST,
         "/content_validations/start_validation",
-        "Send a request to validate img/video upload an specific neuron"
+        "Take a request to start to validate"
     param :request_id, String
 
     def start_validation
@@ -61,9 +61,9 @@ module Api
       end
     end
 
-    api :POST,
-        "/content_validations/start_validation",
-        "Send a request to validate img/video upload an specific neuron"
+    api :PUT,
+        "/content_validations/checked",
+        "Send a notification with an answer about request"
     param :check_request_id, String
     param :message, String
     # param :approved, Boolean
@@ -71,8 +71,9 @@ module Api
     def checked
       check_request_content.message = params[:message]
       check_request_content.approved = params[:approved]
-
       if check_request_content.save
+        request_content.approved = check_request_content.approved
+        request_content.save
         # TODO: Notify User
         render nothing: true,
                status: :accepted
