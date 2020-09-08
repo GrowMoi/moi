@@ -41,6 +41,10 @@ fieldset
             .glyphicon.glyphicon-globe
         
   .form-group
+    = f.text_field :title_instruction,
+                  placeholder: t("activerecord.attributes.content.title_instruction"),
+                  class: "form-control",
+                  value: translate_attribute(f.object, :title_instruction)
     = f.text_area :instructions,
                   placeholder: t("activerecord.attributes.content.instructions"),
                   class: "form-control",

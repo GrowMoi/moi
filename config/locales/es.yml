@@ -742,6 +742,7 @@
         title: Título
         media: Multimedia
         instructions: Instrucciones
+        title_instruction: Titulo instrucciones
       search_engine:
         name: Nombre
         gcse_id: CSE id

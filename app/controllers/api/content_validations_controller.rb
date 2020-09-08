@@ -78,8 +78,9 @@ module Api
         render nothing: true,
                status: :accepted
       else
-        render status: :unprocessable_entity,
-               errors: check_request_content.errors
+        render text: check_content.errors.full_messages,
+              status: :unprocessable_entity,
+              errors: check_content.errors.full_messages
       end
     end
   end

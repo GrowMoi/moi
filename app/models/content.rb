@@ -2,18 +2,19 @@
 #
 # Table name: contents
 #
-#  id           :integer          not null, primary key
-#  level        :integer          not null
-#  kind         :string           not null
-#  description  :text             not null
-#  neuron_id    :integer          not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  source       :string
-#  approved     :boolean          default(FALSE)
-#  title        :string
-#  media_count  :integer          default(0)
-#  instructions :string
+#  id                :integer          not null, primary key
+#  level             :integer          not null
+#  kind              :string           not null
+#  description       :text             not null
+#  neuron_id         :integer          not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  source            :string
+#  approved          :boolean          default(FALSE)
+#  title             :string
+#  media_count       :integer          default(0)
+#  instructions      :string
+#  title_instruction :string
 #
 
 class Content < ActiveRecord::Base

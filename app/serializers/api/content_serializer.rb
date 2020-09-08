@@ -35,6 +35,7 @@ module Api
                :neuron_can_read,
                :favorite,
                :belongs_to_event,
+               :title_instruction,
                :instructions,
                :content_can_read
 
