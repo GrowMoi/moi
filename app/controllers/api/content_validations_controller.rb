@@ -40,15 +40,15 @@ module Api
         "/content_validations/start_validation",
         "Send a request to validate img/video upload an specific neuron"
     param :request_id, String
-    param :media, String
 
     def start_validation
       check_content = CheckContentValidation.new(
-        user: current_user,
+        reviewer: current_user,
         request_content_validation: request_content,
       )
       if check_content.save
-        # request_content.accepted = true;
+        request_content.in_review = true;
+        request_content.save;
         # TODO: Notify User
         render nothing: true,
                status: :accepted

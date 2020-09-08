@@ -8,6 +8,7 @@
 #  media      :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  in_review  :boolean
 #
 
 class RequestContentValidation < ActiveRecord::Base

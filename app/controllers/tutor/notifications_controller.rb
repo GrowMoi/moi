@@ -36,6 +36,10 @@ module Tutor
       ClientNotification.find(params[:id])
     }
 
+    expose(:client_request_content_notifications) {
+      # TODO: get list request
+    }
+
     def index
       render
     end
