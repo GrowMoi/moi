@@ -9,10 +9,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  in_review  :boolean
+#  approved   :boolean
 #
 
 class RequestContentValidation < ActiveRecord::Base
   belongs_to :user
   belongs_to :content
-  has_one :check_content_validation
 end

@@ -36,7 +36,7 @@ module Api
                :favorite,
                :belongs_to_event,
                :instructions,
-               :approved_by_tutor
+               :content_can_read
 
     translates :title, :description, :source
 
@@ -96,8 +96,16 @@ module Api
       belongs
     end
 
-    def approved_by_tutor
-      true
+    def content_can_read
+      if self.instructions
+        RequestContentValidation.where(
+          user: current_user,
+          content: object,
+          approved: true
+        ).exists?
+      else
+        true
+      end
     end
 
     alias_method :current_user, :scope
