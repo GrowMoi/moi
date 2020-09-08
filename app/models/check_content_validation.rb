@@ -14,4 +14,5 @@
 class CheckContentValidation < ActiveRecord::Base
   belongs_to :reviewer, class_name: "User"
   belongs_to :request_content_validation
+  validates :request_content_validation_id, uniqueness: true
 end

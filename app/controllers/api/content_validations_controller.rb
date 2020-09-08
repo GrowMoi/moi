@@ -1,6 +1,7 @@
 module Api
   class ContentValidationsController < BaseController
     before_action :authenticate_user!
+    respond_to :json
 
     expose(:content) {
       Content.find(params[:content_id])
@@ -31,8 +32,9 @@ module Api
         render nothing: true,
                status: :accepted
       else
-        render status: :unprocessable_entity,
-               errors: new_request_content.errors
+        render text: new_request_content.errors.full_messages,
+              status: :unprocessable_entity,
+              errors: new_request_content.errors.full_messages
       end
     end
 
@@ -53,8 +55,9 @@ module Api
         render nothing: true,
                status: :accepted
       else
-        render status: :unprocessable_entity,
-               errors: check_content.errors
+        render text: check_content.errors.full_messages,
+              status: :unprocessable_entity,
+              errors: check_content.errors.full_messages
       end
     end
 
