@@ -75,12 +75,43 @@ module Api
         request_content.approved = check_request_content.approved
         request_content.save
         # TODO: Notify User
+        notification = create_notification(check_request_content)
+        notify_client_content_validation(notification)
         render nothing: true,
                status: :accepted
       else
         render text: check_content.errors.full_messages,
               status: :unprocessable_entity,
               errors: check_content.errors.full_messages
+      end
+    end
+
+
+    private
+
+    def create_notification(check_request_content)
+      notification = ClientNotification.new
+      notification.client_id = request_content.user_id
+      notification.data_type = "client_got_validation_content"
+      notification.data = {
+        approved: check_request_content.approved,
+        message: check_request_content.message
+      }
+      return notification.save ? notification : nil;
+    end
+
+    def notify_client_content_validation(notification_data)
+      unless Rails.env.test?
+        user_channel_general = "tutornotifications.#{check_request_content.reviewer.id}"
+        begin
+          Pusher.trigger(user_channel_general, 'client_got_validation_content', notification_data)
+        rescue Exception => e
+          puts e.message
+          puts e.backtrace.inspect
+        else
+          puts "PUSHER: Message sent successfully!"
+          puts "PUSHER: #{notification_data}"
+        end
       end
     end
   end
