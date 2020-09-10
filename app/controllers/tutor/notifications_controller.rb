@@ -37,7 +37,7 @@ module Tutor
     }
 
     expose(:client_request_content_notifications) {
-      # TODO: get list request
+      RequestContentValidation.where(in_review: false, approved: false)
     }
 
     def index
@@ -47,6 +47,12 @@ module Tutor
     def info
       render json: client_notifications,
       each_serializer: Api::ClientNotificationSerializer,
+      root: "data"
+    end
+
+    def need_content_validation
+      render json: client_request_content_notifications,
+      each_serializer: Api::ClientNotificationRequestSerializer,
       root: "data"
     end
 

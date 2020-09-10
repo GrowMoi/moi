@@ -301,6 +301,7 @@ Moi::Application.routes.draw do
       end
       collection do
         get :info
+        get :need_content_validation
       end
     end
 
