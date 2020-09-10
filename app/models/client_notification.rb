@@ -30,4 +30,19 @@ class ClientNotification < ActiveRecord::Base
   begin :enumerables
     enum data_type: CATEGORIES
   end
+
+  def send_pusher_notification(channel, data_type)
+    unless Rails.env.test?
+      user_channel_general = channel
+      begin
+        Pusher.trigger(user_channel_general, data_type, self.data)
+      rescue Exception => e
+        puts e.message
+        puts e.backtrace.inspect
+      else
+        puts "PUSHER: Message sent successfully!"
+        puts "PUSHER: #{self.data}"
+      end
+    end
+  end
 end
