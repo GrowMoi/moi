@@ -92,7 +92,9 @@ module Api
         data_type: "client_got_validation_content",
         data: {
           approved: check_request_content.approved,
-          message: check_request_content.message
+          message: check_request_content.message,
+          content_title: request_content.content.title,
+          content_id: request_content.content.id,
         }
       )
       if notification.save
