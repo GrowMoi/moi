@@ -16,7 +16,9 @@ Polymer({
   },
   init: function () {
     this.notifications = [];
+    this.notificationsRequests = [];
     var notificationsApi = '/tutor/notifications/info';
+    var notificationsRequestApi = '/tutor/notifications/need_content_validation';
     this.rowImage = this.assetPath('bell.svg');
     this.emptyNotifications = true;
     this.titleMapping = {
@@ -46,6 +48,13 @@ Polymer({
       url: notificationsApi,
       type: 'GET',
       success: this.onGetNotificationsApiSuccess.bind(this)
+      //error:  this.onGetNotificationsApiError.bind(this)
+    });
+
+    $.ajax({
+      url: notificationsRequestApi,
+      type: 'GET',
+      success: this.onGetNotificationsRequestApiSuccess.bind(this)
       //error:  this.onGetNotificationsApiError.bind(this)
     });
 
@@ -89,6 +98,13 @@ Polymer({
     this.notifications = res.data || [];
     this.emptyNotifications = this.notifications.length === 0;
     this.formatNotifications(this.notifications);
+  },
+  onGetNotificationsRequestApiSuccess: function(res) {
+    console.log('res: ', res);
+    this.loading = false;
+    this.notificationsRequests = res.data || [];
+    // this.emptyNotifications = this.notifications.length === 0;
+    // this.formatNotifications(this.notifications);
   },
   formatNotifications: function(data) {
     for(var i = 0; i < data.length; i ++) {

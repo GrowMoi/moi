@@ -37,6 +37,7 @@ module Tutor
     }
 
     expose(:client_request_content_notifications) {
+      # RequestContentValidation.all
       RequestContentValidation.where(in_review: false, approved: false)
     }
 
