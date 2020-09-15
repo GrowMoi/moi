@@ -23,7 +23,7 @@ class Neuron < ActiveRecord::Base
       define_method "#{relationship}_any?" do |opts|
         send("#{relationship}_scope").any? do |item|
           opts.all? do |key, val|
-            item.send(key).eql?(val)
+            item && item.send(key).eql?(val)
           end
         end
       end

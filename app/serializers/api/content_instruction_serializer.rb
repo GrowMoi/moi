@@ -11,7 +11,16 @@
 #  updated_at     :datetime         not null
 #
 
-class ContentInstruction < ActiveRecord::Base
-  belongs_to :content
-  validates :content_id, :title, :description, presence: true
+
+module Api
+  class ContentInstructionSerializer < ResourceSerializer
+    root false
+    attributes :description,
+               :title,
+               :required_media
+
+    def required_media
+      !!object.required_media
+    end
+  end
 end

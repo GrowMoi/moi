@@ -35,11 +35,14 @@ module Api
                :neuron_can_read,
                :favorite,
                :belongs_to_event,
-               :title_instruction,
-               :instructions,
                :content_can_read
-
+    
+    has_one :content_instruction
     translates :title, :description, :source
+
+    def content_instruction
+      ContentInstructionSerializer.new(object.content_instruction)
+    end
 
     def read
       current_user.already_read?(object)
@@ -98,7 +101,7 @@ module Api
     end
 
     def content_can_read
-      if self.instructions
+      if object.content_instruction
         RequestContentValidation.where(
           user: current_user,
           content: object,

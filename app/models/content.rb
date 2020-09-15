@@ -95,7 +95,10 @@ class Content < ActiveRecord::Base
       }
 
     accepts_nested_attributes_for :content_instruction,
-      allow_destroy: true
+      allow_destroy: true,
+      reject_if: ->(attributes) {
+        attributes["id"].blank? && attributes["title"].blank? && attributes["description"].blank?
+      }
   end
 
   begin :scopes
