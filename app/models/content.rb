@@ -93,6 +93,9 @@ class Content < ActiveRecord::Base
       reject_if: ->(attributes) {
         attributes["id"].blank? && attributes["url"].blank?
       }
+
+    accepts_nested_attributes_for :content_instruction,
+      allow_destroy: true
   end
 
   begin :scopes

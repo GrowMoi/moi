@@ -11,6 +11,18 @@
     .content-description
       = content.translated_or_spellchecked(:description)
 
+    .content-instrucion
+      - if content.content_instruction
+        h5 = t("views.contents.instructions")
+        .content-fields
+          h6 = t("activerecord.attributes.content_instruction.title")
+          span  = content.content_instruction.title
+        .content-fields
+          h6 = t("activerecord.attributes.content_instruction.description")
+          span = content.content_instruction.description
+        .content-fields
+          h6 = t("activerecord.attributes.content_instruction.required_media")
+          span = content.content_instruction.required_media
     = content.video_list_group
     = content.media_list_group
     = content.links_list_group

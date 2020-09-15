@@ -3,6 +3,7 @@ fieldset
   .row
     .col-xs-12.content-videos-form
       = f.fields_for :content_instruction do |ci|
+        = ci.hidden_field :id
         .form-group
           = ci.text_field :title,
                   placeholder: t("activerecord.attributes.content_instruction.title"),

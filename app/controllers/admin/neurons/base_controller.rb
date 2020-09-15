@@ -65,6 +65,12 @@ module Admin
                           :id,
                           :url,
                           :language
+                        ],
+                        :content_instruction_attributes => [
+                          :id,
+                          :title,
+                          :description,
+                          :required_media
                         ]
                       ]
       rescue ActionController::ParameterMissing
