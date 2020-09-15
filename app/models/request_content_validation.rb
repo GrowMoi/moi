@@ -10,6 +10,7 @@
 #  updated_at :datetime         not null
 #  in_review  :boolean
 #  approved   :boolean
+#  text       :string
 #
 
 class RequestContentValidation < ActiveRecord::Base

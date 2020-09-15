@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200908231431) do
+ActiveRecord::Schema.define(version: 20200915161258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -497,6 +497,7 @@ ActiveRecord::Schema.define(version: 20200908231431) do
     t.datetime "updated_at", null: false
     t.boolean  "in_review"
     t.boolean  "approved"
+    t.string   "text"
   end
 
   add_index "request_content_validations", ["content_id"], name: "index_request_content_validations_on_content_id", using: :btree
