@@ -95,6 +95,7 @@ module Api
           message: check_request_content.message,
           content_title: request_content.content.title,
           content_id: request_content.content.id,
+          neuron_id: request_content.content.neuron.id,
         }
       )
       if notification.save
