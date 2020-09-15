@@ -5,9 +5,14 @@ module Api
         :data,
         :deleted,
         :opened,
-        :created_at
+        :created_at,
+        :type
 
     has_one :client
+
+    def type
+      object.data_type
+    end
 
     def client
       ClientSerializer.new(object.client)
