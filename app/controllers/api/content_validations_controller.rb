@@ -20,12 +20,14 @@ module Api
         "Send a request to validate img/video upload an specific neuron"
     param :content_id, String
     param :media, String
+    param :text, String
 
     def send_request
       new_request_content = RequestContentValidation.new(
         user: current_user,
         content: content,
-        media: params[:media]
+        media: params[:media],
+        text: params[:text]
       )
       if new_request_content.save
         # TODO: Notify Tutor a new request

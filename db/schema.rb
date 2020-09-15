@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200915161258) do
+ActiveRecord::Schema.define(version: 20200915161952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,17 @@ ActiveRecord::Schema.define(version: 20200915161258) do
   end
 
   add_index "content_importings", ["user_id"], name: "index_content_importings_on_user_id", using: :btree
+
+  create_table "content_instructions", force: :cascade do |t|
+    t.string   "title",          null: false
+    t.string   "description",    null: false
+    t.boolean  "required_media"
+    t.integer  "content_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "content_instructions", ["content_id"], name: "index_content_instructions_on_content_id", using: :btree
 
   create_table "content_learning_events", force: :cascade do |t|
     t.integer  "user_event_id", null: false
