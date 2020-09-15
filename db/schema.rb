@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200915161952) do
+ActiveRecord::Schema.define(version: 20200915165159) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -269,18 +269,16 @@ ActiveRecord::Schema.define(version: 20200915161952) do
   add_index "content_videos", ["language"], name: "index_content_videos_on_language", using: :btree
 
   create_table "contents", force: :cascade do |t|
-    t.integer  "level",                             null: false
-    t.string   "kind",                              null: false
-    t.text     "description",                       null: false
-    t.integer  "neuron_id",                         null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.integer  "level",                       null: false
+    t.string   "kind",                        null: false
+    t.text     "description",                 null: false
+    t.integer  "neuron_id",                   null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "source"
-    t.boolean  "approved",          default: false
+    t.boolean  "approved",    default: false
     t.string   "title"
-    t.integer  "media_count",       default: 0
-    t.string   "instructions"
-    t.string   "title_instruction"
+    t.integer  "media_count", default: 0
   end
 
   add_index "contents", ["media_count"], name: "index_contents_on_media_count", using: :btree

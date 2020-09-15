@@ -216,6 +216,7 @@
         por-que-es: "Por qué es"
         quien-cuando-donde: "Quién/Cuándo/Dónde"
         videos: "Vídeos"
+      instructions: Instrucciones
     profiles:
       new: Nuevo árbol
       edit: Editar árbol
@@ -741,8 +742,6 @@
         approved: Aprobado
         title: Título
         media: Multimedia
-        instructions: Instrucciones
-        title_instruction: Titulo instrucciones
       search_engine:
         name: Nombre
         gcse_id: CSE id
@@ -808,6 +807,10 @@
         inactive_image: Imagen premio - Desactivada
         new_users: Solo para nuevos usuarios
         email_notify: Correo (Recibir notificationes)
+      content_instruction:
+        title: Titulo
+        description: Descripción
+        required_media: Requiere subir imagen o video
     errors:
       messages:
         <<: *errors_messages
