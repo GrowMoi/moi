@@ -245,6 +245,7 @@ class User < ActiveRecord::Base
   end
 
   def skip_password_for_clients
+    self.skip_confirmation! # need remove validation use a migration
     if cliente? && password.blank?
       self.password = Devise.friendly_token
       self.password_confirmation = password
