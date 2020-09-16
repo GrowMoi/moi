@@ -425,6 +425,7 @@
           client_message_open: "Mensaje leido"
           client_recommended_contents_completed: "Contenidos recomendados completados"
           client_got_diploma: "Nuevo diploma obtenido"
+          client_need_validation_content: "Un usuario necesita validar una consigna"
           results: "Resultados"
           player: "Jugador: "
           details: "Detalles"

@@ -25,14 +25,15 @@ Polymer({
       'client_got_item': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_item'),
       'client_recommended_contents_completed': this.t('views.tutor.dashboard.card_tutor_notifications.client_recommended_contents_completed'),
       'client_got_diploma': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_diploma'),
-      'client_need_validation_content': 'sometext'
+      'client_need_validation_content': this.t('views.tutor.dashboard.card_tutor_notifications.client_need_validation_content'),
     };
 
     this.actionsMapping = {
       'client_test_completed': this.buildClientTestCompleted.bind(this),
       'client_message_open': this.buildClientMessageOpen.bind(this),
       'client_got_item': this.buildClientGotItem.bind(this),
-      'client_recommended_contents_completed': this.buildClientRecommendedContentsCompleted.bind(this)
+      'client_recommended_contents_completed': this.buildClientRecommendedContentsCompleted.bind(this),
+      'client_need_validation_content': this.buildClientMessageOpen.bind(this)
     };
 
     this.loading = true;
@@ -202,6 +203,7 @@ Polymer({
         };
   },
   buildClientMessageOpen: function(res, notificationSelected) {
+    debugger
     this.clientMessageOpen = true;
     var username = notificationSelected.client.username;
     this.notificationData =  {

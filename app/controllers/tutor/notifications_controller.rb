@@ -37,8 +37,8 @@ module Tutor
     }
 
     expose(:client_request_content_notifications) {
-      # RequestContentValidation.all
-      RequestContentValidation.where(in_review: false, approved: false)
+      data_type = 6 #client_need_validation_content
+      ClientNotification.where(data_type: data_type).order(created_at: :desc)
     }
 
     def index
@@ -46,14 +46,9 @@ module Tutor
     end
 
     def info
-      render json: client_notifications,
+      notifications = client_notifications + client_request_content_notifications
+      render json: notifications,
       each_serializer: Api::ClientNotificationSerializer,
-      root: "data"
-    end
-
-    def need_content_validation
-      render json: client_request_content_notifications,
-      each_serializer: Api::ClientNotificationRequestSerializer,
       root: "data"
     end
 
