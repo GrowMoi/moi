@@ -16,31 +16,6 @@
           </div>
         </template>
 
-        <template is="dom-repeat" items="{{ notificationsRequests }}">
-          <div class="notification-info">
-            <div class="info">
-              <div class="image">
-                <img src$="[[ rowImage ]]" alt="">
-              </div>
-              <div class="details">
-                <div>Revision de contenido</div>
-                <div>
-                  <small>{{ item.username}}</small>
-                </div>
-
-              </div >
-            </div>
-            <div class="options">
-              <paper-button on-tap="openDialogDetails">
-                <span>[[ t('views.tutor.dashboard.card_tutor_notifications.details') ]]</span>
-              </paper-button>
-              <paper-button class="btn-remove" on-tap="openDialogConfirm">
-                <span>X</span>
-              </paper-button>
-            </div>
-          </div>
-        </template>
-
         <template is="dom-repeat" items="{{ notifications }}">
           <div class="notification-info">
             <div class="info">

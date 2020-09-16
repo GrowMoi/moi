@@ -16,9 +16,7 @@ Polymer({
   },
   init: function () {
     this.notifications = [];
-    this.notificationsRequests = [];
     var notificationsApi = '/tutor/notifications/info';
-    var notificationsRequestApi = '/tutor/notifications/need_content_validation';
     this.rowImage = this.assetPath('bell.svg');
     this.emptyNotifications = true;
     this.titleMapping = {
@@ -26,7 +24,8 @@ Polymer({
       'client_message_open': this.t('views.tutor.dashboard.card_tutor_notifications.client_message_open'),
       'client_got_item': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_item'),
       'client_recommended_contents_completed': this.t('views.tutor.dashboard.card_tutor_notifications.client_recommended_contents_completed'),
-      'client_got_diploma': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_diploma')
+      'client_got_diploma': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_diploma'),
+      'client_need_validation_content': 'sometext'
     };
 
     this.actionsMapping = {
@@ -50,14 +49,6 @@ Polymer({
       success: this.onGetNotificationsApiSuccess.bind(this)
       //error:  this.onGetNotificationsApiError.bind(this)
     });
-
-    $.ajax({
-      url: notificationsRequestApi,
-      type: 'GET',
-      success: this.onGetNotificationsRequestApiSuccess.bind(this)
-      //error:  this.onGetNotificationsApiError.bind(this)
-    });
-
     NotificationBehavior.startPusherForTutorAccount(this.tutorId, this.onNotificationReceived.bind(this));
   },
   bindOptions: function() {
@@ -98,13 +89,6 @@ Polymer({
     this.notifications = res.data || [];
     this.emptyNotifications = this.notifications.length === 0;
     this.formatNotifications(this.notifications);
-  },
-  onGetNotificationsRequestApiSuccess: function(res) {
-    console.log('res: ', res);
-    this.loading = false;
-    this.notificationsRequests = res.data || [];
-    // this.emptyNotifications = this.notifications.length === 0;
-    // this.formatNotifications(this.notifications);
   },
   formatNotifications: function(data) {
     for(var i = 0; i < data.length; i ++) {
