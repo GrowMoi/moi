@@ -1,6 +1,8 @@
 class ContentDecorator < ResourceDecorator
   def build_one_instruction!
-    self.build_content_instruction
+    unless self.content_instruction
+      self.build_content_instruction
+    end
   end
 
   def build_one_link!
