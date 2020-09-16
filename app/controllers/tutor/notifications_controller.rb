@@ -38,7 +38,7 @@ module Tutor
 
     expose(:client_request_content_notifications) {
       data_type = 6 #client_need_validation_content
-      ClientNotification.where(data_type: data_type).order(created_at: :desc)
+      ClientNotification.where(data_type: data_type, deleted: false).order(created_at: :desc)
     }
 
     def index
@@ -102,6 +102,14 @@ module Tutor
         )
         render json: {
           contents: serialized_contents
+        }
+      elsif type == "client_need_validation_content"
+        client_notification.update(opened: true)
+        new_request_content_id = client_notification.data['new_request_content_id']
+        request_client = RequestContentValidation.find(new_request_content_id)
+        serialized_request = Tutor::SimpleRequestValidationSerializer.new(request_client)
+        render json: {
+          request_client: serialized_request
         }
       else
         render json: {}

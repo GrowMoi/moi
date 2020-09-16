@@ -33,7 +33,7 @@ Polymer({
       'client_message_open': this.buildClientMessageOpen.bind(this),
       'client_got_item': this.buildClientGotItem.bind(this),
       'client_recommended_contents_completed': this.buildClientRecommendedContentsCompleted.bind(this),
-      'client_need_validation_content': this.buildClientMessageOpen.bind(this)
+      'client_need_validation_content': this.buildClientNeedValidateAContent.bind(this)
     };
 
     this.loading = true;
@@ -125,7 +125,7 @@ Polymer({
       }.bind(this)
     });
   },
-  rigthAnswers: function (results) {
+  rightAnswers: function (results) {
     var count = 0;
     results.forEach(function(result){
       if (result.correct) {
@@ -188,7 +188,7 @@ Polymer({
   buildClientTestCompleted: function(res, notificationSelected) {
     this.clientTestCompleted = true;
     var totalQuestions = res.questions.questions.length,
-        successAnswers = this.rigthAnswers(res.answers),
+        successAnswers = this.rightAnswers(res.answers),
         description = 'Respondió ' + successAnswers + ' de ' + totalQuestions + ' preguntas correctamente',
         timeMessage = 'Tiempo usado: ' + res.time_quiz,
         answersWithResults =  this.mapQuizResults(res.answers, res.questions.questions),
@@ -203,7 +203,6 @@ Polymer({
         };
   },
   buildClientMessageOpen: function(res, notificationSelected) {
-    debugger
     this.clientMessageOpen = true;
     var username = notificationSelected.client.username;
     this.notificationData =  {
@@ -230,10 +229,26 @@ Polymer({
       contents: res.contents || []
     };
   },
+  buildClientNeedValidateAContent: function(res, notificationSelected) {
+    this.clientNeedValidation = true;
+    var username = notificationSelected.client.username;
+    var request_client = res.request_client || {};
+    var content_instruction = request_client.content_instruction || {};
+    this.notificationData =  {
+      username: username,
+      content: request_client.content_title,
+      media: request_client.media,
+      text: request_client.text,
+      instruction: content_instruction.description,
+      media_required: content_instruction.media_required,
+      created_at: request_client.created_at
+    };
+  },
   resetDialogFlags: function() {
     this.clientTestCompleted = false;
     this.clientMessageOpen = false;
     this.clientGotItem = false;
     this.clientRecommendedContentsCompleted =  false;
+    this.clientNeedValidation = false;
   }
 });
