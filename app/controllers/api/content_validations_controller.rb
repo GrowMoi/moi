@@ -16,7 +16,7 @@ module Api
     }
 
     api :POST,
-        "/content_validations/send",
+        "/content_validations/send_request",
         "Send a request to validate img/video upload an specific neuron"
     param :content_id, String
     param :media, String
@@ -30,7 +30,7 @@ module Api
         text: params[:text]
       )
       if new_request_content.save
-        # TODO: Notify Tutor a new request
+        create_notification_for_tutor(new_request_content)
         render nothing: true,
                status: :accepted
       else
@@ -87,6 +87,22 @@ module Api
     end
 
     private
+
+    def create_notification_for_tutor(new_request_content)
+      tutor = User.where(role: "tutor").last #testing notification
+      notification = ClientNotification.new(
+        client_id: current_user.id,
+        data_type: "client_need_validation_content",
+        data: {
+          new_request_content_id: new_request_content.id,
+        }
+      )
+      if notification.save
+        channel = "tutornotifications.#{tutor.id}"
+        notification.send_pusher_notification(channel, "client_need_validation_content")
+      end
+    end
+
 
     def create_notification(check_request_content)
       notification = ClientNotification.new(
