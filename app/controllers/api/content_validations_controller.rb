@@ -71,8 +71,12 @@ module Api
     # param :approved, Boolean
 
     def checked
-      check_request_content.message = params[:message]
-      check_request_content.approved = params[:approved]
+      check_request_content = CheckContentValidation.new(
+        reviewer: current_user,
+        request_content_validation: request_content,
+        message: params[:message],
+        approved: params[:approved]
+      )
       if check_request_content.save
         request_content.approved = check_request_content.approved
         request_content.save

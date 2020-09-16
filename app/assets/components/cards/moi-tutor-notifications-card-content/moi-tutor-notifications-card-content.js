@@ -43,6 +43,8 @@ Polymer({
       onNotificationOpen: null,
       onNotificationReceived: null
     };
+    this.notificationSelected = null;
+    this.request_answer = "dadas";
     this.resetDialogFlags();
     $.ajax({
       url: notificationsApi,
@@ -105,6 +107,7 @@ Polymer({
     this.resetDialogFlags();
     var model = ev.model;
     var notificationSelected = model.item;
+    this.notificationSelected = notificationSelected;
     $(this.$['dialog-notification-info']).show();
     $.ajax({
       url: '/tutor/notifications/' + notificationSelected.id + '/details',
@@ -185,6 +188,53 @@ Polymer({
       });
     }
   },
+  approvedRequest: function(ev) {
+    var request_id = this.notificationSelected.data.new_request_content_id;
+    var feedback = this.request_answer;
+    $.ajax({
+      url: '/api/content_validations/checked',
+      type: 'PUT',
+      data: {
+        request_id: request_id,
+        message: feedback,
+        approved: true
+      },
+      success: function(res) {
+        console.log(res);
+      }.bind(this),
+      error: function(res) {
+        $(this.$['dialog-confirm']).hide();
+        var message = res.responseJSON && res.responseJSON.message ? res.responseJSON.message : '';
+        this.toastMessage = message;
+        this.$['toast-message'].show();
+      }.bind(this)
+    });
+  },
+  disapprovedRequest: function() {
+    var request_id = this.notificationSelected.data.new_request_content_id;
+    var feedback = this.request_answer;
+    $.ajax({
+      url: '/api/content_validations/checked',
+      type: 'PUT',
+      data: {
+        request_id: request_id,
+        message: feedback,
+        approved: false
+      },
+      success: function(res) {
+        console.log(res);
+      }.bind(this),
+      error: function(res) {
+        $(this.$['dialog-confirm']).hide();
+        var message = res.responseJSON && res.responseJSON.message ? res.responseJSON.message : '';
+        this.toastMessage = message;
+        this.$['toast-message'].show();
+      }.bind(this)
+    });
+  },
+  updateFeedback: function(ev) {
+    console.log(ev.model);
+  },
   buildClientTestCompleted: function(res, notificationSelected) {
     this.clientTestCompleted = true;
     var totalQuestions = res.questions.questions.length,
@@ -241,8 +291,10 @@ Polymer({
       text: request_client.text,
       instruction: content_instruction.description,
       media_required: content_instruction.media_required,
-      created_at: request_client.created_at
+      created_at: request_client.created_at,
+      reviewed: request_client.approved !== null
     };
+    console.log(this.notificationData);
   },
   resetDialogFlags: function() {
     this.clientTestCompleted = false;

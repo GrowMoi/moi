@@ -167,25 +167,41 @@
           <div>{{ t('views.loading') }}</div>
         </template>
         <template is="dom-if" if="{{ !loadingDialogData }}" restamp>
-          <div>
-            <div>Contenido:</div>
-            <h4>{{notificationData.content}}</h4>
-            <br>
-            <div>Consigna:</div>
-            <p>{{notificationData.instruction}}</p>
-          </div>
-          <div>
+          <template is="dom-if" if="{{ notificationData.reviewed }}" restamp>
+            <h4>Este contenido ya ha sido revisado por alguien mas</h4>
+          </template>
+          <template is="dom-if" if="{{ !notificationData.reviewed }}" restamp>
+            <div>
+              <div>Contenido:</div>
+              <h4>{{notificationData.content}}</h4>
+              <br>
+              <div>Consigna:</div>
+              <p>{{notificationData.instruction}}</p>
+            </div>
+            <div>
+              <hr>
+              <div>Usuario:</div>
+              <h4>{{notificationData.username}}</h4>
+              <div>Respuesta:</div>
+              <template is="dom-if" if="{{ notificationData.media_required }}" restamp>
+                <h4>{{notificationData.media}}</h4>
+              </template>
+              <template is="dom-if" if="{{ !notificationData.media_required }}" restamp>
+                <p>{{notificationData.text}}</p>
+              </template>
+            </div>
             <hr>
-            <div>Usuario:</div>
-            <h4>{{notificationData.username}}</h4>
-            <div>Respuesta:</div>
-            <template is="dom-if" if="{{ notificationData.media_required }}" restamp>
-              <h4>{{notificationData.media}}</h4>
+            <label for="feedback">[[ t('views.tutor.dashboard.card_tutor_notifications.actions.feedback') ]]</label>
+            <textarea class="form-control" on-change="updateFeedback" name="request_answer" id="request_answer_feedback"></textarea>
+              <div class="options">
+                <paper-button on-tap="approvedRequest" class="btn-cancel">
+                  <span>[[ t('views.tutor.dashboard.card_tutor_notifications.actions.approve') ]]</span>
+                </paper-button>
+                <paper-button on-tap="disapprovedRequest" class="btn-remove">
+                  <span>[[ t('views.tutor.dashboard.card_tutor_notifications.actions.disapprove') ]]</span>
+                </paper-button>
+              </div>
             </template>
-            <template is="dom-if" if="{{ !notificationData.media_required }}" restamp>
-              <p>{{notificationData.text}}</p>
-            </template>
-          </div>
         </template>
       </moi-dialog>
     </template>
