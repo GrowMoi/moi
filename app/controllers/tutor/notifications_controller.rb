@@ -107,7 +107,7 @@ module Tutor
         client_notification.update(opened: true)
         new_request_content_id = client_notification.data['new_request_content_id']
         request_client = RequestContentValidation.find(new_request_content_id)
-        serialized_request = Tutor::SimpleRequestValidationSerializer.new(request_client)
+        serialized_request = Tutor::SimpleRequestValidationSerializer.new(request_client, scope: current_user)
         render json: {
           request_client: serialized_request
         }

@@ -44,7 +44,7 @@ Polymer({
       onNotificationReceived: null
     };
     this.notificationSelected = null;
-    this.request_answer = "dadas";
+    this.request_answer = "";
     this.resetDialogFlags();
     $.ajax({
       url: notificationsApi,
@@ -189,6 +189,7 @@ Polymer({
     }
   },
   approvedRequest: function(ev) {
+    ev.stopPropagation();
     var request_id = this.notificationSelected.data.new_request_content_id;
     var feedback = this.request_answer;
     $.ajax({
@@ -201,6 +202,7 @@ Polymer({
       },
       success: function(res) {
         console.log(res);
+        $(this.$['dialog-confirm']).hide();
       }.bind(this),
       error: function(res) {
         $(this.$['dialog-confirm']).hide();
@@ -210,7 +212,8 @@ Polymer({
       }.bind(this)
     });
   },
-  disapprovedRequest: function() {
+  disapprovedRequest: function(ev) {
+    ev.stopPropagation();
     var request_id = this.notificationSelected.data.new_request_content_id;
     var feedback = this.request_answer;
     $.ajax({
@@ -223,9 +226,10 @@ Polymer({
       },
       success: function(res) {
         console.log(res);
+        $(this.$['dialog-notification-info']).hide();
       }.bind(this),
       error: function(res) {
-        $(this.$['dialog-confirm']).hide();
+        $(this.$['dialog-notification-info']).hide();
         var message = res.responseJSON && res.responseJSON.message ? res.responseJSON.message : '';
         this.toastMessage = message;
         this.$['toast-message'].show();
@@ -233,7 +237,7 @@ Polymer({
     });
   },
   updateFeedback: function(ev) {
-    console.log(ev.model);
+    this.request_answer = ev.target.value;
   },
   buildClientTestCompleted: function(res, notificationSelected) {
     this.clientTestCompleted = true;
@@ -292,7 +296,8 @@ Polymer({
       instruction: content_instruction.description,
       media_required: content_instruction.media_required,
       created_at: request_client.created_at,
-      reviewed: request_client.approved !== null
+      reviewed: request_client.approved !== null,
+      reviewed_by_me: request_client.reviewed_by_me
     };
     console.log(this.notificationData);
   },

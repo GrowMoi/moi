@@ -25,7 +25,8 @@ module Tutor
                 :approved,
                 :created_at,
                 :content_title,
-                :content_instruction
+                :content_instruction,
+                :reviewed_by_me
 
     def content_title
       object.content.title
@@ -36,5 +37,12 @@ module Tutor
         Api::ContentInstructionSerializer.new(object.content.content_instruction)
       end
     end
+
+    def reviewed_by_me
+      if object.check_content_validation
+        object.check_content_validation.reviewer_id == current_user.id
+      end
+    end
+    alias_method :current_user, :scope
   end
 end
