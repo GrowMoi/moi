@@ -30,7 +30,7 @@ module Api
         text: params[:text]
       )
       if new_request_content.save
-        create_notification_for_tutor(new_request_content)
+        create_notifications_for_tutor(new_request_content)
         render nothing: true,
                status: :accepted
       else
@@ -92,18 +92,20 @@ module Api
 
     private
 
-    def create_notification_for_tutor(new_request_content)
-      tutor = User.where(role: "tutor").last #testing notification
-      notification = ClientNotification.new(
-        client_id: current_user.id,
-        data_type: "client_need_validation_content",
-        data: {
-          new_request_content_id: new_request_content.id,
-        }
-      )
-      if notification.save
-        channel = "tutornotifications.#{tutor.id}"
-        notification.send_pusher_notification(channel, "client_need_validation_content")
+    def create_notifications_for_tutor(new_request_content)
+      tutors = UserTutor.where(user: current_user)
+      tutors.map do |tutor|
+        notification = ClientNotification.new(
+          client_id: current_user.id,
+          data_type: "client_need_validation_content",
+          data: {
+            new_request_content_id: new_request_content.id,
+          }
+        )
+        if notification.save
+          channel = "tutornotifications.#{tutor.tutor_id}"
+          notification.send_pusher_notification(channel, "client_need_validation_content")
+        end
       end
     end
 
