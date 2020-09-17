@@ -49,7 +49,7 @@ module Api
     }
 
     expose(:content_validation_notification) {
-      ClientNotification.where(client: current_user.id, deleted: false, data_type: 6).order(created_at: :desc)
+      ClientNotification.where(client: current_user.id, deleted: false, data_type: 7).order(created_at: :desc)
     }
 
     expose(:total_user_notifications) {

@@ -84,9 +84,9 @@ module Api
         render nothing: true,
                status: :accepted
       else
-        render text: check_content.errors.full_messages,
+        render text: check_request_content.errors.full_messages,
               status: :unprocessable_entity,
-              errors: check_content.errors.full_messages
+              errors: check_request_content.errors.full_messages
       end
     end
 
@@ -109,9 +109,10 @@ module Api
 
 
     def create_notification(check_request_content)
-      notification = ClientNotification.new(
+      notification = Notification.new(
         client_id: request_content.user_id,
-        data_type: "client_got_validation_content",
+        data_type: "tutor_validated_content",
+        user_id: current_user.id,
         data: {
           approved: check_request_content.approved,
           message: check_request_content.message,
@@ -120,10 +121,7 @@ module Api
           neuron_id: request_content.content.neuron.id,
         }
       )
-      if notification.save
-        channel = "tutornotifications.#{check_request_content.reviewer.id}"
-        notification.send_pusher_notification(channel, "client_got_validation_content")
-      end
+      notification.save
     end
   end
 end

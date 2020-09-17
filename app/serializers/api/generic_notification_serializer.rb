@@ -8,7 +8,8 @@ module Api
         :media,
         :type,
         :tutor,
-        :created_at
+        :created_at,
+        :data
 
     def videos
       video_urls = object.notification_videos.map {|v| v[:url] }

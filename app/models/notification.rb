@@ -11,6 +11,7 @@
 #  updated_at  :datetime         not null
 #  client_id   :integer
 #  data_type   :string
+#  data        :json
 #
 
 class Notification < ActiveRecord::Base
