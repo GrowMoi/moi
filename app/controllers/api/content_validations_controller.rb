@@ -77,7 +77,8 @@ module Api
           data_type: "client_need_validation_content",
           data: {
             new_request_content_id: new_request_content.id,
-            tutor_id: tutor.tutor_id
+            tutor_id: tutor.tutor_id,
+            data_type: "client_need_validation_content"
           }
         )
         if notification.save
