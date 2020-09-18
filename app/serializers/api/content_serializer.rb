@@ -35,13 +35,23 @@ module Api
                :neuron_can_read,
                :favorite,
                :belongs_to_event,
-               :content_can_read
+               :content_can_read,
+               :consigna
     
     has_one :content_instruction
     translates :title, :description, :source
 
-    def content_instruction
-      ContentInstructionSerializer.new(object.content_instruction)
+    def consigna
+      if object.content_instruction
+        request = RequestContentValidation.where(
+          user: current_user,
+          content: object
+        ).last
+        {
+          content_instruction: ContentInstructionSerializer.new(object.content_instruction),
+          last_request_sent: request
+        }
+      end
     end
 
     def read

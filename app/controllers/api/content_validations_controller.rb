@@ -41,29 +41,6 @@ module Api
     end
 
     api :POST,
-        "/content_validations/start_validation",
-        "Take a request to start to validate"
-    param :request_id, String
-
-    def start_validation
-      check_content = CheckContentValidation.new(
-        reviewer: current_user,
-        request_content_validation: request_content,
-      )
-      if check_content.save
-        request_content.in_review = true;
-        request_content.save;
-        # TODO: Notify User
-        render nothing: true,
-               status: :accepted
-      else
-        render text: check_content.errors.full_messages,
-              status: :unprocessable_entity,
-              errors: check_content.errors.full_messages
-      end
-    end
-
-    api :PUT,
         "/content_validations/checked",
         "Send a notification with an answer about request"
     param :check_request_id, String
@@ -100,6 +77,7 @@ module Api
           data_type: "client_need_validation_content",
           data: {
             new_request_content_id: new_request_content.id,
+            tutor_id: tutor.tutor_id
           }
         )
         if notification.save

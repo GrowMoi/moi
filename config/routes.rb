@@ -139,8 +139,7 @@ Moi::Application.routes.draw do
     resource :content_validations, only: [] do
       member do
         post :send_request
-        post :start_validation
-        put :checked
+        post :checked
       end
     end
 

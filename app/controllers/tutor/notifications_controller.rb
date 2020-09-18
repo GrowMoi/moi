@@ -6,8 +6,7 @@ module Tutor
     }
 
     expose(:allowed_category_indices_for_tutor) {
-      index_validate_a_content = 6 #client_need_validation_content
-      [0..4, index_validate_a_content]
+      [0..4]
     }
 
     expose(:player) {
@@ -37,12 +36,20 @@ module Tutor
       ClientNotification.find(params[:id])
     }
 
+    expose(:client_request_content_notifications) {
+      data_type = 6 #client_need_validation_content
+      ClientNotification.where(client: student_ids, data_type: data_type, deleted: false)
+                        .where("data->>'tutor_id' = ?", "#{current_user.id}")
+                        .order(created_at: :desc)
+    }
+
     def index
       render
     end
 
     def info
-      render json: client_notifications,
+      notifications = client_notifications + client_request_content_notifications
+      render json: notifications,
       each_serializer: Api::ClientNotificationSerializer,
       root: "data"
     end

@@ -189,43 +189,24 @@ Polymer({
     }
   },
   approvedRequest: function(ev) {
-    ev.stopPropagation();
-    var request_id = this.notificationSelected.data.new_request_content_id;
-    var feedback = this.request_answer;
-    $.ajax({
-      url: '/api/content_validations/checked',
-      type: 'PUT',
-      data: {
-        request_id: request_id,
-        message: feedback,
-        approved: true
-      },
-      success: function(res) {
-        console.log(res);
-        $(this.$['dialog-confirm']).hide();
-      }.bind(this),
-      error: function(res) {
-        $(this.$['dialog-confirm']).hide();
-        var message = res.responseJSON && res.responseJSON.message ? res.responseJSON.message : '';
-        this.toastMessage = message;
-        this.$['toast-message'].show();
-      }.bind(this)
-    });
+    this.answerRequest(ev, true);
   },
   disapprovedRequest: function(ev) {
+    this.answerRequest(ev, false);
+  },
+  answerRequest: function (ev, answer) {
     ev.stopPropagation();
     var request_id = this.notificationSelected.data.new_request_content_id;
     var feedback = this.request_answer;
     $.ajax({
       url: '/api/content_validations/checked',
-      type: 'PUT',
+      type: 'POST',
       data: {
         request_id: request_id,
         message: feedback,
-        approved: false
+        approved: answer
       },
       success: function(res) {
-        console.log(res);
         $(this.$['dialog-notification-info']).hide();
       }.bind(this),
       error: function(res) {
