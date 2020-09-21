@@ -8,7 +8,6 @@
 #  media      :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  in_review  :boolean
 #  approved   :boolean
 #  text       :string
 #
@@ -20,7 +19,6 @@ module Tutor
                 :user_id,
                 :content_id,
                 :media,
-                :in_review,
                 :text,
                 :approved,
                 :created_at,

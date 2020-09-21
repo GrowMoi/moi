@@ -12,8 +12,20 @@
 #  text       :string
 #
 
-class RequestContentValidation < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :content
-  has_one :check_content_validation
+module Api
+  class RequestContentValidationSerializer < ActiveModel::Serializer
+    root false
+    attributes  :id,
+                :user_id,
+                :content_id,
+                :media,
+                :text,
+                :approved,
+                :created_at,
+                :in_review
+
+    def in_review
+      object.approved == nil
+    end
+  end
 end

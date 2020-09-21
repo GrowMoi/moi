@@ -3,7 +3,6 @@ module Api
     attributes :id,
                :user_id,
                :content_id,
-               :in_review,
                :approved,
                :username
 

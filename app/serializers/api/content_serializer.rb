@@ -38,7 +38,6 @@ module Api
                :content_can_read,
                :consigna
     
-    has_one :content_instruction
     translates :title, :description, :source
 
     def consigna
@@ -49,7 +48,7 @@ module Api
         ).last
         {
           content_instruction: ContentInstructionSerializer.new(object.content_instruction),
-          last_request_sent: request
+          last_request_sent: RequestContentValidationSerializer.new(request)
         }
       end
     end
