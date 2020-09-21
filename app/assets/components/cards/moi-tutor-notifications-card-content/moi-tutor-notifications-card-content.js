@@ -208,12 +208,14 @@ Polymer({
       },
       success: function(res) {
         $(this.$['dialog-notification-info']).hide();
+        this.clientNeedValidation = false;
       }.bind(this),
       error: function(res) {
         $(this.$['dialog-notification-info']).hide();
         var message = res.responseJSON && res.responseJSON.message ? res.responseJSON.message : '';
         this.toastMessage = message;
         this.$['toast-message'].show();
+        this.clientNeedValidation = false;
       }.bind(this)
     });
   },
