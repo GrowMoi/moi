@@ -77,6 +77,7 @@ gem "i18n-js"
 gem 'friendly_id', '~> 5.1.0'
 gem 'babosa'
 gem 'fastimage'
+gem 'cloudinary'
 
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'
@@ -131,7 +132,6 @@ end
 
 group :staging, :integration do
   gem 'rails_12factor'
-  gem 'cloudinary'
   gem 'puma'
 end
 
