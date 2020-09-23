@@ -5,7 +5,7 @@
 #  id         :integer          not null, primary key
 #  user_id    :integer          not null
 #  content_id :integer          not null
-#  media      :string           not null
+#  media      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  approved   :boolean
