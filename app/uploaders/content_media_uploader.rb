@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class ContentMediaUploader < CarrierWave::Uploader::Base
-  if defined?(Cloudinary)
+  if Rails.env.staging? || Rails.env.integration?
     include Cloudinary::CarrierWave
   else
     storage :file

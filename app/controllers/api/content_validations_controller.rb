@@ -1,5 +1,7 @@
 module Api
   class ContentValidationsController < BaseController
+    skip_before_filter :verify_authenticity_token, :only => :send_request
+    
     before_action :authenticate_user!
     respond_to :json
 

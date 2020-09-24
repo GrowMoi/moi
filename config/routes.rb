@@ -136,7 +136,7 @@ Moi::Application.routes.draw do
       end
     end
 
-    resource :content_validations, only: [] do
+    resource :content_validations do
       member do
         post :send_request
         post :checked
