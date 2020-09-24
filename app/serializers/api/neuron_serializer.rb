@@ -33,21 +33,6 @@ module Api
       visible_neurons.map(&:id).include?(object.id)
     end
 
-    def belongs_to_event?(content)
-      belongs = false
-      user_event = current_user.user_events.where(completed: false, expired: false).last
-
-      if user_event
-        ids = user_event.content_reading_events.map(&:content_id)
-        content_event_was_read = ids.include? (content.id)
-        unless content_event_was_read
-          elm = { 'content_id'=> content.id.to_s, 'neuron'=> content.neuron.title }
-          belongs = user_event.contents.include? (elm)
-        end
-      end
-      belongs
-    end
-
     alias_method :current_user, :scope
 
     def is_favorite?(content)
