@@ -16,31 +16,15 @@ module Api
     root false
     attributes :id,
                :title,
-               :neuron_can_read
-
-    has_many :contents
+               :neuron_can_read,
+               :contents
 
     def contents
-      object.approved_contents.map do |content|
-        title = content.title
-        lang = current_user.preferred_lang
-        unless lang == ApplicationController::DEFAULT_LANGUAGE
-          resp = TranslatedAttribute.where(translatable_id: content.id, name: "title").last
-          title = resp ? resp.content : title
-        end
-        {
-          id: content.id,
-          neuron_id: content.neuron_id,
-          media: content.content_medium.map(&:media_url),
-          kind: content.kind,
-          level: content.level,
-          read: current_user.already_read?(content),
-          learnt: current_user.already_learnt?(content),
-          favorite: is_favorite?(content),
-          belongs_to_event: belongs_to_event?(content),
-          title: title
-        }
-      end
+      ActiveModel::ArraySerializer.new(
+        object.approved_contents,
+        each_serializer: Api::ContentLigthSerializer,
+        scope: current_user
+      )
     end
 
 
