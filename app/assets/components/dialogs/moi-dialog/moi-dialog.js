@@ -22,7 +22,8 @@ Polymer({
       position: 'fixed',
       zIndex: '1031',
       left: (($(window).width() - $(_this).outerWidth()) / 2) - (_this.width / 2),
-      top: (($(window).height() - $(_this).outerHeight()) / 2) - 200
+      top: 100
+      // top: (($(window).height() - $(_this).outerHeight()) / 2) - 200
     });
     if (_this.theme && _this.theme.length > 0) {
       $(_this.$['moi-dialog-content']).addClass(_this.theme);

@@ -175,15 +175,20 @@
               <div>Contenido:</div>
               <h4>{{notificationData.content}}</h4>
               <div>Consigna:</div>
-              <h4>{{notificationData.instruction}}</h4>
+              <h5 style="white-space: pre-wrap;">{{notificationData.instruction}}</h5>
             </div>
             <div>
               <hr>
               <div>Usuario:</div>
-              <h4>{{notificationData.username}}</h4>
+              <h5>{{notificationData.username}}</h5>
               <div>Respuesta:</div>
-              <template is="dom-if" if="{{ notificationData.media_required }}" restamp>
-                <h4>{{notificationData.media}}</h4>
+              <template is="dom-if" if="{{ notificationData.is_image }}" restamp>
+                <img src$="[[ notificationData.media ]]" alt="validation-img" width="480">
+              </template>
+              <template is="dom-if" if="{{ !notificationData.is_image }}" restamp>
+                <video width="480" height="140" controls>
+                  <source src$="[[ notificationData.media ]]">
+                </video>
               </template>
               <template is="dom-if" if="{{ !notificationData.media_required }}" restamp>
                 <h4>{{notificationData.text}}</h4>

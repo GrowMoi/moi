@@ -277,10 +277,11 @@ Polymer({
       media: request_client.media,
       text: request_client.text,
       instruction: content_instruction.description,
-      media_required: content_instruction.media_required,
+      media_required: !!content_instruction.media_required,
       created_at: request_client.created_at,
       reviewed: request_client.approved !== null,
-      reviewed_by_me: request_client.reviewed_by_me
+      reviewed_by_me: request_client.reviewed_by_me,
+      is_image: request_client.kind_of_file === 'image'
     };
     console.log(this.notificationData);
   },

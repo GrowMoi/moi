@@ -24,7 +24,8 @@ module Tutor
                 :created_at,
                 :content_title,
                 :content_instruction,
-                :reviewed_by_me
+                :reviewed_by_me,
+                :kind_of_file
 
     def content_title
       object.content.title
@@ -41,6 +42,19 @@ module Tutor
         object.check_content_validation.reviewer_id == current_user.id
       end
     end
+
+    def media
+      if object.media
+        object.media.url
+      end
+    end
+
+    def kind_of_file
+      if object.media
+        object.media.resource_type
+      end
+    end
+
     alias_method :current_user, :scope
   end
 end
