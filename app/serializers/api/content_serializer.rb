@@ -114,7 +114,6 @@ module Api
         RequestContentValidation.where(
           user: current_user,
           content: object,
-          approved: true
         ).exists?
       else
         true
