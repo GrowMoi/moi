@@ -27,5 +27,11 @@ module Api
     def in_review
       object.approved == nil
     end
+
+    def media
+      if object.media
+        object.media.url
+      end
+    end
   end
 end
