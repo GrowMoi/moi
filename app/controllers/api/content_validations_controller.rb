@@ -57,8 +57,7 @@ module Api
         approved: params[:approved]
       )
       if check_request_content.save
-        request_content.approved = check_request_content.approved
-        request_content.save
+        request_content.update(approved: params[:approved])
         create_notification(check_request_content)
         render nothing: true,
                status: :accepted
