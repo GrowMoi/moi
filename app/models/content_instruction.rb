@@ -13,5 +13,5 @@
 
 class ContentInstruction < ActiveRecord::Base
   belongs_to :content
-  validates :content_id, :title, :description, presence: true
+  # validates :content_id, :title, :description, presence: true
 end
