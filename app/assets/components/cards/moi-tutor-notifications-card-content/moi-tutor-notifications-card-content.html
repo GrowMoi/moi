@@ -182,10 +182,10 @@
               <div>Usuario:</div>
               <h5>{{notificationData.username}}</h5>
               <div>Respuesta:</div>
-              <template is="dom-if" if="{{ notificationData.is_image }}" restamp>
+              <template is="dom-if" if="{{ notificationData.media_required && notificationData.is_image }}" restamp>
                 <img src$="[[ notificationData.media ]]" alt="validation-img" width="480">
               </template>
-              <template is="dom-if" if="{{ !notificationData.is_image }}" restamp>
+              <template is="dom-if" if="{{ notificationData.media_required && !notificationData.is_image }}" restamp>
                 <video width="480" height="140" controls>
                   <source src$="[[ notificationData.media ]]">
                 </video>
