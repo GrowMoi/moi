@@ -17,6 +17,8 @@ class AdminAchievement < ActiveRecord::Base
         tests_given(self, user)
       when 10
         user_reach_level(self, user)
+      when 11
+        user_learnt_content_in_a_neuron(self, user)
       else
         puts "no achievement found"
       end
@@ -86,6 +88,15 @@ class AdminAchievement < ActiveRecord::Base
     def user_reach_level(achievement, user)
       user_tree = TreeService::UserTreeFetcher.new(user, nil)
       user_tree.depth == achievement.settings['level']
+    end
+
+    ##
+    # user learnt content in a specific neuron
+    def user_learnt_content_in_a_neuron(achievement, user)
+      quantity = achievement.settings['quantity']
+      neuron_id = achievement.settings['neuron_id']
+      total_learnt_contents = user.content_learnings.where(neuron_id: neuron_id).count
+      total_learnt_contents >= quantity
     end
   end
 end

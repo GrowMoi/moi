@@ -97,6 +97,16 @@ achievements_params = [
       level: 9
     },
     number: 10
+  },
+  {
+    name: "Contenidos aprendidos en la neurona ....",
+    description: "El usuario ha aprendido # contenidos en la rama",
+    category: "neuron",
+    settings: {
+      quantity: 4,
+      neuron_id: Neuron.last #just for testing
+    },
+    number: 10
   }
 ]
 
