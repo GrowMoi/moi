@@ -1,0 +1,28 @@
+= form_for [:admin, admin_achievement] do |f|
+  = render "admin/shared/form_errors",
+           resource: admin_achievement
+
+  .form-group
+    = f.label :name
+    = f.text_field :name,
+                   class: "form-control",
+                   required: true
+
+  .form-group
+    = f.label :description
+    = f.text_field :description,
+                   class: "form-control"
+
+  .form-group
+    = f.label "Cuantos test debe desplegar"
+    = number_field_tag :quantity, (admin_achievement.settings && admin_achievement.settings["quantity"] || params[:quantity]), class: "form-control"
+  
+  .form-group
+    = f.label "Los tests deben ser continuos"
+    / = check_box("puppy", "gooddog", {}, "yes", "no")
+    br
+    = check_box :continuos, (admin_achievement.settings && admin_achievement.settings["continuos"] || params[:continuos])
+  
+  .actions
+    = f.submit class: "btn btn-primary",
+               data: { disable_with: t("views.submitting") }
