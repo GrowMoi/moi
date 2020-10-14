@@ -4,16 +4,28 @@
   h3.text-center = admin_achievement.name
 
   .form-group
+    = label_tag "Categoria del logro"
+    p = admin_achievement.category
+
+  .form-group
     = label_tag t("activerecord.attributes.admin_achievement.description")
     p = admin_achievement.description
 
-  .form-group
-    = label_tag t("activerecord.attributes.admin_achievement.settings")
-    p = admin_achievement.settings
+  - if admin_achievement.category != "neuron"
+    .form-group
+      = label_tag t("activerecord.attributes.admin_achievement.settings")
+      p = admin_achievement.settings
+  
+  - if admin_achievement.category == "neuron"
+    = label_tag "Neurona"
+    p = neuron_selected.title
+
+    = label_tag "Cuantos contenidos debe aprender"
+    p = admin_achievement.settings["quantity"]
 
   .form-group
     = label_tag t("activerecord.attributes.admin_achievement.active")
-    p = admin_achievement.active
+    p = admin_achievement.active ? "Si" : "No"
 
   hr
   .pull-right

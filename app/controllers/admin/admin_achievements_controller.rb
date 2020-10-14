@@ -11,6 +11,18 @@ module Admin
       AdminAchievement.order(created_at: :desc)
     }
 
+    expose(:neuron_selected) {
+      Neuron.find(admin_achievement.settings["neuron_id"])
+    }
+
+    expose(:root_neuron) {
+      Neuron.where(parent_id: nil, is_public: true, deleted: false, active: true).last
+    }
+
+    expose(:main_branches) {
+      root_neuron.children_neurons.where(is_public: true, deleted: false, active: true)
+    }
+
     expose(:neurons) {
       Neuron.published
     }

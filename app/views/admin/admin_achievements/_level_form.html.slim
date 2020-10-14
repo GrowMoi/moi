@@ -12,16 +12,10 @@
     = f.label :description
     = f.text_field :description,
                    class: "form-control"
-
   .form-group
-    = f.label "Neurona en la cual debe aprender contenidos"
+    = f.label "Que nivel debe alcanzar el usuario"
     br
-    = select_tag :neuron_id, options_from_collection_for_select(neurons, "id", "title", (admin_achievement.settings && admin_achievement.settings["neuron_id"]))
-
-  .form-group
-    = f.label "Cuantos contenidos debe aprender"
-    = number_field_tag :quantity, (admin_achievement.settings && admin_achievement.settings["quantity"] || params[:quantity]), class: "form-control"
-    
+    = select_tag :level, options_for_select(1..9, (admin_achievement.settings && admin_achievement.settings["level"] || params[:level]))
   .actions
     = f.submit class: "btn btn-primary",
                data: { disable_with: t("views.submitting") }
