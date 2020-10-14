@@ -12,7 +12,7 @@
     -admin_achievements.each do |a|
       tr
         td = a.name
-        td = a.category
+        td = t("activerecord.attributes.admin_achievement.category_kind.#{a.category}") 
         td = a.description
         td = link_to t("actions.show"), admin_admin_achievement_path(a)
   

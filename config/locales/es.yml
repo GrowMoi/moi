@@ -780,6 +780,13 @@
         description: Descripción
         settings: Configuraciones
         active: Logro activo?
+        category: Categoria
+        category_kind:
+          neuron: Neurona
+          content: Contenido
+          branch: Rama
+          test: Test
+          level: Nivel
       content_importing:
         file: Archivo
       payment:
