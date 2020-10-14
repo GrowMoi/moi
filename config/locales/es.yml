@@ -172,6 +172,7 @@
         no_image: "-- no se ha añadido una imagen --"
     admin_achievements:
       edit: Editar Logro
+      new: Nuevo Logro
     contents:
       new: "Nuevo Contenido"
       edit: "Editar Contenido"

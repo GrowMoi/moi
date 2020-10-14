@@ -1,0 +1,27 @@
+= form_for [:admin, admin_achievement] do |f|
+  = render "admin/shared/form_errors",
+           resource: admin_achievement
+
+  .form-group
+    = f.label :name
+    = f.text_field :name,
+                   class: "form-control",
+                   required: true
+
+  .form-group
+    = f.label :description
+    = f.text_field :description,
+                   class: "form-control"
+
+  .form-group
+    = f.label "Seleccione una Neurona"
+    br
+    = select_tag :neuron_id, options_from_collection_for_select(neurons, "id", "title", (admin_achievement.settings && admin_achievement.settings["neuron_id"]))
+
+  .form-group
+    = f.label "Cuantos contenidos debe aprender"
+    = number_field_tag :quantity, (admin_achievement.settings && admin_achievement.settings["quantity"] || params[:quantity]), class: "form-control"
+    
+  .actions
+    = f.submit class: "btn btn-primary",
+               data: { disable_with: t("views.submitting") }
