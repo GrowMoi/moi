@@ -16,17 +16,12 @@ module Admin
     }
 
     def new
-      # @achievement = AdminAchievement.new
       admin_achievement
     end
 
     def create
-      # @achievement = User.new(admin_achievement_params)
-      admin_achievement.settings = {
-        quantity: params[:quantity],
-        neuron_id: params[:neuron_id],
-      }
       admin_achievement.category = 'neuron'
+      add_json_params
       if admin_achievement.save
         redirect_to action: :index
       else
@@ -35,14 +30,24 @@ module Admin
     end
 
     def update
+      add_json_params
       if admin_achievement.save
-        redirect_to admin_achievements_path, notice: I18n.t("views.achievements.updated")
+        redirect_to admin_admin_achievements_path, notice: I18n.t("views.achievements.updated")
       else
         render :edit
       end
     end
 
     private
+
+    def add_json_params
+      if admin_achievement.category === 'neuron'
+        admin_achievement.settings = {
+          quantity: params[:quantity],
+          neuron_id: params[:neuron_id],
+        }
+      end
+    end
 
     def admin_achievement_params
       params.require(:admin_achievement).permit(
