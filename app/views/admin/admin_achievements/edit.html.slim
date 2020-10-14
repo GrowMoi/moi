@@ -1,8 +1,10 @@
 .admin-achievements-page
   - content_for :title, t("views.achievements.edit")
   - if admin_achievement.category == "neuron"
-    = render "form"
+    = render "by_neuron_form"
   - if admin_achievement.category == "level"
-    = render "level_form"
+    = render "by_level_form"
   - if admin_achievement.category == "test"
-    = render "test_form"
+    = render "by_test_form"
+  - if admin_achievement.category == "branch"
+    = render "by_branch_form"
