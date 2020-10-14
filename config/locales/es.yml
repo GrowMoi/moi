@@ -779,7 +779,7 @@
         name: Nombre
         description: Descripción
         settings: Configuraciones
-        active: Activo?
+        active: Logro activo?
       content_importing:
         file: Archivo
       payment:

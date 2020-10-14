@@ -23,6 +23,11 @@
     br
     = check_box :continuos, (admin_achievement.settings && admin_achievement.settings["continuos"] || params[:continuos])
   
+  .form-group
+    = f.label :active
+    br
+    = f.check_box :active
+
   .actions
     = f.submit class: "btn btn-primary",
                data: { disable_with: t("views.submitting") }
