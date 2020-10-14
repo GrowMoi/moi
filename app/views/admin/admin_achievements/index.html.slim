@@ -13,3 +13,8 @@
         td = a.name
         td = a.description
         td = link_to t("actions.show"), admin_admin_achievement_path(a)
+  
+  .achievement-create
+    = link_to t("actions.new"),
+              new_admin_admin_achievement_path,
+              class: "btn btn-sm btn-default"

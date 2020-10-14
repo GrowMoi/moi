@@ -21,7 +21,8 @@ class AdminAchievement < ActiveRecord::Base
     'content',
     'branch',
     'test',
-    'level'
+    'level',
+    'neuron'
   ].freeze
 
   begin :enumerables
@@ -33,6 +34,7 @@ class AdminAchievement < ActiveRecord::Base
   mount_uploader :image, ContentMediaUploader
 
   has_many :user_admin_achievements
+  before_save :add_number
 
   begin :validations
     validates :name, :category, :settings,
@@ -40,6 +42,10 @@ class AdminAchievement < ActiveRecord::Base
     validates :number, uniqueness: true
     validates :category,
               inclusion: { in: CATEGORIES }
+  end
+
+  def add_number
+    self.number = AdminAchievement.last.number + 1
   end
 
 end
