@@ -1,6 +1,7 @@
 = form_for [:admin, admin_achievement] do |f|
   = render "admin/shared/form_errors",
            resource: admin_achievement
+  = hidden_field_tag :category_selected, new_achievement_by
 
   .form-group
     = f.label :name
@@ -15,14 +16,13 @@
 
   .form-group
     = f.label "Cuantos test debe desplegar"
-    = number_field_tag :quantity, (admin_achievement.settings && admin_achievement.settings["quantity"] || params[:quantity]), class: "form-control"
+    = number_field_tag :quantity_json, (admin_achievement.settings && admin_achievement.settings["quantity"] || params[:quantity_json]), class: "form-control"
   
   .form-group
     = f.label "Los tests deben ser continuos"
-    / = check_box("puppy", "gooddog", {}, "yes", "no")
     br
-    = check_box :continuos, (admin_achievement.settings && admin_achievement.settings["continuos"] || params[:continuos])
-  
+    = check_box_tag :continuous_json, true, (admin_achievement.settings && admin_achievement.settings["continuous"])
+    
   .form-group
     = f.label :active
     br

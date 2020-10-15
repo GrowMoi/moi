@@ -34,7 +34,7 @@ class AdminAchievement < ActiveRecord::Base
   mount_uploader :image, ContentMediaUploader
 
   has_many :user_admin_achievements
-  before_save :add_number
+  before_create :add_number
 
   begin :validations
     validates :name, :category, :settings,

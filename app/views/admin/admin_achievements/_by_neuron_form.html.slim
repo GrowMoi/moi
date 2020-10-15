@@ -1,6 +1,7 @@
 = form_for [:admin, admin_achievement] do |f|
   = render "admin/shared/form_errors",
            resource: admin_achievement
+  = hidden_field_tag :category_selected, new_achievement_by
 
   .form-group
     = f.label :name
@@ -16,11 +17,11 @@
   .form-group
     = f.label "Neurona en la cual debe aprender contenidos"
     br
-    = select_tag :neuron_id, options_from_collection_for_select(neurons, "id", "title", (admin_achievement.settings && admin_achievement.settings["neuron_id"]))
+    = select_tag :neuron_id_json, options_from_collection_for_select(neurons, "id", "title", (admin_achievement.settings && admin_achievement.settings["neuron_id"]))
 
   .form-group
     = f.label "Cuantos contenidos debe aprender"
-    = number_field_tag :quantity, (admin_achievement.settings && admin_achievement.settings["quantity"] || params[:quantity]), class: "form-control"
+    = number_field_tag :quantity_json, (admin_achievement.settings && admin_achievement.settings["quantity"] || params[:quantity_json]), class: "form-control"
     
   .form-group
     = f.label :active

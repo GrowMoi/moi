@@ -27,22 +27,30 @@ module Admin
       Neuron.published
     }
 
+    expose(:new_achievement_by) {
+      params["category"]
+    }
+
+    expose(:category_selected) {
+      params["category_selected"]
+    }
+
     def new
       admin_achievement
     end
 
     def create
-      admin_achievement.category = 'neuron'
+      admin_achievement.category = category_selected
       add_json_params
       if admin_achievement.save
         redirect_to action: :index
       else
-        render :new
+        render :index
       end
     end
 
     def update
-      add_json_params
+      add_json_params 
       if admin_achievement.save
         redirect_to admin_admin_achievements_path, notice: I18n.t("views.achievements.updated")
       else
@@ -53,10 +61,33 @@ module Admin
     private
 
     def add_json_params
-      if admin_achievement.category === 'neuron'
+      if admin_achievement.category == 'neuron'
         admin_achievement.settings = {
-          quantity: params[:quantity],
-          neuron_id: params[:neuron_id],
+          quantity: params[:quantity_json],
+          neuron_id: params[:neuron_id_json],
+        }
+      end
+      if admin_achievement.category == 'level'
+        admin_achievement.settings = {
+          level: params[:level_json],
+        }
+      end
+      if admin_achievement.category == 'test'
+        admin_achievement.settings = {
+          quantity: params[:quantity_json],
+          continuous: params[:continuous_json] == "true",
+        }
+      end
+      if admin_achievement.category == 'content'
+        admin_achievement.settings = {
+          quantity: params[:quantity_json],
+          branch: params[:branch_json],
+        }
+      end
+      if admin_achievement.category == 'branch'
+        admin_achievement.settings = {
+          quantity: params[:quantity_json],
+          branch: params[:branch_json],
         }
       end
     end
@@ -66,7 +97,8 @@ module Admin
         :name,
         :number,
         :description,
-        :image
+        :image,
+        :active
       )
     end
 

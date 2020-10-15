@@ -1,6 +1,7 @@
 = form_for [:admin, admin_achievement] do |f|
   = render "admin/shared/form_errors",
            resource: admin_achievement
+  = hidden_field_tag :category_selected, new_achievement_by
 
   .form-group
     = f.label :name
@@ -15,7 +16,7 @@
   .form-group
     = f.label "Que nivel debe alcanzar el usuario"
     br
-    = select_tag :level, options_for_select(1..9, (admin_achievement.settings && admin_achievement.settings["level"] || params[:level]))
+    = select_tag :level_json, options_for_select(1..9, (admin_achievement.settings && admin_achievement.settings["level"] || params[:level_json]))
  
   .form-group
     = f.label :active
