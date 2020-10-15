@@ -48,6 +48,20 @@
     p = admin_achievement.settings["quantity"]
 
   .form-group
+    = label_tag t("activerecord.attributes.admin_achievement.image")
+    br
+    span.content-media-name-on-form
+      - if admin_achievement.image?
+        img src=admin_achievement.image.url
+  
+  .form-group
+    = label_tag t("activerecord.attributes.admin_achievement.inactive_image")
+    br
+    span.content-media-name-on-form
+      - if admin_achievement.inactive_image?
+        img src=admin_achievement.inactive_image.url
+
+  .form-group
     = label_tag t("activerecord.attributes.admin_achievement.active")
     p = admin_achievement.active ? "Si" : "No"
 

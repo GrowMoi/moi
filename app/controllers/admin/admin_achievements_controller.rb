@@ -98,6 +98,7 @@ module Admin
         :number,
         :description,
         :image,
+        :inactive_image,
         :active
       )
     end
