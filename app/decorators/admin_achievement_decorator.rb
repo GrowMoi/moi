@@ -1,30 +1,13 @@
-class AdminAchievementDecorator < LittleDecorator
+class AdminAchievementDecorator < ResourceDecorator
 
   IMAGE_EXTENSIONS = %w(jpg jpeg gif png).freeze
-
-  def image_list_group
-    if record.image?
-      content_tag :div,
-                  class: "achievement_image" do
-        link_to record.image_url,
-                target: "_blank" do
-          tooltip file.filename,
-                  place: "bottom" do
-            render(include_filename: false)
-          end
-        end
-      end
-    else
-      content_tag(:p, I18n.t("views.achievements.data_show.no_image"))
-    end
-  end
 
   def link_for_form
     if record.image?
       link_to record.image_url,
               class: "",
               target: "_blank" do
-        render(include_filename: true)
+        render(include_filename: true, img_path: record.image_url)
       end
     end
   end
@@ -52,7 +35,7 @@ class AdminAchievementDecorator < LittleDecorator
 
     rendered = case file_extension
                when *IMAGE_EXTENSIONS
-                 image_tag(record.image_url)
+                 image_tag(options[:img_path])
                else
                  glyphicon
                end
