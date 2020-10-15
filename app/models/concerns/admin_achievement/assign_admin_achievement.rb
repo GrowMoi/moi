@@ -27,21 +27,21 @@ class AdminAchievement < ActiveRecord::Base
     ##
     # user learnt n contents
     def user_learnt_n_content(achievement, user)
-      number = achievement.settings['quantity']
+      number = achievement.settings['quantity'].to_i
       user.content_learnings.size >= number
     end
 
     ##
     # user gave n tests
     def tests_given(achievement, user)
-      number = achievement.settings['quantity']
+      number = achievement.settings['quantity'].to_i
       user.learning_tests.size >= number
     end
 
     ##
     # user gave tests without errors
     def successful_continous_tests(achievement, user)
-      number = achievement.settings['quantity']
+      number = achievement.settings['quantity'].to_i
       user.continuous_successful_tests(number)
     end
 
@@ -75,7 +75,7 @@ class AdminAchievement < ActiveRecord::Base
       name = achievement.settings['branch']
       contents = user.contents_learnt_by_branch(name)
       unless contents.blank?
-        contents.size >= achievement.settings['quantity']
+        contents.size >= achievement.settings['quantity'].to_i
       else
         false
       end
