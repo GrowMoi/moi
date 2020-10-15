@@ -6,7 +6,19 @@ module Api
       respond_to :json
 
       expose(:user_achievements) {
-        current_user.user_admin_achievements
+        result = {}
+        current_user.user_admin_achievements.map do |ach|
+          result[ach.admin_achievement_id] = {
+            id: ach.id,
+            active: ach.active,
+            admin_achievement_id: ach.admin_achievement_id
+          }
+        end
+        result
+      }
+
+      expose(:all_achievements) {
+        AdminAchievement.all
       }
 
       api :GET,
@@ -37,8 +49,9 @@ module Api
 
       def index
         respond_with(
-          user_achievements,
-          each_serializer: Api::UserAchievementSerializer
+          all_achievements,
+          each_serializer: Api::InventoryAchievementSerializer,
+          scope: user_achievements
         )
       end
 
