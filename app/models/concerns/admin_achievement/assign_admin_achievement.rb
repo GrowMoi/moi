@@ -18,7 +18,7 @@ class AdminAchievement < ActiveRecord::Base
       when 10
         user_reach_level(self, user)
       else
-        puts "no achievement found"
+        user_learnt_content_in_a_neuron(self, user)
       end
     end
 
@@ -27,21 +27,21 @@ class AdminAchievement < ActiveRecord::Base
     ##
     # user learnt n contents
     def user_learnt_n_content(achievement, user)
-      number = achievement.settings['quantity']
+      number = achievement.settings['quantity'].to_i
       user.content_learnings.size >= number
     end
 
     ##
     # user gave n tests
     def tests_given(achievement, user)
-      number = achievement.settings['quantity']
+      number = achievement.settings['quantity'].to_i
       user.learning_tests.size >= number
     end
 
     ##
     # user gave tests without errors
     def successful_continous_tests(achievement, user)
-      number = achievement.settings['quantity']
+      number = achievement.settings['quantity'].to_i
       user.continuous_successful_tests(number)
     end
 
@@ -75,7 +75,7 @@ class AdminAchievement < ActiveRecord::Base
       name = achievement.settings['branch']
       contents = user.contents_learnt_by_branch(name)
       unless contents.blank?
-        contents.size >= achievement.settings['quantity']
+        contents.size >= achievement.settings['quantity'].to_i
       else
         false
       end
@@ -86,6 +86,15 @@ class AdminAchievement < ActiveRecord::Base
     def user_reach_level(achievement, user)
       user_tree = TreeService::UserTreeFetcher.new(user, nil)
       user_tree.depth == achievement.settings['level']
+    end
+
+    ##
+    # user learnt content in a specific neuron
+    def user_learnt_content_in_a_neuron(achievement, user)
+      quantity = achievement.settings['quantity'].to_i
+      neuron_id = achievement.settings['neuron_id'].to_i
+      total_learnt_contents = user.content_learnings.where(neuron_id: neuron_id).count
+      total_learnt_contents >= quantity
     end
   end
 end

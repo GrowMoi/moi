@@ -1,17 +1,12 @@
-= form_for [:admin, admin_achievement] do |f|
-  = render "admin/shared/form_errors",
-           resource: admin_achievement
-
-  .form-group
-    = f.label :name
-    = f.text_field :name,
-                   class: "form-control",
-                   required: true
-
-  .form-group
-    = f.label :description
-    = f.text_field :description,
-                   class: "form-control"
-  .actions
-    = f.submit class: "btn btn-primary",
-               data: { disable_with: t("views.submitting") }
+.admin-achievements-page
+  - content_for :title, t("views.achievements.edit")
+  - if admin_achievement.category == "neuron"
+    = render "by_neuron_form"
+  - if admin_achievement.category == "level"
+    = render "by_level_form"
+  - if admin_achievement.category == "test"
+    = render "by_test_form"
+  - if admin_achievement.category == "branch"
+    = render "by_branch_form"
+  - if admin_achievement.category == "content"
+    = render "by_content_form"

@@ -183,7 +183,7 @@ Moi::Application.routes.draw do
     resources :quizzes
     resources :level_quizzes
     resources :achievements, except: [:create, :destroy]
-    resources :admin_achievements, except: [:create, :destroy]
+    resources :admin_achievements, except: [:destroy]
     resources :payments
     resources :events
     resources :event_achievements, except: [:destroy] do

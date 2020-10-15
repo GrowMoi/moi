@@ -4,16 +4,66 @@
   h3.text-center = admin_achievement.name
 
   .form-group
+    = label_tag "Categoria del logro"
+    p = admin_achievement.category
+
+  .form-group
     = label_tag t("activerecord.attributes.admin_achievement.description")
     p = admin_achievement.description
 
+  - if admin_achievement.category == "branch"
+    .form-group
+      = label_tag "Cuantos contenidos debe aprender"
+      p = admin_achievement.settings["quantity"]
+
+      = label_tag "Rama seleccionada"
+      p = admin_achievement.settings["branch"]
+
+  - if admin_achievement.category == "content"
+    .form-group
+      = label_tag "Cuantos contenidos debe aprender"
+      p = admin_achievement.settings["quantity"]
+
+      = label_tag "Rama"
+      p = admin_achievement.settings["branch"] == "All" ? "Todas" : "Cualquiera"
+
+  - if admin_achievement.category == "test"
+    .form-group
+      = label_tag "Cuantos test debe lograr"
+      p = admin_achievement.settings["quantity"]
+
+      = label_tag "Los tests deben ser continuos"
+      p = admin_achievement.settings["continuous"] ? "Si" : "No"
+
+  - if admin_achievement.category == "level"
+    .form-group
+      = label_tag "Nivel que debe alcanzar"
+      p = admin_achievement.settings["level"]
+  
+  - if admin_achievement.category == "neuron"
+    = label_tag "Neurona"
+    p = neuron_selected.title
+
+    = label_tag "Cuantos contenidos debe aprender"
+    p = admin_achievement.settings["quantity"]
+
   .form-group
-    = label_tag t("activerecord.attributes.admin_achievement.settings")
-    p = admin_achievement.settings
+    = label_tag t("activerecord.attributes.admin_achievement.image")
+    br
+    span.content-media-name-on-form
+      - if admin_achievement.image?
+        img src=admin_achievement.image.url
+  
+  .form-group
+    = label_tag t("activerecord.attributes.admin_achievement.inactive_image")
+    br
+    span.content-media-name-on-form
+      - if admin_achievement.inactive_image?
+        img src=admin_achievement.inactive_image.url
 
   .form-group
     = label_tag t("activerecord.attributes.admin_achievement.active")
-    p = admin_achievement.active
+    p = admin_achievement.active ? "Si" : "No"
 
   hr
   .pull-right

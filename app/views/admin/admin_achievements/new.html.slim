@@ -1,0 +1,17 @@
+.admin-achievements-page
+  - content_for :title, t("views.achievements.new")
+  / = render "form"
+  .form-group
+    = label_tag t("activerecord.attributes.admin_achievement.category")
+    p = t("activerecord.attributes.admin_achievement.category_kind.#{new_achievement_by}") 
+
+  - if new_achievement_by == "neuron"
+    = render "by_neuron_form"
+  - if new_achievement_by == "level"
+    = render "by_level_form"
+  - if new_achievement_by == "test"
+    = render "by_test_form"
+  - if new_achievement_by == "branch"
+    = render "by_branch_form"
+  - if new_achievement_by == "content"
+    = render "by_content_form"

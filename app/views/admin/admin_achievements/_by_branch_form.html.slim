@@ -1,0 +1,69 @@
+= form_for [:admin, admin_achievement] do |f|
+  = render "admin/shared/form_errors",
+           resource: admin_achievement
+  = hidden_field_tag :category_selected, new_achievement_by
+
+  .form-group
+    = f.label :name
+    = f.text_field :name,
+                   class: "form-control",
+                   required: true
+
+  .form-group
+    = f.label :description
+    = f.text_field :description,
+                   class: "form-control"
+
+  .form-group
+    = f.label "Elige una rama"
+    br
+    = select_tag :branch_json, options_from_collection_for_select(main_branches, "title", "title", (admin_achievement.settings && admin_achievement.settings["branch"]))
+
+  .form-group
+    = f.label "Cuantos contenidos debe aprender"
+    = number_field_tag :quantity_json, (admin_achievement.settings && admin_achievement.settings["quantity"] || params[:quantity_json]), class: "form-control"
+  
+  .nested-content-media
+    = f.hidden_field :id
+    = f.label :image
+
+    .form-group
+      = tooltip t("views.contents.attach_media"),
+                place: "left",
+                class: "btn btn-xs btn-default content-media-uploader" do
+        .glyphicon.glyphicon-cloud-upload
+
+      .hidden
+        = f.file_field :image
+        = f.hidden_field :image_cache
+
+      span.content-media-name-on-form
+        - if f.object.image?
+          = decorate(f.object).link_for_form
+
+  .nested-content-media
+    = f.hidden_field :id
+    = f.label :inactive_image
+
+    .form-group
+      = tooltip t("views.contents.attach_media"),
+                place: "left",
+                class: "btn btn-xs btn-default content-media-uploader" do
+        .glyphicon.glyphicon-cloud-upload
+
+      .hidden
+        = f.file_field :inactive_image
+        = f.hidden_field :inactive_image_cache
+
+      span.content-media-name-on-form
+        - if f.object.inactive_image?
+          = decorate(f.object).link_for_form_inactive
+
+  .form-group
+    = f.label :active
+    br
+    = f.check_box :active
+
+  .actions
+    = f.submit class: "btn btn-primary",
+               data: { disable_with: t("views.submitting") }
