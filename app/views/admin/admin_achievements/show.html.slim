@@ -11,6 +11,10 @@
     = label_tag t("activerecord.attributes.admin_achievement.description")
     p = admin_achievement.description
 
+  .form-group
+    = label_tag t("activerecord.attributes.admin_achievement.requirement")
+    p = admin_achievement.requirement
+
   - if admin_achievement.category == "branch"
     .form-group
       = label_tag "Cuantos contenidos debe aprender"
@@ -39,7 +43,7 @@
     .form-group
       = label_tag "Nivel que debe alcanzar"
       p = admin_achievement.settings["level"]
-  
+
   - if admin_achievement.category == "neuron"
     = label_tag "Neurona"
     p = neuron_selected.title
@@ -53,7 +57,7 @@
     span.content-media-name-on-form
       - if admin_achievement.image?
         img src=admin_achievement.image.url
-  
+
   .form-group
     = label_tag t("activerecord.attributes.admin_achievement.inactive_image")
     br

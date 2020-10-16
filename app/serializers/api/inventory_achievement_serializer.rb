@@ -39,10 +39,6 @@ module Api
       !!user_achievements[object.id]
     end
 
-    def requirement
-      "pending add migration"
-    end
-
     def rewards
       case object.number
       when 1
