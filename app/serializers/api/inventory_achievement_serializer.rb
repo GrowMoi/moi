@@ -46,8 +46,8 @@ module Api
     def rewards
       case object.number
       when 1
-        { 
-          video: 'videos/vineta_1.mp4' 
+        {
+          video: 'videos/vineta_1.mp4'
         }
       when 2
         {

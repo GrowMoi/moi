@@ -3,67 +3,23 @@
            resource: admin_achievement
   = hidden_field_tag :category_selected, new_achievement_by
 
-  .form-group
-    = f.label :name
-    = f.text_field :name,
-                   class: "form-control",
-                   required: true
-
-  .form-group
-    = f.label :description
-    = f.text_field :description,
-                   class: "form-control"
+  = render "fields_basic_information", f: f
 
   .form-group
     = f.label "Rama"
     br
     = select_tag :branch_json, options_for_select(["All", "any"], (admin_achievement.settings && admin_achievement.settings["branch"] || params[:branch_json]))
- 
+
   .form-group
     = f.label "Cuantos contenidos debe aprender"
     = number_field_tag :quantity_json, (admin_achievement.settings && admin_achievement.settings["quantity"] || params[:quantity_json]), class: "form-control"
-    
+
   .form-group
     = f.label :active
     br
     = f.check_box :active
 
-  .nested-content-media
-    = f.hidden_field :id
-    = f.label :image
-
-    .form-group
-      = tooltip t("views.contents.attach_media"),
-                place: "left",
-                class: "btn btn-xs btn-default content-media-uploader" do
-        .glyphicon.glyphicon-cloud-upload
-
-      .hidden
-        = f.file_field :image
-        = f.hidden_field :image_cache
-
-      span.content-media-name-on-form
-        - if f.object.image?
-          = decorate(f.object).link_for_form
-
-  .nested-content-media
-    = f.hidden_field :id
-    = f.label :inactive_image
-
-    .form-group
-      = tooltip t("views.contents.attach_media"),
-                place: "left",
-                class: "btn btn-xs btn-default content-media-uploader" do
-        .glyphicon.glyphicon-cloud-upload
-
-      .hidden
-        = f.file_field :inactive_image
-        = f.hidden_field :inactive_image_cache
-
-      span.content-media-name-on-form
-        - if f.object.inactive_image?
-          = decorate(f.object).link_for_form_inactive
-
+  = render "upload_images", f: f
 
   .actions
     = f.submit class: "btn btn-primary",

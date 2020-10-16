@@ -50,7 +50,7 @@ module Admin
     end
 
     def update
-      add_json_params 
+      add_json_params
       if admin_achievement.save
         redirect_to admin_admin_achievements_path, notice: I18n.t("views.achievements.updated")
       else
@@ -99,7 +99,8 @@ module Admin
         :description,
         :image,
         :inactive_image,
-        :active
+        :active,
+        :requirement
       )
     end
 

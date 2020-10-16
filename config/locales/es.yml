@@ -783,6 +783,7 @@
         category: Categoria
         image: Imagen - activa
         inactive_image: Imagen - inactiva
+        requirement: Requerimiento
         category_kind:
           neuron: Neurona
           content: Contenido

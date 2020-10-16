@@ -13,6 +13,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  inactive_image :string
+#  requirement    :string
 #
 
 require 'rails_helper'
