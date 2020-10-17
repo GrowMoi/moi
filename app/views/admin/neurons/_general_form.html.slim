@@ -13,7 +13,8 @@
 .form-group
   = f.label :video
   = f.file_field :video,
-                class: "form-control"
+                class: "form-control",
+                accept: ".mp4, .mov, .mpeg, .flv, .wmv, .avi, .mkv, .webm"
 
   - if f.object.video_url
     br
