@@ -17,7 +17,8 @@ module Api
     attributes :id,
                :title,
                :neuron_can_read,
-               :contents
+               :contents,
+               :video
 
     def contents
       ActiveModel::ArraySerializer.new(
@@ -40,6 +41,10 @@ module Api
         user: current_user,
         content: content
       ).exists?
+    end
+
+    def video
+      object.video ? object.video.url : ""
     end
   end
 end
