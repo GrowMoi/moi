@@ -12,6 +12,7 @@
 #  is_public              :boolean          default(FALSE)
 #  position               :integer          default(0)
 #  pending_contents_count :integer          default(0)
+#  video                  :string
 #
 
 require 'rails_helper'

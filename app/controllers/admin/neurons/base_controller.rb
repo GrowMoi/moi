@@ -35,6 +35,7 @@ module Admin
                       :parent_id,
                       :is_public,
                       :deleted,
+                      :video,
                       :contents_attributes => [
                         :id,
                         :kind,
