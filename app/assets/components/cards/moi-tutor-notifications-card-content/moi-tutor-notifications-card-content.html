@@ -78,7 +78,7 @@
           <br>
           <div>
             <p>{{notificationData.description}}</p>
-            <p>{{notificationDatatimeMessage}}</p>
+            <p>{{notificationData.timeMessage}}</p>
           </div>
           <div>
             <ul>
@@ -160,6 +160,61 @@
       </moi-dialog>
     </template>
 
+    <template is="dom-if" if="{{ clientNeedValidation }}" restamp>
+      <moi-dialog title="Detalles" width="500" id="dialog-notification-info"
+        theme="green">
+        <template is="dom-if" if="{{ loadingDialogData }}" restamp>
+          <div>{{ t('views.loading') }}</div>
+        </template>
+        <template is="dom-if" if="{{ !loadingDialogData }}" restamp>
+          <template is="dom-if" if="{{ notificationData.reviewed && !notificationData.reviewed_by_me }}" restamp>
+            <h4>Este contenido ya ha sido revisado por alguien mas</h4>
+          </template>
+          <div>
+            <div>
+              <div>Contenido:</div>
+              <h4>{{notificationData.content}}</h4>
+              <div>Consigna:</div>
+              <h5 style="white-space: pre-wrap;">{{notificationData.instruction}}</h5>
+            </div>
+            <div>
+              <hr>
+              <div>Usuario:</div>
+              <h5>{{notificationData.username}}</h5>
+              <div>Respuesta:</div>
+              <template is="dom-if" if="{{ notificationData.media_required && notificationData.is_image }}" restamp>
+                <img src$="[[ notificationData.media ]]" alt="validation-img" width="480">
+              </template>
+              <template is="dom-if" if="{{ notificationData.media_required && !notificationData.is_image }}" restamp>
+                <video width="480" height="140" controls>
+                  <source src$="[[ notificationData.media ]]">
+                </video>
+              </template>
+              <template is="dom-if" if="{{ !notificationData.media_required }}" restamp>
+                <h4>{{notificationData.text}}</h4>
+              </template>
+            </div>
+            <template is="dom-if" if="{{ !notificationData.reviewed}}" restamp>
+              <hr>
+              <label for="feedback">[[ t('views.tutor.dashboard.card_tutor_notifications.actions.feedback') ]]</label>
+              <textarea class="form-control" on-change="updateFeedback" name="request_answer" id="request_answer_feedback"></textarea>
+              <div class="options">
+                <paper-button on-tap="approvedRequest" class="btn-cancel">
+                  <span>[[ t('views.tutor.dashboard.card_tutor_notifications.actions.approve') ]]</span>
+                </paper-button>
+                <paper-button on-tap="disapprovedRequest" class="btn-remove">
+                  <span>[[ t('views.tutor.dashboard.card_tutor_notifications.actions.disapprove') ]]</span>
+                </paper-button>
+              </div>
+            </template>
+            <template is="dom-if" if="{{ notificationData.reviewed_by_me}}" restamp>
+              <hr>
+              <h4>ya enviaste tu respuesta</h4>
+            </template>
+          </div>
+        </template>
+      </moi-dialog>
+    </template>
   </template>
   <script src="moi-tutor-notifications-card-content.js"></script>
 </dom-module>

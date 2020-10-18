@@ -141,6 +141,7 @@ module Admin
           contents.each do |decorated_content|
             decorated_content.build_one_link!
             decorated_content.build_one_video!
+            decorated_content.build_one_instruction!
           end
         end
       end

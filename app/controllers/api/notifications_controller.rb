@@ -48,6 +48,10 @@ module Api
       ClientNotification.where(client: current_user.id, deleted: false, data_type: 5).order(created_at: :desc)
     }
 
+    expose(:content_validation_notification) {
+      ClientNotification.where(client: current_user.id, deleted: false, data_type: 7).order(created_at: :desc)
+    }
+
     expose(:total_user_notifications) {
       serialized_admin = serialize_notifications(
                             admin_notifications,
@@ -73,11 +77,17 @@ module Api
                         Api::EventCompletedNotificationSerializer
                       ).as_json
 
+      serialize_content_validation_notifications = serialize_notifications(
+                        content_validation_notification,
+                        Api::ClientNotificationSerializer
+                      ).as_json
+
       serialize_superevent_notifications +
       serialized_my_notifications +
       serialized_tutor_requests +
       serialized_admin +
-      serialized_tutor_notifications
+      serialized_tutor_notifications +
+      serialize_content_validation_notifications
     }
 
     api :POST,

@@ -1,4 +1,10 @@
 class ContentDecorator < ResourceDecorator
+  def build_one_instruction!
+    unless self.content_instruction
+      self.build_content_instruction
+    end
+  end
+
   def build_one_link!
     if content_links_for_current_lang.length === 0
       content_links.build(language: current_language)

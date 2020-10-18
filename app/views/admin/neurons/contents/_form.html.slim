@@ -39,6 +39,9 @@ fieldset
                     place: "right",
                     class: "btn btn-default knowledge-search-btn" do
             .glyphicon.glyphicon-globe
+        
+= render "admin/neurons/contents/instructions_form",
+         f: f
 
 = render "admin/neurons/contents/videos_form",
          f: f

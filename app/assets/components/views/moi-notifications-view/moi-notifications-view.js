@@ -22,7 +22,9 @@ Polymer({
     this.notificationCardApi = api;
     this.notificationCardApi.onNotificationOpen(function(item) {
       AnalyticsBehavior.track('send', 'event', 'Abrir notificación', 'Click');
-      this.notificationCounter--;
+      if (this.notificationCounter > 0) {
+        this.notificationCounter--;
+      }
     }.bind(this));
     this.notificationCardApi.onNotificationRemoved(function(item) {
       AnalyticsBehavior.track('send', 'event', 'Remover notificación', 'Click');

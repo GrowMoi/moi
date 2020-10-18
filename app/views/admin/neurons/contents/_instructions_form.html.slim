@@ -1,0 +1,19 @@
+fieldset
+  legend = t("views.contents.instructions")
+  .row
+    .col-xs-12.content-videos-form
+      = f.fields_for :content_instruction do |ci|
+        = ci.hidden_field :id
+        .form-group
+          = ci.text_field :title,
+                  placeholder: t("activerecord.attributes.content_instruction.title"),
+                  class: "form-control"
+        .form-group
+          = ci.text_area :description,
+                  placeholder: t("activerecord.attributes.content_instruction.description"),
+                  class: "form-control"
+
+        = tooltip t("activerecord.attributes.content_instruction.required_media"),
+              place: "bottom",
+              tag: :span do
+          = ci.check_box :required_media

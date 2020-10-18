@@ -4,7 +4,8 @@ class Neuron < ActiveRecord::Base
       :contents,
       :content_links,
       :content_medium,
-      :content_videos
+      :content_videos,
+      :content_instruction
     ]
 
     def relationships_changed?
@@ -22,7 +23,7 @@ class Neuron < ActiveRecord::Base
       define_method "#{relationship}_any?" do |opts|
         send("#{relationship}_scope").any? do |item|
           opts.all? do |key, val|
-            item.send(key).eql?(val)
+            item && item.send(key).eql?(val)
           end
         end
       end
@@ -44,6 +45,10 @@ class Neuron < ActiveRecord::Base
 
     def content_videos_scope
       contents.map(&:content_videos).flatten
+    end
+
+    def content_instruction_scope
+      contents.map(&:content_instruction).flatten
     end
   end
 end

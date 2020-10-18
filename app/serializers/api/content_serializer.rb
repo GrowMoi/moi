@@ -34,9 +34,24 @@ module Api
                :content_tasks,
                :neuron_can_read,
                :favorite,
-               :belongs_to_event
-
+               :belongs_to_event,
+               :content_can_read,
+               :consigna
+    
     translates :title, :description, :source
+
+    def consigna
+      if object.content_instruction
+        request = RequestContentValidation.where(
+          user: current_user,
+          content: object
+        ).last
+        {
+          content_instruction: ContentInstructionSerializer.new(object.content_instruction),
+          last_request_sent: RequestContentValidationSerializer.new(request)
+        }
+      end
+    end
 
     def read
       current_user.already_read?(object)
@@ -92,6 +107,17 @@ module Api
         end
       end
       belongs
+    end
+
+    def content_can_read
+      if object.content_instruction
+        RequestContentValidation.where(
+          user: current_user,
+          content: object,
+        ).exists?
+      else
+        true
+      end
     end
 
     alias_method :current_user, :scope

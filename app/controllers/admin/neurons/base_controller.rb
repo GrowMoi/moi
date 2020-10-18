@@ -35,6 +35,7 @@ module Admin
                       :parent_id,
                       :is_public,
                       :deleted,
+                      :video,
                       :contents_attributes => [
                         :id,
                         :kind,
@@ -65,6 +66,12 @@ module Admin
                           :id,
                           :url,
                           :language
+                        ],
+                        :content_instruction_attributes => [
+                          :id,
+                          :title,
+                          :description,
+                          :required_media
                         ]
                       ]
       rescue ActionController::ParameterMissing

@@ -136,6 +136,13 @@ Moi::Application.routes.draw do
       end
     end
 
+    resource :content_validations do
+      member do
+        post :send_request
+        post :checked
+      end
+    end
+
     match "users/search" => 'users#search', via: :get
     match "users/content_tasks" => 'users#content_tasks', via: :get
     match "users/content_notes" => 'users#content_notes', via: :get
@@ -176,7 +183,7 @@ Moi::Application.routes.draw do
     resources :quizzes
     resources :level_quizzes
     resources :achievements, except: [:create, :destroy]
-    resources :admin_achievements, except: [:create, :destroy]
+    resources :admin_achievements, except: [:destroy]
     resources :payments
     resources :events
     resources :event_achievements, except: [:destroy] do
@@ -293,6 +300,7 @@ Moi::Application.routes.draw do
       end
       collection do
         get :info
+        get :need_content_validation
       end
     end
 

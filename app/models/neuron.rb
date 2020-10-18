@@ -12,6 +12,7 @@
 #  is_public              :boolean          default(FALSE)
 #  position               :integer          default(0)
 #  pending_contents_count :integer          default(0)
+#  video                  :string
 #
 
 class Neuron < ActiveRecord::Base
@@ -20,6 +21,7 @@ class Neuron < ActiveRecord::Base
 
   translates :title
 
+  mount_uploader :video, VideoUploader
   has_paper_trail ignore: [:created_at, :id, :pending_contents_count]
 
   STATES = %w(active inactive)

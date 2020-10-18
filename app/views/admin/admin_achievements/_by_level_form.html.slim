@@ -1,0 +1,22 @@
+= form_for [:admin, admin_achievement] do |f|
+  = render "admin/shared/form_errors",
+           resource: admin_achievement
+  = hidden_field_tag :category_selected, new_achievement_by
+
+  = render "fields_basic_information", f: f
+
+  .form-group
+    = f.label "Que nivel debe alcanzar el usuario"
+    br
+    = select_tag :level_json, options_for_select(1..9, (admin_achievement.settings && admin_achievement.settings["level"] || params[:level_json]))
+
+  .form-group
+    = f.label :active
+    br
+    = f.check_box :active
+
+  = render "upload_images", f: f
+
+  .actions
+    = f.submit class: "btn btn-primary",
+               data: { disable_with: t("views.submitting") }

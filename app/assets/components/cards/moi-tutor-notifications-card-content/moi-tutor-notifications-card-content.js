@@ -24,14 +24,16 @@ Polymer({
       'client_message_open': this.t('views.tutor.dashboard.card_tutor_notifications.client_message_open'),
       'client_got_item': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_item'),
       'client_recommended_contents_completed': this.t('views.tutor.dashboard.card_tutor_notifications.client_recommended_contents_completed'),
-      'client_got_diploma': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_diploma')
+      'client_got_diploma': this.t('views.tutor.dashboard.card_tutor_notifications.client_got_diploma'),
+      'client_need_validation_content': this.t('views.tutor.dashboard.card_tutor_notifications.client_need_validation_content'),
     };
 
     this.actionsMapping = {
       'client_test_completed': this.buildClientTestCompleted.bind(this),
       'client_message_open': this.buildClientMessageOpen.bind(this),
       'client_got_item': this.buildClientGotItem.bind(this),
-      'client_recommended_contents_completed': this.buildClientRecommendedContentsCompleted.bind(this)
+      'client_recommended_contents_completed': this.buildClientRecommendedContentsCompleted.bind(this),
+      'client_need_validation_content': this.buildClientNeedValidateAContent.bind(this)
     };
 
     this.loading = true;
@@ -41,6 +43,8 @@ Polymer({
       onNotificationOpen: null,
       onNotificationReceived: null
     };
+    this.notificationSelected = null;
+    this.request_answer = "";
     this.resetDialogFlags();
     $.ajax({
       url: notificationsApi,
@@ -48,7 +52,6 @@ Polymer({
       success: this.onGetNotificationsApiSuccess.bind(this)
       //error:  this.onGetNotificationsApiError.bind(this)
     });
-
     NotificationBehavior.startPusherForTutorAccount(this.tutorId, this.onNotificationReceived.bind(this));
   },
   bindOptions: function() {
@@ -104,6 +107,7 @@ Polymer({
     this.resetDialogFlags();
     var model = ev.model;
     var notificationSelected = model.item;
+    this.notificationSelected = notificationSelected;
     $(this.$['dialog-notification-info']).show();
     $.ajax({
       url: '/tutor/notifications/' + notificationSelected.id + '/details',
@@ -124,7 +128,7 @@ Polymer({
       }.bind(this)
     });
   },
-  rigthAnswers: function (results) {
+  rightAnswers: function (results) {
     var count = 0;
     results.forEach(function(result){
       if (result.correct) {
@@ -184,10 +188,44 @@ Polymer({
       });
     }
   },
+  approvedRequest: function(ev) {
+    this.answerRequest(ev, true);
+  },
+  disapprovedRequest: function(ev) {
+    this.answerRequest(ev, false);
+  },
+  answerRequest: function (ev, answer) {
+    ev.stopPropagation();
+    var request_id = this.notificationSelected.data.new_request_content_id;
+    var feedback = this.request_answer;
+    $.ajax({
+      url: '/api/content_validations/checked',
+      type: 'POST',
+      data: {
+        request_id: request_id,
+        message: feedback,
+        approved: answer
+      },
+      success: function(res) {
+        $(this.$['dialog-notification-info']).hide();
+        this.clientNeedValidation = false;
+      }.bind(this),
+      error: function(res) {
+        $(this.$['dialog-notification-info']).hide();
+        var message = res.responseJSON && res.responseJSON.message ? res.responseJSON.message : '';
+        this.toastMessage = message;
+        this.$['toast-message'].show();
+        this.clientNeedValidation = false;
+      }.bind(this)
+    });
+  },
+  updateFeedback: function(ev) {
+    this.request_answer = ev.target.value;
+  },
   buildClientTestCompleted: function(res, notificationSelected) {
     this.clientTestCompleted = true;
     var totalQuestions = res.questions.questions.length,
-        successAnswers = this.rigthAnswers(res.answers),
+        successAnswers = this.rightAnswers(res.answers),
         description = 'Respondió ' + successAnswers + ' de ' + totalQuestions + ' preguntas correctamente',
         timeMessage = 'Tiempo usado: ' + res.time_quiz,
         answersWithResults =  this.mapQuizResults(res.answers, res.questions.questions),
@@ -228,10 +266,30 @@ Polymer({
       contents: res.contents || []
     };
   },
+  buildClientNeedValidateAContent: function(res, notificationSelected) {
+    this.clientNeedValidation = true;
+    var username = notificationSelected.client.username;
+    var request_client = res.request_client || {};
+    var content_instruction = request_client.content_instruction || {};
+    this.notificationData =  {
+      username: username,
+      content: request_client.content_title,
+      media: request_client.media,
+      text: request_client.text,
+      instruction: content_instruction.description,
+      media_required: !!content_instruction.media_required,
+      created_at: request_client.created_at,
+      reviewed: request_client.approved !== null,
+      reviewed_by_me: request_client.reviewed_by_me,
+      is_image: request_client.kind_of_file === 'image'
+    };
+    console.log(this.notificationData);
+  },
   resetDialogFlags: function() {
     this.clientTestCompleted = false;
     this.clientMessageOpen = false;
     this.clientGotItem = false;
     this.clientRecommendedContentsCompleted =  false;
+    this.clientNeedValidation = false;
   }
 });

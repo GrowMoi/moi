@@ -10,6 +10,17 @@
               {include_blank: true},
               class: "form-control"
 
+.form-group
+  = f.label :video
+  = f.file_field :video,
+                class: "form-control",
+                accept: ".mp4, .mov, .mpeg, .flv, .wmv, .avi, .mkv, .webm"
+
+  - if f.object.video_url
+    br
+    = video_tag decorated_neuron.video_url.to_s, controls: true,
+                                            class: "neuron-video",
+                                            width: "200"
 .checkbox
   label
     = f.check_box :is_public

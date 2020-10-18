@@ -66,6 +66,9 @@ class Content < ActiveRecord::Base
              dependent: :destroy
     has_many :content_tutor_recommendation,
              dependent: :destroy
+    has_many :request_content_validations
+    has_one :content_instruction, 
+            dependent: :destroy
   end
 
   begin :nested_attributes
@@ -89,6 +92,12 @@ class Content < ActiveRecord::Base
       allow_destroy: true,
       reject_if: ->(attributes) {
         attributes["id"].blank? && attributes["url"].blank?
+      }
+
+    accepts_nested_attributes_for :content_instruction,
+      allow_destroy: true,
+      reject_if: ->(attributes) {
+        attributes["id"].blank? && attributes["title"].blank? && attributes["description"].blank?
       }
   end
 

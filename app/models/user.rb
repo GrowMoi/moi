@@ -31,6 +31,9 @@
 #  image                  :string
 #  level                  :integer          default(1)
 #  tree_image_app         :string
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
 #
 
 class User < ActiveRecord::Base
@@ -150,6 +153,7 @@ class User < ActiveRecord::Base
              through: :user_event_achievements
     has_many :user_event_achievements,
              dependent: :destroy
+    has_many :request_content_validations
   end
 
   def update_status_super_event

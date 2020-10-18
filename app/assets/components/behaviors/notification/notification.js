@@ -57,7 +57,8 @@ NotificationBehavior.pusherEvents = [
   'client_test_completed',
   'client_message_open',
   'client_got_item',
-  'client_recommended_contents_completed'
+  'client_recommended_contents_completed',
+  'client_need_validation_content'
 ];
 
 NotificationBehavior.startPusherForTutorAccount = function(tutorId, onNotificationReceived) {

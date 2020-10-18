@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
     def assign_achievements
       new_achievements = []
-      achievements = AdminAchievement.all
+      achievements = AdminAchievement.all.where(active: true)
       my_achievements = self.my_achievements
       no_achievements = achievements.reject{ |x| my_achievements.include? x }
       no_achievements.each do |achievement|
