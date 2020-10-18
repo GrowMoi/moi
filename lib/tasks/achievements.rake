@@ -3,7 +3,7 @@ namespace :achievements do
   task set_user_achievements: :environment do
     clients_ids = ContentLearning.all.map(&:user_id).uniq.sort
     clients = User.where(id: clients_ids)
-    achievements_db = AdminAchievement.all
+    achievements_db = AdminAchievement.all.where(active: true)
     clients.each do |client|
       my_achievements = client.user_admin_achievements.map(&:admin_achievement_id)
       no_achievements = achievements_db.reject{ |x| my_achievements.include? x.id }

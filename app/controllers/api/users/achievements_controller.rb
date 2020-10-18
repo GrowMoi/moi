@@ -18,7 +18,7 @@ module Api
       }
 
       expose(:all_achievements) {
-        AdminAchievement.all
+        AdminAchievement.all.where(active: true)
       }
 
       api :GET,

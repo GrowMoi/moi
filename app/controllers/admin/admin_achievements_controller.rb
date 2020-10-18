@@ -64,7 +64,7 @@ module Admin
       if admin_achievement.category == 'neuron'
         admin_achievement.settings = {
           quantity: params[:quantity_json],
-          neuron_id: params[:neuron_id_json],
+          neuron_id: params[:neuron_id_json]
         }
       end
       if admin_achievement.category == 'level'
@@ -75,19 +75,19 @@ module Admin
       if admin_achievement.category == 'test'
         admin_achievement.settings = {
           quantity: params[:quantity_json],
-          continuous: params[:continuous_json] == "true",
+          continuous: params[:continuous_json] == "true"
         }
       end
       if admin_achievement.category == 'content'
         admin_achievement.settings = {
           quantity: params[:quantity_json],
-          branch: params[:branch_json],
+          branch: params[:branch_json]
         }
       end
       if admin_achievement.category == 'branch'
         admin_achievement.settings = {
           quantity: params[:quantity_json],
-          branch: params[:branch_json],
+          branch: params[:branch_json]
         }
       end
     end

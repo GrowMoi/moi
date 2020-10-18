@@ -14,12 +14,12 @@
     = f.label "Cuantos contenidos debe aprender"
     = number_field_tag :quantity_json, (admin_achievement.settings && admin_achievement.settings["quantity"] || params[:quantity_json]), class: "form-control"
 
+  = render "upload_images", f: f
+
   .form-group
     = f.label :active
     br
     = f.check_box :active
-
-  = render "upload_images", f: f
 
   .actions
     = f.submit class: "btn btn-primary",
