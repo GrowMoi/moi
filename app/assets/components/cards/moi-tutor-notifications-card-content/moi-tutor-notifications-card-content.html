@@ -183,7 +183,9 @@
               <h5>{{notificationData.username}}</h5>
               <div><strong>Respuesta:</strong></div>
               <template is="dom-if" if="{{ notificationData.show_image }}" restamp>
-                <img src$="[[ notificationData.media ]]" alt="validation-img" width="480">
+                <a href$="[[ notificationData.media ]]" target="_blank">
+                  <img src$="[[ notificationData.media ]]" alt="validation-img" class="img-consigna">
+                </a>
               </template>
               <template is="dom-if" if="{{ notificationData.show_video }}" restamp>
                 <video width="480" height="140" controls>
