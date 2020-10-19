@@ -167,7 +167,7 @@
           <div>{{ t('views.loading') }}</div>
         </template>
         <template is="dom-if" if="{{ !loadingDialogData }}" restamp>
-          <template is="dom-if" if="{{ notificationData.reviewed && !notificationData.reviewed_by_me }}" restamp>
+          <template is="dom-if" if="{{ notificationData.reviewed_by_other }}" restamp>
             <h4>Este contenido ya ha sido revisado por alguien mas</h4>
           </template>
           <div>
@@ -179,13 +179,13 @@
             </div>
             <div>
               <hr>
-              <div>Usuario:</div>
+              <div><strong>Usuario:</strong></div>
               <h5>{{notificationData.username}}</h5>
-              <div>Respuesta:</div>
-              <template is="dom-if" if="{{ notificationData.media_required && notificationData.is_image }}" restamp>
+              <div><strong>Respuesta:</strong></div>
+              <template is="dom-if" if="{{ notificationData.show_image }}" restamp>
                 <img src$="[[ notificationData.media ]]" alt="validation-img" width="480">
               </template>
-              <template is="dom-if" if="{{ notificationData.media_required && !notificationData.is_image }}" restamp>
+              <template is="dom-if" if="{{ notificationData.show_video }}" restamp>
                 <video width="480" height="140" controls>
                   <source src$="[[ notificationData.media ]]">
                 </video>
