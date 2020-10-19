@@ -283,7 +283,10 @@ Polymer({
       reviewed_by_me: request_client.reviewed_by_me,
       is_image: request_client.kind_of_file === 'image'
     };
-    console.log(this.notificationData);
+    this.notificationData.show_image = this.notificationData.media_required && this.notificationData.is_image;
+    this.notificationData.show_video = this.notificationData.media_required && !this.notificationData.is_image;
+    this.notificationData.reviewed_by_other = this.notificationData.reviewed && !this.notificationData.reviewed_by_me;
+    // console.log(this.notificationData);
   },
   resetDialogFlags: function() {
     this.clientTestCompleted = false;
