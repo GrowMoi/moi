@@ -277,7 +277,7 @@ Polymer({
       media: request_client.media,
       text: request_client.text,
       instruction: content_instruction.description,
-      media_required: !!content_instruction.media_required,
+      media_required: !!content_instruction.required_media,
       created_at: request_client.created_at,
       reviewed: request_client.approved !== null,
       reviewed_by_me: request_client.reviewed_by_me,
