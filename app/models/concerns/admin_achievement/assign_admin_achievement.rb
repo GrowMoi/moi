@@ -73,7 +73,7 @@ class AdminAchievement < ActiveRecord::Base
     # user learnt content specific branch
     def by_branch(achievement, user)
       completed = false
-      name = achievement.settings['branch']
+      name = achievement.settings['branch'] || ""
       contents = user.contents_learnt_by_branch(name)
       unless contents.blank?
         completed = contents.size >= achievement.settings['quantity'].to_i
@@ -91,7 +91,7 @@ class AdminAchievement < ActiveRecord::Base
     ##
     # user learnt content in a specific neuron
     def by_neuron(achievement, user)
-      settings = achievement.settings['quantity'] || {};
+      settings = achievement.settings || {};
       quantity = settings['quantity'].to_i
       neuron_id = settings['neuron_id'].to_i
       total_learnt_contents = user.content_learnings.where(neuron_id: neuron_id).count
