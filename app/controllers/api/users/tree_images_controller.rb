@@ -20,7 +20,7 @@ module Api
           user.tree_image = params[:image]
         end
 
-        if user.save()
+        if user.save
           response = {
             status: :accepted,
             user: user

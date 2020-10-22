@@ -23,6 +23,15 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-tutor
         li.item-recommendations(class=(params[:controller] == 'tutor/recommendations' ? 'active' : ''))
           = image_tag("moi_navbar_recommendations.svg")
           = link_to t("views.tutor.navbar.recommendations"), new_tutor_recommendation_path, class:"navbar-link-recommendations", id:"navbar-link-recommendations"
+
+      ul.nav.navbar-nav.navbar-tutor-second-section
+        .contact-us
+          h4 = "Tienes preguntas? Mira el"
+          a.link-to-tutorial  href="https://www.instagram.com/tv/B_Qi1gQDWG0/" target="_blank"
+            = " tutorial aqui "
+          h4 = "o escribemos a"
+        a.email-to href="mailto:learning@growmoi.com"
+          = "learning@growmoi.com"
       ul.nav.navbar-nav.navbar-right.navbar-tutor-last-item
         li.item-tutor.dropdown
           = image_tag("moi_navbar_tutor.png")
