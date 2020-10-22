@@ -26,6 +26,7 @@ Polymer({
     this.downloadBtnFilename = 'reporte_' + Date.now() + '.xls';
     this.downloadBtnFilenameV3 = 'reporte_' + Date.now() + '.xlsx';
     $(this.$.btnSelectiveDownload).addClass('disabled');
+    $(this.$.btnAllDownload).addClass('disabled');
     this.emitters = {};
     this.loading = true;
     this.userRemove = null;
@@ -76,7 +77,15 @@ Polymer({
       type: 'GET',
       success: function (res) {
         this.loading = false;
-        this.students = res.data;
+        this.students = res.data || [];
+        var hasActiveUsers = this.students.find(function(item) {
+          return item.status === "accepted"
+        });
+        if (hasActiveUsers) {
+          $(this.$.btnAllDownload).removeClass('disabled');
+        } else {
+          $(this.$.btnAllDownload).addClass('disabled');
+        }
       }.bind(this)
     });
   },
