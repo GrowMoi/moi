@@ -16,22 +16,42 @@ module Tutor
 
     def destroy
       request = UserTutor.where(tutor_id: current_user.id, user_id: params[:id] ).first
-      if request.destroy
+      if request.nil? # the request was rejected
         render json: {
           message: I18n.t(
-            "views.tutor.moi.tutor_request.cancel_request_ok"
+            "views.tutor.moi.tutor_request.user_reject_already"
           ),
           type: 'cancel_request_ok',
         },
         status: 200
       else
-        render json: {
-          message: I18n.t(
-            "views.tutor.moi.tutor_request.cancel_request_failed"
-          ),
-          type: 'cancel_request_failed',
-        },
-        status: 422
+        if request.status == "accepted"
+          render json: {
+            message: I18n.t(
+              "views.tutor.moi.tutor_request.user_added_already"
+            ),
+            type: 'cancel_request_ok',
+          },
+          status: 200
+        else
+          if request.destroy
+            render json: {
+              message: I18n.t(
+                "views.tutor.moi.tutor_request.cancel_request_ok"
+              ),
+              type: 'cancel_request_ok',
+            },
+            status: 200
+          else
+            render json: {
+              message: I18n.t(
+                "views.tutor.moi.tutor_request.cancel_request_failed"
+              ),
+              type: 'cancel_request_failed',
+            },
+            status: 422
+          end
+        end
       end
     end
 
