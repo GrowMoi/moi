@@ -296,6 +296,8 @@
           cancel_request_failed: "Tu solicitud no ha podido ser cancelada"
           remove_user_ok: "El estudiante ha sido eliminado"
           remove_user_failed: "El estudiante no ha podido ser eliminado"
+          user_added_already: "El usuario ya acepto tu solictud"
+          user_reject_already: "El usuario ya rechazo tu solictud"
       analysis:
         analyze: "Seleccione análisis"
         total_neurons_learnt: "Neuronas aprendidas"
