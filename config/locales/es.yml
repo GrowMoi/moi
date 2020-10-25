@@ -37,6 +37,7 @@
       event_achievements: Super Eventos
     users:
       new: "Nuevo Usuario"
+      new_multiple_users: "Crear multiples usuarios"
       edit: "Editar Usuario"
       created: "Usuario creado"
       updated: "Usuario actualizado"
