@@ -1,0 +1,18 @@
+.quizzes-page
+  - content_for :title, t("activerecord.models.user").pluralize
+
+  table.table.table-striped
+    thead
+      tr
+        th =t("views.user_importings.created_at")
+        th =t("views.user_importings.show")
+    tbody
+    -user_importings.each do |q|
+      tr
+        td = l(q.created_at, :format => :short)
+        td = link_to t("views.user_importings.show"), admin_user_importing_path(q)
+
+  .notification-create.pull-right
+    = link_to t("views.quizzes.create"),
+              new_admin_user_importing_path,
+              class: "btn btn-sm btn-default"

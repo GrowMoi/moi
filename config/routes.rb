@@ -183,6 +183,7 @@ Moi::Application.routes.draw do
         post :multiple_users
       end
     end
+    resources :user_importings, except: [:edit, :destroy]
     resources :profiles
     resources :notifications
     resources :quizzes

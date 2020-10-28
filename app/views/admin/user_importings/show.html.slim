@@ -1,0 +1,19 @@
+.users_importing_page
+  - content_for :title, t("activerecord.models.user").pluralize
+
+  table.table.table-striped
+    thead
+      tr
+        th = t("activerecord.attributes.user.username")
+        th = t("activerecord.attributes.user.name")
+        th = t("activerecord.attributes.user.email")
+        th = t("activerecord.attributes.user.authorization_key_en")
+        th = t("activerecord.attributes.user.authorization_key_es")
+    tbody
+    -users_created.each do |u|
+      tr
+        td = u.username
+        td = u.name
+        td = u.email
+        td = u.authorization_key
+        td = UserAuthorizationKeys::KEYS_ES[u.authorization_key.to_sym]

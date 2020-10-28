@@ -1,0 +1,11 @@
+- content_for :title, t("views.users.new")
+
+= form_tag(admin_user_importings_path, method: :post) do
+  .form-group
+    = label_tag "Nombres de usuarios (max 100)"
+    = text_area_tag :users, params[:users], class: "form-control", rows: 20
+    br
+    span.input-group-btn
+      = submit_tag t("actions.create"),
+                    class: "btn btn-default",
+                    data: { disable_with: t("views.submitting") }
