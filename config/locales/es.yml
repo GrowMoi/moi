@@ -701,7 +701,7 @@
   activerecord:
     models:
       user: "Usuario"
-      user_importing: "Importacion de usuario"
+      user_importing: "Creación multiple de usuario"
       cliente: "Cliente"
       neuron: "Neurona"
       content: "Contenido"
@@ -864,6 +864,7 @@
     search: Buscar
     actions: Acciones
     change_to_tutor: Cambiar a Tutor
+    download_as_csv: Descargar csv
   enumerize:
     content_importing:
       status:

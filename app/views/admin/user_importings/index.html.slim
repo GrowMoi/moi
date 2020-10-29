@@ -5,14 +5,15 @@
     thead
       tr
         th =t("views.user_importings.created_at")
-        th =t("views.user_importings.show")
+        th = ""
+        th = ""
     tbody
     -user_importings.each do |q|
       tr
         td = l(q.created_at, :format => :short)
         td = link_to t("views.user_importings.show"), admin_user_importing_path(q)
-
+        td = link_to t("actions.download_as_csv"), admin_user_importing_path(q,  format: :csv)
   .notification-create.pull-right
-    = link_to t("views.quizzes.create"),
+    = link_to t("actions.new"),
               new_admin_user_importing_path,
               class: "btn btn-sm btn-default"

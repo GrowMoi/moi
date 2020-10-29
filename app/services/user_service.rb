@@ -34,8 +34,13 @@ class UserService
   def generate_username(user_names, count)
     user_names = user_names.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').downcase.to_s
     split_names = user_names.split(" ")
-    last_name = split_names[0]
-    first_name = split_names[2]
+    if split_names.count == 2
+      last_name = split_names[0]
+      first_name = split_names[1]
+    else
+      last_name = split_names[0] || ""
+      first_name = split_names[2] || ""
+    end
     "#{last_name}#{first_name}#{(count == 0 ? "" : count)}".parameterize
   end
 end

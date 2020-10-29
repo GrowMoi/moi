@@ -17,3 +17,6 @@
         td = u.email
         td = u.authorization_key
         td = UserAuthorizationKeys::KEYS_ES[u.authorization_key.to_sym]
+
+  = link_to t("actions.download_as_csv"),
+            admin_user_importing_path(users_importing, format: :csv)

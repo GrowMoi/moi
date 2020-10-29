@@ -2,8 +2,9 @@
 
 = form_tag(admin_user_importings_path, method: :post) do
   .form-group
-    = label_tag "Nombres de usuarios (max 100)"
-    = text_area_tag :users, params[:users], class: "form-control", rows: 20
+    = label_tag "Ingrese un nombre x linea"
+    = text_area_tag :users, params[:users], class: "form-control", rows: 20, placeholder: "Ejm: Marco Antonio Rios Jaramillo"
+    h5 = "Número maximo 100"
     br
     span.input-group-btn
       = submit_tag t("actions.create"),

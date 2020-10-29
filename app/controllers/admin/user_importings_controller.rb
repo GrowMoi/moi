@@ -6,11 +6,14 @@ module Admin
 
     authorize_resource
 
-    # expose(:user_importing, attributes: :user_params)
-    expose(:user_importings)
+    expose(:user_importings) {
+      UserImporting.order(created_at: :desc)
+    }
+    expose(:users_importing) {
+      UserImporting.find(params[:id])
+    }
     expose(:users_created) {
-      users = UserImporting.find(params[:id])
-      User.where(id: users.users)
+      User.where(id: users_importing.users)
     }
 
     def index
@@ -26,14 +29,17 @@ module Admin
         users: users_ids
       )
       if new_user_importing.save
-        redirect_to admin_user_importings_path, notice: I18n.t("views.users.created")
+        redirect_to admin_user_importing_path(new_user_importing), notice: I18n.t("views.users.created")
       else
         render :new
       end
     end
 
     def show
-      users_created
+      respond_to do |format|
+        format.html
+        format.csv { send_data users_importing.to_csv, filename: "users-#{users_importing.created_at}.csv" }
+      end
     end
 
     private
