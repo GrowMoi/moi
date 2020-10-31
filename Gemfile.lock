@@ -367,6 +367,7 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
+    rack-timeout (0.6.0)
     rails (4.2.8)
       actionmailer (= 4.2.8)
       actionpack (= 4.2.8)
@@ -576,6 +577,7 @@ DEPENDENCIES
   pusher
   rack-cors
   rack-mini-profiler
+  rack-timeout
   rails (= 4.2.8)
   rails_12factor
   rspec-rails
