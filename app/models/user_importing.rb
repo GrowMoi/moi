@@ -6,11 +6,13 @@
 #  users      :json             default([]), is an Array
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  list       :string
+#  file_name  :string
 #
 
 class UserImporting < ActiveRecord::Base
 
-  validates :users, presence: true
+  validates :list, presence: true
 
   def to_csv
     CSV.generate(headers: true) do |csv|

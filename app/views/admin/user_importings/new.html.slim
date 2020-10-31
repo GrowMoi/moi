@@ -4,7 +4,7 @@
   .form-group
     = label_tag "Ingrese un nombre x linea"
     = text_area_tag :users, params[:users], class: "form-control", rows: 20, placeholder: "Ejm: Marco Antonio Rios Jaramillo"
-    h5 = "Número maximo 100"
+    h6 = "* Este proceso podria tomar un tiempo en ejecutarse dependiendo del número de usuarios"
     br
     span.input-group-btn
       = submit_tag t("actions.create"),

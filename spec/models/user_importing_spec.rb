@@ -6,6 +6,8 @@
 #  users      :json             default([]), is an Array
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  list       :string
+#  file_name  :string
 #
 
 require 'rails_helper'

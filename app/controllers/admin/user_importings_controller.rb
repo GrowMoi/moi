@@ -9,11 +9,9 @@ module Admin
     expose(:user_importings) {
       UserImporting.order(created_at: :desc)
     }
+
     expose(:users_importing) {
       UserImporting.find(params[:id])
-    }
-    expose(:users_created) {
-      User.where(id: users_importing.users)
     }
 
     def index
@@ -22,23 +20,24 @@ module Admin
 
     def create
       list = params[:users]
-      split_users = params[:users].split("\r\n").map {|name| name.strip}
-      split_users = split_users.reject(&:empty?)
-      users_ids = UserService.new(split_users).run!
       new_user_importing = UserImporting.new(
-        users: users_ids
+        list: list
       )
       if new_user_importing.save
-        redirect_to admin_user_importing_path(new_user_importing), notice: I18n.t("views.users.created")
+        system "rake users:generate_users_from_list_names ID_IMPORT=#{new_user_importing.id} &"
+        redirect_to admin_user_importings_path, notice: I18n.t("views.users.created")
       else
         render :new
       end
     end
 
     def show
+      ids_users = users_importing.users
       respond_to do |format|
         format.html
-        format.csv { send_data users_importing.to_csv, filename: "users-#{users_importing.created_at}.csv" }
+        format.json {
+          render json: UsersDatatable.new(view_context, ids_users)
+        }
       end
     end
 

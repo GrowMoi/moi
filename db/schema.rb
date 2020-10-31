@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201027234417) do
+ActiveRecord::Schema.define(version: 20201031212302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -678,6 +678,8 @@ ActiveRecord::Schema.define(version: 20201027234417) do
     t.json     "users",      default: [],              array: true
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.string   "list"
+    t.string   "file_name"
   end
 
   create_table "user_seen_images", force: :cascade do |t|

@@ -53,14 +53,6 @@ module Admin
       end
     end
 
-    def multiple_users
-      list = params[:users]
-      split_users = params[:users].split("\r\n").map {|name| name.strip}
-      split_users = split_users.reject(&:empty?)
-      UserService.new(split_users).run!
-      render :index
-    end
-
     private
 
     def user_params
