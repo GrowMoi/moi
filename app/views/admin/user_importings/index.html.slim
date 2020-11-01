@@ -1,0 +1,27 @@
+.quizzes-page
+  - content_for :title, t("activerecord.models.user").pluralize
+
+  table.table.table-striped
+    thead
+      tr
+        th =t("views.user_importings.created_at")
+        th = ""
+        th = ""
+    tbody
+    -user_importings.each do |q|
+      tr
+        td = l(q.created_at, :format => :short)
+        - if q.file_name.nil?
+          td = "en progreso..."
+        - else
+          td = link_to t("views.user_importings.show"), admin_user_importing_path(q)
+        - if q.file_name.nil?
+          td = "generando archivo..."
+        - else
+          td = link_to  t("actions.download_as_csv"), "#{Rails.application.secrets.url}/#{q.file_name}"
+
+
+  .notification-create.pull-right
+    = link_to t("actions.new"),
+              new_admin_user_importing_path,
+              class: "btn btn-sm btn-default"

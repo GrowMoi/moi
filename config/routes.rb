@@ -178,6 +178,7 @@ Moi::Application.routes.draw do
   namespace :admin do
     resource :dashboard, only: :index
     resources :users
+    resources :user_importings, except: [:edit, :destroy]
     resources :profiles
     resources :notifications
     resources :quizzes

@@ -1,8 +1,9 @@
 class UsersDatatable
   delegate :params, :t, :link_to, :image_tag, to: :@view
 
-  def initialize(view)
+  def initialize(view, ids_users =[])
     @view = view
+    @ids_users = ids_users
   end
 
   def as_json(options = {})
@@ -40,6 +41,9 @@ private
   def users_scope
     @users_scope ||= begin
       scope = User.order("#{sort_column} #{sort_direction}")
+      if @ids_users.count > 0
+        scope = scope.where(id: @ids_users)
+      end
       if params[:sSearch].present?
         scope = scope.where(
           "name ILIKE :search OR email ILIKE :search",

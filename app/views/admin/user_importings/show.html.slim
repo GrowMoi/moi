@@ -1,0 +1,12 @@
+.users_importing_page
+  - content_for :title, t("activerecord.models.user").pluralize
+
+  = datatable source: admin_user_importing_path(users_importing, format: :json) do
+    thead
+      tr
+        th #{t("activerecord.attributes.user.username")}
+        th #{t("activerecord.attributes.user.name")}
+        th #{t("activerecord.attributes.user.email")}
+        th #{t("activerecord.attributes.user.role")}
+        th
+    tbody

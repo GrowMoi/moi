@@ -41,6 +41,12 @@
       created: "Usuario creado"
       updated: "Usuario actualizado"
       show: "Mostrar Usuario"
+    user_importings:
+      new: "Nueva importación"
+      created: "Usuarios creados"
+      show: "Mostrar Usuarios"
+      created_at: "Fecha de creación"
+      importing: "Generando usuarios"
     neurons:
       new: "Nueva Neurona"
       created: "Neurona creada"
@@ -696,6 +702,7 @@
   activerecord:
     models:
       user: "Usuario"
+      user_importing: "Creación multiple de usuario"
       cliente: "Cliente"
       neuron: "Neurona"
       content: "Contenido"
@@ -723,6 +730,8 @@
         name: "Nombre real"
         login: "Nombre de usuario o Email"
         authorization_key: "Imagen de autorización"
+        authorization_key_es: "Imagen en ingles"
+        authorization_key_en: "Imagen en español"
       cliente:
         identificacion: "Identificación"
         tipo_id: "Tipo de identificación"
@@ -856,6 +865,7 @@
     search: Buscar
     actions: Acciones
     change_to_tutor: Cambiar a Tutor
+    download_as_csv: Descargar csv
   enumerize:
     content_importing:
       status:
