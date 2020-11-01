@@ -46,6 +46,7 @@
       created: "Usuarios creados"
       show: "Mostrar Usuarios"
       created_at: "Fecha de creación"
+      importing: "Generando usuarios"
     neurons:
       new: "Nueva Neurona"
       created: "Neurona creada"

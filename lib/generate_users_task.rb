@@ -1,6 +1,4 @@
 require 'csv'
-require "utils/remote_fetcher"
-
 class GenerateUsersTask
   def initialize(id_import)
     @id_import = id_import
@@ -59,13 +57,5 @@ class GenerateUsersTask
       first_name = split_names[2] || ""
     end
     "#{last_name}#{first_name}#{(count == 0 ? "" : count)}".parameterize
-  end
-
-  def users_list
-    fetch(@list_uri).body.split("\n")
-  end
-
-  def fetch(uri_str)
-    Utils::RemoteFetcher.fetch(uri_str)
   end
 end

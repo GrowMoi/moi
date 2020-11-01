@@ -25,7 +25,7 @@ module Admin
       )
       if new_user_importing.save
         system "rake users:generate_users_from_list_names ID_IMPORT=#{new_user_importing.id} &"
-        redirect_to admin_user_importings_path, notice: I18n.t("views.users.created")
+        redirect_to admin_user_importings_path, notice: I18n.t("views.user_importings.importing")
       else
         render :new
       end
