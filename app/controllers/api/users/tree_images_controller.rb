@@ -20,19 +20,21 @@ module Api
           user.tree_image = params[:image]
         end
 
-        if user.save
+        begin
+          user.save
           response = {
             status: :accepted,
             user: user
           }
-        else
-          response = {
-            nothing: true,
-            status: :unprocessable_entity
+          render json: response, status: :accepted
+        rescue Exception => e
+          render json: {
+            status: :accepted,
+            success: false,
+            message: "Failed to upload image. Please try after some time.",
+            user: user
           }
         end
-        render json: response,
-               status: response[:status]
       end
     end
   end
