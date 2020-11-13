@@ -27,8 +27,8 @@ module Api
                :favorite,
                :belongs_to_event,
                :content_can_read,
-               :title
-  
+               :title,
+               :description
 
     translates :title, :description, :source
 
