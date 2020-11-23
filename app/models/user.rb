@@ -51,8 +51,8 @@ class User < ActiveRecord::Base
   include UserAchievements
   include UserStorage
 
-  mount_base64_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
-  mount_base64_uploader :tree_image_app, ContentMediaUploader, file_name: -> { 'tree_app' }
+  mount_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
+  mount_uploader :tree_image_app, ContentMediaUploader, file_name: -> { 'tree_app' }
   mount_base64_uploader :image, ContentMediaUploader, file_name: -> { DateTime.now.strftime('%s') + 'user_image' }
 
   # Include default devise modules. Others available are:
@@ -267,10 +267,10 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth)
-    where("email = :email OR (provider = :provider AND uid = :uid)", 
+    where("email = :email OR (provider = :provider AND uid = :uid)",
             {
-              email: auth.info.email, 
-              provider: auth.provider, 
+              email: auth.info.email,
+              provider: auth.provider,
               uid: auth.uid
             }
           ).first_or_create do |user|
