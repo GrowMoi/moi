@@ -48,10 +48,9 @@ module Api
     end
 
     def contents
-      ids = object.content_ids.map.reject { |id| id.empty? }
       branches_neurons_ids = TreeService::NeuronsFetcher.new(nil).neurons_ids_by_branch
-      ids.map do |id|
-        content = Content.find(id)
+      contents = Content.includes(:neuron).where(id: object.content_ids)
+      contents.map do |content|
         neuron = content.neuron
         neuron_title = neuron.title
         lang = current_user.preferred_lang
@@ -60,7 +59,7 @@ module Api
           neuron_title = resp ? resp.content : neuron_title
         end
         {
-          content_id: id,
+          content_id: content.id,
           neuron: neuron_title,
           neuron_color: TreeService::NeuronsFetcher.new(neuron).neuron_color(branches_neurons_ids)
         }
