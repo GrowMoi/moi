@@ -28,11 +28,10 @@ class UserEvent < ActiveRecord::Base
   # add necessary contents
   # with neuron title
   def add_contents!
-    ids = self.event.content_ids.map.reject { |id| id.empty? }
-    self.contents = ids.map do |id|
-      content = Content.find(id)
+    contents = Content.includes(:neuron).where(id: self.event.content_ids)
+    self.contents = contents.map do |content|
       {
-        content_id: id,
+        content_id: content.id,
         neuron: content.neuron.title
       }
     end
