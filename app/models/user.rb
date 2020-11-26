@@ -267,13 +267,19 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth)
-    where("email = :email OR (provider = :provider AND uid = :uid)", 
+    where("email = :email OR (provider = :provider AND uid = :uid)",
             {
-              email: auth.info.email, 
-              provider: auth.provider, 
+              email: auth.info.email,
+              provider: auth.provider,
               uid: auth.uid
             }
           ).first_or_create do |user|
+      # we set only for new users:
+      if user.new_record?
+        user.provider = auth.provider
+        user.uid = auth.uid
+      end
+
       # for now only tutors taking advantage of this
       user.role = "tutor"
 
