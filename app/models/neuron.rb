@@ -39,14 +39,14 @@ class Neuron < ActiveRecord::Base
   }
   scope :approved_public_contents, -> {
     ids = where(is_public: true)
-    Content.where(neuron_id: ids, approved: true)
+    Content.includes(:neuron, :content_tasks, :content_medium, :content_instruction).where(neuron_id: ids, approved: true)
   }
 
   begin :relationships
     has_many :contents,
              dependent: :destroy
     has_many :approved_contents,
-             -> { Content.approved },
+             -> { Content.includes(:content_medium, :content_instruction).approved },
              class_name: "Content"
     belongs_to :parent, class_name: "Neuron"
   end

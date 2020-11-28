@@ -7,7 +7,7 @@ module Api
     }
 
     expose(:user_event) {
-      UserEvent.where(
+      UserEvent.includes(:event, :user).where(
         user: current_user,
         completed: false,
         expired: false
@@ -310,7 +310,7 @@ module Api
     end
 
     def validate_content_was_already_learned(content_id)
-      content_already_learned = ContentLearning.where(
+      content_already_learned = ContentLearning.includes(:content, :user).where(
         user: current_user,
         content_id: content.id
       ).first

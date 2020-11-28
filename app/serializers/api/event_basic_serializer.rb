@@ -16,13 +16,12 @@
 #  updated_at     :datetime         not null
 #
 module Api
-  class EventSerializer < ActiveModel::Serializer
+  class EventBasicSerializer < ActiveModel::Serializer
     attributes :id,
                :title,
                :description,
                :image,
                :inactive_image,
-               :contents,
                :duration,
                :kind,
                :user_level,
@@ -45,25 +44,6 @@ module Api
     def inactive_image
       inactive_image = object.inactive_image
       inactive_image ? inactive_image.url : ''
-    end
-
-    def contents
-      branches_neurons_ids = TreeService::NeuronsFetcher.new(nil).neurons_ids_by_branch
-      contents = Content.includes(:neuron).where(id: object.content_ids)
-      contents.map do |content|
-        neuron = content.neuron
-        neuron_title = neuron.title
-        lang = current_user.preferred_lang
-        unless lang == ApplicationController::DEFAULT_LANGUAGE
-          resp = TranslatedAttribute.where(translatable_id: neuron.id, name: "title", translatable_type: "Neuron").last
-          neuron_title = resp ? resp.content : neuron_title
-        end
-        {
-          content_id: content.id,
-          neuron: neuron_title,
-          neuron_color: TreeService::NeuronsFetcher.new(neuron).neuron_color(branches_neurons_ids)
-        }
-      end
     end
 
     def is_available
