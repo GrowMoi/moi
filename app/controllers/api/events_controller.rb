@@ -54,10 +54,13 @@ module Api
       ]
     }
     def index
-      events_serialized = serializeEvents(Event.all)
       events_achievement_serialized = serializeSuperEvent(EventAchievement.all)
       respond_with(
-        events: events_serialized,
+        events: ActiveModel::ArraySerializer.new(
+          Event.all,
+          each_serializer: Api::EventBasicSerializer,
+          scope: current_user
+        ),
         superevents: events_achievement_serialized
       )
     end
