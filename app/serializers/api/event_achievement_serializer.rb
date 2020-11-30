@@ -49,8 +49,8 @@ module Api
 
     def achievements
       ids = object.user_achievement_ids || []
-      ids.map do |id|
-        achievement = AdminAchievement.find(id)
+      achievements = AdminAchievement.where(id: ids)
+      achievements.map do |achievement|
         {
           name: achievement.name,
           description: achievement.description,

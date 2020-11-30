@@ -1,7 +1,7 @@
 module Api
   class ContentValidationsController < BaseController
     skip_before_filter :verify_authenticity_token, :only => :send_request
-    
+
     before_action :authenticate_user!
     respond_to :json
 
@@ -10,7 +10,7 @@ module Api
     }
 
     expose(:request_content) {
-      RequestContentValidation.find(params[:request_id])
+      RequestContentValidation.includes(:content).find(params[:request_id])
     }
 
     expose(:check_request_content) {

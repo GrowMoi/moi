@@ -85,6 +85,11 @@ module Tutor
     end
 
     def add_recommendation_to_client (students_ids, recommendation, content_ids)
+      # students = ClientTutorRecommendation.where(
+      #   client_id: students_ids,
+      #   tutor_recommendation: recommendation
+      # )
+
       students_ids.each do |student_id|
 
         client_tutor_recommendation = ClientTutorRecommendation.find_by(
@@ -134,8 +139,8 @@ module Tutor
     end
 
     def iterate_and_assign_contents_to_recommendation(content_ids, students_ids)
-      content_ids.each do |id|
-        content = Content.find(id)
+      contents = Content.where(id: content_ids)
+      contents.each do |content|
         content_tutor_recommendation = ContentTutorRecommendation.new(
           tutor_recommendation: tutor_recommendation,
           content: content

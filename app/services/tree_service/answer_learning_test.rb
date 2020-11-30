@@ -24,7 +24,7 @@ module TreeService
           unread!(answer)
           unread_content_event!(answer)
         end
-        content = Content.find(answer["content_id"])
+        content = Content.includes(:neuron).find(answer["content_id"])
         {
           correct: !!correct_answer,
           content_id: answer["content_id"],
