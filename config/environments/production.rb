@@ -86,6 +86,8 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  config.lograge.enabled = true
+
   config.middleware.insert_before 0, "Rack::Cors" do
     allow do
       origins "http://moi.growmoi.com",
