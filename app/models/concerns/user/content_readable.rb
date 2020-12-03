@@ -26,10 +26,23 @@ class User < ActiveRecord::Base
     # @return [Boolean] wether if the user
     #   has already read a content
     def already_read?(content)
+      check_if_should_remove_content_test?()
       ContentReading.where(
         user: self,
         content: content
       ).exists?
+    end
+
+    
+    private
+
+    def check_if_should_remove_content_test?()
+      test = ContentLearningTest.where(completed: false, user: self).last
+      if test
+        ids = test.questions.map{|q| q["content_id"]}
+        self.content_readings.where(content_id: ids).destroy_all
+        test.destroy
+      end
     end
   end
 end

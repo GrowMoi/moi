@@ -6,7 +6,7 @@ module Api
       respond_to :json
 
       api :PUT,
-        "/users/storages",
+        "/users/storage",
         "update user data"
       param :frontendValues, String, required: true, desc: %{
       needs to be a JSON-encoded string having the following format:
@@ -31,11 +31,11 @@ module Api
       end
 
       api :GET,
-          "/users/storages",
+          "/users/storage",
           "show user data"
 
       def show
-        respond_with(storage: current_user.storage ? current_user.storage.frontendValues: {})
+        respond_with(storage: current_user.storage ? current_user.storage.frontendValues : {})
       end
 
     end

@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-	default from: 'Banco del Pacífico <wwebadminbp@pacifico.fin.ec>'
+	default from: 'Banco del Pacífico <miaulabdp@gmail.com>'
 
   def notify_role_change(user)
     @user = user
@@ -23,6 +23,6 @@ class UserMailer < ApplicationMailer
 
   def send_email_to(email)
     @email = email
-    mail(to: "webadminbp@pacifico.fin.ec", subject: "Clave Tutor")
+    mail(to: "miaulabdp@gmail.com", subject: "Clave Tutor")
   end
 end

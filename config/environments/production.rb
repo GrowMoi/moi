@@ -37,7 +37,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = ENV["FORCE_SSL"] == "true"
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
@@ -97,7 +97,9 @@ Rails.application.configure do
               "http://aula.miaulabdp.com",
               "http://www.aula.miaulabdp.com",
               "https://aula.miaulabdp.com",
-              "https://www.aula.miaulabdp.com"
+              "https://www.aula.miaulabdp.com",
+              "https://www.miaulabdp.com",
+              "https://miaulabdp.com"
 
       resource "/api/*",
                headers: :any,
@@ -117,7 +119,9 @@ Rails.application.configure do
               "https://aula.miaulabdp.com",
               "https://www.aula.miaulabdp.com",
               "http://backend.miaulabdp.com",
-              "https://backend.miaulabdp.com"
+              "https://backend.miaulabdp.com",
+              "https://www.miaulabdp.com",
+              "https://miaulabdp.com"
 
       resource '/assets/*'
     end
