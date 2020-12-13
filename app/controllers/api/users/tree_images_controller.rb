@@ -26,7 +26,7 @@ module Api
           user.save
           response = {
             status: :accepted,
-            user: user
+            user: user.tree_image
           }
           render json: response, status: :accepted
         rescue Exception => e
