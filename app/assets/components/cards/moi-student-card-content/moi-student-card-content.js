@@ -30,6 +30,7 @@ Polymer({
     this.emitters = {};
     this.loading = true;
     this.userRemove = null;
+    this.exportHasError = false;
     this.usernames = [];
     this.reportItems = [
       { id: 'username', text: 'Nombre de usuario'},
@@ -171,6 +172,7 @@ Polymer({
     ev.stopPropagation();
     this.backSelectReportOption()
     $(this.$['dialog-build-report']).show();
+    this.exportHasError = false;
   },
   restoreReportOptionsVisibility: function() {
     this.set('reportOption.firstStep.visible', false);
@@ -251,12 +253,17 @@ Polymer({
     req.open("GET", mainUrl, true);
     req.responseType = "blob";
     req.onload = function(event) {
-      var blob = req.response;
-      var link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
-      link.download = this.downloadBtnFilenameV3;
-      link.click();
-      $(this.buttonDownloadReport).removeClass("disabled");
+      if (event.target.status >= 400) {
+        this.exportHasError = true;
+      } else {
+        var blob = req.response;
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = this.downloadBtnFilenameV3;
+        link.click();
+        $(this.buttonDownloadReport).removeClass("disabled");
+      }
+
     }.bind(this);
 
     req.send();
@@ -276,7 +283,8 @@ Polymer({
       });
       workbook.SheetNames.forEach(function(sheetName) {
         var usernames = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName])
-                  .map(function(item){ return item['Usuario'] });
+                  .filter(function(item) { return !!Object.values(item)[0] })
+                  .map(function(item){ return Object.values(item)[0] });
 
         cb(usernames)
       })

@@ -28,9 +28,10 @@ module Api
       def take
         if event
           if user_can_take_event?
-            user_event = UserEvent.new
-            user_event.user = current_user
-            user_event.event = event
+            user_event = UserEvent.new(
+              user: current_user,
+              event: event
+            )
             user_event.save
             response = {
               status: :created,

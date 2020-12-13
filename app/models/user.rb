@@ -274,6 +274,12 @@ class User < ActiveRecord::Base
               uid: auth.uid
             }
           ).first_or_create do |user|
+      # we set only for new users:
+      if user.new_record?
+        user.provider = auth.provider
+        user.uid = auth.uid
+      end
+
       # for now only tutors taking advantage of this
       user.role = "tutor"
 
