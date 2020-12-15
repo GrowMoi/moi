@@ -31,6 +31,7 @@ module Tutor
       if user_tutor.present?
         user = user_tutor.user
         data = AnalyticService::UtilsStatistic.new(user, nil).contents_learnt_by_branch
+        data = data.blank? ? [] : data
       end
       render json: {
         data: data

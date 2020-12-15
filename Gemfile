@@ -20,7 +20,7 @@ gem 'coffee-rails', '~> 4.2.2'
 
 gem 'time_diff', '~> 0.3.0'
 
-gem "rack-timeout"
+gem 'slowpoke'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -108,7 +108,6 @@ group :test, :development do
 end
 
 group :development do
-  gem 'mailcatcher'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
