@@ -50,7 +50,10 @@ module TreeService
       serializer_klass.new(
         neuron,
         scope: user,
-        context: { desired_neuron_path: @desired_neuron_path }
+        context: {
+          desired_neuron_path: @desired_neuron_path,
+          contents_learning_ids: contents_learning_ids
+        }
       ).tap do |serializer|
         update_tree_depth(serializer.object)
         serializer.children = children_for(
@@ -61,6 +64,10 @@ module TreeService
 
     def serializer_klass
       SERIALIZER.constantize
+    end
+
+    def contents_learning_ids
+      ContentLearning.where(user: user).map(&:content_id)
     end
   end
 end

@@ -14,7 +14,7 @@ module Api
     attributes *ATTRIBUTES
 
     def state
-      if current_user.already_learnt_any?(object.contents)
+      if contents_learnt_ids_in_neuron.count > 0
         "florecida"
       else
         "descubierta"
@@ -34,13 +34,7 @@ module Api
     end
 
     def learnt_contents
-      count = 0
-      object.contents.map do |content|
-        if current_user.already_learnt?(content)
-          count = count + 1
-        end
-      end
-      count
+      contents_learnt_ids_in_neuron.count
     end
 
     def in_desired_neuron_path
@@ -63,5 +57,13 @@ module Api
     end
 
     alias_method :current_user, :scope
+
+    private
+
+    def contents_learnt_ids_in_neuron
+      contents_learnt_ids = context[:contents_learning_ids]
+      neuron_ids_contents = object.contents.pluck(:id)
+      (neuron_ids_contents & contents_learnt_ids)
+    end
   end
 end
