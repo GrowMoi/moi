@@ -1,6 +1,12 @@
 Polymer({
   is: 'moi-user-card-content',
-  behaviors: [TranslateBehavior, AssetBehavior, NotificationBehavior, AnalyticsBehavior],
+  behaviors: [
+    TranslateBehavior,
+    AssetBehavior,
+    NotificationBehavior,
+    AnalyticsBehavior,
+    UtilsBehavior
+  ],
   properties: {
     options: {
       type: Object,
@@ -8,6 +14,8 @@ Polymer({
     }
   },
   ready: function () {
+    var currentUser =  UtilsBehavior.getCurrentUser() || {};
+    this.isAdmin = currentUser.role === 'admin';
     this.searchValue = '';
     this.usersApi = '/tutor/dashboard/get_clients';
     this.sendRequestBtnApi = '/tutor/user_tutors';
@@ -15,6 +23,7 @@ Polymer({
     this.rowImgInactive = this.assetPath('client_avatar_inactive.png');
     this.rowImgCheck = this.assetPath('check_blue.png');
     this.inputIconImage = this.assetPath('icon_search.png');
+    this.downloadBtnFilename = 'reporte_' + Date.now() + '.xls';
     this.rowApis = [];
     this.emitters = {};
     this.rowOptions = {

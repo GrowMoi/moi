@@ -394,7 +394,7 @@ module Tutor
       end
     end
 
-    def download_all_user_analytics
+    def download_all_users_analytics
       @statistics_by_user = []
       User.all.each do |student|
         statistics = student.generate_statistics(
