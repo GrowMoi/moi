@@ -379,7 +379,8 @@ module Tutor
               "images_opened_in_count",
               "total_notes",
               "user_test_answers",
-              "content_learnings_with_reading_times"
+              "content_learnings_with_reading_times",
+              "user_created_at"
             ]
           )
           @statistics_by_user.push({
@@ -407,7 +408,8 @@ module Tutor
             "images_opened_in_count",
             "total_notes",
             "user_test_answers",
-            "content_learnings_with_reading_times"
+            "content_learnings_with_reading_times",
+            "user_created_at"
           ]
         )
         @statistics_by_user.push({
