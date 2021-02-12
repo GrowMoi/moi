@@ -8,6 +8,7 @@
     <Table>
       <Row>
         <Cell><Data ss:Type="String">Username</Data></Cell>
+        <Cell><Data ss:Type="String">Fecha de registro</Data></Cell>
         <Cell><Data ss:Type="String">Nombre</Data></Cell>
         <Cell><Data ss:Type="String">Email</Data></Cell>
         <Cell><Data ss:Type="String">Contenidos aprendidos en total</Data></Cell>
@@ -38,6 +39,7 @@
 
       <Row>
         <Cell><Data ss:Type="String"><%= statistics[:student].username %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= statistics[:student].created_at.strftime('%m/%d/%Y') %></Data></Cell>
         <Cell><Data ss:Type="String"><%= statistics[:student].name %></Data></Cell>
         <Cell><Data ss:Type="String"><%= statistics[:student].email %></Data></Cell>
         <Cell><Data ss:Type="Number"><%= statistics[:statistics]["total_contents_learnt"][:value]%></Data></Cell>
