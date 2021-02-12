@@ -453,6 +453,7 @@ module Tutor
     def report_labels
       [
         "Usuario",
+        "Fecha de registro",
         "Nombre",
         "Email",
         "Contenidos aprendidos en total",
@@ -477,6 +478,7 @@ module Tutor
     def report_fields(statistics)
       [
         statistics[:student].username,
+        statistics[:student].created_at.strftime('%m/%d/%Y'),
         statistics[:student].name,
         statistics[:student].email,
         statistics[:statistics]["total_contents_learnt"][:value],
