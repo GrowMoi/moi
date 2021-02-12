@@ -260,7 +260,8 @@ module Tutor
               "images_opened_in_count",
               "total_notes",
               "user_test_answers",
-              "content_learnings_with_reading_times"
+              "content_learnings_with_reading_times",
+              "user_created_at"
             ]
           )
 
@@ -397,7 +398,7 @@ module Tutor
 
     def download_all_users_analytics
       @statistics_by_user = []
-      User.all.each do |student|
+      User.all.last(2).each do |student|
         statistics = student.generate_statistics(
           [
             "total_neurons_learnt",
