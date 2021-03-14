@@ -17,4 +17,26 @@ server {
   error_page 500 502 503 504 /500.html;
   keepalive_timeout 10;
   client_max_body_size 4G;
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/moi-backend.growmoi.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/moi-backend.growmoi.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 }
+
+server {
+    if ($host = www.moi-backend.growmoi.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = moi-backend.growmoi.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+  listen 80;
+  server_name moi-backend.growmoi.com www.moi-backend.growmoi.com
+              moi-backend.shiriculapo.com www.moi-backend.shiriculapo.com;
+    return 404; # managed by Certbot
