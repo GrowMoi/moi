@@ -284,6 +284,7 @@ Moi::Application.routes.draw do
         get :download_tutor_analytics
         get :download_tutor_analytics_v2
         get :download_all_users_analytics
+        get "report_status/:id", to: "dashboard#report_status"
         get :get_contents
         post :level
         post :send_notification

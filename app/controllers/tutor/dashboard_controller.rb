@@ -397,32 +397,15 @@ module Tutor
     end
 
     def download_all_users_analytics
-      @statistics_by_user = []
-      User.all.last(2).each do |student|
-        statistics = student.generate_statistics(
-          [
-            "total_neurons_learnt",
-            "total_contents_learnt",
-            "contents_learnt_by_branch",
-            "used_time",
-            "average_used_time_by_content",
-            "images_opened_in_count",
-            "total_notes",
-            "user_test_answers",
-            "content_learnings_with_reading_times",
-            "user_created_at"
-          ]
-        )
-        @statistics_by_user.push({
-          student: student,
-          statistics: statistics
-        })
-      end
+      @report = Report.create!(
+        kind: :download_all_users_analytics
+      )
+      render json: @report
+    end
 
-      respond_to do |format|
-        format.html
-        format.xls
-      end
+    def report_status
+      @report = Report.find params[:id]
+      render json: @report
     end
 
     private
