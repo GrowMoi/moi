@@ -4,7 +4,7 @@
 \:host
   display: block
 
-  #download-button
+  #report-button
     padding: 0.5rem
     border-radius: 0.3rem
     text-transform: uppercase
@@ -20,3 +20,6 @@
     &:hover
       background-color: var(--moi-download-button-color)
       color: $white !important
+
+  +var(moi-download-button-color, $base-color-green)
+  +var(moi-download-button-border-color, $base-color-green)
