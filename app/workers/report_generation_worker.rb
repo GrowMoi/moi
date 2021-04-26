@@ -10,13 +10,9 @@ class ReportGenerationWorker
     User.all.find_each do |student|
       statistics = student.generate_statistics(
         [
-          "total_neurons_learnt",
-          "total_contents_learnt",
           "contents_learnt_by_branch",
           "used_time",
           "average_used_time_by_content",
-          "images_opened_in_count",
-          "total_notes",
           "user_test_answers",
           "content_learnings_with_reading_times",
           "user_created_at"
