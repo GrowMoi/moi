@@ -28,6 +28,13 @@ class ReportGenerationWorker
       })
     end
 
+    ##
+    # make sure reports folder exists
+    reports_path = Rails.root.join('public/reports')
+    if !Dir.exist?(reports_path)
+      Dir.mkdir(reports_path)
+    end
+
     file = Rails.root.join(
       "app/views/tutor/dashboard/download_all_users_analytics.xls.erb"
     )
