@@ -1,6 +1,8 @@
 module Api
   module Users
     class TreeImagesController < BaseController
+      skip_before_filter :verify_authenticity_token, :only => :update
+
       before_action :authenticate_user!
 
       expose(:user) {
@@ -24,7 +26,7 @@ module Api
           user.save
           response = {
             status: :accepted,
-            user: user
+            user: user.tree_image
           }
           render json: response, status: :accepted
         rescue Exception => e

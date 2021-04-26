@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   include UserAchievements
   include UserStorage
 
-  mount_base64_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
+  mount_uploader :tree_image, ContentMediaUploader, file_name: -> { 'tree' }
   mount_base64_uploader :tree_image_app, ContentMediaUploader, file_name: -> { 'tree_app' }
   mount_base64_uploader :image, ContentMediaUploader, file_name: -> { DateTime.now.strftime('%s') + 'user_image' }
 
