@@ -13,7 +13,6 @@
         <Cell><Data ss:Type="String">Escuela</Data></Cell>
         <Cell><Data ss:Type="String">Ciudad</Data></Cell>
         <Cell><Data ss:Type="String">Fecha de registro</Data></Cell>
-        <Cell><Data ss:Type="String">Tiempo de uso</Data></Cell>
         <Cell><Data ss:Type="String">Contenidos aprendidos en total</Data></Cell>
       </Row>
       <% @statistics_by_user.each do |statistics| %>
@@ -24,7 +23,6 @@
           <Cell><Data ss:Type="String"><%= statistics[:student].school %></Data></Cell>
           <Cell><Data ss:Type="String"><%= statistics[:student].city %></Data></Cell>
           <Cell><Data ss:Type="String"><%= statistics[:student].created_at.strftime('%m/%d/%Y') %></Data></Cell>
-          <Cell><Data ss:Type="String"><%= statistics[:statistics]["used_time"][:meta][:value_humanized] %></Data></Cell>
           <Cell><Data ss:Type="Number"><%= statistics[:statistics]["total_contents_learnt"][:value]%></Data></Cell>
         </Row>
       <% end %>
