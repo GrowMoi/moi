@@ -260,7 +260,8 @@ module Tutor
               "images_opened_in_count",
               "total_notes",
               "user_test_answers",
-              "content_learnings_with_reading_times"
+              "content_learnings_with_reading_times",
+              "user_created_at"
             ]
           )
 
@@ -379,10 +380,10 @@ module Tutor
               "images_opened_in_count",
               "total_notes",
               "user_test_answers",
-              "content_learnings_with_reading_times"
+              "content_learnings_with_reading_times",
+              "user_created_at"
             ]
           )
-
           @statistics_by_user.push({
             student: student,
             statistics: statistics
@@ -393,6 +394,18 @@ module Tutor
         format.html
         format.xls
       end
+    end
+
+    def download_all_users_analytics
+      @report = Report.create!(
+        kind: :download_all_users_analytics
+      )
+      render json: @report
+    end
+
+    def report_status
+      @report = Report.find params[:id]
+      render json: @report
     end
 
     private

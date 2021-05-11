@@ -366,6 +366,7 @@
           show_report: "Generar Reporte"
           loading_report: "Generando reporte..."
           export_xls: "Exportar todo"
+          export_as_admin_xls: "Exportar todos los usuarios"
           export_xls_title: "Exportar a excel los datos de todos los alumnos"
           export_selected_xls: "Exportar seleccionados"
           export_selected_xls_title: "Exportar a excel los datos de los alumnos seleccionados"

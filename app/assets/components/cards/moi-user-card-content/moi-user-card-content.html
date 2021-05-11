@@ -26,6 +26,15 @@
       </div>
 
       <moi-actions-row>
+        <template is="dom-if" if="{{ isAdmin }}" restamp>
+          <moi-report-button
+            href="/tutor/dashboard/download_all_users_analytics.xls"
+            query-href="/tutor/dashboard/report_status"
+            id="btnAllUsersDownload"
+            text="[[ t('views.tutor.dashboard.card_students.export_as_admin_xls') ]]"
+            loading-text="[[ t('views.tutor.dashboard.card_students.loading_report') ]]">
+          </moi-report-button>
+        </template>
         <moi-send-client-request-button id="btnsend"
           send-request-api="[[ sendRequestBtnApi ]]"
           text="[[ t('views.tutor.dashboard.card_users.send_request') ]]"

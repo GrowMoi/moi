@@ -75,7 +75,7 @@ module AnalyticService
 
     def format_data
       @contents_count = 0
-      root_neuron = @items_content.detect {|i|i[:parent_id] == nil}
+      root_neuron = TreeService::RootFetcher.root_neuron
       global_root_children = find_root_children
       user_root_children = @items_content.find_all {|i|i[:parent_id] == root_neuron[:id]}
       @root_children = normalize_root_contents_learnt(global_root_children, user_root_children).sort_by{|g| g[:title]}

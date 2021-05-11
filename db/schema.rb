@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200503010323) do
+ActiveRecord::Schema.define(version: 20210425195156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -486,6 +486,12 @@ ActiveRecord::Schema.define(version: 20200503010323) do
   add_index "read_notifications", ["notifications_id"], name: "index_read_notifications_on_notifications_id", using: :btree
   add_index "read_notifications", ["user_id"], name: "index_read_notifications_on_user_id", using: :btree
 
+  create_table "reports", force: :cascade do |t|
+    t.string   "kind"
+    t.string   "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
   create_table "room_chats", force: :cascade do |t|
     t.integer  "sender_id",                      null: false
     t.integer  "receiver_id",                    null: false
