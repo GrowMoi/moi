@@ -27,7 +27,8 @@ class Report < ActiveRecord::Base
 
   def uri
     # NB: XLS only for now
-    "reports/#{id}.xls"
+    name = "usuarios-mi-aula-bdp#{Time.now.strftime('-%m-%d-%Y')}"
+    "reports/#{name}.xls"
   end
 
   private
