@@ -11,8 +11,9 @@ class GenerateUsersTask
     split_users = split_users.reject(&:empty?)
     out_uri = "generate_users_task-#{Time.now.to_s.parameterize}.csv"
     @csv_out = CSV.open(Rails.root.join("public", out_uri), "wb")
-    @csv_out << ["username", "authorization_key", "name", "email", "authorization_key_es", "status"]
-    split_users.each do |user_names|
+    @csv_out << ["username", "authorization_key", "name", "email", "authorization_key_es", "status", "tutor"]
+    split_users.each do |user_names_and_tutor|
+      user_names, tutor_email = user_names_and_tutor.split(",")
       user = User.new(
         name: user_names,
         authorization_key: UserAuthorizationKeys::KEYS.sample
@@ -32,10 +33,15 @@ class GenerateUsersTask
       rescue Exception => e
         @csv_out << ["", "", user.name, "", "", "failed"]
       else
+        # set tutor
+        tutor_user = nil
+        if tutor_email.present? && tutor_user = User.find_by(email: tutor_email.strip)
+          UserTutor.create!(status: :accepted, tutor: tutor_user, user: user)
+        end
         users_created << user.id
         key_pass = user.authorization_key
         key_pass_es = UserAuthorizationKeys::KEYS_ES[key_pass.to_sym]
-        @csv_out << [user.username, key_pass, user.name, user.email, key_pass_es, "created"]
+        @csv_out << [user.username, key_pass, user.name, user.email, key_pass_es, "created", tutor_user.try(:email)]
         puts [user.username, key_pass, user.name, user.email, key_pass_es]
       end
     end
