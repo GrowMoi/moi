@@ -763,12 +763,10 @@ ActiveRecord::Schema.define(version: 20210525064813) do
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
-    t.integer  "owner_id"
     t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-  add_index "versions", ["owner_id"], name: "index_versions_on_owner_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "client_notifications", "users", column: "client_id"
@@ -810,5 +808,4 @@ ActiveRecord::Schema.define(version: 20210525064813) do
   add_foreign_key "user_event_achievements", "users"
   add_foreign_key "user_tutors", "users"
   add_foreign_key "user_tutors", "users", column: "tutor_id"
-  add_foreign_key "versions", "users", column: "owner_id"
 end

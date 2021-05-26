@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.8'
 
 # Use postgresql as the database for Active Record
-gem 'pg'
+gem 'pg', '0.20'
 
 gem 'sass', github: 'JhymerMartinez/sass', branch: '3.2.19-var-fix'
 # Use SCSS for stylesheets
@@ -136,3 +136,4 @@ end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
+gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'

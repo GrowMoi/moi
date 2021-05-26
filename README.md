@@ -45,3 +45,7 @@ we are using [mailcatcher](http://mailcatcher.me/) on dev environment
 
 ### api
 we are using [apipie](https://github.com/Apipie/apipie-rails#dsl-reference) + [maruku](https://github.com/bhollis/maruku) to document our api using markdown. All endpoints should be documented. Include `Api::BaseDoc` module and use `#doc_for` if you're documenting an endpoint which method isn't defined in the controller itself
+
+### Dev Notes
+If you have installed Postgres App in your mac, you need to link the pg gem to the app, please run this command:
+`gem install pg -v '0.20' -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/11/bin/pg_config`
