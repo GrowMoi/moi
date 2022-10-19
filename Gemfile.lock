@@ -1,39 +1,29 @@
 GIT
-  remote: git://github.com/JhymerMartinez/paper-elements.git
+  remote: https://github.com/JhymerMartinez/paper-elements.git
   revision: 99f0717d373aae88fee04201e5b9ed3d3f9acbed
   specs:
     polymer-paper-elements-rails (0.0.1)
       polymer-rails (~> 1.0)
 
 GIT
-  remote: git://github.com/JhymerMartinez/sass.git
+  remote: https://github.com/JhymerMartinez/sass.git
   revision: 9852c297b48eb4e2ec103d3eb9161aad330e5946
   branch: 3.2.19-var-fix
   specs:
     sass (3.2.19)
 
 GIT
-  remote: git://github.com/macool/little_decorator.git
+  remote: https://github.com/macool/little_decorator.git
   revision: 32427367d37317d43dbbbc40b242ef993f279e54
   specs:
     little_decorator (0.0.6)
       rails
 
 GIT
-  remote: git://github.com/nicholasjhenry/spellchecker.git
+  remote: https://github.com/nicholasjhenry/spellchecker.git
   revision: 74ae2c23d23ba4a65729c37b3d124615271483b5
   specs:
     spellchecker (0.1.5)
-
-GIT
-  remote: git://github.com/rweng/jquery-datatables-rails.git
-  revision: db17aa0145164095b2b21f83f1ef7ccf91b9ea54
-  specs:
-    jquery-datatables-rails (3.1.1)
-      actionpack (>= 3.1)
-      jquery-rails
-      railties (>= 3.1)
-      sass-rails
 
 GIT
   remote: https://github.com/randym/axlsx.git
@@ -45,6 +35,16 @@ GIT
       mimemagic (~> 0.3)
       nokogiri (>= 1.6.6)
       rubyzip (>= 1.2.1)
+
+GIT
+  remote: https://github.com/rweng/jquery-datatables-rails.git
+  revision: d486b31b192a2924b1913e080ad23460e6b96d31
+  specs:
+    jquery-datatables-rails (3.4.0)
+      actionpack (>= 3.1)
+      jquery-rails
+      railties (>= 3.1)
+      sass-rails
 
 GEM
   remote: https://rubygems.org/
@@ -279,9 +279,11 @@ GEM
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2020.0512)
-    mimemagic (0.3.3)
+    mimemagic (0.4.3)
+      nokogiri (~> 1)
+      rake
     mini_mime (1.0.2)
-    mini_portile2 (2.4.0)
+    mini_portile2 (2.8.0)
     minitest (5.14.2)
     momentjs-rails (2.17.1)
       railties (>= 3.1)
@@ -296,8 +298,9 @@ GEM
     netrc (0.11.0)
     newrelic_rpm (3.14.0.305)
     nio4r (2.5.1)
-    nokogiri (1.10.4)
-      mini_portile2 (~> 2.4.0)
+    nokogiri (1.13.9)
+      mini_portile2 (~> 2.8.0)
+      racc (~> 1.4)
     nokogumbo (1.4.13)
       nokogiri
     oauth2 (1.4.4)
@@ -348,6 +351,7 @@ GEM
       multi_json (~> 1.0)
       pusher-signature (~> 0.1.8)
     pusher-signature (0.1.8)
+    racc (1.6.0)
     rack (1.6.13)
     rack-contrib (1.2.0)
       rack (>= 0.9.1)
